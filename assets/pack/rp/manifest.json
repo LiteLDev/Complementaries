@@ -1,0 +1,21 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Complementaries RP",
+    "description": "Textures, models and names of Complementaries (Supplementaries for Bedrock)",
+    "uuid": "f7548b12-7a92-45b2-8804-47f9c9615075",
+    "version": "${version}",
+    "min_engine_version": [
+      1,
+      21,
+      40
+    ]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "14995b55-1880-4f18-ba76-8c91752f896f",
+      "version": "${version}"
+    }
+  ]
+}

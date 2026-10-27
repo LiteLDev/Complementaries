@@ -1,0 +1,21 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Complementaries BP",
+    "description": "Blocks, items and recipes of Complementaries (Supplementaries for Bedrock)",
+    "uuid": "e08e2440-ee72-4abd-bfab-77d38eda72ea",
+    "version": "${version}",
+    "min_engine_version": [
+      1,
+      21,
+      40
+    ]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "334ed236-30ed-4472-b89b-ca13d231f7c5",
+      "version": "${version}"
+    }
+  ]
+}
