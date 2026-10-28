@@ -1,0 +1,25 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "complementaries:cannon_barrel",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "properties": {
+        "complementaries:yaw": { "type": "float", "range": [-360.0, 360.0], "default": 0.0, "client_sync": true },
+        "complementaries:pitch": { "type": "float", "range": [-90.0, 90.0], "default": 0.0, "client_sync": true }
+      }
+    },
+    "components": {
+      "minecraft:collision_box": { "width": 0.01, "height": 0.01 },
+      "minecraft:custom_hit_test": { "hitboxes": [{ "width": 0.0, "height": 0.0, "pivot": [0, 0, 0] }] },
+      "minecraft:physics": { "has_gravity": false, "has_collision": false },
+      "minecraft:pushable": { "is_pushable": false, "is_pushable_by_piston": false },
+      "minecraft:damage_sensor": { "triggers": { "cause": "all", "deals_damage": "no" } },
+      "minecraft:knockback_resistance": { "value": 1.0 },
+      "minecraft:fire_immune": {},
+      "minecraft:persistent": {},
+      "minecraft:type_family": { "family": ["complementaries_cannon_barrel", "inanimate"] }
+    }
+  }
+}

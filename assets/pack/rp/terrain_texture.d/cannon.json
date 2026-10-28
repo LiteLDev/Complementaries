@@ -1,0 +1,4 @@
+{
+  "complementaries_cannon": { "textures": "textures/blocks/cannon" },
+  "complementaries_cannonball": { "textures": "textures/blocks/cannonball" }
+}

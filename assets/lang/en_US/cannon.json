@@ -1,0 +1,23 @@
+{
+  "cm.cannon.key.attack": "Attack",
+  "cm.cannon.key.sneak": "Sneak",
+  "cm.cannon.maneuver_end": "Stopped maneuvering the cannon",
+  "cm.cannon.power": "Power: {0} (scroll to change)",
+  "gui.supplementaries.cannon": "Cannon",
+  "cm.cannon.action": "Action",
+  "cm.cannon.apply": "Apply",
+  "cm.cannon.fire": "Fire",
+  "cm.cannon.fuel": "Gunpowder: {0} / {1}",
+  "gui.supplementaries.cannon.maneuver": "Maneuver",
+  "cm.cannon.pitch": "Pitch",
+  "cm.cannon.power_level": "Power",
+  "cm.cannon.projectile": "Projectile: {0} × {1}",
+  "cm.cannon.projectile_empty": "Projectile: none",
+  "cm.cannon.take_fuel": "Take out gunpowder",
+  "cm.cannon.take_projectile": "Take out projectile",
+  "cm.cannon.yaw": "Yaw",
+  "message.supplementaries.cannon": "Can shoot anything",
+  "cm.cannon.loaded": "Cannon loaded",
+  "message.supplementaries.cannon.maneuver": "Press {0} to Dismount, {1} to Fire",
+  "cm.cannon.not_loaded": "The cannon is not loaded"
+}

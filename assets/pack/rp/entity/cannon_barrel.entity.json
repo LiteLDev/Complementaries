@@ -1,0 +1,17 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "complementaries:cannon_barrel",
+      "materials": { "default": "entity_alphatest" },
+      "textures": { "default": "textures/entity/cannon_barrel" },
+      "geometry": { "default": "geometry.complementaries.cannon_barrel" },
+      "render_controllers": ["controller.render.default"],
+      "animations": {
+        "aim": "animation.complementaries.cannon_barrel.aim",
+        "fire": "animation.complementaries.cannon_barrel.fire"
+      },
+      "scripts": { "animate": ["aim"] }
+    }
+  }
+}

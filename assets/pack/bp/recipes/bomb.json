@@ -1,0 +1,15 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:bomb" },
+    "tags": ["crafting_table"],
+    "pattern": [" S ", "NGN", " N "],
+    "key": {
+      "S": { "item": "minecraft:string" },
+      "N": { "item": "minecraft:iron_nugget" },
+      "G": { "item": "minecraft:gunpowder" }
+    },
+    "unlock": [{ "item": "minecraft:gunpowder" }],
+    "result": { "item": "complementaries:bomb", "count": 2 }
+  }
+}

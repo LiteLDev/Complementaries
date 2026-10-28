@@ -1,0 +1,13 @@
+tile.complementaries:cannon.name=Cannon
+tile.complementaries:cannonball.name=Cannonball
+item.complementaries:bomb.name=Bomb
+item.complementaries:bomb_blue.name=Blue Bomb
+item.complementaries:bomb_spiky.name=Spiky Bomb
+entity.complementaries:bomb.name=Bomb
+entity.complementaries:bomb_blue.name=Blue Bomb
+entity.complementaries:bomb_spiky.name=Spiky Bomb
+entity.complementaries:cannonball.name=Cannonball
+entity.complementaries:cannon_barrel.name=Cannon
+entity.complementaries:red_merchant.name=Red Merchant
+item.spawn_egg.entity.complementaries:red_merchant.name=Red Merchant Spawn Egg
+entity.complementaries:bomb_blue_baby.name=Blue Bomb

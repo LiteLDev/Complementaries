@@ -1,0 +1,23 @@
+{
+  "cm.cannon.key.attack": "攻击",
+  "cm.cannon.key.sneak": "潜行",
+  "cm.cannon.maneuver_end": "已停止操控加农炮",
+  "cm.cannon.power": "威力：{0}（滚动滚轮调整）",
+  "gui.supplementaries.cannon": "加农炮",
+  "cm.cannon.action": "操作",
+  "cm.cannon.apply": "应用",
+  "cm.cannon.fire": "开火",
+  "cm.cannon.fuel": "火药：{0} / {1}",
+  "gui.supplementaries.cannon.maneuver": "操控",
+  "cm.cannon.pitch": "俯仰角",
+  "cm.cannon.power_level": "威力",
+  "cm.cannon.projectile": "弹药：{0} × {1}",
+  "cm.cannon.projectile_empty": "弹药：无",
+  "cm.cannon.take_fuel": "取出火药",
+  "cm.cannon.take_projectile": "取出弹药",
+  "cm.cannon.yaw": "偏航角",
+  "message.supplementaries.cannon": "可以发射任何东西",
+  "cm.cannon.loaded": "加农炮已装填",
+  "message.supplementaries.cannon.maneuver": "按 {0} 离开，按 {1} 开火",
+  "cm.cannon.not_loaded": "加农炮尚未装填"
+}
