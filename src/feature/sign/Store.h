@@ -103,6 +103,7 @@ private:
     std::unordered_map<std::string, Board> mBoards;
     std::unordered_map<std::string, Mat>   mMats;
     std::unordered_set<std::string>        mNoDrop;
+    std::unordered_map<std::string, int>   mMissing; ///< reconcile passes an entry's actor was missing
 };
 
 } // namespace cm::feature::sign

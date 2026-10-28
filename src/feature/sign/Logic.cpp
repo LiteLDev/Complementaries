@@ -36,6 +36,14 @@ int dimOf(std::string const& key) {
     return p ? p->dim : 0;
 }
 
+/// The block at `key` is `id` (and loaded).
+bool blockIs(std::string const& key, std::string_view id) {
+    auto p = parsePosKey(key);
+    if (!p) return false;
+    auto* region = regionOf(p->dim);
+    return region && game::blockIdAt(*region, BlockPos{p->x, p->y, p->z}) == id;
+}
+
 /// The arm to edit, or nullptr when missing / waxed.
 Arm* editableArm(Post& post, bool upper) {
     if (post.waxed) return nullptr;
@@ -165,7 +173,7 @@ void refreshBoardBlock(std::string const& key) {
 }
 
 bool boardInsert(std::string const& key, ItemStack const& item) {
-    if (item.isNull()) return false;
+    if (item.isNull() || !blockIs(key, kNoticeBoard)) return false;
     Board board;
     if (auto* b = store().board(key)) board = *b;
     if (!board.item.empty()) return false;
@@ -224,7 +232,7 @@ bool boardGlow(std::string const& key, bool glowing) {
     Board board   = *b;
     board.glowing = glowing;
     store().putBoard(key, std::move(board));
-    playSound(dimOf(key), centerOf(key), "sign.ink_sac.use");
+    playSound(dimOf(key), centerOf(key), glowing ? "sign.glow_ink_sac.use" : "sign.ink_sac.use");
     return true;
 }
 
@@ -239,6 +247,7 @@ int boardSignal(std::string const& key) {
 
 // ---- doormats -----------------------------------------------------------------------------------
 bool setMatLines(std::string const& key, std::array<std::string, kDoormatLines> const& lines) {
+    if (!blockIs(key, kDoormat)) return false;
     Mat mat;
     if (auto* m = store().mat(key)) mat = *m;
     if (mat.waxed) return false;
@@ -264,11 +273,12 @@ bool matGlow(std::string const& key, bool glowing) {
     Mat mat     = *m;
     mat.glowing = glowing;
     store().putMat(key, std::move(mat));
-    playSound(dimOf(key), centerOf(key), "sign.ink_sac.use");
+    playSound(dimOf(key), centerOf(key), glowing ? "sign.glow_ink_sac.use" : "sign.ink_sac.use");
     return true;
 }
 
 bool matWax(std::string const& key, bool waxed) {
+    if (!blockIs(key, kDoormat)) return false;
     Mat mat;
     if (auto* m = store().mat(key)) mat = *m;
     if (mat.waxed == waxed) return false;
@@ -337,7 +347,7 @@ void openMatEditor(Player& player, std::string const& key) {
 
 // ---- way signs ----------------------------------------------------------------------------------
 std::string waySignText(WayTarget const& target, int fromX, int fromZ) {
-    if (!config::get<SignConfig>().waySignDistanceText) return target.name;
+    if (!config::get<SignConfig>().waySignDistanceText) return fitWidth(target.name, kSignPostLineWidth);
     double dx   = target.x - fromX;
     double dz   = target.z - fromZ;
     int    dist = static_cast<int>(std::lround(std::sqrt(dx * dx + dz * dz)));

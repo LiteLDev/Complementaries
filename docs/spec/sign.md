@@ -52,8 +52,7 @@ Plus `waxed` for the whole post. A post holds up to two arms: **up** (upper half
 
 ### Posts
 
-Valid posts: every vanilla fence and wall (`*_fence`, `*_wall`, `nether_brick_fence`), and any
-block carrying the `complementaries:sign_post_holder` tag (other units can add posts). Unlike
+Valid posts: every vanilla fence and wall (`*_fence`, `*_wall`, `nether_brick_fence`). Unlike
 Java, the post block itself is not replaced by a mimic block: it stays the real block (neighbour
 connections, waterlogging, sounds and drops behave exactly as the original block), and the arms are
 drawn by a display entity standing on the post.
@@ -105,8 +104,9 @@ blocks away, a spruce fence is placed on the surface (grass / dirt / sand / grav
 ground, open air above) near the cell centre and a sign post is put on it:
 
 - up arm (spruce): points to the village, text `Village` (+ ` 123m` when `waySignDistanceText`),
-- down arm (oak): points to the nearest other structure in range (pillager outpost, woodland
-  mansion, trail ruins, trial chambers, temples), text with its name, if any.
+- down arm (oak): points to the nearest other structure in range (pillager outpost, trail ruins,
+  trial chambers; woodland mansions are not searched because that search can stall the server),
+  text with its name, if any.
 
 Processed cells are stored under `cm:sign:wg:<cx>:<cz>` so each cell is tried only once.
 
@@ -130,7 +130,9 @@ Valid items: writable book, written book, (filled / empty) map, banners; any ite
 
 Display (Java renderer): books show the current page, wrapped to the board width and scaled down to
 fit; other items show their name. Redstone: a rising edge (unpowered → powered) turns the page.
-Comparator output: 0 empty; book: current page number (1-based, max 15); other items: 15.
+Power is read from the six neighbours (redstone block / torch, powered repeater or comparator,
+dust / plates / detectors with a signal, lever, button, observer). Comparator output (Java): 0
+empty; book: current page number (1-based, max 15); other items: 15 — see "Not ported".
 
 ## 4. Doormat
 
@@ -188,10 +190,8 @@ Mod text (`assets/lang/<locale>/sign.json`):
 | `cm.sign.waxed` | This sign is waxed |
 | `cm.sign.way_sign.village` | Village |
 | `cm.sign.way_sign.pillager_outpost` | Pillager Outpost |
-| `cm.sign.way_sign.mansion` | Woodland Mansion |
 | `cm.sign.way_sign.trail_ruins` | Trail Ruins |
 | `cm.sign.way_sign.trial_chambers` | Trial Chambers |
-| `cm.sign.way_sign.temple` | Temple |
 | `cm.sign.way_sign.distance` | {} {}m |
 | `cm.sign.way_sign.none` | No village nearby |
 | `cm.sign.way_sign.placed` | Way sign placed at {} |
@@ -209,3 +209,4 @@ Block / item names (`texts.d`): `Oak Sign Post` … `Pale Oak Sign Post`, `Notic
 | Text lighting follows the world light (dark at night unless glowing) | text is drawn full bright | Bedrock name tag text has no light input |
 | Way signs as a jigsaw structure placed during chunk generation at village road ends | placed on the surface near villages once a player explores the area | Bedrock has no data-driven way to add jigsaw pieces to vanilla villages |
 | Modded wood types | only vanilla woods | Bedrock has no runtime wood type registry |
+| Comparators read the notice board page | the value is computed (`boardSignal`, selftested) but comparators do not read it | data-driven blocks cannot be comparator sources, and the engine's `hasComparatorSignal` body is shared (folded) with unrelated functions, so it cannot be hooked safely |

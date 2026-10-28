@@ -64,12 +64,12 @@ struct StructureType {
     std::string_view english;
 };
 constexpr StructureType kVillage{"village", "cm.sign.way_sign.village", "Village"};
-constexpr std::array<StructureType, 5> kOthers = {{
+// Structures with a regular spacing grid (cheap to locate); woodland mansions are left out on
+// purpose: their search can scan a huge area and stall the server thread.
+constexpr std::array<StructureType, 3> kOthers = {{
     {"pillager_outpost", "cm.sign.way_sign.pillager_outpost", "Pillager Outpost"},
-    {"mansion", "cm.sign.way_sign.mansion", "Woodland Mansion"},
     {"trail_ruins", "cm.sign.way_sign.trail_ruins", "Trail Ruins"},
     {"trial_chambers", "cm.sign.way_sign.trial_chambers", "Trial Chambers"},
-    {"temple", "cm.sign.way_sign.temple", "Temple"},
 }};
 
 WorldGenerator* generatorOf(int dim) {
@@ -175,9 +175,10 @@ void tickWaySigns() {
     std::vector<std::pair<int, int>> candidates;
     level->forEachPlayer([&](Player& p) {
         if (static_cast<int>(p.getDimensionId()) != 0) return true;
-        auto pos = p.getPosition();
-        auto cx0 = floorDiv(static_cast<std::int64_t>(pos.x), kCell);
-        auto cz0 = floorDiv(static_cast<std::int64_t>(pos.z), kCell);
+        auto pos   = p.getPosition();
+        auto block = game::blockPosOf(pos);
+        auto cx0   = floorDiv(block.x, kCell);
+        auto cz0   = floorDiv(block.z, kCell);
         for (auto cx = cx0 - 1; cx <= cx0 + 1; ++cx) {
             for (auto cz = cz0 - 1; cz <= cz0 + 1; ++cz) {
                 int    mx = static_cast<int>(cx * kCell + kCell / 2);

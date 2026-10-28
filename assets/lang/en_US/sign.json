@@ -7,10 +7,8 @@
   "cm.sign.waxed": "This sign is waxed",
   "cm.sign.way_sign.village": "Village",
   "cm.sign.way_sign.pillager_outpost": "Pillager Outpost",
-  "cm.sign.way_sign.mansion": "Woodland Mansion",
   "cm.sign.way_sign.trail_ruins": "Trail Ruins",
   "cm.sign.way_sign.trial_chambers": "Trial Chambers",
-  "cm.sign.way_sign.temple": "Temple",
   "cm.sign.way_sign.distance": "{} {}m",
   "cm.sign.way_sign.none": "No village nearby",
   "cm.sign.way_sign.placed": "Way sign placed at {}"

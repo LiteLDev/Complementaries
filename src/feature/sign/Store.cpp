@@ -116,6 +116,7 @@ void Store::clear() {
     mBoards.clear();
     mMats.clear();
     mNoDrop.clear();
+    mMissing.clear();
 }
 
 void Store::load() {
@@ -182,6 +183,7 @@ void Store::syncPost(std::string const& key, Post& post) {
 void Store::putPost(std::string const& key, Post post) {
     if (post.empty()) {
         dropDisplay(post.entity);
+        if (auto* stored = this->post(key)) dropDisplay(stored->entity);
         mPosts.erase(key);
         game::db::erase(dbKey(kPostPrefix, key));
         return;
@@ -233,7 +235,7 @@ std::vector<std::string> Store::boardLines(Board const& b, int* pageCount) const
     if (!pages.empty()) {
         if (pageCount) *pageCount = static_cast<int>(pages.size());
         int page = b.page % static_cast<int>(pages.size());
-        return wrapText(stripFormatting(pages[static_cast<std::size_t>(page)]), kBoardLineWidth);
+        return wrapText(stripFormatting(pages[static_cast<std::size_t>(page)], true), kBoardLineWidth);
     }
     if (item.isNull()) return {};
     auto id = itemId(item);
@@ -349,8 +351,74 @@ void Store::onBlockChanged(int dim, BlockPos const& pos, std::string const& newB
     if (mMats.contains(key) && newBlock != kDoormat) removeMat(key);
 }
 
+namespace {
+/// The stored position a display actor belongs to, from its type and position.
+std::string ownerKey(Actor& actor, std::string_view type) {
+    auto const& pos = actor.getPosition();
+    int         dim = static_cast<int>(actor.getDimensionId());
+    if (type == kSignPostEntity) {
+        return posKey(dim, static_cast<int>(std::floor(pos.x)), static_cast<int>(std::lround(pos.y - 1.0f)), static_cast<int>(std::floor(pos.z)));
+    }
+    auto info = unpackDisplay(actor.getVariant());
+    if (info.kind == DisplayKind::Doormat) {
+        return posKey(dim, static_cast<int>(std::floor(pos.x)), static_cast<int>(std::floor(pos.y)), static_cast<int>(std::floor(pos.z)));
+    }
+    auto [dx, dz] = game::facingOffset(info.facing);
+    return posKey(
+        dim,
+        static_cast<int>(std::floor(pos.x - dx * 0.51f)),
+        static_cast<int>(std::floor(pos.y)),
+        static_cast<int>(std::floor(pos.z - dz * 0.51f))
+    );
+}
+} // namespace
+
 void Store::reconcile(bool sweepOrphans) {
-    if (!ll::service::getLevel()) return;
+    auto level = ll::service::getLevel();
+    if (!level) return;
+
+    // Display actors load a little after their chunk: adopt a loaded actor for an entry that lost
+    // track of its own, drop duplicates, and remove strays on the slower sweep.
+    std::unordered_set<std::int64_t> owned;
+    for (auto const& [k, v] : mPosts) owned.insert(v.entity);
+    for (auto const& [k, v] : mBoards) owned.insert(v.entity);
+    for (auto const& [k, v] : mMats) owned.insert(v.entity);
+    for (auto* actor : level->getRuntimeActorList()) {
+        if (!actor) continue;
+        auto type = actor->getTypeName();
+        if (type != kSignPostEntity && type != kTextDisplayEntity) continue;
+        auto id = actor->getOrCreateUniqueID().rawID;
+        if (owned.contains(id)) continue;
+        auto          key    = ownerKey(*actor, type);
+        std::int64_t* slot   = nullptr;
+        if (type == kSignPostEntity) {
+            if (auto* p = post(key)) slot = &p->entity;
+        } else if (auto* b = board(key)) {
+            slot = &b->entity;
+        } else if (auto* m = mat(key)) {
+            slot = &m->entity;
+        }
+        if (slot && !findActor(*slot)) {
+            *slot = id;
+            owned.insert(id);
+            mMissing.erase(key);
+            if (auto* p = post(key)) {
+                savePost(key, *p);
+                syncPost(key, *p);
+            } else if (auto* b = board(key)) {
+                saveBoard(key, *b);
+                syncBoard(key, *b);
+            } else if (auto* m = mat(key)) {
+                saveMat(key, *m);
+                syncMat(key, *m);
+            }
+            continue;
+        }
+        if (slot || sweepOrphans) removeActor(*actor);
+    }
+
+    // An entry whose actor is still missing after a grace period gets a new one.
+    auto due = [this](std::string const& key) { return ++mMissing[key] >= 3; };
     std::vector<std::string> gone;
     for (auto& [key, post] : mPosts) {
         auto p = parsePosKey(key);
@@ -360,7 +428,8 @@ void Store::reconcile(bool sweepOrphans) {
             gone.push_back(key);
             continue;
         }
-        if (!findActor(post.entity)) syncPost(key, post);
+        if (findActor(post.entity)) mMissing.erase(key);
+        else if (due(key)) syncPost(key, post);
     }
     for (auto const& k : gone) removePost(k, true);
     gone.clear();
@@ -372,7 +441,8 @@ void Store::reconcile(bool sweepOrphans) {
             gone.push_back(key);
             continue;
         }
-        if (!b.item.empty() && !findActor(b.entity)) syncBoard(key, b);
+        if (b.item.empty() || findActor(b.entity)) mMissing.erase(key);
+        else if (due(key)) syncBoard(key, b);
     }
     for (auto const& k : gone) removeBoard(k, true);
     gone.clear();
@@ -384,23 +454,13 @@ void Store::reconcile(bool sweepOrphans) {
             gone.push_back(key);
             continue;
         }
-        if (!findActor(m.entity)) syncMat(key, m);
+        if (findActor(m.entity)) mMissing.erase(key);
+        else if (due(key)) syncMat(key, m);
     }
     for (auto const& k : gone) removeMat(k);
     mNoDrop.clear();
-
-    if (!sweepOrphans) return;
-    std::unordered_set<std::int64_t> owned;
-    for (auto const& [k, v] : mPosts) owned.insert(v.entity);
-    for (auto const& [k, v] : mBoards) owned.insert(v.entity);
-    for (auto const& [k, v] : mMats) owned.insert(v.entity);
-    for (auto* actor : ll::service::getLevel()->getRuntimeActorList()) {
-        if (!actor) continue;
-        auto type = actor->getTypeName();
-        if (type != kSignPostEntity && type != kTextDisplayEntity) continue;
-        if (!owned.contains(actor->getOrCreateUniqueID().rawID)) removeActor(*actor);
-    }
 }
+
 
 namespace {
 int signalFrom(BlockSource& region, BlockPos const& n) {

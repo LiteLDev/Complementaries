@@ -79,6 +79,24 @@ struct Click {
     float        yaw;
 };
 
+/// Runs `fn(player)` next tick (world edits during a cancelled interaction are rolled back), only
+/// if the player still holds the item they clicked with.
+void defer(Click const& c, std::function<void(Player&)> fn) {
+    deferred().push_back([c, fn = std::move(fn)] {
+        auto* player = playerById(c.player);
+        if (!player || itemId(player->getSelectedItem()) != c.item) return;
+        fn(*player);
+    });
+}
+
+void failSound(Click const& c) {
+    deferred().push_back([c] {
+        playSound(c.dim, Vec3{c.pos.x + 0.5f, c.pos.y + 0.5f, c.pos.z + 0.5f}, "sign.waxed_interact_fail");
+    });
+}
+
+bool isInk(std::string_view id) { return id == "minecraft:glow_ink_sac" || id == "minecraft:ink_sac"; }
+
 // ---- sign posts ---------------------------------------------------------------------------------
 bool postClick(Click const& c) {
     auto key  = posKey(c.dim, c.pos.x, c.pos.y, c.pos.z);
@@ -88,17 +106,15 @@ bool postClick(Click const& c) {
     if (wood) {
         if (!cfg().signPostEnabled) return false;
         if (post && (post->waxed || (post->up.active && post->down.active))) return false;
-        deferred().push_back([c, key, w = *wood] {
-            auto* player = playerById(c.player);
-            if (!player) return;
+        defer(c, [c, key, w = *wood](Player& player) {
             // the arrow points to the side of the post the player clicked
-            float  rad   = c.yaw * 3.14159265f / 180.0f;
-            double rx    = -std::cos(rad), rz = -std::sin(rad); // the player's right
-            bool   left  = (c.relX - 0.5) * rx + (c.relZ - 0.5) * rz < 0;
-            float  yaw   = std::round((c.yaw + (left ? -90.0f : 90.0f)) / 22.5f) * 22.5f;
+            float  rad  = c.yaw * 3.14159265f / 180.0f;
+            double rx   = -std::cos(rad), rz = -std::sin(rad); // the player's right
+            bool   left = (c.relX - 0.5) * rx + (c.relZ - 0.5) * rz < 0;
+            float  yaw  = std::round((c.yaw + (left ? -90.0f : 90.0f)) / 22.5f) * 22.5f;
             if (!logic::addArm(key, w, c.relY >= 0.5, yaw, left)) return;
-            consumeSelected(*player);
-            logic::openPostEditor(*player, key);
+            consumeSelected(player);
+            logic::openPostEditor(player, key);
         });
         return true;
     }
@@ -108,60 +124,45 @@ bool postClick(Click const& c) {
     bool up = *upper;
     if (post->waxed) {
         if (isAxe(c.item)) {
-            deferred().push_back([c, key] {
-                if (!logic::waxPost(key, false)) return;
-                if (auto* p = playerById(c.player)) damageSelected(*p);
+            defer(c, [key](Player& p) {
+                if (logic::waxPost(key, false)) damageSelected(p);
             });
             return true;
         }
-        if (c.item.empty() || c.item == "minecraft:honeycomb" || dyeOfItem(c.item) || c.item.ends_with("compass")
-            || c.item == "minecraft:ink_sac" || c.item == "minecraft:glow_ink_sac") {
-            deferred().push_back([c] {
-                playSound(c.dim, Vec3{c.pos.x + 0.5f, c.pos.y + 0.5f, c.pos.z + 0.5f}, "sign.waxed_interact_fail");
-            });
+        if (c.item.empty() || c.item == "minecraft:honeycomb" || dyeOfItem(c.item) || c.item.ends_with("compass") || isInk(c.item)) {
+            failSound(c);
             return true;
         }
         return false;
     }
     if (c.item == "minecraft:compass" || c.item == "minecraft:lodestone_compass" || c.item == "minecraft:recovery_compass") {
-        deferred().push_back([c, key, up] {
-            auto* player = playerById(c.player);
-            if (!player) return;
-            auto target = compassTarget(*player, c.dim);
-            if (target) logic::pointArm(key, up, target->first, target->second);
+        defer(c, [c, key, up](Player& p) {
+            if (auto target = compassTarget(p, c.dim)) logic::pointArm(key, up, target->first, target->second);
         });
         return true;
     }
     if (auto dye = dyeOfItem(c.item)) {
-        deferred().push_back([c, key, up, d = *dye] {
-            if (!logic::dyeArm(key, up, d)) return;
-            if (auto* p = playerById(c.player)) consumeSelected(*p);
+        defer(c, [key, up, d = *dye](Player& p) {
+            if (logic::dyeArm(key, up, d)) consumeSelected(p);
         });
         return true;
     }
-    if (c.item == "minecraft:glow_ink_sac" || c.item == "minecraft:ink_sac") {
+    if (isInk(c.item)) {
         bool glow = c.item == "minecraft:glow_ink_sac";
-        deferred().push_back([c, key, up, glow] {
-            if (!logic::glowArm(key, up, glow)) return;
-            if (auto* p = playerById(c.player)) consumeSelected(*p);
+        defer(c, [key, up, glow](Player& p) {
+            if (logic::glowArm(key, up, glow)) consumeSelected(p);
         });
         return true;
     }
     if (c.item == "minecraft:honeycomb") {
-        deferred().push_back([c, key] {
-            if (!logic::waxPost(key, true)) return;
-            if (auto* p = playerById(c.player)) consumeSelected(*p);
+        defer(c, [key](Player& p) {
+            if (logic::waxPost(key, true)) consumeSelected(p);
         });
         return true;
     }
     if (c.item.empty()) {
-        if (c.sneaking) {
-            deferred().push_back([key, up] { logic::flipArm(key, up); });
-        } else {
-            deferred().push_back([c, key] {
-                if (auto* p = playerById(c.player)) logic::openPostEditor(*p, key);
-            });
-        }
+        if (c.sneaking) defer(c, [key, up](Player&) { logic::flipArm(key, up); });
+        else defer(c, [key](Player& p) { logic::openPostEditor(p, key); });
         return true;
     }
     return false;
@@ -177,45 +178,36 @@ bool boardClick(Click const& c, int facing) {
     if (!c.item.empty()) {
         if (full) {
             if (auto dye = dyeOfItem(c.item)) {
-                deferred().push_back([c, key, d = *dye] {
-                    if (!logic::boardDye(key, d)) return;
-                    if (auto* p = playerById(c.player)) consumeSelected(*p);
+                defer(c, [key, d = *dye](Player& p) {
+                    if (logic::boardDye(key, d)) consumeSelected(p);
                 });
                 return true;
             }
-            if (c.item == "minecraft:glow_ink_sac" || c.item == "minecraft:ink_sac") {
+            if (isInk(c.item)) {
                 bool glow = c.item == "minecraft:glow_ink_sac";
-                deferred().push_back([c, key, glow] {
-                    if (!logic::boardGlow(key, glow)) return;
-                    if (auto* p = playerById(c.player)) consumeSelected(*p);
+                defer(c, [key, glow](Player& p) {
+                    if (logic::boardGlow(key, glow)) consumeSelected(p);
                 });
                 return true;
             }
             return false;
         }
         if (!cfg().noticeBoardAcceptsAnyItem && !isBoardItem(c.item)) return false;
-        deferred().push_back([c, key] {
-            auto* player = playerById(c.player);
-            if (!player) return;
-            ItemStack held = player->getSelectedItem();
-            if (itemId(held) != c.item) return;
-            if (!logic::boardInsert(key, held)) return;
-            consumeSelected(*player);
+        defer(c, [key](Player& p) {
+            if (logic::boardInsert(key, p.getSelectedItem())) consumeSelected(p);
         });
         return true;
     }
     if (!full) return false;
-    deferred().push_back([c, key] {
-        auto* player = playerById(c.player);
-        if (!player) return;
+    defer(c, [c, key](Player& player) {
         if (!c.sneaking && logic::boardNextPage(key)) return;
         auto item = logic::boardTake(key);
         if (item.isNull()) return;
-        if (player->getSelectedItem().isNull()) {
-            player->setSelectedItem(item);
-            player->refreshInventory();
-        } else if (!player->addAndRefresh(item)) {
-            if (auto* region = regionOf(c.dim)) dropItem(*region, player->getPosition(), item);
+        if (player.getSelectedItem().isNull()) {
+            player.setSelectedItem(item);
+            player.refreshInventory();
+        } else if (!player.addAndRefresh(item)) {
+            if (auto* region = regionOf(c.dim)) dropItem(*region, player.getPosition(), item);
         }
     });
     return true;
@@ -228,46 +220,38 @@ bool matClick(Click const& c) {
     auto* mat = Store::get().mat(key);
     if (mat && mat->waxed) {
         if (isAxe(c.item)) {
-            deferred().push_back([c, key] {
-                if (!logic::matWax(key, false)) return;
-                if (auto* p = playerById(c.player)) damageSelected(*p);
+            defer(c, [key](Player& p) {
+                if (logic::matWax(key, false)) damageSelected(p);
             });
             return true;
         }
         if (c.item.empty()) {
-            deferred().push_back([c] {
-                playSound(c.dim, Vec3{c.pos.x + 0.5f, c.pos.y + 0.1f, c.pos.z + 0.5f}, "sign.waxed_interact_fail");
-            });
+            failSound(c);
             return true;
         }
         return false;
     }
     if (auto dye = dyeOfItem(c.item)) {
-        deferred().push_back([c, key, d = *dye] {
-            if (!logic::matDye(key, d)) return;
-            if (auto* p = playerById(c.player)) consumeSelected(*p);
+        defer(c, [key, d = *dye](Player& p) {
+            if (logic::matDye(key, d)) consumeSelected(p);
         });
         return true;
     }
-    if (c.item == "minecraft:glow_ink_sac" || c.item == "minecraft:ink_sac") {
+    if (isInk(c.item)) {
         bool glow = c.item == "minecraft:glow_ink_sac";
-        deferred().push_back([c, key, glow] {
-            if (!logic::matGlow(key, glow)) return;
-            if (auto* p = playerById(c.player)) consumeSelected(*p);
+        defer(c, [key, glow](Player& p) {
+            if (logic::matGlow(key, glow)) consumeSelected(p);
         });
         return true;
     }
     if (c.item == "minecraft:honeycomb") {
-        deferred().push_back([c, key] {
-            if (!logic::matWax(key, true)) return;
-            if (auto* p = playerById(c.player)) consumeSelected(*p);
+        defer(c, [key](Player& p) {
+            if (logic::matWax(key, true)) consumeSelected(p);
         });
         return true;
     }
     if (c.item.empty()) {
-        deferred().push_back([c, key] {
-            if (auto* p = playerById(c.player)) logic::openMatEditor(*p, key);
-        });
+        defer(c, [key](Player& p) { logic::openMatEditor(p, key); });
         return true;
     }
     return false;
@@ -288,7 +272,7 @@ std::optional<std::pair<double, double>> compassTarget(Player& player, int dim) 
         return std::pair{deathPos->x + 0.5, deathPos->z + 0.5};
     }
     if (dim != 0) return std::nullopt; // the needle spins outside the overworld
-    auto const& spawn = player.getLevel().getDefaultSpawn();
+    auto spawn = player.getLevel().getSharedSpawnPos();
     return std::pair{spawn.x + 0.5, spawn.z + 0.5};
 }
 

@@ -48,8 +48,8 @@ inline constexpr int kDefaultDye = 15;
 // ---- text ---------------------------------------------------------------------------------------
 /// Width in font pixels of `text` in the default Minecraft font (UTF-8; unknown glyphs count 6).
 [[nodiscard]] int textWidth(std::string_view text);
-/// Removes `§x` formatting codes and control characters.
-[[nodiscard]] std::string stripFormatting(std::string_view text);
+/// Removes `§x` formatting codes and control characters (newlines too unless `keepNewlines`).
+[[nodiscard]] std::string stripFormatting(std::string_view text, bool keepNewlines = false);
 /// Cuts `text` (already stripped) so it is at most `maxWidth` font pixels wide.
 [[nodiscard]] std::string fitWidth(std::string_view text, int maxWidth);
 /// Word-wraps `text` into lines of at most `maxWidth` pixels (keeps explicit newlines).

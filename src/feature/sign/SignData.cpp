@@ -157,7 +157,7 @@ int textWidth(std::string_view text) {
     return w;
 }
 
-std::string stripFormatting(std::string_view text) {
+std::string stripFormatting(std::string_view text, bool keepNewlines) {
     std::string out;
     std::size_t i = 0;
     while (i < text.size()) {
@@ -165,6 +165,10 @@ std::string stripFormatting(std::string_view text) {
         auto        cp    = nextCodePoint(text, i);
         if (cp == 0xA7) {
             if (i < text.size()) nextCodePoint(text, i);
+            continue;
+        }
+        if (cp == '\n' && keepNewlines) {
+            out += '\n';
             continue;
         }
         if (cp < 0x20 || cp == 0x7F) continue;

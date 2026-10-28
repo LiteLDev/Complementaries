@@ -12,6 +12,7 @@
 #include "mc/world/actor/ActorDefinitionIdentifier.h"
 #include "mc/world/actor/SynchedActorDataEntityWrapper.h"
 #include "mc/world/actor/player/Player.h"
+#include "mc/world/item/Item.h"
 #include "mc/world/item/ItemStack.h"
 #include "mc/world/level/BlockPos.h"
 #include "mc/world/level/BlockSource.h"
@@ -82,7 +83,14 @@ void damageSelected(Player& player) {
     if (player.isCreative()) return;
     ItemStack item = player.getSelectedItem();
     if (item.isNull() || !item.isDamageableItem()) return;
-    item.setDamageValue(static_cast<short>(item.getDamageValue() + 1));
+    short damage = static_cast<short>(item.getDamageValue() + 1);
+    short max    = item.mItem ? item.mItem->getMaxDamage() : 0;
+    if (max > 0 && damage >= max) {
+        item = ItemStack{}; // the tool breaks
+        playSound(static_cast<int>(player.getDimensionId()), player.getPosition(), "random.break");
+    } else {
+        item.setDamageValue(damage);
+    }
     player.setSelectedItem(item);
     player.refreshInventory();
 }
