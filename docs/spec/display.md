@@ -85,7 +85,7 @@ item is displayed and **0** otherwise.
   hat stand and the hat. Creative players break it at once without drops. Arrows and explosions
   break it; fire burns it down slowly; lava quickly.
 - "Skibidi": a hat stand standing in a cauldron/composter (tall) or a hopper/decorated pot pops its
-  head up and dances for 8 s, turning towards a player; it starts randomly (20 % every 5 s).
+  head up and dances for 8 s (turning towards a player: see Not ported); it starts randomly (20 % every 5 s).
 
 ## 3. Screens
 
@@ -140,4 +140,6 @@ Hat Stand (item and entity). Mod strings (`assets/lang/<locale>/display.json`):
 | Item names floating above pedestals/shelves | Bedrock shows entity name tags only when looking at the entity; the helper entity cannot be looked at. |
 | Waterlogging | Bedrock data-driven blocks cannot be waterlogged in this engine version. |
 | Feature on/off flags | Blocks and recipes come from the behavior pack and cannot be unregistered at runtime. |
+| Dispensers placing hat stands / inserting into display blocks | Bedrock dispensers drop data-driven items; the dispense behaviour is not a hookable per-item registry. Hoppers do not feed display blocks either (no container block entity). |
+| Skibidi dance turning towards a player | The dance animation plays; the head does not track a target. |
 | Redstone power through solid blocks (statue) | Bedrock's circuit graph is not queryable for custom blocks; only adjacent power sources count. |

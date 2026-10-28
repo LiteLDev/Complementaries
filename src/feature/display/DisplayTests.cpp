@@ -109,6 +109,9 @@ CM_REGISTER_SELFTEST("display.pedestal_stack", [](Context& ctx) -> ll::coro::Cor
 CM_REGISTER_SELFTEST("display.player_use", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto p = ctx.testPos(1206);
     ctx.require(co_await ctx.ensureLoaded(p), "test area loaded");
+    auto support = p;
+    support.z += 1; // the default shelf faces north: its wall is to the south
+    ctx.require(ctx.setBlock(support, "minecraft:stone"), "wall behind the shelf");
     ctx.require(ctx.setBlock(p, std::string(kItemShelf)), "item shelf placed");
     co_await ctx.ticks(2);
     auto& player = ctx.player();
@@ -168,6 +171,11 @@ CM_REGISTER_SELFTEST("display.shelf_support", [](Context& ctx) -> ll::coro::Coro
     co_await ctx.ticks(3);
     ctx.check(kindOf(region.getBlock(game::blockPos(p))) == Kind::None, "the shelf popped off without support");
     ctx.check(!displayedItem(p), "its book was dropped");
+    auto loose = p;
+    loose.x += 2;
+    ctx.require(ctx.setBlock(loose, std::string(kItemShelf)), "a shelf with nothing behind it");
+    co_await ctx.ticks(3);
+    ctx.check(kindOf(region.getBlock(game::blockPos(loose))) == Kind::None, "a shelf can't stay without a wall");
 });
 
 CM_REGISTER_SELFTEST("display.statue", [](Context& ctx) -> ll::coro::CoroTask<> {

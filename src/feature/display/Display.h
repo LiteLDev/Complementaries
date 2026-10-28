@@ -86,7 +86,7 @@ enum class UseResult { Pass, Placed, Taken };
 /// interaction event (the module defers it by one tick).
 UseResult use(Player& player, BlockSource& region, BlockPos const& pos);
 
-/// Puts `item` (one of it) on the display block directly (tests, dispensers). False if not possible.
+/// Puts `item` (one of it) on the display block directly (tests, other units). False if not possible.
 bool putItem(BlockSource& region, BlockPos const& pos, ItemStack const& item);
 /// Removes and returns the displayed item.
 std::optional<ItemStack> takeItem(BlockSource& region, BlockPos const& pos);

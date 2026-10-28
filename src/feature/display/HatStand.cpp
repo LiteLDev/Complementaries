@@ -1,5 +1,6 @@
 // U12 display: the hat stand entity (HatStandEntity / HatStandItem of Supplementaries).
 
+#include <algorithm>
 #include <cmath>
 #include <map>
 #include <random>
@@ -74,7 +75,13 @@ HatState& hs() {
     return s;
 }
 
-StandState& stateOf(Actor& stand) { return hs().stands[stand.getOrCreateUniqueID().rawID]; }
+/// The tracked state of a stand. A stand seen for the first time (placed, loaded) stops any dance
+/// it was saved with: the dance timer lives only in memory.
+StandState& stateOf(Actor& stand) {
+    auto [it, fresh] = hs().stands.try_emplace(stand.getOrCreateUniqueID().rawID);
+    if (fresh) entityEvent(stand, "skibidi_0");
+    return it->second;
+}
 
 void toggle(Actor& stand, char const* prop, int& value) {
     value ^= 1;
@@ -321,7 +328,9 @@ LL_TYPE_INSTANCE_HOOK(
     Actor&      actor,
     Vec3 const& location
 ) {
-    if (!getLevel().isClientSide() && isHatStand(actor)) {
+    auto held = itemId(getSelectedItem());
+    // Name tags and leads keep their vanilla behaviour (Java: interactAt passes for name tags).
+    if (!getLevel().isClientSide() && isHatStand(actor) && held != "minecraft:name_tag" && held != "minecraft:lead") {
         InteractionResult r{};
         bool ok   = useHatStand(*this, actor);
         r.mSuccess = ok;
@@ -377,9 +386,11 @@ void tickHatStands(int tick) {
     if (tick % kScanInterval != 0) return;
     auto level = ll::service::getLevel();
     if (!level) return;
-    bool skibidi = config::get<DisplayConfig>().hatStandSkibidi;
+    bool                skibidi = config::get<DisplayConfig>().hatStandSkibidi;
+    std::vector<int64>  seen;
     for (auto* actor : level->getRuntimeActorList()) {
         if (!actor || !isHatStand(*actor) || !actor->isAlive()) continue;
+        seen.push_back(actor->getOrCreateUniqueID().rawID);
         auto& s   = stateOf(*actor);
         auto  box = standBox(actor->getPosition());
         // Entities walking through the stand make its head swing (Java PendulumAnimation#hitByEntity).
@@ -401,6 +412,9 @@ void tickHatStands(int tick) {
             }
         }
     }
+    // Forget stands that are no longer loaded.
+    std::sort(seen.begin(), seen.end());
+    std::erase_if(h.stands, [&seen](auto const& e) { return !std::binary_search(seen.begin(), seen.end(), e.first); });
 }
 
 } // namespace detail

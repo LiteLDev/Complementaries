@@ -5,7 +5,14 @@
 
 function Aim([string]$at) { Invoke-Chat "/tp @s 0.5 ~ 0.5 facing $at"; Start-Sleep -Milliseconds 700 }
 function Hold([string]$item) { Invoke-Chat "/replaceitem entity @s slot.weapon.mainhand 0 $item"; Start-Sleep -Milliseconds 400 }
-function Use-Center { Click 0.5 0.5 -Relative -Right; Start-Sleep -Milliseconds 900 }
+# Press the right button without moving the mouse: a mouse move would turn the camera away from
+# the target the /tp command aimed at.
+function Use-Center {
+    Focus-Game
+    Assert-GameForeground
+    [BsE2E.Native]::MouseButton(1, $false); Start-Sleep -Milliseconds 60; [BsE2E.Native]::MouseButton(1, $true)
+    Start-Sleep -Milliseconds 900
+}
 
 Invoke-Chat '/gamemode survival'
 Invoke-Chat '/tp @s 0.5 ~ 0.5'

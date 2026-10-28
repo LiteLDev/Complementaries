@@ -1,6 +1,7 @@
 // U12 display: comparator output of the display blocks and the enchanting power of end crystals
 // on pedestals.
 
+#include <algorithm>
 #include <cmath>
 #include <vector>
 
@@ -70,7 +71,10 @@ void patchComparators() {
         if (!type) continue;
         auto*   bt   = const_cast<BlockType*>(&*type);
         void**& vptr = *reinterpret_cast<void***>(bt);
-        if (vptr == &p.table[1]) continue;
+        if (vptr == &p.table[1]) {
+            if (std::find(p.patched.begin(), p.patched.end(), bt) == p.patched.end()) p.patched.push_back(bt);
+            continue;
+        }
         if (expected && vptr != expected) {
             if (!p.warned) log().warn("Display: {} is not a plain BlockType, no comparator output", id);
             p.warned = true;
@@ -144,9 +148,9 @@ namespace detail {
 void onWorldReady() { patchComparators(); }
 
 void onWorldClosed() {
-    // The block types may be rebuilt for the next world: forget them (a destroyed type no longer
-    // needs its vtable; our copy keeps every original entry, including the destructor).
-    vp().patched.clear();
+    // Restore while the block types are still alive; the next world patches them again. This way no
+    // BlockType pointer is kept across worlds.
+    unpatchComparators();
     resetHatStands();
 }
 

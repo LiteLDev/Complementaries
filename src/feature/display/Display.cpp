@@ -52,11 +52,12 @@ namespace {
 
 constexpr int kReconcileInterval = 20; ///< ticks between helper entity checks
 constexpr int kRedstoneInterval  = 4;  ///< ticks between statue power polls
-constexpr int kUseCooldown       = 4;  ///< ignore repeated use packets of one click
+constexpr int kHoldGap           = 8;  ///< use packets closer than this belong to one held click
 
 struct Slot {
-    Kind      kind = Kind::None;
-    ItemStack item;
+    Kind        kind = Kind::None;
+    ItemStack   item;
+    std::string key; ///< SNBT of `item` ("" when empty)
     [[nodiscard]] bool hasItem() const { return !item.isNull(); }
 };
 
@@ -82,7 +83,7 @@ struct State {
     std::set<GlobalPos>              shelves; ///< shelves to check for support
     std::set<GlobalPos>              removed; ///< display blocks replaced by something else
     std::vector<PendingUse>          uses;
-    std::map<int64, int>             lastUse; ///< player unique id -> tick of the last use
+    std::map<int64, std::pair<GlobalPos, int>> lastUse; ///< player -> block and tick of the last use packet
     BlockType const*                 types[4]{};
     int                              tick = 0;
 };
@@ -108,9 +109,11 @@ bool parseKey(std::string_view s, GlobalPos& p) {
     return true;
 }
 
-void saveSlot(GlobalPos const& p, Slot const& s) {
+/// Stores the slot (and refreshes its cached SNBT, used to compare with the helper entity's item).
+void saveSlot(GlobalPos const& p, Slot& s) {
+    s.key = itemToSnbt(s.item);
     if (!db::available()) return;
-    db::save(dbKey(p), {{"kind", static_cast<int>(s.kind)}, {"item", itemToSnbt(s.item)}});
+    db::save(dbKey(p), {{"kind", static_cast<int>(s.kind)}, {"item", s.key}});
 }
 
 void eraseSlot(GlobalPos const& p) {
@@ -146,7 +149,10 @@ void loadAll() {
         if (!j) continue;
         Slot slot;
         slot.kind = static_cast<Kind>(j->value("kind", 0));
-        if (auto item = itemFromSnbt(j->value("item", std::string{}))) slot.item = *item;
+        if (auto item = itemFromSnbt(j->value("item", std::string{}))) {
+            slot.item = *item;
+            slot.key  = itemToSnbt(slot.item);
+        }
         if (slot.kind == Kind::None) continue;
         s.slots[p] = std::move(slot);
     }
@@ -299,7 +305,7 @@ void syncEntity(BlockSource& region, BlockPos const& pos, Kind kind, Slot const*
     if (es.pose != pose) entityEvent(*entity, "pose_" + std::to_string(es.pose = pose));
     if (es.facing != facing) entityEvent(*entity, "facing_" + std::to_string(es.facing = facing));
     if (es.waving != waving) entityEvent(*entity, "waving_" + std::to_string(es.waving = waving));
-    auto key = itemToSnbt(item);
+    auto const& key = slot ? slot->key : std::string{};
     if (es.itemKey != key) {
         entity->setCarriedItem(item.isNull() ? ItemStack::EMPTY_ITEM() : item);
         es.itemKey = key;
@@ -403,8 +409,11 @@ public:
         });
         db::onWorldClosed([] {
             detail::onWorldClosed();
-            st().slots.clear();
-            st().entities.clear();
+            auto& s = st();
+            s.slots.clear();
+            s.entities.clear();
+            s.lastUse.clear();
+            for (auto& t : s.types) t = nullptr; // no block type pointers across worlds
         });
         if (db::available()) {
             loadAll();
@@ -433,7 +442,9 @@ private:
         Kind  kind   = kindOf(*block);
         auto const& hand = ev.item().isNull() ? player.getSelectedItem() : ev.item();
         if (kind == Kind::None) {
-            if (itemId(hand) == kHatStand) {
+            // Java: the block's own use (chests, doors, ...) wins unless the player sneaks.
+            bool blockUse = block->getBlockType().isInteractiveBlock() && !player.isSneaking();
+            if (itemId(hand) == kHatStand && !blockUse) {
                 ev.cancel();
                 detail::queueHatStandPlacement(player, ev.blockPos(), static_cast<int>(ev.face()));
             }
@@ -447,10 +458,13 @@ private:
         bool has = it != s.slots.end() && it->second.hasItem();
         if (!has && hand.isNull()) return;
         ev.cancel();
-        auto  id   = player.getOrCreateUniqueID();
-        auto& last = s.lastUse[id.rawID];
-        if (s.tick - last < kUseCooldown && last != 0) return;
-        last = s.tick;
+        // Bedrock repeats the use packet while the button is held: act once per click, i.e. only
+        // when the previous packet of this player on this block is older than the repeat gap.
+        auto id    = player.getOrCreateUniqueID();
+        auto found = s.lastUse.find(id.rawID);
+        bool held  = found != s.lastUse.end() && found->second.first == gp && s.tick - found->second.second <= kHoldGap;
+        s.lastUse[id.rawID] = {gp, s.tick};
+        if (held) return;
         s.uses.push_back({id, gp});
     }
 
@@ -465,6 +479,8 @@ private:
         auto  gp      = game::globalPos(region, pos);
         if (oldKind != Kind::None && oldKind != newKind) s.removed.insert(gp);
         if (newKind != Kind::None) s.dirty.insert(gp);
+        // A new shelf needs a block behind it (Java canSurvive at placement).
+        if (newKind == Kind::Shelf && oldKind != Kind::Shelf) s.shelves.insert(gp);
         // A pedestal above / below has to re-evaluate its connections and status.
         for (int dy : {-1, 1}) {
             BlockPos n{pos.x, pos.y + dy, pos.z};
@@ -694,9 +710,7 @@ bool putItem(BlockSource& region, BlockPos const& pos, ItemStack const& item) {
     auto const& block = region.getBlock(pos);
     Kind kind = kindOf(block);
     if (kind == Kind::None) return false;
-    if (kind == Kind::Pedestal && pedestalStatusFor(region, pos, false) == PedestalStatus::None
-        && game::intState(block, "complementaries:item_status").value_or(1) == 0)
-        return false;
+    if (kind == Kind::Pedestal && pedestalStatusFor(region, pos, false) == PedestalStatus::None) return false;
     auto gp = game::globalPos(region, pos);
     auto& slot = st().slots[gp];
     if (slot.hasItem()) return false;
