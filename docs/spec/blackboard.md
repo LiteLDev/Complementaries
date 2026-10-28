@@ -13,15 +13,13 @@ Behaviour reference only: no code or assets are copied.
 **Recipe** (shaped, gives 2):
 
 ```
-S B
-S B W
-S B
+SB.
+SBW
+SB.
 ```
 
-`S` any wooden slab, `B` blackstone, `W` an item of the `blackboard_white` group (white dye).
-Bedrock has no item-tag ingredient for "wooden slabs" across all wood types in a single
-recipe slot, so the recipe is registered once per vanilla wooden slab (oak, spruce, birch, jungle,
-acacia, dark oak, mangrove, cherry, pale oak, bamboo, crimson, warped).
+`S` any wooden slab (item tag `minecraft:wooden_slabs`), `B` blackstone, `W` white dye (Java item
+tag `blackboard_white`).
 
 **Soap recipe** (shapeless): blackboard + `complementaries:soap` -> blank blackboard. Owned by
 the soap unit (it defines the soap item); this unit only washes placed boards with soap.
@@ -98,16 +96,18 @@ as one big canvas; the 3x3 window with the most boards is chosen.
 
 ### Complementaries
 
-- **Modded client** (Complementaries client mod present, local world or remote server): a native
-  screen drawn by the client mod with the Java layout and controls (pixel grid, Clear / Done /
-  Undo, palette). Left click / drag draws, right click / drag erases. The result is sent with the
-  `/supplementaries blackboard set` sub-command on close.
-- **Vanilla client** (BDS, no client mod): a server form (data-driven custom form) titled "Edit
-  Blackboard": a live preview of the canvas (coloured block characters) with a cursor, sliders for
-  the cursor column / row, a colour dropdown (with `colored_blackboard`), and buttons **Draw**
-  (toggle the pixel like a Java click), **Erase**, **Clear**, **Undo**, **Done**. Changes apply when
-  the form closes, as in Java.
+Every client (vanilla or modded) gets a data-driven server form titled "Edit Blackboard" (the
+DDUI custom form that LeviLamina 26.51 provides; it renders the same on both):
 
+- a live preview of the canvas (coloured block characters; `░` where the 3x3 window has no board)
+  with a red cursor;
+- sliders **Column** and **Row** that move the cursor over the whole connected canvas;
+- with `colored_blackboard`, a **Colour** dropdown with the 16 Java palette entries (black = blank);
+- buttons **Draw** (a Java left click: the selected colour, or blank if the pixel already has it),
+  **Erase**, **Clear**, **Undo** (20 steps) and **Done**.
+
+As in Java the changes apply when the form closes (Done, Esc or the close button), with the same
+server checks, and the "draw complete" sound plays when the drawing changed.
 ## Rendering
 
 Java renders the drawing as a dynamic texture on the block. Bedrock custom blocks have no block
@@ -132,9 +132,10 @@ removed when the board is cleared or broken, and re-created if they go missing (
 
 ## Commands
 
-`/supplementaries blackboard set <x> <y> <z> <pixels>` (any player): the channel the client
-screen uses to submit a drawing (256 hex digits, one per pixel, row-major from the top-left).
-Accepted only from the player currently editing that board. Not meant to be typed.
+`/supplementaries blackboard set <x> <y> <z> "<pixels>"`: sets the drawing of the board at x y z
+(256 hex digits, one per pixel value, row-major from the top left; quote it). Operators and the
+console may set any board (map making, tests); other players only boards of their open edit
+session (an extension point for a client-side screen). Complementaries only.
 
 ## Strings
 
@@ -143,9 +144,9 @@ Accepted only from the player currently editing that board. Not meant to be type
 | `gui.supplementaries.blackboard.edit` | Edit Blackboard |
 | `gui.supplementaries.blackboard.clear` | Clear |
 | `gui.supplementaries.blackboard.undo` | Undo |
-| `gui.done` (fallback) | Done |
+| `cm.blackboard.done` | Done |
 | `message.supplementaries.blackboard` | Waxed |
-| `message.supplementaries.glowing` | Glowing |
+| `cm.blackboard.glowing` | Glowing (Java `message.supplementaries.glowing`, shared by every glowable block, so kept unit-local) |
 | `subtitles.supplementaries.blackboard.draw` | Blackboard drawn on |
 | `cm.blackboard.draw` | Draw |
 | `cm.blackboard.erase` | Erase |
@@ -153,11 +154,16 @@ Accepted only from the player currently editing that board. Not meant to be type
 | `cm.blackboard.row` | Row |
 | `cm.blackboard.color` | Colour |
 | `cm.blackboard.busy` | Someone else is editing this blackboard |
-| `color.minecraft.<dye>` | the 16 dye colour names |
+| `cm.blackboard.color.<0-15>` | the palette colour names, by pixel value |
 
 Block name: `tile.complementaries:blackboard.name` = Blackboard (RP `texts`).
 
 ## Not ported
+
+- **The Java pixel-grid screen with click-and-drag painting**: LeviLamina 26.51 has no API for
+  custom client screens (its forms are OreUI data-driven forms with fixed controls), so the client
+  mod uses the same form as vanilla clients; drawing directly on the placed board (hold use with a
+  dye) gives the click-and-drag experience in the world.
 
 - **Duplicate recipe** (drawn + blank -> two drawn): Bedrock crafting recipes cannot match on or
   copy item data; the crafting result is computed by the game from data-driven recipes. Copy a

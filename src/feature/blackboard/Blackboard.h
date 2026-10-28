@@ -55,6 +55,8 @@ struct BlackboardConfig {
 [[nodiscard]] std::pair<int, int> hitPixel(int front, BlockPos const& pos, Vec3 const& hit);
 
 // ---- board data -------------------------------------------------------------------------------
+/// The server BlockSource of a dimension (nullptr without a level).
+[[nodiscard]] BlockSource* regionOf(int dim);
 /// The board stored at `pos` (an empty board when there is none).
 [[nodiscard]] Board boardAt(core::GlobalPos const& pos);
 /// Stores `board` for the blackboard at `pos` and updates its display entities.

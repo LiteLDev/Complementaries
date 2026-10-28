@@ -112,14 +112,8 @@ std::string renderPreview(Session const& s) {
 void refresh(Session& s) { s.preview.setData(renderPreview(s)); }
 
 void applySession(Session& s) {
-    auto* region = [&]() -> BlockSource* {
-        auto level = ll::service::getLevel();
-        if (!level) return nullptr;
-        auto d = level->getDimension(s.dim).lock();
-        return d ? &d->getBlockSourceFromMainChunkSource() : nullptr;
-    }();
+    auto* region = regionOf(s.dim);
     if (!region) return;
-    bool changed = false;
     std::optional<BlockPos> soundAt;
     bool                    colored = config().colored_blackboard;
     for (std::size_t i = 0; i < s.canvas.cells.size(); ++i) {
@@ -129,24 +123,24 @@ void applySession(Session& s) {
         if (!region->hasChunksAt(pos, 0, false) || !isBlackboard(region->getBlock(pos))) continue;
         Board board = boardAt(*cell);
         if (board.waxed) continue;
-        Pixels px = s.work[i];
-        if (!colored) {
-            // Java refuses coloured pixels when colours are off
-            bool ok = std::all_of(px.begin(), px.end(), [](std::uint8_t v) { return v <= 1; });
-            if (!ok) continue;
+        // only the pixels this session changed: edits made meanwhile (dye, soap, ...) survive
+        Pixels px = board.px;
+        bool   ok = true;
+        for (std::size_t k = 0; k < px.size(); ++k) {
+            if (s.work[i][k] == s.original[i][k]) continue;
+            if (!colored && s.work[i][k] > 1) ok = false; // Java refuses coloured pixels when colours are off
+            px[k] = s.work[i][k];
         }
-        if (board.px == px) continue;
+        if (!ok || board.px == px) continue;
         board.px = px;
         setBoard(*region, pos, board);
-        changed = true;
         soundAt = pos;
     }
-    if (changed && soundAt) {
+    if (soundAt) {
         playSound(*region, *soundAt, "complementaries.block.blackboard.draw_complete");
-        log().info("blackboard: edit applied at {}", s.canvas.cells.front() ? s.canvas.cells.front()->key() : std::string("?"));
+        log().info("blackboard: edit applied at {}", game::globalPos(s.dim, *soundAt).key());
     }
 }
-
 void endSession(std::int64_t key, bool apply) {
     auto& all = sessions();
     auto  it  = all.find(key);
@@ -158,10 +152,7 @@ void endSession(std::int64_t key, bool apply) {
     if (apply) applySession(*s);
 }
 
-char const* gStage = "";
-
 void showForm(Player& player, std::shared_ptr<Session> const& s) {
-    gStage = "create";
     std::weak_ptr<Session> weak = s;
     auto act                    = [weak](auto fn) {
         return [weak, fn]() {
@@ -173,12 +164,9 @@ void showForm(Player& player, std::shared_ptr<Session> const& s) {
     };
     s->form = std::make_unique<ll::ui::CustomForm>(player, trFor(player, "gui.supplementaries.blackboard.edit", "Edit Blackboard"));
     auto& f = *s->form;
-    gStage = "label";
     f.label(s->preview);
-    gStage = "slider";
     f.slider(trFor(player, "cm.blackboard.column", "Column"), s->column, 0.0, static_cast<double>(s->width() - 1), {.step = 1.0});
     f.slider(trFor(player, "cm.blackboard.row", "Row"), s->row, 0.0, static_cast<double>(s->height() - 1), {.step = 1.0});
-    gStage = "buttons";
     if (config().colored_blackboard) {
         std::vector<ll::ui::DropdownItemData> items;
         for (int c = 0; c < 16; ++c) {
@@ -227,7 +215,6 @@ void showForm(Player& player, std::shared_ptr<Session> const& s) {
     s->row.subscribe([weak](double const&) {
         if (auto s = weak.lock(); s && !s->closed) refresh(*s);
     });
-    gStage = "show";
     auto key = s->playerKey;
     auto res = f.show([key, weak](ll::ui::CustomForm::Result) {
         auto s = weak.lock();
@@ -290,7 +277,7 @@ bool openEditor(Player& player, BlockPos const& pos) {
     try {
         showForm(player, s);
     } catch (std::exception const& e) {
-        log().warn("blackboard: the edit form failed at {}: {}", gStage, e.what());
+        log().warn("blackboard: the edit form failed: {}", e.what());
         endSession(key, false);
         return false;
     }
@@ -298,12 +285,7 @@ bool openEditor(Player& player, BlockPos const& pos) {
 }
 
 std::string submitPixels(Player* player, bool admin, core::GlobalPos const& pos, Pixels const& px) {
-    auto* region = [&]() -> BlockSource* {
-        auto level = ll::service::getLevel();
-        if (!level) return nullptr;
-        auto d = level->getDimension(pos.dim).lock();
-        return d ? &d->getBlockSourceFromMainChunkSource() : nullptr;
-    }();
+    auto* region = regionOf(pos.dim);
     if (!region) return "no world";
     auto bp = game::blockPos(pos);
     if (!region->hasChunksAt(bp, 0, false) || !isBlackboard(region->getBlock(bp))) return "not a blackboard";
@@ -340,6 +322,8 @@ std::string submitPixels(Player* player, bool admin, core::GlobalPos const& pos,
     log().info("blackboard: pixels set at {}", pos.key());
     return {};
 }
+
+void closeEditorOf(Player& player) { endSession(player.getOrCreateUniqueID().rawID, false); }
 
 void closeAllEditors() {
     auto all = std::move(sessions());

@@ -23,6 +23,8 @@ bool openEditor(Player& player, BlockPos const& pos);
 /// Applies pixels sent by a client for a board of `player`'s open session (or by an admin).
 /// Returns an error message, empty on success.
 [[nodiscard]] std::string submitPixels(Player* player, bool admin, core::GlobalPos const& pos, Pixels const& px);
+/// Drops the session of a player (disconnect) without applying it.
+void closeEditorOf(Player& player);
 /// Closes every session (world closed / module uninstalled).
 void closeAllEditors();
 

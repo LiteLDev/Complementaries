@@ -9,6 +9,7 @@
 #include <unordered_map>
 
 #include "ll/api/event/EventBus.h"
+#include "ll/api/event/player/PlayerDisconnectEvent.h"
 #include "ll/api/event/player/PlayerInteractBlockEvent.h"
 #include "ll/api/event/player/PlayerPlaceBlockEvent.h"
 #include "ll/api/event/world/BlockChangedEvent.h"
@@ -39,6 +40,7 @@
 #include "mc/world/level/Spawner.h"
 #include "mc/world/level/block/Block.h"
 #include "mc/world/level/block/BlockType.h"
+#include "mc/world/level/block/ResourceDropsContext.h"
 #include "mc/world/level/dimension/Dimension.h"
 #include "mc/world/phys/AABB.h"
 
@@ -69,6 +71,7 @@ struct State {
     std::map<core::GlobalPos, Board> removed; ///< boards broken this tick (for their drops)
     std::unordered_map<std::int64_t, Board> placing; ///< item data of a block being placed, by player
     std::map<core::GlobalPos, int>   missing; ///< checks a drawn board was seen without displays
+    std::unordered_map<std::int64_t, std::pair<core::GlobalPos, int>> lastUse; ///< by player: board, tick
     int                              tick = 0;
 };
 State& state() {
@@ -108,13 +111,16 @@ std::optional<Board> fromJson(nlohmann::json const& j) {
 
 bool serverSide(BlockSource& region) { return !region.getLevel().isClientSide(); }
 
-BlockSource* regionOf(int dim) {
-    auto level = ll::service::getLevel();
-    if (!level) return nullptr;
-    auto d = level->getDimension(dim).lock();
-    if (!d) return nullptr;
-    return &d->getBlockSourceFromMainChunkSource();
+/// True when the player used the same board a moment ago (Bedrock repeats the use while held).
+bool repeatedUse(Player& player, core::GlobalPos const& gp) {
+    auto& s      = state();
+    auto& last   = s.lastUse[player.getOrCreateUniqueID().rawID];
+    bool  recent = last.first == gp && s.tick - last.second <= 6;
+    last         = {gp, s.tick};
+    return recent;
 }
+
+bool playerServerSide(Player& player) { return serverSide(player.getDimensionBlockSource()); }
 
 // ---- display entities -------------------------------------------------------------------------
 
@@ -230,8 +236,11 @@ void loadAll() {
 void checkBoards() {
     auto& s = state();
     std::vector<core::GlobalPos> gone;
+    std::map<int, BlockSource*>  regions;
     for (auto const& [gp, board] : s.boards) {
-        auto* region = regionOf(gp.dim);
+        auto [rit, fresh] = regions.try_emplace(gp.dim, nullptr);
+        if (fresh) rit->second = regionOf(gp.dim);
+        auto* region = rit->second;
         if (!region) continue;
         auto pos = game::blockPos(gp);
         if (!region->hasChunksAt(pos, 0, false)) continue;
@@ -294,6 +303,10 @@ LL_TYPE_INSTANCE_HOOK(
         if (auto it = s.removed.find(gp); it != s.removed.end()) board = it->second;
         else if (auto it2 = s.boards.find(gp); it2 != s.boards.end()) board = it2->second;
         if (board && !board->empty()) {
+            s.removed.erase(gp);
+            // explosions drop a block with a chance of 1 / radius, like the vanilla loot
+            float radius = ctx.mExplosionRadius;
+            if (radius > 1.f && static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) > 1.f / radius) return;
             auto item = makeBoardItem(*board);
             region.getLevel().getSpawner().spawnItem(
                 region,
@@ -302,7 +315,6 @@ LL_TYPE_INSTANCE_HOOK(
                 Vec3{pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.5f},
                 10
             );
-            s.removed.erase(gp);
             return;
         }
     }
@@ -337,16 +349,26 @@ public:
             auto block = ev.block();
             if (!block || !isBlackboard(*block)) return;
             auto& player = ev.self();
+            if (!playerServerSide(player)) return;
             if (use(player, ev.item(), ev.blockPos(), static_cast<int>(ev.face()), ev.clickPos())) ev.cancel();
+        }));
+        mListeners.push_back(bus.emplaceListener<ll::event::PlayerDisconnectEvent>([](auto& ev) {
+            auto& player = ev.self();
+            closeEditorOf(player);
+            auto key = player.getOrCreateUniqueID().rawID;
+            state().placing.erase(key);
+            state().lastUse.erase(key);
         }));
         mListeners.push_back(bus.emplaceListener<ll::event::PlayerPlacingBlockEvent>([](auto& ev) {
             auto& player = ev.self();
+            if (!playerServerSide(player)) return;
             auto  board  = boardOfItem(player.getSelectedItem());
             auto  key    = player.getOrCreateUniqueID().rawID;
             if (board) state().placing[key] = *board;
             else state().placing.erase(key);
         }));
         mListeners.push_back(bus.emplaceListener<ll::event::PlayerPlacedBlockEvent>([](auto& ev) {
+            if (!playerServerSide(ev.self())) return;
             auto& s   = state();
             auto  key = ev.self().getOrCreateUniqueID().rawID;
             auto  it  = s.placing.find(key);
@@ -400,6 +422,7 @@ public:
             s.removed.clear();
             s.placing.clear();
             s.missing.clear();
+            s.lastUse.clear();
         });
         if (game::db::available()) loadAll(); // BDS: the world already exists
     }
@@ -479,6 +502,14 @@ std::pair<int, int> hitPixel(int front, BlockPos const& pos, Vec3 const& hit) {
         break;
     }
     return {col, row};
+}
+
+BlockSource* regionOf(int dim) {
+    auto level = ll::service::getLevel();
+    if (!level) return nullptr;
+    auto d = level->getDimension(dim).lock();
+    if (!d) return nullptr;
+    return &d->getBlockSourceFromMainChunkSource();
 }
 
 Board boardAt(core::GlobalPos const& pos) {
@@ -588,11 +619,12 @@ bool use(Player& player, ItemStack& item, BlockPos const& pos, int face, Vec3 co
     auto        gp    = game::globalPos(region, pos);
     Board       board = boardAt(gp);
     std::string id    = item.isNull() ? std::string() : item.getTypeName();
+    bool        again = repeatedUse(player, gp);
 
     // waxing and glowing work on every face
     if (id == "minecraft:honeycomb") {
         if (board.waxed) {
-            playSound(region, pos, "complementaries.block.blackboard.fail");
+            if (!again) playSound(region, pos, "complementaries.block.blackboard.fail");
             return true;
         }
         board.waxed = true;
@@ -605,7 +637,7 @@ bool use(Player& player, ItemStack& item, BlockPos const& pos, int face, Vec3 co
     }
     if (id == "minecraft:glow_ink_sac") {
         if (board.glow) {
-            playSound(region, pos, "complementaries.block.blackboard.fail");
+            if (!again) playSound(region, pos, "complementaries.block.blackboard.fail");
             return true;
         }
         board.glow = true;
