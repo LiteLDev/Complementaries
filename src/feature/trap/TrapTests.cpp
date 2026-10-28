@@ -305,5 +305,6 @@ CM_REGISTER_SELFTEST("trap.fodder_eat", [](Context& ctx) -> ll::coro::CoroTask<>
     }
     ctx.check(ate, "the cow eats a layer of fodder");
     cow = trap::actorByUid(mobs.ids[0]);
-    ctx.check(cow && cow->isInLove(), "the cow is in love after eating");
+    // a naturally spawned cow is sometimes a calf: calves eat without falling in love
+    ctx.check(cow && (cow->isBaby() || cow->isInLove()), "an adult cow is in love after eating");
 });

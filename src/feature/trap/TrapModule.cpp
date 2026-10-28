@@ -4,6 +4,7 @@
 #include <functional>
 #include <set>
 #include <tuple>
+#include <unordered_map>
 #include <vector>
 
 #include "ll/api/event/EventBus.h"
@@ -78,6 +79,18 @@ Player* playerByUid(int64_t id) {
 
 void later(std::function<void()> fn) { gNextTick.push_back(std::move(fn)); }
 
+/// Java's right-click delay (4 ticks): the client repeats item-use packets while the button is
+/// held, and several can arrive in one tick. One use per player per 4 ticks.
+std::unordered_map<int64_t, uint64_t> gLastUse;
+
+bool useAllowed(int64_t player) {
+    uint64_t now  = currentTick();
+    auto     it   = gLastUse.find(player);
+    if (it != gLastUse.end() && now < it->second + 4) return false;
+    gLastUse[player] = now;
+    return true;
+}
+
 bool isHoe(std::string const& id) { return id.ends_with("_hoe"); }
 
 /// Unit offset of a clicked face (Bedrock FacingID: 0 down, 1 up, 2 north, 3 south, 4 west, 5 east).
@@ -119,13 +132,14 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
     int64_t    puid  = uid(player);
     auto       block = ev.block();
     int        face  = static_cast<int>(ev.face());
+    log().info("trap: interact {} with {} at {} {} {} face {} sneaking {}", player.getRealName(), id, at.x, at.y, at.z, face, player.isSneaking());
     auto&      region = player.getDimensionBlockSource();
 
     if (id == kCageId && config().cage.enabled) {
         if (!player.isSneaking()) {
             // cages are placed only while sneaking; otherwise a full cage releases its mob
             ev.cancel();
-            if (cage::isFull(item)) {
+            if (cage::isFull(item) && useAllowed(puid)) {
                 Vec3 click = absoluteClick(ev.clickPos(), at);
                 if (face != 1) { // keep the mob out of the clicked block
                     auto d = faceOffset(face);
@@ -160,6 +174,7 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
     if (id == "minecraft:lingering_potion" && isBlock(*block, kSpikesId) && stateOf(*block, kTipState) == 0
         && config().bambooSpikes.tippedSpikes && spikes::isPotionValid(item.getAuxValue())) {
         ev.cancel();
+        if (!useAllowed(puid)) return;
         later([puid, at] {
             if (auto* p = playerByUid(puid)) spikes::useLingeringPotion(*p, at);
         });
@@ -167,6 +182,7 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
     }
     if (isHoe(id) && isBlock(*block, kFodderId)) {
         ev.cancel();
+        if (!useAllowed(puid)) return;
         later([puid, at] {
             if (auto* p = playerByUid(puid)) fodder::useHoe(*p, at);
         });
@@ -247,7 +263,10 @@ LL_TYPE_INSTANCE_HOOK(
         if (cage::isDisplay(entity)) return false;
         auto const& held = player.getSelectedItem();
         if (itemId(held) == kCageId && !cage::isFull(held) && config().cage.enabled) {
-            if (cage::tryCatch(player, entity)) return true;
+            if (cage::tryCatch(player, entity)) {
+                gLastUse[uid(player)] = currentTick();
+                return true;
+            }
         }
     }
     return origin(entity, location, handSlot);
@@ -298,7 +317,10 @@ public:
             }
             auto const& held = player.getSelectedItem();
             if (itemId(held) == kCageId && !cage::isFull(held) && config().cage.enabled) {
-                if (cage::tryCatch(player, ev.target())) ev.cancel();
+                if (cage::tryCatch(player, ev.target())) {
+                    gLastUse[uid(player)] = currentTick();
+                    ev.cancel();
+                }
             }
         }));
         mListeners.push_back(bus.emplaceListener<ll::event::PlayerDestroyBlockEvent>([](ll::event::PlayerDestroyBlockEvent& ev) {
@@ -322,6 +344,7 @@ public:
             });
             game::db::onWorldClosed([] {
                 gNextTick.clear();
+                gLastUse.clear();
                 gPlacing = Placing{};
                 spikes::onWorldClosed();
                 cage::onWorldClosed();

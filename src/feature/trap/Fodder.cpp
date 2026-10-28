@@ -229,7 +229,7 @@ void eat(Mob& animal, BlockSource& region, BlockPos const& pos) {
         runCommand("event entity @e[tag=" + tag + "] minecraft:on_eat_block");
         runCommand("tag @e[tag=" + tag + "] remove " + tag);
     }
-    log().info("trap: {} ate fodder at {} {} {}", animal.getTypeName(), pos.x, pos.y, pos.z);
+    log().info("trap: {}{} ate fodder at {} {} {}", animal.isBaby() ? "baby " : "", animal.getTypeName(), pos.x, pos.y, pos.z);
 }
 
 void forceSearch(Actor& animal) {
