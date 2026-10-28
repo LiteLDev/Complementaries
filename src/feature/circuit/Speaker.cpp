@@ -106,7 +106,12 @@ void setSpeakerData(core::GlobalPos const& pos, SpeakerData const& data) {
     cache()[pos] = data;
     game::db::save(
         dbKey(pos),
-        {{"message", data.message}, {"mode", data.mode}, {"volume", data.volume}, {"name", data.name}}
+        {
+            {"message", data.message},
+            {"mode",    data.mode   },
+            {"volume",  data.volume },
+            {"name",    data.name   }
+    }
     );
 }
 
@@ -136,7 +141,8 @@ int speak(BlockSource& region, BlockPos const& pos) {
     level.forEachPlayer([&](Player& p) {
         if (static_cast<int>(p.getDimensionId()) != dimId) return true;
         if (p.getPosition().distanceTo(center) > static_cast<float>(volume)) return true;
-        std::string name = data.name.empty() ? trFor(p, "block.supplementaries.speaker_block", "Speaker Block") : data.name;
+        std::string name =
+            data.name.empty() ? trFor(p, "block.supplementaries.speaker_block", "Speaker Block") : data.name;
         switch (mode) {
         case SpeakerMode::Status:
             sendTitle(p, SetTitlePacketPayload::TitleType::Actionbar, data.message);
@@ -152,21 +158,25 @@ int speak(BlockSource& region, BlockPos const& pos) {
         ++heard;
         return true;
     });
-    level.spawnParticleEffect("minecraft:note_particle", Vec3{pos.x + 0.5f, pos.y + 1.2f, pos.z + 0.5f}, &region.getDimension());
+    level.spawnParticleEffect(
+        "minecraft:note_particle",
+        Vec3{pos.x + 0.5f, pos.y + 1.2f, pos.z + 0.5f},
+        &region.getDimension()
+    );
     log().info("speaker at {} spoke to {} player(s)", gp.key(), heard);
     return heard;
 }
 
 void openSpeakerScreen(Player& player, core::GlobalPos const& pos) {
-    auto const& cfg   = config::get<CircuitConfig>();
-    auto        data  = speakerData(pos);
-    int         range = std::max(cfg.speakerRange, 1);
+    auto const&              cfg   = config::get<CircuitConfig>();
+    auto                     data  = speakerData(pos);
+    int                      range = std::max(cfg.speakerRange, 1);
     std::vector<std::string> modes;
     for (int i = 0; i < kSpeakerModeCount; ++i) {
         if (i == static_cast<int>(SpeakerMode::Narrator) && !cfg.speakerNarrator) break;
         modes.push_back(trFor(player, modeKey(i), modeFallback(i)));
     }
-    int mode = std::min(data.mode, static_cast<int>(modes.size()) - 1);
+    int                  mode = std::min(data.mode, static_cast<int>(modes.size()) - 1);
     ll::form::CustomForm form(trFor(player, "gui.supplementaries.speaker_block.edit", "Speaker Block"));
     form.appendInput(
         "message",
@@ -174,7 +184,12 @@ void openSpeakerScreen(Player& player, core::GlobalPos const& pos) {
         "",
         data.message
     );
-    form.appendDropdown("mode", trFor(player, "gui.supplementaries.speaker_block.mode", "Mode"), modes, static_cast<size_t>(mode));
+    form.appendDropdown(
+        "mode",
+        trFor(player, "gui.supplementaries.speaker_block.mode", "Mode"),
+        modes,
+        static_cast<size_t>(mode)
+    );
     form.appendSlider(
         "volume",
         trFor(player, "gui.supplementaries.speaker_block.volume", "Volume"),
@@ -197,12 +212,16 @@ void openSpeakerScreen(Player& player, core::GlobalPos const& pos) {
             }
         }
         if (auto it = result->find("mode"); it != result->end()) {
-            if (auto const* v = std::get_if<uint64>(&it->second)) data.mode = std::clamp(static_cast<int>(*v), 0, kSpeakerModeCount - 1);
-            else if (auto const* d = std::get_if<double>(&it->second)) data.mode = std::clamp(static_cast<int>(*d), 0, kSpeakerModeCount - 1);
+            if (auto const* v = std::get_if<uint64>(&it->second))
+                data.mode = std::clamp(static_cast<int>(*v), 0, kSpeakerModeCount - 1);
+            else if (auto const* d = std::get_if<double>(&it->second))
+                data.mode = std::clamp(static_cast<int>(*d), 0, kSpeakerModeCount - 1);
         }
         if (auto it = result->find("volume"); it != result->end()) {
-            if (auto const* d = std::get_if<double>(&it->second)) data.volume = clampVolume(static_cast<int>(*d + 0.5), cfg.speakerRange);
-            else if (auto const* v = std::get_if<uint64>(&it->second)) data.volume = clampVolume(static_cast<int>(*v), cfg.speakerRange);
+            if (auto const* d = std::get_if<double>(&it->second))
+                data.volume = clampVolume(static_cast<int>(*d + 0.5), cfg.speakerRange);
+            else if (auto const* v = std::get_if<uint64>(&it->second))
+                data.volume = clampVolume(static_cast<int>(*v), cfg.speakerRange);
         }
         setSpeakerData(pos, data);
         log().info("speaker at {} set by {}: mode={} volume={}", pos.key(), p.getRealName(), data.mode, data.volume);
@@ -221,13 +240,14 @@ void installSpeaker() {
         ev.cancel();
         auto id  = player.getOrCreateUniqueID().rawID;
         auto now = std::chrono::steady_clock::now();
-        if (auto it = lastOpen().find(id); it != lastOpen().end() && now - it->second < std::chrono::milliseconds(400)) {
+        if (auto it = lastOpen().find(id);
+            it != lastOpen().end() && now - it->second < std::chrono::milliseconds(400)) {
             return;
         }
         lastOpen()[id] = now;
         openSpeakerScreen(player, game::globalPos(player.getDimensionBlockSource(), ev.blockPos()));
     });
-    gPlacing = bus.emplaceListener<ll::event::PlayerPlacingBlockEvent>([](ll::event::PlayerPlacingBlockEvent& ev) {
+    gPlacing  = bus.emplaceListener<ll::event::PlayerPlacingBlockEvent>([](ll::event::PlayerPlacingBlockEvent& ev) {
         auto& player = ev.self();
         if (player.isClientSide()) return;
         auto const& item = player.getSelectedItem();
@@ -236,7 +256,7 @@ void installSpeaker() {
         if (name.empty()) pendingNames().erase(player.getOrCreateUniqueID().rawID);
         else pendingNames()[player.getOrCreateUniqueID().rawID] = std::move(name);
     });
-    gPlaced = bus.emplaceListener<ll::event::PlayerPlacedBlockEvent>([](ll::event::PlayerPlacedBlockEvent& ev) {
+    gPlaced   = bus.emplaceListener<ll::event::PlayerPlacedBlockEvent>([](ll::event::PlayerPlacedBlockEvent& ev) {
         auto& player = ev.self();
         if (player.isClientSide()) return;
         auto it = pendingNames().find(player.getOrCreateUniqueID().rawID);

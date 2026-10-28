@@ -67,7 +67,7 @@ struct CircuitConfig {
 /// Evaluates every tracked block now (also runs every tick).
 void evaluateAll();
 /// Starts tracking `pos` if it holds one of our blocks (selftests; block changes do it by themselves).
-void track(BlockSource& region, BlockPos const& pos);
+void               track(BlockSource& region, BlockPos const& pos);
 [[nodiscard]] bool tracked(core::GlobalPos const& pos);
 
 // ---- speaker block (Speaker.cpp) ------------------------------------------------------------

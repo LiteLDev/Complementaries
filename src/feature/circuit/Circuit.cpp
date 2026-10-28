@@ -41,7 +41,7 @@ constexpr char const* kBlocksKey = "cm:circuit:blocks";
 
 struct State {
     std::map<core::GlobalPos, Kind> blocks;
-    bool                            dirty = false;
+    bool                            dirty  = false;
     bool                            loaded = false;
     // BlockType pointers of our blocks (resolved lazily; the registry is global).
     BlockType const* relayer     = nullptr;
@@ -95,7 +95,7 @@ bool updateState(BlockSource& region, BlockPos const& pos, Block const& block, s
 
 // ---- persistence --------------------------------------------------------------------------------
 void loadBlocks() {
-    auto& s  = st();
+    auto& s = st();
     s.blocks.clear();
     s.loaded = true;
     auto j   = game::db::load(kBlocksKey);
@@ -107,7 +107,8 @@ void loadBlocks() {
         if (!ints) continue;
         int k = e[0].get<int>();
         if (k <= static_cast<int>(Kind::None) || k > static_cast<int>(Kind::Illuminator)) continue;
-        s.blocks[core::GlobalPos{e[1].get<int>(), e[2].get<int>(), e[3].get<int>(), e[4].get<int>()}] = static_cast<Kind>(k);
+        s.blocks[core::GlobalPos{e[1].get<int>(), e[2].get<int>(), e[3].get<int>(), e[4].get<int>()}] =
+            static_cast<Kind>(k);
     }
 }
 
@@ -206,9 +207,9 @@ int displayRow(BlockSource& region, BlockPos const& pos, int front, int& indexOu
 }
 
 void evaluateConsumer(Dimension& dim, BlockSource& region, core::GlobalPos const& gp, Kind kind) {
-    auto        pos      = game::blockPos(gp);
-    auto const& block    = region.getBlock(pos);
-    auto        input    = componentStrength(dim, pos);
+    auto        pos   = game::blockPos(gp);
+    auto const& block = region.getBlock(pos);
+    auto        input = componentStrength(dim, pos);
     if (!input) return; // the circuit has not rebuilt our component yet: keep the current state
     int strength = *input;
     switch (kind) {
@@ -302,7 +303,7 @@ public:
                 st().dirty      = true;
             }
         });
-        mTick = bus.emplaceListener<ll::event::ServerLevelTickEvent>([](ll::event::ServerLevelTickEvent&) {
+        mTick     = bus.emplaceListener<ll::event::ServerLevelTickEvent>([](ll::event::ServerLevelTickEvent&) {
             evaluateAll();
             tickCarts();
         });
@@ -415,7 +416,7 @@ int relayerInput(BlockSource& region, BlockPos const& pos, int facing) {
 void evaluateAll() {
     auto level = ll::service::getLevel();
     if (!level || !st().loaded) return;
-    std::vector<core::GlobalPos> relayers;
+    std::vector<core::GlobalPos>                  relayers;
     std::vector<std::pair<core::GlobalPos, Kind>> consumers;
     for (auto const& [gp, kind] : st().blocks) {
         if (kind == Kind::Relayer) relayers.push_back(gp);
@@ -451,7 +452,7 @@ void track(BlockSource& region, BlockPos const& pos) {
     Kind k = kindOf(region.getBlock(pos));
     if (k == Kind::None) return;
     st().blocks[game::globalPos(region, pos)] = k;
-    st().dirty                                 = true;
+    st().dirty                                = true;
 }
 
 bool tracked(core::GlobalPos const& pos) { return st().blocks.contains(pos); }

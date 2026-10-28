@@ -37,7 +37,8 @@ namespace game    = cm::game;
 bool command(std::string const& cmd) {
     auto level = ll::service::getLevel();
     if (!level) return false;
-    ServerCommandOrigin origin("complementaries-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(0));
+    ServerCommandOrigin
+         origin("complementaries-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(0));
     auto out = ll::command::CommandRegistrar::getServerInstance().executeCommand(cmd, origin);
     if (out.mSuccessCount > 0) return true;
     std::string text;
@@ -80,7 +81,7 @@ ll::coro::CoroTask<bool> waitFor(int ticks, F pred) {
     co_return pred();
 }
 
-constexpr int kEast = 5;
+constexpr int kEast  = 5;
 constexpr int kNorth = 2;
 
 } // namespace
@@ -110,22 +111,48 @@ CM_REGISTER_SELFTEST("circuit.facing_states", [](Context& ctx) -> ll::coro::Coro
     command("setblock " + at(d) + " complementaries:crystal_display [\"minecraft:cardinal_direction\"=\"west\"]");
     command("setblock " + at(n) + " complementaries:speaker_block [\"minecraft:cardinal_direction\"=\"north\"]");
     co_await ctx.ticks(1);
-    ctx.check(circuit::facingOf(blockAt(ctx, n)) == kNorth, "cardinal_direction=north reads as north, got " + std::to_string(circuit::facingOf(blockAt(ctx, n))));
-    ctx.check(game::blockWith(circuit::kDisplay, {{circuit::kFacing4, circuit::facingToCardinal(kEast)}}) != nullptr, "east display state");
+    ctx.check(
+        circuit::facingOf(blockAt(ctx, n)) == kNorth,
+        "cardinal_direction=north reads as north, got " + std::to_string(circuit::facingOf(blockAt(ctx, n)))
+    );
+    ctx.check(
+        game::blockWith(
+            circuit::kDisplay,
+            {
+                {circuit::kFacing4, circuit::facingToCardinal(kEast)}
+    }
+        ) != nullptr,
+        "east display state"
+    );
     ctx.require(idAt(ctx, r) == circuit::kRelayer, "relayer placed by command");
-    ctx.check(circuit::facingOf(blockAt(ctx, r)) == kEast, "facing_direction=east reads as east, got " + std::to_string(circuit::facingOf(blockAt(ctx, r))));
-    ctx.check(circuit::facingOf(blockAt(ctx, d)) == 4, "cardinal_direction=west reads as west, got " + std::to_string(circuit::facingOf(blockAt(ctx, d))));
+    ctx.check(
+        circuit::facingOf(blockAt(ctx, r)) == kEast,
+        "facing_direction=east reads as east, got " + std::to_string(circuit::facingOf(blockAt(ctx, r)))
+    );
+    ctx.check(
+        circuit::facingOf(blockAt(ctx, d)) == 4,
+        "cardinal_direction=west reads as west, got " + std::to_string(circuit::facingOf(blockAt(ctx, d)))
+    );
     ctx.check(circuit::tracked(r) && circuit::tracked(d), "placed blocks are tracked");
 });
 
 CM_REGISTER_SELFTEST("circuit.relayer", [](Context& ctx) -> ll::coro::CoroTask<> {
     // [redstone block] -> [relayer facing east] -> [lamp]; a block at the side does nothing
-    auto src   = ctx.testPos(810);
-    auto rel   = ctx.testPos(811);
-    auto lamp  = ctx.testPos(812);
-    auto side  = shift(rel, 0, 0, 1);
+    auto src  = ctx.testPos(810);
+    auto rel  = ctx.testPos(811);
+    auto lamp = ctx.testPos(812);
+    auto side = shift(rel, 0, 0, 1);
     ctx.require(co_await ctx.ensureLoaded(rel), "test area loaded");
-    ctx.require(ctx.setBlock(rel, std::string(circuit::kRelayer), {{"minecraft:facing_direction", kEast}}), "relayer placed");
+    ctx.require(
+        ctx.setBlock(
+            rel,
+            std::string(circuit::kRelayer),
+            {
+                {"minecraft:facing_direction", kEast}
+    }
+        ),
+        "relayer placed"
+    );
     ctx.require(ctx.setBlock(lamp, "minecraft:redstone_lamp"), "lamp placed");
     ctx.cleanupBlock(side);
     co_await ctx.ticks(4);
@@ -149,13 +176,29 @@ CM_REGISTER_SELFTEST("circuit.relayer", [](Context& ctx) -> ll::coro::CoroTask<>
 CM_REGISTER_SELFTEST("circuit.relayer_facings", [](Context& ctx) -> ll::coro::CoroTask<> {
     // a relayer of each facing, powered from behind, with lamps on its other five sides: only the
     // lamp in front lights up
-    int dirs[6][3] = {{0, -1, 0}, {0, 1, 0}, {0, 0, -1}, {0, 0, 1}, {-1, 0, 0}, {1, 0, 0}};
+    int dirs[6][3] = {
+        {0,  -1, 0 },
+        {0,  1,  0 },
+        {0,  0,  -1},
+        {0,  0,  1 },
+        {-1, 0,  0 },
+        {1,  0,  0 }
+    };
     ctx.require(co_await ctx.ensureLoaded(ctx.testPos(870)), "test area loaded");
     for (int f = 0; f < 6; ++f) {
         auto rel = shift(ctx.testPos(870 + f * 4), 0, 3, 0);
-        ctx.setBlock(rel, std::string(circuit::kRelayer), {{"minecraft:facing_direction", f}});
+        ctx.setBlock(
+            rel,
+            std::string(circuit::kRelayer),
+            {
+                {"minecraft:facing_direction", f}
+        }
+        );
         for (int i = 0; i < 6; ++i) {
-            ctx.setBlock(shift(rel, dirs[i][0], dirs[i][1], dirs[i][2]), (i ^ 1) == f ? "minecraft:redstone_block" : "minecraft:redstone_lamp");
+            ctx.setBlock(
+                shift(rel, dirs[i][0], dirs[i][1], dirs[i][2]),
+                (i ^ 1) == f ? "minecraft:redstone_block" : "minecraft:redstone_lamp"
+            );
         }
     }
     co_await ctx.ticks(10);
@@ -163,7 +206,8 @@ CM_REGISTER_SELFTEST("circuit.relayer_facings", [](Context& ctx) -> ll::coro::Co
         auto        rel = shift(ctx.testPos(870 + f * 4), 0, 3, 0);
         std::string lit;
         for (int i = 0; i < 6; ++i) {
-            if (idAt(ctx, shift(rel, dirs[i][0], dirs[i][1], dirs[i][2])) == "minecraft:lit_redstone_lamp") lit += std::to_string(i) + " ";
+            if (idAt(ctx, shift(rel, dirs[i][0], dirs[i][1], dirs[i][2])) == "minecraft:lit_redstone_lamp")
+                lit += std::to_string(i) + " ";
         }
         ctx.check(
             stateAt(ctx, rel, circuit::kPowered) == 1 && lit == std::to_string(f) + " ",
@@ -182,8 +226,20 @@ CM_REGISTER_SELFTEST("circuit.relayer_repeater", [](Context& ctx) -> ll::coro::C
         auto rep = shift(src, 1, 0, 0);
         auto rel = shift(src, 2, 0, 0);
         ctx.cleanupBlock(rep);
-        ctx.require(ctx.setBlock(rel, std::string(circuit::kRelayer), {{"minecraft:facing_direction", kEast}}), "relayer placed");
-        command("setblock " + at(rep) + " unpowered_repeater [\"minecraft:cardinal_direction\"=\"" + (i ? "west" : "east") + "\"]");
+        ctx.require(
+            ctx.setBlock(
+                rel,
+                std::string(circuit::kRelayer),
+                {
+                    {"minecraft:facing_direction", kEast}
+        }
+            ),
+            "relayer placed"
+        );
+        command(
+            "setblock " + at(rep) + " unpowered_repeater [\"minecraft:cardinal_direction\"=\"" + (i ? "west" : "east")
+            + "\"]"
+        );
         ctx.require(ctx.setBlock(src, "minecraft:redstone_block"), "power placed");
     }
     co_await ctx.ticks(12);
@@ -195,11 +251,29 @@ CM_REGISTER_SELFTEST("circuit.relayer_chain", [](Context& ctx) -> ll::coro::Coro
     auto src = ctx.testPos(820);
     ctx.require(co_await ctx.ensureLoaded(src), "test area loaded");
     for (int i = 1; i <= 3; ++i) {
-        ctx.require(ctx.setBlock(ctx.testPos(820 + i), std::string(circuit::kRelayer), {{"minecraft:facing_direction", kEast}}), "relayer placed");
+        ctx.require(
+            ctx.setBlock(
+                ctx.testPos(820 + i),
+                std::string(circuit::kRelayer),
+                {
+                    {"minecraft:facing_direction", kEast}
+        }
+            ),
+            "relayer placed"
+        );
     }
     // a relayer facing sideways next to the chain must not take its power
     auto sideways = shift(ctx.testPos(822), 0, 0, 1);
-    ctx.require(ctx.setBlock(sideways, std::string(circuit::kRelayer), {{"minecraft:facing_direction", kNorth}}), "side relayer placed");
+    ctx.require(
+        ctx.setBlock(
+            sideways,
+            std::string(circuit::kRelayer),
+            {
+                {"minecraft:facing_direction", kNorth}
+    }
+        ),
+        "side relayer placed"
+    );
     auto lamp = ctx.testPos(824);
     ctx.require(ctx.setBlock(lamp, "minecraft:redstone_lamp"), "lamp placed");
     co_await ctx.ticks(2);
@@ -231,7 +305,16 @@ CM_REGISTER_SELFTEST("circuit.display", [](Context& ctx) -> ll::coro::CoroTask<>
     auto east = ctx.testPos(841);
     auto west = ctx.testPos(840);
     ctx.require(co_await ctx.ensureLoaded(east), "test area loaded");
-    ctx.require(ctx.setBlock(east, std::string(circuit::kDisplay), {{"minecraft:cardinal_direction", circuit::facingToCardinal(kNorth)}}), "display placed");
+    ctx.require(
+        ctx.setBlock(
+            east,
+            std::string(circuit::kDisplay),
+            {
+                {"minecraft:cardinal_direction", circuit::facingToCardinal(kNorth)}
+    }
+        ),
+        "display placed"
+    );
     co_await ctx.ticks(2);
     ctx.check(circuit::facingOf(blockAt(ctx, east)) == kNorth, "display faces north");
     ctx.check(stateAt(ctx, east, circuit::kChain) == 0, "a lone display is alone");
@@ -239,11 +322,24 @@ CM_REGISTER_SELFTEST("circuit.display", [](Context& ctx) -> ll::coro::CoroTask<>
     ctx.require(ctx.setBlock(src, "minecraft:redstone_block"), "power placed");
     bool on = co_await waitFor(10, [&] { return stateAt(ctx, east, circuit::kPower) == 15; });
     ctx.check(on, "the display shows 15");
-    ctx.require(ctx.setBlock(west, std::string(circuit::kDisplay), {{"minecraft:cardinal_direction", circuit::facingToCardinal(kNorth)}}), "second display placed");
+    ctx.require(
+        ctx.setBlock(
+            west,
+            std::string(circuit::kDisplay),
+            {
+                {"minecraft:cardinal_direction", circuit::facingToCardinal(kNorth)}
+    }
+        ),
+        "second display placed"
+    );
     bool paired = co_await waitFor(10, [&] {
         return stateAt(ctx, east, circuit::kChain) == 1 && stateAt(ctx, west, circuit::kChain) == 2;
     });
-    ctx.check(paired, "left display = tens, right display = units (got " + std::to_string(stateAt(ctx, east, circuit::kChain)) + ", " + std::to_string(stateAt(ctx, west, circuit::kChain)) + ")");
+    ctx.check(
+        paired,
+        "left display = tens, right display = units (got " + std::to_string(stateAt(ctx, east, circuit::kChain)) + ", "
+            + std::to_string(stateAt(ctx, west, circuit::kChain)) + ")"
+    );
     auto d = circuit::displayDigits(15, circuit::Chain::Tens);
     ctx.check(d.big == 9, "a chained display shows one digit clamped to 9");
 });
@@ -274,10 +370,20 @@ CM_REGISTER_SELFTEST("circuit.dispenser_minecart", [](Context& ctx) -> ll::coro:
     ctx.require(co_await ctx.ensureLoaded(rail), "test area loaded");
     auto below = shift(rail, 0, -1, 0);
     ctx.require(ctx.setBlock(below, "minecraft:stone"), "rail support");
-    ctx.require(ctx.setBlock(rail, "minecraft:activator_rail", {{"rail_direction", 1}}), "activator rail placed");
+    ctx.require(
+        ctx.setBlock(
+            rail,
+            "minecraft:activator_rail",
+            {
+                {"rail_direction", 1}
+    }
+        ),
+        "activator rail placed"
+    );
     ctx.cleanupBlock(shift(rail, 0, 0, -1));
     // summoning right after the area loads can fail while the chunk is not ticking yet: retry
-    bool summoned = co_await waitFor(40, [&] { return command("summon complementaries:dispenser_minecart " + at(rail)); });
+    bool summoned =
+        co_await waitFor(40, [&] { return command("summon complementaries:dispenser_minecart " + at(rail)); });
     ctx.require(summoned, "summon command succeeds");
     // the cart is looked up again after every tick (no actor pointers across ticks)
     std::int64_t cartId   = 0;
@@ -310,11 +416,17 @@ CM_REGISTER_SELFTEST("circuit.dispenser_minecart", [](Context& ctx) -> ll::coro:
         arrows.reinit("minecraft:arrow", 4, 0);
         inv.setItem(0, arrows);
         ctx.check(circuit::dispenseFromCart(*cart), "the cart fires");
-        ctx.check(inv.getItem(0).mCount == 3, "one arrow used, left " + std::to_string(static_cast<int>(inv.getItem(0).mCount)));
+        ctx.check(
+            inv.getItem(0).mCount == 3,
+            "one arrow used, left " + std::to_string(static_cast<int>(inv.getItem(0).mCount))
+        );
     }
     // a powered activator rail fires it by itself
     ctx.require(ctx.setBlock(shift(rail, 0, 0, -1), "minecraft:redstone_block"), "rail power placed");
-    bool fired = co_await waitFor(20, [&] { int n = slot0(); return n >= 0 && n <= 2; });
+    bool fired = co_await waitFor(20, [&] {
+        int n = slot0();
+        return n >= 0 && n <= 2;
+    });
     ctx.check(fired, "the cart fires on a powered activator rail");
     if (auto* cart = findCart()) cart->remove();
 });

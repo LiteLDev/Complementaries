@@ -15,6 +15,7 @@
 #include "mc/world/actor/Actor.h"
 #include "mc/world/actor/ActorDamageSource.h"
 #include "mc/world/actor/item/MinecartChest.h"
+#include "mc/world/inventory/FillingContainer.h"
 #include "mc/world/item/Item.h"
 #include "mc/world/item/ItemStack.h"
 #include "mc/world/level/BlockPos.h"
@@ -23,7 +24,6 @@
 #include "mc/world/level/block/Block.h"
 #include "mc/world/level/block/BlockType.h"
 #include "mc/world/level/block/DispenserBlock.h"
-#include "mc/world/inventory/FillingContainer.h"
 
 #include "feature/circuit/Circuit.h"
 #include "game/Blocks.h"
@@ -78,10 +78,10 @@ int travelFacing(Actor const& actor) {
 bool dispenseFromCart(Actor& cart) {
     auto container = cart.getEntityContext().tryGetComponent<ContainerComponent>();
     if (!container) return false;
-    Container& inv    = *container->mContainer;
-    auto&      region = cart.getDimensionBlockSource();
-    auto&      level  = region.getLevel();
-    auto const pos    = cart.getPosition();
+    Container&       inv    = *container->mContainer;
+    auto&            region = cart.getDimensionBlockSource();
+    auto&            level  = region.getLevel();
+    auto const       pos    = cart.getPosition();
     std::vector<int> slots;
     for (int i = 0; i < inv.getContainerSize(); ++i) {
         if (!inv.getItem(i).isNull()) slots.push_back(i);
@@ -91,13 +91,13 @@ bool dispenseFromCart(Actor& cart) {
         return false;
     }
     static std::mt19937 rng{std::random_device{}()};
-    int    slot   = slots[std::uniform_int_distribution<size_t>(0, slots.size() - 1)(rng)];
-    int    facing = travelFacing(cart);
-    auto   o      = facingOffset(facing);
-    Vec3   at{pos.x + o.x * 0.9f, pos.y + 0.5f, pos.z + o.z * 0.9f};
-    ItemStack item = inv.getItem(slot);
-    auto const* it = item.mItem.get();
-    bool done      = it && it->dispense(region, inv, slot, at, static_cast<uchar>(facing));
+    int                 slot   = slots[std::uniform_int_distribution<size_t>(0, slots.size() - 1)(rng)];
+    int                 facing = travelFacing(cart);
+    auto                o      = facingOffset(facing);
+    Vec3                at{pos.x + o.x * 0.9f, pos.y + 0.5f, pos.z + o.z * 0.9f};
+    ItemStack           item = inv.getItem(slot);
+    auto const*         it   = item.mItem.get();
+    bool                done = it && it->dispense(region, inv, slot, at, static_cast<uchar>(facing));
     if (!done) DispenserBlock::ejectItem(region, at, static_cast<uchar>(facing), item, inv, slot, 1);
     level.broadcastLevelEvent(SharedTypes::Legacy::LevelEvent::SoundClick, pos, 1000, nullptr);
     log().info("dispenser minecart fired {} towards {}", item.getTypeName(), facing);
@@ -108,7 +108,7 @@ void tickCarts() {
     if (!config::get<CircuitConfig>().dispenserMinecartEnabled) return;
     auto level = ll::service::getLevel();
     if (!level) return;
-    auto& active = activeCarts();
+    auto&                                  active = activeCarts();
     std::unordered_map<std::int64_t, bool> seen;
     for (auto* actor : level->getRuntimeActorList()) {
         if (!actor || !isCart(*actor)) continue;
