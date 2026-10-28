@@ -125,9 +125,14 @@ public:
             auto  uuid   = player.getUuid().asString();
             auto  now    = detail::currentTick();
             auto& last   = gLastClick[uuid];
-            // the same click delivered twice in a tick
-            if (last.tick == now && last.click.pos == click.pos) {
-                if (last.consumed) ev.cancel();
+            // A click on one of our blocks may reach the server twice (the client repeats the use
+            // while the button is down): within Java's 4-tick right-click delay the identical click
+            // (same block, face, item and sneaking) is ignored. Other clicks are always recorded,
+            // since placements read them.
+            if (last.consumed && last.tick >= 0 && now - last.tick < 4 && last.click.pos == click.pos
+                && last.click.face == click.face && last.click.sneaking == click.sneaking
+                && last.item.getTypeName() == ev.item().getTypeName()) {
+                ev.cancel();
                 return;
             }
             last.click    = click;

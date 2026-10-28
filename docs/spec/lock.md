@@ -184,15 +184,32 @@ Gold Trapdoor, Netherite Door, Netherite Trapdoor (钥匙, 锁方块, 保险箱,
 - Item data of a safe (owner, password, contents) is kept in the item's user NBT, and its tooltip
   lines are written as item lore so vanilla clients see them.
 
+- Use: `PlayerInteractBlockEvent` runs Java's `useItemOn` / `useWithoutItem` order (sneaking with an
+  item skips the block unless the item is a key, like Forge's `doesSneakBypassUse`); a consumed
+  click cancels the vanilla interaction (no block placed against a door) and world edits run on the
+  next tick. Placement fixes (facing, hinge, door upper half, trapdoor half, safe owner) run on the
+  tick after `PlayerPlacedBlockEvent`; door items are `minecraft:block_placer` items that place the
+  lower half.
+- Removal (`BlockChangedEvent`): a door half takes its partner with it (one door item drops unless
+  a creative player broke it), lock data is erased, a safe drops its item with data and despawns
+  its storage.
+- Java plays the gate sound of the state *before* the click (an opening gate plays the close
+  sound); this quirk is kept.
+
 ## 13. Not ported
 
 | Feature | Reason |
 |---|---|
-| Lavalogged safe / netherite trapdoor | Bedrock blocks cannot hold lava. |
+| Lavalogged safe / netherite trapdoor (and their light) | Bedrock blocks cannot hold lava. |
 | Fire-resistant netherite door / trapdoor items | No data-driven item component for it. |
 | Double doors opening together | Java needs Quark / Double Doors; not part of standalone Supplementaries. |
-| Iron bars visually connecting to gates | Bedrock decides bar connections in the renderer from vanilla rules. |
-| Keys in Curios / Trinkets / key-ring slots | No such slots on Bedrock. |
-| Key in a dispenser | Bedrock dispensers have no per-item behaviour hook for data-driven items. |
-| Piglins angered by opening a safe | Bedrock has no "container opened" anger hook for non-vanilla containers. |
-| Safe recipe keeping the shulker box's contents | Bedrock recipes cannot copy item data; the shulker's contents are dropped back to the crafter instead (see §4). |
+| Iron bars visually connecting to gates | Bedrock decides bar connections in its renderer from vanilla rules. |
+| Keys in Curios / Trinkets slots | No such slots on Bedrock. |
+| Key in a dispenser | Bedrock dispensers have no per-item behaviour for data-driven items. |
+| Piglins angered by opening a safe | Piglin anger is hard-coded to vanilla container blocks. |
+| Safe comparator output | Data-driven blocks have no analog (comparator) output. |
+| Safe recipe keeping the shulker box's contents and name | Bedrock recipes cannot copy item data: the crafted safe is empty (empty the shulker box first). |
+| `Key Lockable` hint line | Java shows it only with advanced tooltips (F3+H), which Bedrock does not have. |
+| Simple-mode owner line hidden from the owner | Item lore is the same for every viewer; it is always shown. |
+| Tool requirement for a safe's drop | The safe always drops (with its contents), so contents are never lost to a wrong tool. |
+| Gates' 1.5-block-high collision | Custom block collision boxes are limited to one block. |

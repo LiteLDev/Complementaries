@@ -46,10 +46,25 @@ constexpr int kSlots = 27;
 
 std::string safeKey(core::GlobalPos const& pos) { return "cm:lock:safe:" + pos.key(); }
 
-/// Players (UUID strings) that have a safe open, per safe position.
-std::map<core::GlobalPos, std::set<std::string>> gOpeners;
+/// An open safe: who has it open and its data (cached while open; refreshed by saveSafeData).
+struct OpenSafe {
+    std::set<std::string> players; ///< UUID strings
+    SafeData              data;
+};
+std::map<core::GlobalPos, OpenSafe> gOpeners;
 
 std::string uuidOf(Player const& p) { return p.getUuid().asString(); }
+
+/// The player's open container screen belongs to the storage entity `storageId`.
+bool hasStorageOpen(Player& p, long long storageId) {
+    if (storageId == 0) return false;
+    std::shared_ptr<ContainerManagerModel> const& sp = p.mContainerManager;
+    auto* model = sp.get();
+    if (!model) return false;
+    auto const& owner = *model->mScreenContext->mOwner;
+    auto const* aid   = std::get_if<ActorUniqueID>(&owner);
+    return aid && aid->rawID == storageId;
+}
 
 Player* playerByUuid(std::string const& uuid) {
     auto level = ll::service::getLevel();
@@ -200,34 +215,42 @@ SafeData fromJson(nlohmann::json const& j) {
     return d;
 }
 
+/// Java `SafeBlockTile.getDisplayName` (in `player`'s language when given). Simple mode shows the
+/// owner only when a short password is also set (Java checks `shouldShowPassword` there too).
+std::string titleFor(SafeData const& data, Player const* player) {
+    auto t = [&](std::string_view key, std::string_view fallback, auto const&... args) {
+        return player ? trFor(*player, key, fallback, args...) : tr(key, fallback, args...);
+    };
+    std::string base = data.customName ? *data.customName : t("gui.supplementaries.safe", "Safe");
+    bool showPassword = data.password && data.password->size() <= kMaxShownPassword;
+    if (config().simpleSafes) {
+        if (data.ownerName && showPassword) return t("gui.supplementaries.safe.name", "{0}'s {1}", *data.ownerName, base);
+    } else if (showPassword) {
+        return t("gui.supplementaries.safe.password", "{1} key: {0}", *data.password, base);
+    }
+    return base;
+}
+
 void openSafe(Player& player, core::GlobalPos const& pos, SafeData data) {
     auto* actor = ensureStorage(pos, data);
     if (!actor) return;
+    if (hasStorageOpen(player, data.storage)) return; // the same click delivered twice
     auto* cc = containerOf(*actor);
     if (!cc) {
         log().error("lock: the storage of the safe at {} has no container", pos.key());
         return;
     }
-    // the screen title (Java getDisplayName), in the player's language
-    std::string base = data.customName ? *data.customName : trFor(player, "gui.supplementaries.safe", "Safe");
-    std::string title = base;
-    if (config().simpleSafes) {
-        if (data.ownerName && (!data.password || data.password->size() <= kMaxShownPassword)) {
-            title = trFor(player, "gui.supplementaries.safe.name", "{0}'s {1}", *data.ownerName, base);
-        }
-    } else if (data.password && data.password->size() <= kMaxShownPassword) {
-        title = trFor(player, "gui.supplementaries.safe.password", "{1} key: {0}", *data.password, base);
-    }
-    cc->setCustomName(title);
+    cc->setCustomName(titleFor(data, &player));
     if (!cc->openContainer(*actor, player)) {
         log().warn("lock: the safe at {} did not open for {}", pos.key(), player.getRealName());
         return;
     }
-    gOpeners[pos].insert(uuidOf(player));
+    auto& open = gOpeners[pos];
+    open.players.insert(uuidOf(player));
+    open.data = data;
     setSafeOpenState(pos, true);
     log().info("lock: {} opened the safe at {}", player.getRealName(), pos.key());
 }
-
 } // namespace
 
 // ---- data ------------------------------------------------------------------------------------------
@@ -237,19 +260,14 @@ SafeData safeData(core::GlobalPos const& pos) {
     return v ? fromJson(*v) : SafeData{};
 }
 
-void saveSafeData(core::GlobalPos const& pos, SafeData const& data) { game::db::save(safeKey(pos), toJson(data)); }
+void saveSafeData(core::GlobalPos const& pos, SafeData const& data) {
+    game::db::save(safeKey(pos), toJson(data));
+    if (auto it = gOpeners.find(pos); it != gOpeners.end()) it->second.data = data;
+}
 
 bool safeLocked(SafeData const& data) { return config().simpleSafes ? data.owner.has_value() : data.password.has_value(); }
 
-std::string safeTitle(SafeData const& data) {
-    std::string base = data.customName ? *data.customName : tr("gui.supplementaries.safe", "Safe");
-    if (config().simpleSafes) {
-        if (data.ownerName) return tr("gui.supplementaries.safe.name", "{0}'s {1}", *data.ownerName, base);
-    } else if (data.password && data.password->size() <= kMaxShownPassword) {
-        return tr("gui.supplementaries.safe.password", "{1} key: {0}", *data.password, base);
-    }
-    return base;
-}
+std::string safeTitle(SafeData const& data) { return titleFor(data, nullptr); }
 
 bool safeCanOpen(Player& player, core::GlobalPos const& pos, bool feedback) {
     if (player.isCreative()) return true;
@@ -342,7 +360,7 @@ bool useSafe(Player& player, ItemStack const& held, Click const& click) {
 
 bool safeOpenBy(Player& player, core::GlobalPos const& pos) {
     auto it = gOpeners.find(pos);
-    return it != gOpeners.end() && it->second.contains(uuidOf(player));
+    return it != gOpeners.end() && it->second.players.contains(uuidOf(player));
 }
 
 // ---- storage access --------------------------------------------------------------------------------
@@ -393,7 +411,7 @@ std::vector<std::pair<int, std::string>> itemListOf(ItemStack const& item) {
     auto j = nlohmann::json::parse(std::string(tag.at("cm_safe").get<StringTag>()), nullptr, false);
     if (!j.is_object() || !j.contains("items") || !j["items"].is_array()) return out;
     for (auto const& e : j["items"]) {
-        if (e.is_object() && e.contains("slot") && e.contains("item") && e["item"].is_string()) {
+        if (e.is_object() && e.contains("slot") && e["slot"].is_number_integer() && e.contains("item") && e["item"].is_string()) {
             out.emplace_back(e["slot"].get<int>(), e["item"].get<std::string>());
         }
     }
@@ -504,31 +522,24 @@ void removeSafe(core::GlobalPos const& pos, bool byCreative) {
 void tickSafes() {
     if (gOpeners.empty()) return;
     std::vector<core::GlobalPos> closed;
-    for (auto& [pos, uuids] : gOpeners) {
-        auto data   = safeData(pos);
-        auto* actor = storageOf(pos, data);
-        long long id = actor ? actor->getOrCreateUniqueID().rawID : 0;
+    for (auto& [pos, open] : gOpeners) {
+        auto const& data  = open.data;
+        auto*       actor = storageOf(pos, data);
+        if (!actor) continue; // not resolvable right now (chunk unloading): keep the openers
+        long long id        = actor->getOrCreateUniqueID().rawID;
         Player*   anyOpener = nullptr;
+        auto&     uuids     = open.players;
         for (auto it = uuids.begin(); it != uuids.end();) {
-            auto* p     = playerByUuid(*it);
-            bool  still = false;
-            if (p && id != 0) {
-                std::shared_ptr<ContainerManagerModel> const& sp = p->mContainerManager;
-                auto* model = sp.get();
-                if (model) {
-                    auto const& owner = *model->mScreenContext->mOwner;
-                    if (auto const* aid = std::get_if<ActorUniqueID>(&owner)) still = aid->rawID == id;
-                }
-            }
-            if (still) {
+            auto* p = playerByUuid(*it);
+            if (p && hasStorageOpen(*p, id)) {
                 anyOpener = p;
                 ++it;
             } else {
+                log().info("lock: {} closed the safe at {}", p ? p->getRealName() : *it, pos.key());
                 it = uuids.erase(it);
             }
-        }
-        // shulker-box rules: no shulker boxes, no safes and not the safe's own key
-        if (auto* cc = actor ? containerOf(*actor) : nullptr) {
+        }        // shulker-box rules: no shulker boxes, no safes and not the safe's own key
+        if (auto* cc = containerOf(*actor)) {
             for (int i = 0; i < cc->mContainer->getContainerSize(); ++i) {
                 auto const& item = cc->mContainer->getItem(i);
                 if (!disallowedInSafe(item, data)) continue;
