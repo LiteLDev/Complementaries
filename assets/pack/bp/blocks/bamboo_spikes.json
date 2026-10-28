@@ -1,0 +1,45 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:bamboo_spikes",
+      "menu_category": { "category": "items" },
+      "states": {
+        "complementaries:tip": { "values": { "min": 0, "max": 8 } }
+      },
+      "traits": {
+        "minecraft:placement_position": { "enabled_states": ["minecraft:block_face"] }
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.complementaries.bamboo_spikes",
+      "minecraft:material_instances": {
+        "*": { "texture": "complementaries_bamboo_spikes_base", "render_method": "alpha_test", "ambient_occlusion": false },
+        "spikes": { "texture": "complementaries_bamboo_spikes", "render_method": "alpha_test", "ambient_occlusion": false, "face_dimming": false }
+      },
+      "minecraft:collision_box": { "origin": [-8, 0, -8], "size": [16, 1, 16] },
+      "minecraft:selection_box": { "origin": [-8, 0, -8], "size": [16, 16, 16] },
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 2.0 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 2.0 },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#78aa3c",
+      "minecraft:loot": "loot_tables/blocks/bamboo_spikes.json"
+    },
+    "permutations": [
+      { "condition": "q.block_state('minecraft:block_face') == 'down'", "components": { "minecraft:transformation": { "rotation": [180, 0, 0] } } },
+      { "condition": "q.block_state('minecraft:block_face') == 'north'", "components": { "minecraft:transformation": { "rotation": [-90, 0, 0] } } },
+      { "condition": "q.block_state('minecraft:block_face') == 'south'", "components": { "minecraft:transformation": { "rotation": [90, 0, 0] } } },
+      { "condition": "q.block_state('minecraft:block_face') == 'west'", "components": { "minecraft:transformation": { "rotation": [0, 0, 90] } } },
+      { "condition": "q.block_state('minecraft:block_face') == 'east'", "components": { "minecraft:transformation": { "rotation": [0, 0, -90] } } },
+      { "condition": "q.block_state('complementaries:tip') > 0", "components": { "minecraft:loot": "loot_tables/blocks/bamboo_spikes_tipped.json" } },
+      { "condition": "q.block_state('complementaries:tip') == 1", "components": { "minecraft:material_instances": { "*": { "texture": "complementaries_bamboo_spikes_base", "render_method": "alpha_test", "ambient_occlusion": false }, "spikes": { "texture": "complementaries_bamboo_spikes_tip_1", "render_method": "alpha_test", "ambient_occlusion": false, "face_dimming": false } } } },
+      { "condition": "q.block_state('complementaries:tip') == 2", "components": { "minecraft:material_instances": { "*": { "texture": "complementaries_bamboo_spikes_base", "render_method": "alpha_test", "ambient_occlusion": false }, "spikes": { "texture": "complementaries_bamboo_spikes_tip_2", "render_method": "alpha_test", "ambient_occlusion": false, "face_dimming": false } } } },
+      { "condition": "q.block_state('complementaries:tip') == 3", "components": { "minecraft:material_instances": { "*": { "texture": "complementaries_bamboo_spikes_base", "render_method": "alpha_test", "ambient_occlusion": false }, "spikes": { "texture": "complementaries_bamboo_spikes_tip_3", "render_method": "alpha_test", "ambient_occlusion": false, "face_dimming": false } } } },
+      { "condition": "q.block_state('complementaries:tip') == 4", "components": { "minecraft:material_instances": { "*": { "texture": "complementaries_bamboo_spikes_base", "render_method": "alpha_test", "ambient_occlusion": false }, "spikes": { "texture": "complementaries_bamboo_spikes_tip_4", "render_method": "alpha_test", "ambient_occlusion": false, "face_dimming": false } } } },
+      { "condition": "q.block_state('complementaries:tip') == 5", "components": { "minecraft:material_instances": { "*": { "texture": "complementaries_bamboo_spikes_base", "render_method": "alpha_test", "ambient_occlusion": false }, "spikes": { "texture": "complementaries_bamboo_spikes_tip_5", "render_method": "alpha_test", "ambient_occlusion": false, "face_dimming": false } } } },
+      { "condition": "q.block_state('complementaries:tip') == 6", "components": { "minecraft:material_instances": { "*": { "texture": "complementaries_bamboo_spikes_base", "render_method": "alpha_test", "ambient_occlusion": false }, "spikes": { "texture": "complementaries_bamboo_spikes_tip_6", "render_method": "alpha_test", "ambient_occlusion": false, "face_dimming": false } } } },
+      { "condition": "q.block_state('complementaries:tip') == 7", "components": { "minecraft:material_instances": { "*": { "texture": "complementaries_bamboo_spikes_base", "render_method": "alpha_test", "ambient_occlusion": false }, "spikes": { "texture": "complementaries_bamboo_spikes_tip_7", "render_method": "alpha_test", "ambient_occlusion": false, "face_dimming": false } } } },
+      { "condition": "q.block_state('complementaries:tip') == 8", "components": { "minecraft:material_instances": { "*": { "texture": "complementaries_bamboo_spikes_base", "render_method": "alpha_test", "ambient_occlusion": false }, "spikes": { "texture": "complementaries_bamboo_spikes_tip_8", "render_method": "alpha_test", "ambient_occlusion": false, "face_dimming": false } } } }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "complementaries_bamboo_spikes": { "textures": "textures/items/bamboo_spikes" },
+  "complementaries_bamboo_spikes_tipped": { "textures": "textures/items/bamboo_spikes_tipped" },
+  "complementaries_cage": { "textures": "textures/items/cage" },
+  "complementaries_fodder": { "textures": "textures/items/fodder" }
+}

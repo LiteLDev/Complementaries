@@ -1,0 +1,14 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:bamboo_spikes" },
+    "tags": ["crafting_table"],
+    "pattern": ["1 1", "1 1", "000"],
+    "key": {
+      "0": { "tag": "minecraft:wooden_slabs" },
+      "1": { "item": "minecraft:bamboo" }
+    },
+    "unlock": [{ "item": "minecraft:bamboo" }],
+    "result": { "item": "complementaries:bamboo_spikes", "count": 2 }
+  }
+}

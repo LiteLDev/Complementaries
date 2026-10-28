@@ -1,0 +1,17 @@
+{
+  "complementaries_bamboo_spikes": { "textures": "textures/blocks/bamboo_spikes" },
+  "complementaries_bamboo_spikes_base": { "textures": "textures/blocks/bamboo_spikes_base" },
+  "complementaries_bamboo_spikes_tip_1": { "textures": "textures/blocks/bamboo_spikes_tip_1" },
+  "complementaries_bamboo_spikes_tip_2": { "textures": "textures/blocks/bamboo_spikes_tip_2" },
+  "complementaries_bamboo_spikes_tip_3": { "textures": "textures/blocks/bamboo_spikes_tip_3" },
+  "complementaries_bamboo_spikes_tip_4": { "textures": "textures/blocks/bamboo_spikes_tip_4" },
+  "complementaries_bamboo_spikes_tip_5": { "textures": "textures/blocks/bamboo_spikes_tip_5" },
+  "complementaries_bamboo_spikes_tip_6": { "textures": "textures/blocks/bamboo_spikes_tip_6" },
+  "complementaries_bamboo_spikes_tip_7": { "textures": "textures/blocks/bamboo_spikes_tip_7" },
+  "complementaries_bamboo_spikes_tip_8": { "textures": "textures/blocks/bamboo_spikes_tip_8" },
+  "complementaries_cage_side": { "textures": "textures/blocks/cage_side" },
+  "complementaries_cage_top": { "textures": "textures/blocks/cage_top" },
+  "complementaries_cage_bottom": { "textures": "textures/blocks/cage_bottom" },
+  "complementaries_fodder_side": { "textures": "textures/blocks/fodder_side" },
+  "complementaries_fodder_top": { "textures": "textures/blocks/fodder_top" }
+}

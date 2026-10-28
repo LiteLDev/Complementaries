@@ -1,0 +1,9 @@
+tile.complementaries:bamboo_spikes.name=竹刺
+item.complementaries:bamboo_spikes=竹刺
+item.complementaries:bamboo_spikes_tipped=浸药竹刺
+tile.complementaries:cage.name=笼子
+item.complementaries:cage=笼子
+tile.complementaries:fodder.name=饲料堆
+item.complementaries:fodder=饲料堆
+death.attack.complementaries.bamboo_spikes=%1$s被竹刺刺穿了
+death.attack.complementaries.bamboo_spikes.player=%1$s在与%2$s战斗时被竹刺刺穿了

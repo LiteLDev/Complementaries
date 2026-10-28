@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:bamboo_spikes_tipped_harming"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:bamboo_spikes"
+      },
+      {
+        "item": "minecraft:lingering_potion",
+        "data": 23
+      }
+    ],
+    "unlock": [
+      {
+        "item": "complementaries:bamboo_spikes"
+      }
+    ],
+    "result": {
+      "item": "complementaries:bamboo_spikes_tipped",
+      "data": 23
+    }
+  }
+}

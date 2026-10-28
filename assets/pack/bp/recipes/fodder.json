@@ -1,0 +1,13 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "complementaries:fodder" },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "minecraft:hay_block" },
+      { "item": "complementaries:flax_block" }
+    ],
+    "unlock": [{ "item": "minecraft:hay_block" }],
+    "result": { "item": "complementaries:fodder", "count": 2 }
+  }
+}

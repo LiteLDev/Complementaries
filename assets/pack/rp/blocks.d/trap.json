@@ -1,0 +1,5 @@
+{
+  "complementaries:bamboo_spikes": { "sound": "bamboo" },
+  "complementaries:cage": { "sound": "metal" },
+  "complementaries:fodder": { "sound": "grass" }
+}
