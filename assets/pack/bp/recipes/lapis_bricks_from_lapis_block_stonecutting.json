@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:lapis_bricks_from_lapis_block_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:lapis_block"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:lapis_block"
+      }
+    ],
+    "result": {
+      "item": "complementaries:lapis_bricks",
+      "count": 1
+    }
+  }
+}

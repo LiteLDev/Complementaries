@@ -1,0 +1,145 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:raked_gravel",
+      "menu_category": {
+        "category": "nature"
+      },
+      "states": {
+        "complementaries:shape": {
+          "values": {
+            "min": 0,
+            "max": 5
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.6
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.6
+      },
+      "minecraft:map_color": "#857f7c",
+      "minecraft:tags": [
+        "minecraft:is_shovel_item_destructible"
+      ],
+      "minecraft:geometry": "geometry.complementaries.raked_gravel",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "gravel",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "cm_raked_gravel_0",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -8.0,
+          0.0,
+          -8.0
+        ],
+        "size": [
+          16.0,
+          15.0,
+          16.0
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8.0,
+          0.0,
+          -8.0
+        ],
+        "size": [
+          16.0,
+          15.0,
+          16.0
+        ]
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:loot": "loot_tables/blocks/raked_gravel.json"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:shape') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "gravel",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "cm_raked_gravel_1",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:shape') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "gravel",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "cm_raked_gravel_2",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:shape') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "gravel",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "cm_raked_gravel_3",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:shape') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "gravel",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "cm_raked_gravel_4",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:shape') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "gravel",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "cm_raked_gravel_5",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

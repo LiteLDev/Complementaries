@@ -1,0 +1,375 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:ash",
+      "menu_category": {
+        "category": "nature"
+      },
+      "states": {
+        "complementaries:layers": {
+          "values": {
+            "min": 1,
+            "max": 8
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.1
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.1
+      },
+      "minecraft:map_color": "#9a9a9a",
+      "minecraft:tags": [
+        "minecraft:is_shovel_item_destructible"
+      ],
+      "minecraft:geometry": "geometry.complementaries.layers",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_ash",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:light_dampening": 0
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:layers') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.layers",
+            "bone_visibility": {
+              "layers_1": "1.0",
+              "layers_2": "0.0",
+              "layers_3": "0.0",
+              "layers_4": "0.0",
+              "layers_5": "0.0",
+              "layers_6": "0.0",
+              "layers_7": "0.0",
+              "layers_8": "0.0"
+            }
+          },
+          "minecraft:collision_box": false,
+          "minecraft:selection_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              2.0,
+              16.0
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/ash_1.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:layers') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.layers",
+            "bone_visibility": {
+              "layers_1": "0.0",
+              "layers_2": "1.0",
+              "layers_3": "0.0",
+              "layers_4": "0.0",
+              "layers_5": "0.0",
+              "layers_6": "0.0",
+              "layers_7": "0.0",
+              "layers_8": "0.0"
+            }
+          },
+          "minecraft:collision_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              2.0,
+              16.0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              4.0,
+              16.0
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/ash_2.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:layers') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.layers",
+            "bone_visibility": {
+              "layers_1": "0.0",
+              "layers_2": "0.0",
+              "layers_3": "1.0",
+              "layers_4": "0.0",
+              "layers_5": "0.0",
+              "layers_6": "0.0",
+              "layers_7": "0.0",
+              "layers_8": "0.0"
+            }
+          },
+          "minecraft:collision_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              4.0,
+              16.0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              6.0,
+              16.0
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/ash_3.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:layers') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.layers",
+            "bone_visibility": {
+              "layers_1": "0.0",
+              "layers_2": "0.0",
+              "layers_3": "0.0",
+              "layers_4": "1.0",
+              "layers_5": "0.0",
+              "layers_6": "0.0",
+              "layers_7": "0.0",
+              "layers_8": "0.0"
+            }
+          },
+          "minecraft:collision_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              6.0,
+              16.0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              8.0,
+              16.0
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/ash_4.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:layers') == 5",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.layers",
+            "bone_visibility": {
+              "layers_1": "0.0",
+              "layers_2": "0.0",
+              "layers_3": "0.0",
+              "layers_4": "0.0",
+              "layers_5": "1.0",
+              "layers_6": "0.0",
+              "layers_7": "0.0",
+              "layers_8": "0.0"
+            }
+          },
+          "minecraft:collision_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              8.0,
+              16.0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              10.0,
+              16.0
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/ash_5.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:layers') == 6",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.layers",
+            "bone_visibility": {
+              "layers_1": "0.0",
+              "layers_2": "0.0",
+              "layers_3": "0.0",
+              "layers_4": "0.0",
+              "layers_5": "0.0",
+              "layers_6": "1.0",
+              "layers_7": "0.0",
+              "layers_8": "0.0"
+            }
+          },
+          "minecraft:collision_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              10.0,
+              16.0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              12.0,
+              16.0
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/ash_6.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:layers') == 7",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.layers",
+            "bone_visibility": {
+              "layers_1": "0.0",
+              "layers_2": "0.0",
+              "layers_3": "0.0",
+              "layers_4": "0.0",
+              "layers_5": "0.0",
+              "layers_6": "0.0",
+              "layers_7": "1.0",
+              "layers_8": "0.0"
+            }
+          },
+          "minecraft:collision_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              12.0,
+              16.0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              14.0,
+              16.0
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/ash_7.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:layers') == 8",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.layers",
+            "bone_visibility": {
+              "layers_1": "0.0",
+              "layers_2": "0.0",
+              "layers_3": "0.0",
+              "layers_4": "0.0",
+              "layers_5": "0.0",
+              "layers_6": "0.0",
+              "layers_7": "0.0",
+              "layers_8": "1.0"
+            }
+          },
+          "minecraft:collision_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              14.0,
+              16.0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8.0,
+              0.0,
+              -8.0
+            ],
+            "size": [
+              16.0,
+              16.0,
+              16.0
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/ash_8.json",
+          "minecraft:light_dampening": 15
+        }
+      }
+    ]
+  }
+}

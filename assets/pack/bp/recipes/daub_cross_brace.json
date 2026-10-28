@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:daub_cross_brace"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:timber_cross_brace"
+      },
+      {
+        "item": "complementaries:daub"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "complementaries:timber_cross_brace"
+      }
+    ],
+    "result": {
+      "item": "complementaries:daub_cross_brace",
+      "count": 1
+    }
+  }
+}

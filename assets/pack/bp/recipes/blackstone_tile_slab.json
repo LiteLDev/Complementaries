@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:blackstone_tile_slab"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "complementaries:blackstone_tile"
+      }
+    },
+    "unlock": [
+      {
+        "item": "complementaries:blackstone_tile"
+      }
+    ],
+    "result": {
+      "item": "complementaries:blackstone_tile_slab",
+      "count": 6
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:lapis_bricks"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:lapis_block"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:lapis_block"
+      }
+    ],
+    "result": {
+      "item": "complementaries:lapis_bricks",
+      "count": 4
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:daub"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "CW",
+      "WC"
+    ],
+    "key": {
+      "C": {
+        "item": "minecraft:clay_ball"
+      },
+      "W": {
+        "item": "minecraft:wheat"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:clay_ball"
+      }
+    ],
+    "result": {
+      "item": "complementaries:daub",
+      "count": 2
+    }
+  }
+}

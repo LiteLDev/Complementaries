@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:stone_tile_wall"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "complementaries:stone_tile"
+      }
+    },
+    "unlock": [
+      {
+        "item": "complementaries:stone_tile"
+      }
+    ],
+    "result": {
+      "item": "complementaries:stone_tile_wall",
+      "count": 6
+    }
+  }
+}

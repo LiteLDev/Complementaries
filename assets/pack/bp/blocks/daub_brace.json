@@ -1,0 +1,49 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:daub_brace",
+      "menu_category": {
+        "category": "construction"
+      },
+      "states": {
+        "complementaries:flipped": [
+          false,
+          true
+        ]
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3.0
+      },
+      "minecraft:map_color": "#d8cfb8",
+      "minecraft:tags": [
+        "minecraft:is_pickaxe_item_destructible"
+      ],
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_daub_brace",
+          "render_method": "opaque"
+        }
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:flipped')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_daub_brace_flipped",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

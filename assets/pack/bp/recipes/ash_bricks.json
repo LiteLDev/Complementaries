@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:ash_bricks"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "complementaries:ash_brick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "complementaries:ash_brick"
+      }
+    ],
+    "result": {
+      "item": "complementaries:ash_bricks",
+      "count": 1
+    }
+  }
+}
