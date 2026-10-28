@@ -4,8 +4,8 @@
     "description": {
       "identifier": "complementaries:wild_flax_feature"
     },
-    "places_feature": "complementaries:wild_flax_single_feature",
-    "iterations": 24,
+    "places_feature": "complementaries:wild_flax_snap_feature",
+    "iterations": 12,
     "coordinate_eval_order": "xzy",
     "x": {
       "distribution": "gaussian",
@@ -15,9 +15,6 @@
       "distribution": "gaussian",
       "extent": [-4, 4]
     },
-    "y": {
-      "distribution": "uniform",
-      "extent": [-2, 3]
-    }
+    "y": 0
   }
 }

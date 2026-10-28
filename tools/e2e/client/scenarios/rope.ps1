@@ -1,6 +1,6 @@
 # U11 rope on a real client: block models / textures, item icons, real right-clicks on ropes
 # (extend, pull up), the pulley screen and climbing.
-# Screenshots: out/rope/{blocks,items,pulley-form,climb}.png
+# Screenshots: out/rope/{blocks,items,pulley-form,rope-arrow,climb}.png
 Invoke-Chat '/gamerule sendcommandfeedback false'
 Invoke-Chat '/gamemode creative'
 Invoke-Chat '/time set noon'
@@ -17,8 +17,8 @@ Invoke-Chat '/setblock ~5 ~3 ~1 stone'
 Invoke-Chat '/setblock ~5 ~3 ~2 complementaries:rope'
 Invoke-Chat '/setblock ~5 ~3 ~3 complementaries:rope'
 Invoke-Chat '/setblock ~5 ~2 ~3 complementaries:rope'
-# pulley with a rope column (x+6, z0)
-Invoke-Chat '/setblock ~6 ~4 ~0 complementaries:pulley_block'
+# a pulley (x+4, y+3, z0)
+Invoke-Chat '/setblock ~4 ~3 ~0 complementaries:pulley_block'
 # flax: farmland and crops of several ages, wild flax and a flax block
 Invoke-Chat '/fill ~3 ~-1 ~-1 ~3 ~-1 ~1 farmland'
 Invoke-Chat '/setblock ~3 ~ ~-1 complementaries:flax_crop ["complementaries:age"=2]'
@@ -59,7 +59,7 @@ if ($pulled -ne 1) { throw "one click pulled up $pulled ropes (expected 1)" }
 
 # The pulley screen.
 $mark = Get-LogMark
-Invoke-Chat "/tp @s ~ ~ ~ facing ~6 ~2.9 ~0"   # facing is computed from the feet: aim 1.6 lower
+Invoke-Chat "/tp @s ~ ~ ~ facing ~4 ~1.9 ~0"   # facing is computed from the feet: aim 1.6 lower
 Start-Sleep -Milliseconds 600
 Click 0.5 0.5 -Relative -Right
 Wait-LogLine 'rope: opened the pulley screen' 15 -Since $mark | Out-Null
@@ -73,11 +73,13 @@ Invoke-Chat '/summon complementaries:rope_arrow ~2 ~1.5 ~0.5'
 Start-Sleep -Seconds 2
 Save-Screenshot 'rope-arrow' | Out-Null
 
-# Climbing: inside the rope column a survival player does not fall to the ground.
+# Climbing: inside the rope column a survival player slides down like on a ladder (the HUD
+# position shows the height); the descent speed itself is checked by the rope.climbable selftest.
 Invoke-Chat '/gamemode survival'
-Invoke-Chat '/tp @s ~4 ~3 ~-2'
-Start-Sleep -Seconds 2
+Invoke-Chat '/tp @s ~4 ~4 ~-2 facing ~5 ~4 ~-2'
+Start-Sleep -Milliseconds 300
 Save-Screenshot 'climb' | Out-Null
+Start-Sleep -Seconds 2
 Invoke-Chat '/gamemode creative'
 
 $r = Invoke-SelfTest 'rope.*'
