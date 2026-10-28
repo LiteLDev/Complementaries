@@ -1,0 +1,33 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:awning_gray_2"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "awning",
+    "unlock": [
+      {
+        "item": "minecraft:gray_carpet"
+      }
+    ],
+    "pattern": [
+      "###",
+      "/ /"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:gray_carpet"
+      },
+      "/": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "complementaries:awning_gray",
+      "count": 2
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:awning_orange"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "awning",
+    "unlock": [
+      {
+        "item": "complementaries:awning"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:awning"
+      },
+      {
+        "item": "minecraft:orange_dye"
+      }
+    ],
+    "result": {
+      "item": "complementaries:awning_orange",
+      "count": 1
+    }
+  }
+}

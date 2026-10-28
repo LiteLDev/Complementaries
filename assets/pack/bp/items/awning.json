@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:awning",
+      "menu_category": {
+        "category": "items",
+        "group": "minecraft:itemGroup.name.wool"
+      }
+    },
+    "components": {
+      "minecraft:icon": {
+        "textures": {
+          "default": "complementaries_awning"
+        }
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:block_placer": {
+        "block": "complementaries:awning",
+        "replace_block_item": true,
+        "use_on": [
+          "minecraft:end_portal"
+        ]
+      },
+      "minecraft:tags": {
+        "tags": [
+          "complementaries:awnings"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.complementaries.flag_cloth.wave": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "rotation": [
+            0,
+            "90 * (2 - q.property('complementaries:facing')) + q.body_y_rotation",
+            0
+          ]
+        },
+        "seg0": {
+          "rotation": [
+            0,
+            "(1 + 0.3 * 0) * math.sin(0 - 360 * v.cm_t)",
+            0
+          ]
+        },
+        "seg1": {
+          "rotation": [
+            0,
+            "(1 + 0.3 * 3) * math.sin(42.9718 - 360 * v.cm_t) - ((1 + 0.3 * 0) * math.sin(0 - 360 * v.cm_t))",
+            0
+          ]
+        },
+        "seg2": {
+          "rotation": [
+            0,
+            "(1 + 0.3 * 6) * math.sin(85.9437 - 360 * v.cm_t) - ((1 + 0.3 * 3) * math.sin(42.9718 - 360 * v.cm_t))",
+            0
+          ]
+        },
+        "seg3": {
+          "rotation": [
+            0,
+            "(1 + 0.3 * 9) * math.sin(128.9155 - 360 * v.cm_t) - ((1 + 0.3 * 6) * math.sin(85.9437 - 360 * v.cm_t))",
+            0
+          ]
+        },
+        "seg4": {
+          "rotation": [
+            0,
+            "(1 + 0.3 * 12) * math.sin(171.8873 - 360 * v.cm_t) - ((1 + 0.3 * 9) * math.sin(128.9155 - 360 * v.cm_t))",
+            0
+          ]
+        },
+        "seg5": {
+          "rotation": [
+            0,
+            "(1 + 0.3 * 15) * math.sin(214.8592 - 360 * v.cm_t) - ((1 + 0.3 * 12) * math.sin(171.8873 - 360 * v.cm_t))",
+            0
+          ]
+        },
+        "seg6": {
+          "rotation": [
+            0,
+            "(1 + 0.3 * 18) * math.sin(257.831 - 360 * v.cm_t) - ((1 + 0.3 * 15) * math.sin(214.8592 - 360 * v.cm_t))",
+            0
+          ]
+        },
+        "seg7": {
+          "rotation": [
+            0,
+            "(1 + 0.3 * 21) * math.sin(300.8028 - 360 * v.cm_t) - ((1 + 0.3 * 18) * math.sin(257.831 - 360 * v.cm_t))",
+            0
+          ]
+        }
+      }
+    },
+    "animation.complementaries.flag_held.wave": {
+      "loop": true,
+      "bones": {
+        "cloth": {
+          "rotation": [
+            0,
+            "3 * math.sin(q.life_time * 216)",
+            0
+          ]
+        }
+      }
+    },
+    "animation.complementaries.flag_held.first": {
+      "loop": true,
+      "bones": {
+        "held": {
+          "position": [
+            -4,
+            -6,
+            2
+          ],
+          "rotation": [
+            0,
+            90,
+            0
+          ],
+          "scale": 0.6
+        }
+      }
+    },
+    "animation.complementaries.flag_held.third": {
+      "loop": true,
+      "bones": {
+        "held": {
+          "position": [
+            0,
+            6,
+            -2
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        }
+      }
+    }
+  }
+}

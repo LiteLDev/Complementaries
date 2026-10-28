@@ -1,0 +1,36 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "complementaries:flag_cyan",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/flag/held_cyan"
+      },
+      "geometry": {
+        "default": "geometry.complementaries.flag_held"
+      },
+      "animations": {
+        "wave": "animation.complementaries.flag_held.wave",
+        "first": "animation.complementaries.flag_held.first",
+        "third": "animation.complementaries.flag_held.third"
+      },
+      "scripts": {
+        "animate": [
+          "wave",
+          {
+            "first": "c.is_first_person"
+          },
+          {
+            "third": "!c.is_first_person"
+          }
+        ]
+      },
+      "render_controllers": [
+        "controller.render.complementaries.flag_held"
+      ]
+    }
+  }
+}

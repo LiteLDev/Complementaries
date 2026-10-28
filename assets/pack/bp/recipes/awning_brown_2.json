@@ -1,0 +1,33 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:awning_brown_2"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "awning",
+    "unlock": [
+      {
+        "item": "minecraft:brown_carpet"
+      }
+    ],
+    "pattern": [
+      "###",
+      "/ /"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:brown_carpet"
+      },
+      "/": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "complementaries:awning_brown",
+      "count": 2
+    }
+  }
+}

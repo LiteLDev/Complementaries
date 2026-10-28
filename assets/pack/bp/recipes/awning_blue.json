@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:awning_blue"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "awning",
+    "unlock": [
+      {
+        "item": "complementaries:awning"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:awning"
+      },
+      {
+        "item": "minecraft:blue_dye"
+      }
+    ],
+    "result": {
+      "item": "complementaries:awning_blue",
+      "count": 1
+    }
+  }
+}

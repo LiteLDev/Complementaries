@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:dragon_banner_pattern"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "",
+    "unlock": [
+      {
+        "item": "minecraft:paper"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:paper"
+      },
+      {
+        "item": "minecraft:dragon_head"
+      }
+    ],
+    "result": {
+      "item": "complementaries:dragon_banner_pattern",
+      "count": 1
+    }
+  }
+}

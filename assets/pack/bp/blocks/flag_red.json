@@ -1,0 +1,68 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:flag_red",
+      "menu_category": {
+        "category": "items",
+        "group": "minecraft:itemGroup.name.banner"
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.complementaries.flag_pole",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "complementaries_flag_pole",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          16,
+          8
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          16,
+          8
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 1.0
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#B02E26",
+      "minecraft:loot": "loot_tables/blocks/flag_red.json",
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true,
+            "on_liquid_touches": "no_reaction"
+          }
+        ]
+      },
+      "minecraft:flammable": {
+        "destroy_chance_modifier": 20,
+        "catch_chance_modifier": 5
+      },
+      "tag:complementaries:flags": {}
+    }
+  }
+}

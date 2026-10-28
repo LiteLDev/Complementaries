@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:awning_cyan"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "awning",
+    "unlock": [
+      {
+        "item": "complementaries:awning"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:awning"
+      },
+      {
+        "item": "minecraft:cyan_dye"
+      }
+    ],
+    "result": {
+      "item": "complementaries:awning_cyan",
+      "count": 1
+    }
+  }
+}

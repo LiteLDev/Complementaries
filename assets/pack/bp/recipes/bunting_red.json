@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:bunting_red"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "bunting",
+    "unlock": [
+      {
+        "item": "minecraft:red_dye"
+      }
+    ],
+    "ingredients": [
+      {
+        "tag": "complementaries:buntings"
+      },
+      {
+        "item": "minecraft:red_dye"
+      }
+    ],
+    "result": {
+      "item": "complementaries:bunting_red",
+      "count": 1
+    }
+  }
+}
