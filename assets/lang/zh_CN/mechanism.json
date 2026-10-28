@@ -1,0 +1,5 @@
+{
+  "cm.mechanism.turn_table.clockwise": "转盘：顺时针",
+  "cm.mechanism.turn_table.counterclockwise": "转盘：逆时针",
+  "cm.mechanism.crank.power": "能量：{}"
+}

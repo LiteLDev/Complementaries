@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:turn_table"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "PPP",
+      "CRC",
+      "CCC"
+    ],
+    "key": {
+      "P": {
+        "tag": "minecraft:planks"
+      },
+      "C": {
+        "item": "minecraft:cobblestone"
+      },
+      "R": {
+        "item": "minecraft:redstone"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:redstone"
+      }
+    ],
+    "result": {
+      "item": "complementaries:turn_table",
+      "count": 1
+    }
+  }
+}

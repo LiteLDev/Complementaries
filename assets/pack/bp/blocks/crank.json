@@ -1,0 +1,443 @@
+{
+  "format_version": "1.26.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:crank",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:power": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        }
+      },
+      "traits": {
+        "minecraft:placement_position": {
+          "enabled_states": [
+            "minecraft:block_face"
+          ]
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.complementaries.crank_0",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_crank",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          14,
+          12
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.5
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:loot": "loot_tables/blocks/crank.json",
+      "minecraft:map_color": "#9a7344"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'down'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'up'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              270,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              90
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              270
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 4 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 12",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.crank_0"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 1 || q.block_state('complementaries:power') == 5 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 13",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.crank_1"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 2 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 14",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.crank_2"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 3 || q.block_state('complementaries:power') == 7 || q.block_state('complementaries:power') == 11 || q.block_state('complementaries:power') == 15",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.crank_3"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 0",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 0,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 1",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 1,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 2",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 2,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 3",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 3,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 4",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 4,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 5",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 5,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 6",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 6,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 7",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 7,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 8",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 8,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 9",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 9,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 10",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 10,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 11",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 11,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 12",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 12,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 13",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 13,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 14",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 14,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:power') == 15",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 15,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "west",
+              "east"
+            ],
+            "transform_relative": true
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "complementaries.block.bellows.blow": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "sounds/mob/breeze/idle_air1",
+        "volume": 0.4
+      },
+      {
+        "name": "sounds/mob/breeze/idle_air2",
+        "volume": 0.4
+      },
+      {
+        "name": "sounds/mob/breeze/idle_air3",
+        "volume": 0.4
+      },
+      {
+        "name": "sounds/mob/breeze/idle_air4",
+        "volume": 0.4
+      }
+    ]
+  },
+  "complementaries.block.bellows.retract": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "sounds/mob/breeze/inhale1",
+        "volume": 0.3
+      },
+      {
+        "name": "sounds/mob/breeze/inhale2",
+        "volume": 0.3
+      }
+    ]
+  },
+  "complementaries.block.crank": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "sounds/random/wood_click",
+        "volume": 0.6
+      }
+    ]
+  },
+  "complementaries.block.turn_table.rotate": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "sounds/block/itemframe/rotate_item1",
+        "volume": 0.7
+      },
+      {
+        "name": "sounds/block/itemframe/rotate_item2",
+        "volume": 0.7
+      },
+      {
+        "name": "sounds/block/itemframe/rotate_item3",
+        "volume": 0.7
+      },
+      {
+        "name": "sounds/block/itemframe/rotate_item4",
+        "volume": 0.7
+      }
+    ]
+  },
+  "complementaries.block.piston_launcher.extend": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "sounds/tile/piston/out",
+        "volume": 0.5
+      }
+    ]
+  },
+  "complementaries.block.piston_launcher.retract": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "sounds/tile/piston/in",
+        "volume": 0.5
+      }
+    ]
+  },
+  "complementaries.block.piston_launcher.launch": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "sounds/mob/slime/big1",
+        "volume": 0.8
+      },
+      {
+        "name": "sounds/mob/slime/big2",
+        "volume": 0.8
+      },
+      {
+        "name": "sounds/mob/slime/big3",
+        "volume": 0.8
+      },
+      {
+        "name": "sounds/mob/slime/big4",
+        "volume": 0.8
+      }
+    ]
+  }
+}

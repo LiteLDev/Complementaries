@@ -1,0 +1,7 @@
+tile.complementaries:piston_launcher.name=Spring Launcher
+tile.complementaries:piston_launcher_head.name=Spring Launcher Head
+tile.complementaries:piston_launcher_arm.name=Spring Launcher Arm
+tile.complementaries:bellows.name=Bellows
+tile.complementaries:turn_table.name=Turn Table
+tile.complementaries:cog_block.name=Cog Block
+tile.complementaries:crank.name=Crank

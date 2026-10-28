@@ -1,0 +1,186 @@
+{
+  "format_version": "1.26.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:bellows",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:stage": {
+          "values": {
+            "min": 0,
+            "max": 7
+          }
+        }
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:facing_direction"
+          ]
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.complementaries.bellows_0",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_bellows_board",
+          "render_method": "alpha_test"
+        },
+        "up": {
+          "texture": "cm_bellows_front",
+          "render_method": "alpha_test"
+        },
+        "board": {
+          "texture": "cm_bellows_board",
+          "render_method": "alpha_test"
+        },
+        "leather": {
+          "texture": "cm_bellows_leather",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.8
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3
+      },
+      "minecraft:flammable": {
+        "catch_chance_modifier": 5,
+        "destroy_chance_modifier": 20
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:redstone_consumer": {
+        "min_power": 1,
+        "propagates_power": false
+      },
+      "minecraft:loot": "loot_tables/blocks/bellows.json",
+      "minecraft:map_color": "#9a7344"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'down'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'up'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              270,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              270
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              90
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:stage') == 0",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.bellows_0"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:stage') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.bellows_1"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:stage') == 2",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.bellows_2"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:stage') == 3",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.bellows_3"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:stage') == 4",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.bellows_4"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:stage') == 5",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.bellows_5"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:stage') == 6",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.bellows_6"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:stage') == 7",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.bellows_7"
+        }
+      }
+    ]
+  }
+}
