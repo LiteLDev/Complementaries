@@ -33,7 +33,8 @@ therefore the contents (like Bedrock's own bundles). This only affects creative 
 | States | `complementaries:open` (bool; true while someone has the sack screen open) |
 | Shape | 10×10×10 body with a tied neck (open state: neck untied) |
 | Hardness | 0.8, sound: wool; mined by hand |
-| Drops | itself with its contents (any way it is removed: player, explosion, piston, command). In creative an empty sack drops nothing, a non-empty one drops itself (shulker-box behaviour). Loot table is empty; the mod spawns the item. |
+| Drops | itself with its contents (any way it is removed: player, explosion, command). In creative an empty sack drops nothing, a non-empty one drops itself (shulker-box behaviour). Loot table is empty; the mod spawns the item. |
+| Pistons | pushed and pulled like other blocks; the contents move with it (Bedrock turns a pushed block into air and places it again next to it a few ticks later: the record waits up to 6 ticks for the block to reappear next to its old place, else the block drops) |
 
 Mechanics:
 - **Container**: `sack_slots` slots (default 9). Right-click opens the sack screen and plays
@@ -41,7 +42,8 @@ Mechanics:
   viewed, back to `false` when the last viewer closes it (sound again).
 - **Allowed items**: everything that may go into a container item: not sacks, not shulker boxes, not
   bundles. Disallowed items put into the screen bounce back to the player's inventory (or drop at
-  their feet when it is full).
+  their feet when it is full; with several viewers they drop at the sack, since the server cannot
+  tell who put them in).
 - **Gravity**: the sack is a falling block. When the block below becomes air / replaceable it drops
   straight down to the first supporting block (Bedrock: it moves there instantly; no falling entity
   animation, see *Not ported*).
@@ -75,7 +77,7 @@ Present (normal):
 - One slot. Right-click on an unpacked present opens the **present screen**: the slot, a *recipient*
   text field (`To:`; empty = public), a *description* field and a **Pack** button. Packing stores the
   sender (the packing player's name), sets `packed=true`, plays the pack sound
-  (`block.present.pack`; Bedrock: `random.orb`-like `bottle.fill` sound) and closes the screen.
+  (`block.present.pack`; Bedrock: the vanilla `item.book.page_turn` paper sound) and closes the screen.
 - Right-click on a packed present: players allowed to open it (public present, the recipient, or a
   creative player) unpack it: `packed=false`, sound `block.present.open` and the screen opens with the
   gift inside; the message `From <sender>` is shown. Anyone else gets the action-bar message
@@ -85,9 +87,10 @@ Present (normal):
 
 Trapped present:
 - Same packing screen without the recipient field. When packed, any player right-clicking it opens it:
-  the content is **activated** with the dispenser behaviour of the item, shooting upwards from the top of
-  the present (TNT ignites, arrows/potions/fire charges/snowballs/eggs are shot, spawn eggs spawn their
-  mob, fireworks launch, other items just pop out). The present becomes unpacked and empty.
+  one item of the content is **activated** with the dispenser behaviour of the item, shooting upwards
+  from the top of the present (TNT ignites, arrows/potions/fire charges/snowballs/eggs are shot, spawn
+  eggs spawn their mob, fireworks launch); the rest of the stack (or an item without a dispenser
+  behaviour) pops out. The present becomes unpacked and empty.
 
 Screen on Bedrock: a LeviLamina form (custom form) with the current content, an *item* drop-down
 (*keep*, *put the item you hold*, *take the item out*), the recipient field (normal presents), the

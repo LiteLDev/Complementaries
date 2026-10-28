@@ -52,6 +52,11 @@ ContainerComponent* viewContainer(Player& p, cm::core::GlobalPos const& pos) {
     return nullptr;
 }
 
+/// Moves a test player a few blocks away from `pos`, so it does not pick up what drops there.
+void stepAway(Player& p, cm::core::GlobalPos const& pos) {
+    p.teleport(Vec3{static_cast<float>(pos.x) + 0.5f, static_cast<float>(pos.y) + 1.f, static_cast<float>(pos.z) + 4.5f}, p.getDimensionId());
+}
+
 cm::core::GlobalPos playerPos(Player& p) {
     auto bp = game::blockPosOf(p.getPosition());
     return {static_cast<int>(p.getDimensionId()), bp.x, bp.y, bp.z};
@@ -122,8 +127,9 @@ CM_REGISTER_SELFTEST("storage.sack_drops_contents", [](Context& ctx) -> ll::coro
     std::vector<ItemStack> items(9);
     items[4] = makeStack("minecraft:diamond", 5);
     saveContents(rec.uid, items);
+    stepAway(p, pos);
     game::clearBlock(p.getDimensionBlockSource(), game::blockPos(pos));
-    co_await ctx.ticks(3);
+    co_await ctx.ticks(10);
     ctx.check(!loadBlockRecord(pos), "block record removed");
     auto* drop = droppedItem(p, pos, [&](ItemStack const& s) { return itemUid(s) == rec.uid; });
     ctx.require(drop != nullptr, "the sack dropped with its uid");
@@ -146,8 +152,9 @@ CM_REGISTER_SELFTEST("storage.sack_drops_contents", [](Context& ctx) -> ll::coro
     removeQuietly(pos);
     // an empty sack drops a plain, stackable sack
     ctx.require(ctx.setBlock(pos, std::string(kSack)), "empty sack placed");
+    stepAway(p, pos);
     game::clearBlock(p.getDimensionBlockSource(), game::blockPos(pos));
-    co_await ctx.ticks(3);
+    co_await ctx.ticks(10);
     auto* plain = droppedItem(p, pos, [](ItemStack const& s) { return itemId(s) == kSack && itemUid(s).empty(); });
     ctx.check(plain != nullptr, "empty sack drops a plain sack");
     if (plain) plain->despawn();
@@ -171,6 +178,48 @@ CM_REGISTER_SELFTEST("storage.sack_falls", [](Context& ctx) -> ll::coro::CoroTas
     auto moved = loadBlockRecord(ground);
     ctx.check(moved && moved->uid == rec.uid, "the record moved with the sack");
     removeQuietly(ground);
+});
+
+CM_REGISTER_SELFTEST("storage.sack_piston", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto base = ctx.testPos(225);
+    ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
+    auto& p     = ctx.player();
+    auto  power = base;
+    auto  pist  = base;
+    auto  a     = base;
+    auto  b     = base;
+    auto  end   = base;
+    // a piston pushing two sacks straight up, powered from the side
+    power.x -= 1;
+    a.y += 1;
+    b.y += 2;
+    end.y += 3;
+    ctx.cleanupBlock(end);
+    ctx.require(ctx.setBlock(pist, "minecraft:piston", {{"facing_direction", 1}}), "piston placed");
+    ctx.require(ctx.setBlock(a, std::string(kSack)), "first sack");
+    ctx.require(ctx.setBlock(b, std::string(kSack)), "second sack");
+    auto ra = blockRecordOrNew(a);
+    auto rb = blockRecordOrNew(b);
+    std::vector<ItemStack> items(9);
+    items[0] = makeStack("minecraft:emerald", 1);
+    saveContents(ra.uid, items);
+    items[0] = makeStack("minecraft:redstone", 2);
+    saveContents(rb.uid, items);
+    ctx.require(ctx.setBlock(power, "minecraft:redstone_block"), "piston powered");
+    co_await ctx.ticks(12);
+    ctx.info("after the push: " + idAt(p, pist) + " / " + idAt(p, a) + " / " + idAt(p, b) + " / " + idAt(p, end));
+    ctx.check(idAt(p, b) == kSack && idAt(p, end) == kSack, "both sacks moved one block");
+    auto na = loadBlockRecord(b);
+    auto nb = loadBlockRecord(end);
+    ctx.check(na && na->uid == ra.uid, "the first sack's contents moved with it");
+    ctx.check(nb && nb->uid == rb.uid, "the second sack's contents moved with it");
+    ctx.check(!loadBlockRecord(a), "nothing left behind");
+    auto* drop = droppedItem(p, b, [](ItemStack const& s) { return itemId(s) == kSack; });
+    ctx.check(drop == nullptr, "no sack dropped");
+    if (drop) drop->despawn();
+    removeQuietly(b);
+    removeQuietly(end);
+    game::clearBlock(p.getDimensionBlockSource(), game::blockPos(a)); // the piston head
 });
 
 CM_REGISTER_SELFTEST("storage.sack_screen", [](Context& ctx) -> ll::coro::CoroTask<> {
@@ -243,8 +292,10 @@ CM_REGISTER_SELFTEST("storage.present", [](Context& ctx) -> ll::coro::CoroTask<>
     interactBlock(giver, pos);
     ctx.check(stateAt(giver, pos, kStatePacked) == 1, "still packed after a stranger's click");
     // the packed present travels as an item
+    stepAway(giver, pos);
+    stepAway(taker, pos);
     game::clearBlock(giver.getDimensionBlockSource(), game::blockPos(pos));
-    co_await ctx.ticks(3);
+    co_await ctx.ticks(10);
     auto* drop = droppedItem(giver, pos, [&](ItemStack const& s) { return itemUid(s) == rec->uid; });
     ctx.require(drop != nullptr, "the packed present dropped");
     ItemStack item = *drop->mItem;
@@ -276,7 +327,7 @@ CM_REGISTER_SELFTEST("storage.trapped_present", [](Context& ctx) -> ll::coro::Co
     triggerTrappedPresent(pos);
     co_await ctx.ticks(2);
     ctx.check(stateAt(p, pos, kStatePacked) == 0, "opened");
-    ctx.check(countOf(loadContents(rec->uid, 1)[0]) < 4, "the content was activated");
+    ctx.check(isEmpty(loadContents(rec->uid, 1)[0]), "the content was activated, the present is empty");
     bool shot = false;
     for (auto* a : entitiesNear(p, pos, 6.0f)) {
         if (a && (a->getTypeName() == "minecraft:arrow" || a->getTypeName() == "minecraft:item")) {

@@ -274,9 +274,10 @@ void returnProxies(Player& player) {
     if (changed) player.sendInventory(false);
 }
 
-void quiverTick(Player& player) {
+void quiverTick(Player& player, bool fullScan) {
     ItemStack const& main    = player.getSelectedItem();
     bool             wantBow = isRangedWeapon(main);
+    if (!wantBow && !fullScan && proxyOf(player.getOffhandSlot()).empty()) return; // nothing lent, no bow
     int              qslot   = wantBow ? findItem(player, kQuiver) : -2;
     std::string      quid    = qslot >= -1 ? itemUid(slotItem(player, qslot)) : std::string();
     int              qsel    = qslot >= -1 ? tagInt(slotItem(player, qslot), "sel", 0) : 0;

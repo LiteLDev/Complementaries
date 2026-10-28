@@ -3,6 +3,7 @@
 // Feature entry points of the storage unit, called by the module's event handlers (Storage.cpp)
 // and by the selftests.
 
+#include <optional>
 #include <string>
 
 #include "core/GlobalPos.h"
@@ -35,10 +36,11 @@ struct StorageConfig {
 
 /// A sack / present was placed from `item`: moves the item's uid and present data to the block.
 void onBlockPlaced(core::GlobalPos const& pos, ItemStack const& item);
-/// A sack / present block (`oldId`) disappeared: drops it with its contents (see the spec).
-void onBlockRemoved(core::GlobalPos const& pos, std::string const& oldId, bool creativeBreak);
-/// A piston moved the block away (`minecraft:moving_block`); called once the push is over.
-void onBlockPushed(core::GlobalPos const& pos, std::string const& oldId);
+/// A sack / present block (`oldId`, record `rec` taken when it vanished) did not reappear next to
+/// its place (piston): drops it with its contents (see the spec).
+void onBlockGone(core::GlobalPos const& pos, std::string const& oldId, std::optional<BlockRecord> const& rec, bool creativeBreak);
+/// A piston moved a block: its record (taken when it vanished) arrives with it at `pos`.
+void onBlockLanded(core::GlobalPos const& pos, std::optional<BlockRecord> const& rec);
 /// Lets the sack at `pos` fall when nothing supports it. Returns the new position.
 core::GlobalPos checkFall(core::GlobalPos const& pos);
 /// True while this unit moves / recolours its own blocks (not a removal).
@@ -85,7 +87,8 @@ void cycleSelection(Player& player, int slot);
 bool openItemScreen(Player& player, int slot);
 
 /// The quiver lends its selected arrows to the off-hand while a bow / crossbow is held.
-void quiverTick(Player& player);
+/// `fullScan` also looks for lent stacks moved elsewhere in the inventory (every second).
+void quiverTick(Player& player, bool fullScan = true);
 /// Puts every lent stack back into its quiver (disconnect, before opening the screen, ...).
 void returnProxies(Player& player);
 

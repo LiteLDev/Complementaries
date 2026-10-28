@@ -47,6 +47,7 @@ struct Session {
 };
 
 std::map<std::string, Session> gSessions;
+long long                      gSweepTick = 0;
 
 std::pair<ContainerType, int> gridFor(int size) {
     if (size <= 5) return {ContainerType::Hopper, 5};
@@ -120,7 +121,7 @@ void finish(std::string const& uid, bool closeScreens) {
     if (it == gSessions.end()) return;
     Session s = std::move(it->second);
     gSessions.erase(it);
-    Player* owner = s.viewers.empty() ? nullptr : playerById(s.viewers.front().player);
+    Player* owner = s.viewers.size() == 1 ? playerById(s.viewers.front().player) : nullptr;
     sync(s, owner);
     if (closeScreens) {
         for (auto const& v : s.viewers) {
@@ -210,7 +211,6 @@ void tick() {
             done.push_back(uid);
             continue;
         }
-        Player* owner = nullptr;
         for (auto it = s.viewers.begin(); it != s.viewers.end();) {
             auto* p   = playerById(it->player);
             auto* cur = p ? p->mContainerManager.get() : nullptr;
@@ -222,19 +222,37 @@ void tick() {
             } else if (!gone && cur != it->model) {
                 gone = true;
             }
-            if (gone) {
-                it = s.viewers.erase(it);
-            } else {
-                if (!owner) owner = p;
-                ++it;
-            }
+            if (gone) it = s.viewers.erase(it);
+            else ++it;
         }
-        sync(s, owner);
+        // with several viewers nobody knows who put a refused item in: it drops at the container
+        sync(s, s.viewers.size() == 1 ? playerById(s.viewers.front().player) : nullptr);
         if (s.viewers.empty()) done.push_back(uid);
     }
     for (auto const& uid : done) finish(uid, false);
+
+    // Views left over from a crash or a world closed with a screen open (saved with the world):
+    // the content record is authoritative, so they are removed without dropping their copy.
+    if (++gSweepTick % 100 == 0) {
+        auto level = ll::service::getLevel();
+        if (!level) return;
+        for (auto* a : level->getRuntimeActorList()) {
+            if (!a || a->getTypeName() != kViewEntity) continue;
+            long long id    = a->getOrCreateUniqueID().rawID;
+            bool      owned = false;
+            for (auto const& [uid, s] : gSessions) owned = owned || s.actor == id;
+            if (owned) continue;
+            if (auto* cc = containerOf(*a)) cc->mContainer->removeAllItems();
+            a->despawn();
+        }
+    }
 }
 
-void reset() { gSessions.clear(); }
+void reset() {
+    std::vector<std::string> uids;
+    for (auto const& [uid, s] : gSessions) uids.push_back(uid);
+    for (auto const& uid : uids) finish(uid, true); // no-op on entities of a world that is gone
+    gSessions.clear();
+}
 
 } // namespace cm::feature::storage::view

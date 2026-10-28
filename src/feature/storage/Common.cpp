@@ -322,9 +322,8 @@ void spawnItem(BlockSource& region, ItemStack const& stack, Vec3 const& pos) {
 
 void giveOrDrop(Player& player, ItemStack stack) {
     if (isEmpty(stack)) return;
-    if (!player.add(stack) || !isEmpty(stack)) {
-        if (!isEmpty(stack)) player.drop(stack, false);
-    }
+    // add() takes what fits and leaves the rest in `stack`; it returns false when something is left
+    if (!player.add(stack) && !isEmpty(stack)) player.drop(stack, false);
     player.sendInventory(false);
 }
 

@@ -200,13 +200,8 @@ void onBlockPlaced(core::GlobalPos const& pos, ItemStack const& item) {
     }
 }
 
-void onBlockRemoved(core::GlobalPos const& pos, std::string const& oldId, bool creativeBreak) {
-    if (gMoving) return;
-    auto rec = loadBlockRecord(pos);
-    if (rec) {
-        view::close(rec->uid);
-        eraseBlockRecord(pos);
-    }
+void onBlockGone(core::GlobalPos const& pos, std::string const& oldId, std::optional<BlockRecord> const& rec, bool creativeBreak) {
+    if (rec) view::close(rec->uid);
     ItemStack drop = blockItem(oldId, rec ? &*rec : nullptr);
     bool      bare = itemUid(drop).empty();
     if (creativeBreak && bare) return; // creative: only filled blocks drop (shulker-box rule)
@@ -214,25 +209,13 @@ void onBlockRemoved(core::GlobalPos const& pos, std::string const& oldId, bool c
     log().info("storage: {} at {} dropped{}", oldId, pos.key(), bare ? "" : " with contents");
 }
 
-void onBlockPushed(core::GlobalPos const& pos, std::string const& oldId) {
-    // a piston moved it: the record follows the block to the neighbour that now holds it
-    static constexpr int kDirs[6][3] = {{1, 0, 0}, {-1, 0, 0}, {0, 1, 0}, {0, -1, 0}, {0, 0, 1}, {0, 0, -1}};
-    auto                 rec         = loadBlockRecord(pos);
-    if (ourBlock(pos)) return; // pulled back already
-    if (rec) view::close(rec->uid);
-    for (auto const& d : kDirs) {
-        core::GlobalPos n{pos.dim, pos.x + d[0], pos.y + d[1], pos.z + d[2]};
-        auto const*     b = ourBlock(n);
-        if (!b || b->getTypeName() != oldId || loadBlockRecord(n)) continue;
-        if (rec) {
-            eraseBlockRecord(pos);
-            saveBlockRecord(n, *rec);
-        }
-        log().info("storage: {} pushed from {} to {}", oldId, pos.key(), n.key());
-        if (kindOf(*b) == Kind::Sack) checkFall(n);
-        return;
-    }
-    onBlockRemoved(pos, oldId, false);
+void onBlockLanded(core::GlobalPos const& pos, std::optional<BlockRecord> const& rec) {
+    if (rec) saveBlockRecord(pos, *rec);
+    else eraseBlockRecord(pos);
+    auto const* b = ourBlock(pos);
+    if (!b) return;
+    log().info("storage: {} pushed to {}", b->getTypeName(), pos.key());
+    if (kindOf(*b) == Kind::Sack) checkFall(pos);
 }
 
 core::GlobalPos checkFall(core::GlobalPos const& pos) {
@@ -367,13 +350,10 @@ void triggerTrappedPresent(core::GlobalPos const& pos) {
         Vec3              out = center(pos, 1.2f);
         DispenseContainer c(contents[0]);
         auto const*       item = contents[0].mItem.get();
-        bool              ok   = item && item->dispense(*region, c, 0, out, 1 /* up */);
-        if (!ok) {
-            spawnItem(*region, c.mItem, out);
-            c.mItem = ItemStack();
-        }
-        contents[0] = c.mItem;
-        saveContents(rec.uid, contents);
+        // one item is activated like a dispenser would; whatever is left pops out: the present ends up empty
+        if (item) item->dispense(*region, c, 0, out, 1 /* up */);
+        spawnItem(*region, c.mItem, out);
+        eraseContents(rec.uid);
     }
     log().info("storage: trapped present at {} triggered", pos.key());
 }
