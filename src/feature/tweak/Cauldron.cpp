@@ -4,6 +4,7 @@
 #include <climits>
 
 #include "mc/deps/core/math/Vec3.h"
+#include "mc/deps/nbt/CompoundTag.h"
 #include "mc/world/actor/player/Player.h"
 #include "mc/world/level/BlockSource.h"
 #include "mc/world/level/block/Block.h"
@@ -141,12 +142,18 @@ bool cauldronUseOn(UseOn const& use) {
         int  newAux = held.getAuxValue();
         auto newId  = recolor(item, dye, newAux);
         if (newId.empty()) return;
-        if (newId != item || newAux != held.getAuxValue()) {
-            setSelected(*player, makeItem(newId, held.mCount, newAux));
-        }
+        if (newId == item && newAux == held.getAuxValue()) return; // already that colour: keep the water
+        ItemStack dyed = makeItem(newId, held.mCount, newAux);
+        if (held.mUserData) dyed.setUserData(held.mUserData->clone()); // names, lore, ...
+        setSelected(*player, dyed);
         int next = std::max(0, level - kFullBottle);
         if (auto const* nb = withState(b, "fill_level", next)) game::setBlock(*r, pos, *nb);
-        if (next == 0) c->mHasCustomColor = false;
+        if (next == 0) {
+            // the block entity may have been replaced by setBlock: look it up again
+            if (auto* again = r->getBlockEntity(pos); again && blockName(r->getBlock(pos)) == "minecraft:cauldron") {
+                static_cast<CauldronBlockActor*>(again)->mHasCustomColor = false;
+            }
+        }
         playSound(*r, Sound::Splash, Vec3{pos.x + 0.5f, pos.y + 0.8f, pos.z + 0.5f});
         log().info("tweak: {} dyed {} {} in a cauldron", player->getRealName(), static_cast<int>(held.mCount), newId);
     });

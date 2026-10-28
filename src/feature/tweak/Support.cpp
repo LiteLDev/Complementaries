@@ -33,10 +33,12 @@ bool supported(BlockSource& region, BlockPos const& pos, Block const& block) {
 } // namespace
 
 void supportBlockChanged(BlockSource& region, BlockPos const& pos, Block const& previous, Block const& now) {
-    if (isSolid(previous) == isSolid(now) && previous.isAir() == now.isAir()) return;
-    int dim = static_cast<int>(region.getDimensionId());
-    pending().insert(game::globalPos(dim, offset(pos, 0))); // a pot hanging below
-    pending().insert(game::globalPos(dim, offset(pos, 1))); // a trail lying on top
+    if (blockName(previous) == blockName(now)) return;
+    int  dim   = static_cast<int>(region.getDimensionId());
+    auto below = offset(pos, 0);
+    auto above = offset(pos, 1);
+    if (blockName(region.getBlock(below)) == kHangingPotBlock) pending().insert(game::globalPos(dim, below));
+    if (blockName(region.getBlock(above)) == kGunpowderBlock) pending().insert(game::globalPos(dim, above));
 }
 
 void supportTick() {

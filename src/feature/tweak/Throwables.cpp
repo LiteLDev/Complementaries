@@ -62,6 +62,11 @@ Actor* spawnThrown(Player& player, char const* entity, std::string const& initEv
 }
 } // namespace
 
+void throwablesClear() {
+    bounces().clear();
+    lastThrow().clear();
+}
+
 bool throwUse(Player& player, std::string const& itemId) {
     if (!throwEnabled(itemId)) return false;
     bool brick = itemId != "minecraft:slime_ball";

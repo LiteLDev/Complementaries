@@ -47,6 +47,9 @@ void clearDropSuppression() { suppressed().clear(); }
 void onBlockChanged(BlockSource& region, BlockPos const& pos, Block const& previous, Block const& now) {
     auto const& prevId = blockName(previous);
     if (!prevId.starts_with("complementaries:") || prevId == blockName(now)) return;
+    // pushed by a piston (the block comes back elsewhere) or burnt by fire: no drops
+    auto const& nowId = blockName(now);
+    if (nowId == "minecraft:moving_block" || nowId == "minecraft:fire" || nowId == "minecraft:soul_fire") return;
     auto gp = game::globalPos(region, pos);
     if (suppressed().erase(gp)) return;
     auto drops = dropsOf(previous);

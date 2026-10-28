@@ -34,21 +34,18 @@ int levelOf(Player& player) {
 }
 } // namespace
 
-std::string clockText(int dayTicks) {
-    int t       = ((dayTicks % 24000) + 24000) % 24000;
-    int hours   = (t / 1000 + 6) % 24;
-    int minutes = (t % 1000) * 60 / 1000;
-    return tr("message.supplementaries.clock", "{0}:{1}", twoDigits(hours), twoDigits(minutes));
+std::string clockText(int dayTicks, Player const* player) {
+    int  t       = ((dayTicks % 24000) + 24000) % 24000;
+    auto hours   = twoDigits((t / 1000 + 6) % 24);
+    auto minutes = twoDigits((t % 1000) * 60 / 1000);
+    if (player) return trFor(*player, "message.supplementaries.clock", "{0}:{1}", hours, minutes);
+    return tr("message.supplementaries.clock", "{0}:{1}", hours, minutes);
 }
 
 bool infoUse(Player& player, std::string const& itemId) {
     auto const& cfg = config();
     if (itemId == "minecraft:clock" && cfg.clockRightClick) {
-        int t = ((player.getLevel().getTime() % 24000) + 24000) % 24000;
-        showTip(
-            player,
-            trFor(player, "message.supplementaries.clock", "{0}:{1}", twoDigits((t / 1000 + 6) % 24), twoDigits((t % 1000) * 60 / 1000))
-        );
+        showTip(player, clockText(player.getLevel().getTime(), &player));
         return true;
     }
     if (itemId == "minecraft:compass" && cfg.compassRightClick) {

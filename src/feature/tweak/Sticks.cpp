@@ -9,6 +9,7 @@
 #include "feature/tweak/TweakConfig.h"
 #include "feature/tweak/Util.h"
 #include "game/Blocks.h"
+#include "mod/Log.h"
 
 namespace cm::feature::tweak {
 
@@ -78,6 +79,7 @@ bool sticksUseOn(UseOn const& use) {
         if (!block || !game::setBlock(*r, target, *block)) return;
         playBlockSound(*r, Sound::Place, target, *block);
         consumeSelected(*player);
+        log().info("tweak: {} placed {} at {} {} {}", player->getRealName(), blockId, target.x, target.y, target.z);
     });
     return true;
 }

@@ -75,7 +75,7 @@ match the block state; a creative-mode player breaking them gets nothing.
 
 - Using a slimeball throws it (entity `complementaries:throwable_slimeball`). A hit mob gets "slimed":
   Slowness II for `slimedDurationTicks` (default 200). The slimeball bounces off blocks up to two times
-  (losing half its speed each time), then splats with slime particles and the squish sound.
+  (losing half its speed each time, with the squish sound), then splats.
 
 ### 2.3 Clock and compass information
 

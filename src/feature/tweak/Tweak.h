@@ -68,6 +68,8 @@ bool zombieHorseInteract(Player& player, Actor& target);
 
 /// A projectile hit. True when the hit is fully handled (the vanilla hit is skipped).
 bool projectileHit(Actor& projectile, HitResult const& hit);
+/// Forgets per-projectile / per-player throw state (world closed).
+void throwablesClear();
 
 // ---- drops ------------------------------------------------------------------------------------------
 /// The items a block of this unit drops (empty for other blocks).
@@ -126,7 +128,8 @@ bool ringThroughChain(BlockSource& region, BlockPos const& pos, Actor* source);
 [[nodiscard]] std::string recolor(std::string const& itemId, int dye, int& aux);
 
 // ---- info -------------------------------------------------------------------------------------------
-[[nodiscard]] std::string clockText(int dayTicks);
+/// "HH:MM" of a day time (in the player's language when given).
+[[nodiscard]] std::string clockText(int dayTicks, Player const* player = nullptr);
 
 // ---- bottling ---------------------------------------------------------------------------------------
 /// Total experience points of a player.

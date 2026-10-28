@@ -11,6 +11,7 @@
 #include "feature/tweak/TweakConfig.h"
 #include "feature/tweak/Util.h"
 #include "game/Blocks.h"
+#include "mod/Log.h"
 
 namespace cm::feature::tweak {
 
@@ -83,6 +84,7 @@ bool hangingPotUseOn(UseOn const& use) {
                     game::setBlock(*r, pos, *next);
                     playBlockSound(*r, Sound::Place, pos, b);
                     consumeSelected(*player);
+                    log().info("tweak: {} planted {} in a hanging pot", player->getRealName(), plantItem(plant));
                 }
             });
             return true;
@@ -121,6 +123,7 @@ bool hangingPotUseOn(UseOn const& use) {
         if (!block || !game::setBlock(*r, target, *block)) return;
         playBlockSound(*r, Sound::Place, target, *block);
         consumeSelected(*player);
+        log().info("tweak: {} hung a flower pot at {} {} {}", player->getRealName(), target.x, target.y, target.z);
     });
     return true;
 }

@@ -115,6 +115,7 @@ public:
             game::db::onWorldClosed([] {
                 gunpowderClear();
                 supportClear();
+                throwablesClear();
                 clearDeferred();
                 clearDropSuppression();
             });

@@ -1,6 +1,7 @@
 // Placeable gunpowder: a fuse that burns along and lights TNT (docs/spec/tweak.md §1.2).
 
 #include <algorithm>
+#include <format>
 #include <map>
 #include <set>
 
@@ -88,10 +89,8 @@ void primeTnt(BlockSource& region, BlockPos const& pos) {
     static constexpr char const* kDims[] = {"overworld", "nether", "the_end"};
     int dim = static_cast<int>(region.getDimensionId());
     if (dim < 0 || dim > 2) return;
-    runCommand(
-        std::string("execute in ") + kDims[dim] + " run summon tnt " + std::to_string(pos.x) + ".5 " + std::to_string(pos.y)
-        + " " + std::to_string(pos.z) + ".5"
-    );
+    // block centre as a number: "-5.5" would be the centre of block -6
+    runCommand(std::format("execute in {} run summon tnt {:.1f} {} {:.1f}", kDims[dim], pos.x + 0.5, pos.y, pos.z + 0.5));
     playSound(region, Sound::Fuse, Vec3{pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.5f});
 }
 
@@ -175,13 +174,17 @@ bool gunpowderUseOn(UseOn const& use) {
 
     // lighting a trail
     if (isTrail(use.block) && (use.itemId == "minecraft:flint_and_steel" || use.itemId == "minecraft:fire_charge")) {
+        if (game::intState(use.block, kBurning).value_or(0) != 0) return true; // already burning: nothing to use up
         BlockPos pos     = use.pos;
         auto     itemUse = use.itemId;
         defer([=] {
             auto* player = findPlayer(playerId);
             auto* r      = regionOf(dim);
             if (!player || !r) return;
+            Block const& b = r->getBlock(pos);
+            if (!isTrail(b) || game::intState(b, kBurning).value_or(0) != 0) return;
             igniteTrail(*r, pos);
+            log().info("tweak: {} lit gunpowder at {} {} {}", player->getRealName(), pos.x, pos.y, pos.z);
             if (itemUse == "minecraft:fire_charge") {
                 consumeSelected(*player);
             } else if (!player->isCreative()) {
@@ -206,6 +209,7 @@ bool gunpowderUseOn(UseOn const& use) {
         if (!placeTrail(*r, target)) return;
         playBlockSound(*r, Sound::Place, target, r->getBlock(target));
         consumeSelected(*player);
+        log().info("tweak: {} placed gunpowder at {} {} {}", player->getRealName(), target.x, target.y, target.z);
     });
     return true;
 }
