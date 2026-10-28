@@ -1,0 +1,238 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:clock_block",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:hour": {
+          "values": {
+            "min": 0,
+            "max": 11
+          }
+        },
+        "complementaries:minute": {
+          "values": {
+            "min": 0,
+            "max": 11
+          }
+        },
+        "complementaries:two_faced": {
+          "values": {
+            "min": 0,
+            "max": 1
+          }
+        }
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.clock_block",
+        "bone_visibility": {
+          "body_single": "q.block_state('complementaries:two_faced') == 0",
+          "body_double": "q.block_state('complementaries:two_faced') == 1",
+          "hour_front_0": "q.block_state('complementaries:hour') == 0",
+          "minute_front_0": "q.block_state('complementaries:minute') == 0",
+          "hour_back_0": "q.block_state('complementaries:hour') == 0 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_0": "q.block_state('complementaries:minute') == 0 && q.block_state('complementaries:two_faced') == 1",
+          "hour_front_1": "q.block_state('complementaries:hour') == 1",
+          "minute_front_1": "q.block_state('complementaries:minute') == 1",
+          "hour_back_1": "q.block_state('complementaries:hour') == 1 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_1": "q.block_state('complementaries:minute') == 1 && q.block_state('complementaries:two_faced') == 1",
+          "hour_front_2": "q.block_state('complementaries:hour') == 2",
+          "minute_front_2": "q.block_state('complementaries:minute') == 2",
+          "hour_back_2": "q.block_state('complementaries:hour') == 2 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_2": "q.block_state('complementaries:minute') == 2 && q.block_state('complementaries:two_faced') == 1",
+          "hour_front_3": "q.block_state('complementaries:hour') == 3",
+          "minute_front_3": "q.block_state('complementaries:minute') == 3",
+          "hour_back_3": "q.block_state('complementaries:hour') == 3 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_3": "q.block_state('complementaries:minute') == 3 && q.block_state('complementaries:two_faced') == 1",
+          "hour_front_4": "q.block_state('complementaries:hour') == 4",
+          "minute_front_4": "q.block_state('complementaries:minute') == 4",
+          "hour_back_4": "q.block_state('complementaries:hour') == 4 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_4": "q.block_state('complementaries:minute') == 4 && q.block_state('complementaries:two_faced') == 1",
+          "hour_front_5": "q.block_state('complementaries:hour') == 5",
+          "minute_front_5": "q.block_state('complementaries:minute') == 5",
+          "hour_back_5": "q.block_state('complementaries:hour') == 5 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_5": "q.block_state('complementaries:minute') == 5 && q.block_state('complementaries:two_faced') == 1",
+          "hour_front_6": "q.block_state('complementaries:hour') == 6",
+          "minute_front_6": "q.block_state('complementaries:minute') == 6",
+          "hour_back_6": "q.block_state('complementaries:hour') == 6 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_6": "q.block_state('complementaries:minute') == 6 && q.block_state('complementaries:two_faced') == 1",
+          "hour_front_7": "q.block_state('complementaries:hour') == 7",
+          "minute_front_7": "q.block_state('complementaries:minute') == 7",
+          "hour_back_7": "q.block_state('complementaries:hour') == 7 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_7": "q.block_state('complementaries:minute') == 7 && q.block_state('complementaries:two_faced') == 1",
+          "hour_front_8": "q.block_state('complementaries:hour') == 8",
+          "minute_front_8": "q.block_state('complementaries:minute') == 8",
+          "hour_back_8": "q.block_state('complementaries:hour') == 8 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_8": "q.block_state('complementaries:minute') == 8 && q.block_state('complementaries:two_faced') == 1",
+          "hour_front_9": "q.block_state('complementaries:hour') == 9",
+          "minute_front_9": "q.block_state('complementaries:minute') == 9",
+          "hour_back_9": "q.block_state('complementaries:hour') == 9 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_9": "q.block_state('complementaries:minute') == 9 && q.block_state('complementaries:two_faced') == 1",
+          "hour_front_10": "q.block_state('complementaries:hour') == 10",
+          "minute_front_10": "q.block_state('complementaries:minute') == 10",
+          "hour_back_10": "q.block_state('complementaries:hour') == 10 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_10": "q.block_state('complementaries:minute') == 10 && q.block_state('complementaries:two_faced') == 1",
+          "hour_front_11": "q.block_state('complementaries:hour') == 11",
+          "minute_front_11": "q.block_state('complementaries:minute') == 11",
+          "hour_back_11": "q.block_state('complementaries:hour') == 11 && q.block_state('complementaries:two_faced') == 1",
+          "minute_back_11": "q.block_state('complementaries:minute') == 11 && q.block_state('complementaries:two_faced') == 1"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_clock_side",
+          "render_method": "opaque"
+        },
+        "dial": {
+          "texture": "cm_clock_face",
+          "render_method": "opaque"
+        },
+        "hands": {
+          "texture": "cm_clock_hands",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -7
+        ],
+        "size": [
+          16,
+          16,
+          15
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -7
+        ],
+        "size": [
+          16,
+          16,
+          15
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#7a5530",
+      "minecraft:loot": "loot_tables/blocks/clock_block.json",
+      "minecraft:flammable": {
+        "catch_chance_modifier": 5,
+        "destroy_chance_modifier": 20
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true
+          }
+        ]
+      },
+      "minecraft:movable": {
+        "movement_type": "immovable"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:two_faced') == 1",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -8,
+              0,
+              -7
+            ],
+            "size": [
+              16,
+              16,
+              14
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -7
+            ],
+            "size": [
+              16,
+              16,
+              14
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/clock_block_two_faced.json"
+        }
+      }
+    ]
+  }
+}

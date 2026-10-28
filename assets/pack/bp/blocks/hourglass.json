@@ -1,0 +1,790 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:hourglass",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:level": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        },
+        "complementaries:dust": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        },
+        "complementaries:dust_page": {
+          "values": {
+            "min": 0,
+            "max": 1
+          }
+        }
+      },
+      "traits": {
+        "minecraft:placement_position": {
+          "enabled_states": [
+            "minecraft:block_face"
+          ]
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.hourglass",
+        "bone_visibility": {
+          "sand_high_0": "q.block_state('complementaries:level') == 0 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_0": "q.block_state('complementaries:level') == 0 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_1": "q.block_state('complementaries:level') == 1 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_1": "q.block_state('complementaries:level') == 1 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_1": "q.block_state('complementaries:level') == 1 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_2": "q.block_state('complementaries:level') == 2 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_2": "q.block_state('complementaries:level') == 2 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_2": "q.block_state('complementaries:level') == 2 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_3": "q.block_state('complementaries:level') == 3 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_3": "q.block_state('complementaries:level') == 3 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_3": "q.block_state('complementaries:level') == 3 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_4": "q.block_state('complementaries:level') == 4 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_4": "q.block_state('complementaries:level') == 4 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_4": "q.block_state('complementaries:level') == 4 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_5": "q.block_state('complementaries:level') == 5 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_5": "q.block_state('complementaries:level') == 5 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_5": "q.block_state('complementaries:level') == 5 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_6": "q.block_state('complementaries:level') == 6 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_6": "q.block_state('complementaries:level') == 6 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_6": "q.block_state('complementaries:level') == 6 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_7": "q.block_state('complementaries:level') == 7 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_7": "q.block_state('complementaries:level') == 7 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_7": "q.block_state('complementaries:level') == 7 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_8": "q.block_state('complementaries:level') == 8 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_8": "q.block_state('complementaries:level') == 8 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_8": "q.block_state('complementaries:level') == 8 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_9": "q.block_state('complementaries:level') == 9 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_9": "q.block_state('complementaries:level') == 9 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_9": "q.block_state('complementaries:level') == 9 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_10": "q.block_state('complementaries:level') == 10 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_10": "q.block_state('complementaries:level') == 10 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_10": "q.block_state('complementaries:level') == 10 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_11": "q.block_state('complementaries:level') == 11 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_11": "q.block_state('complementaries:level') == 11 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_11": "q.block_state('complementaries:level') == 11 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_12": "q.block_state('complementaries:level') == 12 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_12": "q.block_state('complementaries:level') == 12 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_12": "q.block_state('complementaries:level') == 12 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_13": "q.block_state('complementaries:level') == 13 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_13": "q.block_state('complementaries:level') == 13 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_13": "q.block_state('complementaries:level') == 13 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_14": "q.block_state('complementaries:level') == 14 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "sand_high_14": "q.block_state('complementaries:level') == 14 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0",
+          "stream_14": "q.block_state('complementaries:level') == 14 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0 && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+          "sand_low_15": "q.block_state('complementaries:level') == 15 && (q.block_state('complementaries:dust') + q.block_state('complementaries:dust_page')) > 0"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_hourglass_frame",
+          "render_method": "alpha_test"
+        },
+        "glass": {
+          "texture": "cm_hourglass_glass",
+          "render_method": "alpha_test"
+        },
+        "sand": {
+          "texture": "cm_hourglass_sand",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          16,
+          8
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          16,
+          8
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 1
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#d6ae3c",
+      "minecraft:loot": "loot_tables/blocks/hourglass.json",
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true
+          }
+        ]
+      },
+      "minecraft:movable": {
+        "movement_type": "immovable"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              90
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              90
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_sand",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_red_sand",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_suspicious_sand",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_sugar",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_ash",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_gunpowder",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_glowstone",
+              "render_method": "alpha_test"
+            }
+          },
+          "minecraft:light_emission": 10
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_soul_sand",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_blaze",
+              "render_method": "alpha_test"
+            }
+          },
+          "minecraft:light_emission": 6
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_redstone",
+              "render_method": "alpha_test"
+            }
+          },
+          "minecraft:light_emission": 4
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_slime",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_honey",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_dust",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_dust",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 0 && q.block_state('complementaries:dust') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_dust",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_white",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_orange",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_magenta",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_light_blue",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_yellow",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_lime",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_pink",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_gray",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_silver",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_cyan",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_purple",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_blue",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_brown",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_green",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_red",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:dust_page') == 1 && q.block_state('complementaries:dust') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_hourglass_frame",
+              "render_method": "alpha_test"
+            },
+            "glass": {
+              "texture": "cm_hourglass_glass",
+              "render_method": "alpha_test"
+            },
+            "sand": {
+              "texture": "cm_hourglass_concrete_black",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

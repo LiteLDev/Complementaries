@@ -1,0 +1,6 @@
+tile.complementaries:globe.name=地球仪
+tile.complementaries:globe_sepia.name=墨绘地球仪
+tile.complementaries:wind_vane.name=风向标
+tile.complementaries:clock_block.name=时钟方块
+tile.complementaries:hourglass.name=沙漏
+item.complementaries:altimeter.name=海拔计

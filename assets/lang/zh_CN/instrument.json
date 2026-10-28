@@ -1,0 +1,15 @@
+{
+  "message.supplementaries.altimeter": "Y：{}",
+  "message.supplementaries.globe": "由流浪商人出售",
+  "message.supplementaries.hourglass": "可放入任意砂类或粉末",
+  "message.supplementaries.wind_vane": "会对天气变化产生反应",
+  "commands.supplementaries.globe_changed": "地球仪种子已改变",
+  "commands.supplementaries.globe_reset": "地球仪种子已重设",
+  "globe.supplementaries.earth": "地球",
+  "globe.supplementaries.flat": "地平说",
+  "globe.supplementaries.moon": "月球",
+  "globe.supplementaries.round": "圆球",
+  "globe.supplementaries.sun": "太阳",
+  "cm.instrument.am": " 上午",
+  "cm.instrument.pm": " 下午"
+}

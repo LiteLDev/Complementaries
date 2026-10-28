@@ -1,0 +1,28 @@
+{
+  "complementaries.block.globe.spin": {
+    "category": "block",
+    "sounds": [
+      { "name": "sounds/block/grindstone/grindstone1", "volume": 0.6, "pitch": 1.4 },
+      { "name": "sounds/block/grindstone/grindstone2", "volume": 0.6, "pitch": 1.4 }
+    ]
+  },
+  "complementaries.block.clock.tick_1": {
+    "category": "block",
+    "sounds": [{ "name": "sounds/random/click", "volume": 0.5, "pitch": 1.9 }]
+  },
+  "complementaries.block.clock.tick_2": {
+    "category": "block",
+    "sounds": [{ "name": "sounds/random/wood_click", "volume": 0.5, "pitch": 1.6 }]
+  },
+  "complementaries.block.wind_vane.spin": {
+    "category": "block",
+    "sounds": [
+      { "name": "sounds/random/door_open", "volume": 0.4, "pitch": 0.7 },
+      { "name": "sounds/random/door_close", "volume": 0.4, "pitch": 0.6 }
+    ]
+  },
+  "complementaries.block.rotate": {
+    "category": "block",
+    "sounds": [{ "name": "sounds/random/wood_click", "volume": 0.8, "pitch": 1.2 }]
+  }
+}

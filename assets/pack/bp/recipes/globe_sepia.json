@@ -1,0 +1,10 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "complementaries:globe_sepia" },
+    "tags": ["crafting_table"],
+    "ingredients": [{ "item": "complementaries:globe" }, { "item": "complementaries:antique_ink" }],
+    "unlock": [{ "item": "complementaries:globe" }],
+    "result": { "item": "complementaries:globe_sepia", "count": 1 }
+  }
+}
