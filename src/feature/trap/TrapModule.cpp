@@ -55,6 +55,7 @@ enum class PlaceKind { None, Cage, Spikes };
 struct Placing {
     PlaceKind   kind = PlaceKind::None;
     int         dim  = 0;
+    BlockPos    target{0, 0, 0}; ///< where the item places its block
     CompoundTag cageData;
     spikes::Tip tip;
 };
@@ -79,6 +80,26 @@ void later(std::function<void()> fn) { gNextTick.push_back(std::move(fn)); }
 
 bool isHoe(std::string const& id) { return id.ends_with("_hoe"); }
 
+/// Unit offset of a clicked face (Bedrock FacingID: 0 down, 1 up, 2 north, 3 south, 4 west, 5 east).
+BlockPos faceOffset(int face) {
+    switch (face) {
+    case 0: return {0, -1, 0};
+    case 1: return {0, 1, 0};
+    case 2: return {0, 0, -1};
+    case 3: return {0, 0, 1};
+    case 4: return {-1, 0, 0};
+    case 5: return {1, 0, 0};
+    default: return {0, 0, 0};
+    }
+}
+
+/// The block a placement on `face` of `at` fills: `at` itself when replaceable, else its neighbour.
+BlockPos placementTarget(BlockSource& region, BlockPos const& at, int face) {
+    if (game::replaceable(region, at)) return at;
+    auto d = faceOffset(face);
+    return BlockPos{at.x + d.x, at.y + d.y, at.z + d.z};
+}
+
 /// LeviLamina passes the hit position of the click; accept both absolute and block-relative.
 Vec3 absoluteClick(Vec3 const& click, BlockPos const& pos) {
     bool relative = click.x >= 0.f && click.x <= 1.f && click.y >= 0.f && click.y <= 1.f && click.z >= 0.f && click.z <= 1.f;
@@ -97,6 +118,8 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
     int        dim   = static_cast<int>(player.getDimensionId());
     int64_t    puid  = uid(player);
     auto       block = ev.block();
+    int        face  = static_cast<int>(ev.face());
+    auto&      region = player.getDimensionBlockSource();
 
     if (id == kCageId && config().cage.enabled) {
         if (!player.isSneaking()) {
@@ -104,6 +127,10 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
             ev.cancel();
             if (cage::isFull(item)) {
                 Vec3 click = absoluteClick(ev.clickPos(), at);
+                if (face != 1) { // keep the mob out of the clicked block
+                    auto d = faceOffset(face);
+                    click  = Vec3{click.x + 0.5f * d.x, click.y + (face == 0 ? -1.f : 0.f), click.z + 0.5f * d.z};
+                }
                 later([puid, click] {
                     if (auto* p = playerByUid(puid)) cage::release(*p, click);
                 });
@@ -114,6 +141,7 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
             gPlacing          = Placing{};
             gPlacing.kind     = PlaceKind::Cage;
             gPlacing.dim      = dim;
+            gPlacing.target   = placementTarget(region, at, face);
             gPlacing.cageData = *userData(item);
         }
         return;
@@ -121,8 +149,9 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
     if (id == kTippedId) {
         if (auto tip = spikes::itemTip(item)) {
             gPlacing      = Placing{};
-            gPlacing.kind = PlaceKind::Spikes;
-            gPlacing.dim  = dim;
+            gPlacing.kind   = PlaceKind::Spikes;
+            gPlacing.dim    = dim;
+            gPlacing.target = placementTarget(region, at, face);
             gPlacing.tip  = *tip;
         }
         return;
@@ -170,7 +199,7 @@ void onBlockChanged(ll::event::BlockChangedEvent& ev) {
             if (auto* r = regionOf(dim)) cage::onRemoved(*r, pos, drop);
         });
     }
-    if (gPlacing.kind != PlaceKind::None && gPlacing.dim == dim && prevId != nextId) {
+    if (gPlacing.kind != PlaceKind::None && gPlacing.dim == dim && gPlacing.target == pos && prevId != nextId) {
         if (gPlacing.kind == PlaceKind::Cage && nextId == kCageId) {
             later([dim, pos, data = gPlacing.cageData] {
                 if (auto* r = regionOf(dim)) cage::onPlaced(*r, pos, data);
@@ -235,8 +264,20 @@ LL_TYPE_INSTANCE_HOOK(
     std::string const& deadName,
     Actor*             dead
 ) {
-    if (gSpikeHurt) return {"death.attack.complementaries.bamboo_spikes", {deadName}};
-    return origin(deadName, dead);
+    if (!gSpikeHurt) return origin(deadName, dead);
+    // Java SpikePlayerDamageSource: the ".player" variant names the entity with the kill credit
+    if (dead && dead->mLastHurtByMobTime > 0) {
+        if (auto* killer = actorByUid(dead->mLastHurtByMobId->rawID); killer && killer != dead) {
+            std::string name = killer->isPlayer() ? static_cast<Player*>(killer)->getRealName() : killer->getNameTag();
+            if (name.empty()) {
+                std::string type = killer->getTypeName();
+                if (auto colon = type.find(':'); colon != std::string::npos) type = type.substr(colon + 1);
+                name = "%entity." + type + ".name";
+            }
+            return {"death.attack.supplementaries.bamboo_spikes.player", {deadName, name}};
+        }
+    }
+    return {"death.attack.supplementaries.bamboo_spikes", {deadName}};
 }
 
 } // namespace

@@ -349,9 +349,9 @@ std::optional<Tip> itemTip(ItemStack const& item) {
 void onRemoved(BlockSource& region, BlockPos const& pos, bool drop) {
     auto gp  = game::globalPos(region, pos);
     auto tip = tipAt(gp);
-    if (!tip) return;
-    forget(gp);
-    if (drop && tip->charges > 0) {
+    if (tip) forget(gp);
+    // the tipped loot table drops nothing: drop the tipped item, or plain spikes without data
+    if (drop && tip && tip->charges > 0) {
         spawnItem(region, Vec3{pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.5f}, tippedItem(tip->potion, tip->charges));
     } else if (drop) {
         spawnItem(region, Vec3{pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.5f}, makeItem(kSpikesId));

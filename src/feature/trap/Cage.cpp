@@ -58,6 +58,7 @@ struct Record {
     CompoundTag mob;
     std::string name;
     int64_t     display = 0;
+    int         missing = 0; ///< maintenance checks the display was not found (not saved)
 };
 
 std::map<core::GlobalPos, Record> gCages;
@@ -296,6 +297,7 @@ Actor* displayAt(core::GlobalPos const& pos) {
 void addCommandMob(std::string const& type) { gCommandMobs.insert(type); }
 
 void maintain(Level& level) {
+    if (!game::db::available()) return;
     ensureLoaded();
     // displays of placed cages: present and in place
     for (auto it = gCages.begin(); it != gCages.end();) {
@@ -321,12 +323,19 @@ void maintain(Level& level) {
         }
         Actor* display = actorByUid(rec.display);
         if (!display || !display->isAlive()) {
+            // entities load after their chunk: give a saved display a few seconds to appear
+            if (++rec.missing < 3 && rec.display != 0) {
+                ++it;
+                continue;
+            }
+            rec.missing = 0;
             if (auto* fresh = spawnDisplay(region, pos, rec)) {
                 rec.display = uid(*fresh);
                 store(gp, rec);
             }
-        } else if ((display->getPosition() - center(pos)).length() > 0.05) {
-            display->teleport(center(pos), display->getDimensionId());
+        } else {
+            rec.missing = 0;
+            if ((display->getPosition() - center(pos)).length() > 0.05) display->teleport(center(pos), display->getDimensionId());
         }
         ++it;
     }
@@ -345,7 +354,7 @@ CM_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     using cm::feature::trap::TrapCageCommandParams;
     cmd.overload<TrapCageCommandParams>().text("cage").required("entity").execute(
         [](CommandOrigin const& origin, CommandOutput& output, TrapCageCommandParams const& params) {
-            if (!cm::commands::isAdmin(origin)) return output.error("You need operator permission.");
+            if (!cm::commands::isAdmin(origin)) return output.error(cm::tr("cm.trap.need_op", "You need operator permission."));
             std::string type = params.entity;
             if (type.find(':') == std::string::npos) type = "minecraft:" + type;
             cm::feature::trap::cage::addCommandMob(type);

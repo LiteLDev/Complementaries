@@ -54,7 +54,7 @@ files named after the ids below, RP fragments `*.d/trap.json`, `texts.d/*/trap.l
 - Valid potion: has effects; with `only_allow_harmful_effects` (default on) every effect must be
   harmful and the potion must not be in the blacklist (oozing, infested); otherwise only the
   finite blacklist applies (empty in vanilla).
-- Applying (server, per entity, 20-tick cooldown per block since the last charge was used): for
+- Applying (server, per entity, 20-tick cooldown per block since the last charge was used, so none for infinite tips): for
   every effect of the potion that the entity can receive and does not have yet: instant effects
   are applied at once (scale 0.5), others are added with 10 % of the potion's duration and the
   same amplifier. If at least one effect was used: a coloured potion particle and one charge is
@@ -184,8 +184,7 @@ Complementaries additions: `cm.trap.charges` "Charges: {}", `cm.trap.infinite` "
   carry the potion id as aux value (one BP recipe per harmful lingering potion) and get their NBT
   when placed or picked.
 - Spikes: a server tick scans living entities against spike blocks (Java `entityInside`).
-  Damage cause `contact`; the death message is replaced with
-  `death.attack.complementaries.bamboo_spikes` (RP text).
+  Damage cause `contact`; the death message is replaced with the Supplementaries keys (RP text).
 - Cage display: the captured mob is shown by a real copy of the mob inside the cage, frozen
   (no AI), persistent, invulnerable, untargetable by cages and spikes, tagged `cm_cage_display`.
   It is removed with the cage and re-created if it goes missing. Works for vanilla clients.

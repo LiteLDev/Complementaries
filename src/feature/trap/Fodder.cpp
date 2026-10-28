@@ -6,6 +6,7 @@
 #include <cmath>
 #include <random>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "ll/api/service/Bedrock.h"
 
@@ -127,7 +128,7 @@ void tickGoal(Mob& mob, Goal& goal, uint64_t now) {
     }
     case Phase::Seeking:
     case Phase::Eating: {
-        if (!validTarget(region, goal.target) || goal.tryTicks > 200 || goal.tryTicks < -100) {
+        if (!validTarget(region, goal.target) || goal.tryTicks > 200) {
             goal.phase = Phase::Idle;
             return;
         }
@@ -241,30 +242,30 @@ void onWorldClosed() { gGoals.clear(); }
 
 void tick(Level& level) {
     if (!config().fodder.enabled) return;
-    uint64_t now = currentTick();
-    bool     scan = now % 20 == 0; // idle animals are checked once a second
-    std::unordered_map<int64_t, bool> seen;
-    for (Actor* actor : level.getRuntimeActorList()) {
-        if (!actor) continue;
-        int64_t id = uid(*actor);
-        auto    it = gGoals.find(id);
-        if (it == gGoals.end()) {
-            if (!scan || !eligible(*actor)) continue;
-            it = gGoals.emplace(id, Goal{}).first;
-        } else if (it->second.phase == Phase::Idle && !scan) {
-            seen[id] = true;
+    uint64_t    now    = currentTick();
+    auto const& eaters = config().fodder.eaters;
+    if (now % 20 == 0) {
+        // once a second: track the animals that eat fodder and run their idle goals
+        std::unordered_set<int64_t> present;
+        for (Actor* actor : level.getRuntimeActorList()) {
+            if (!actor || actor->isPlayer() || !actor->hasCategory(ActorCategory::Mob)) continue;
+            if (std::find(eaters.begin(), eaters.end(), actor->getTypeName()) == eaters.end()) continue;
+            int64_t id = uid(*actor);
+            present.insert(id);
+            auto& goal = gGoals[id];
+            if (goal.phase == Phase::Idle && actor->isAlive()) tickGoal(static_cast<Mob&>(*actor), goal, now);
+        }
+        std::erase_if(gGoals, [&](auto const& entry) { return !present.contains(entry.first); });
+    }
+    // every tick: animals walking to fodder or eating it
+    for (auto& [id, goal] : gGoals) {
+        if (goal.phase == Phase::Idle) continue;
+        Actor* actor = actorByUid(id);
+        if (!actor || !actor->isAlive()) {
+            goal.phase = Phase::Idle;
             continue;
         }
-        seen[id] = true;
-        if (!actor->isAlive()) continue;
-        tickGoal(static_cast<Mob&>(*actor), it->second, now);
-    }
-    if (scan) {
-        for (auto it = gGoals.begin(); it != gGoals.end();) {
-            if (!seen.contains(it->first)) it = gGoals.erase(it);
-            else ++it;
-        }
+        tickGoal(static_cast<Mob&>(*actor), goal, now);
     }
 }
-
 } // namespace cm::feature::trap::fodder

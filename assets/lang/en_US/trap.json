@@ -7,6 +7,7 @@
   "commands.supplementaries.cage": "Added {} to temporary Cage and Jars catchable list",
   "cm.trap.charges": "Charges: {}",
   "cm.trap.charges_infinite": "Charges: infinite",
+  "cm.trap.need_op": "You need operator permission.",
   "cm.trap.sneak": "Sneak",
   "cm.trap.cage.command_unknown": "Unknown entity type: {}",
   "cm.trap.potion.slowness": "Slowness",

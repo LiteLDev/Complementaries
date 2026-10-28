@@ -7,6 +7,7 @@
   "commands.supplementaries.cage": "已将{}添加至暂时性的笼子与玻璃罐可捕捉列表",
   "cm.trap.charges": "剩余次数：{}",
   "cm.trap.charges_infinite": "剩余次数：无限",
+  "cm.trap.need_op": "你需要管理员权限。",
   "cm.trap.sneak": "潜行",
   "cm.trap.cage.command_unknown": "未知的实体类型：{}",
   "cm.trap.potion.slowness": "迟缓",

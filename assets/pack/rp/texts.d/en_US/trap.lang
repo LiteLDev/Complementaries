@@ -5,5 +5,5 @@ tile.complementaries:cage.name=Cage
 item.complementaries:cage=Cage
 tile.complementaries:fodder.name=Fodder
 item.complementaries:fodder=Fodder
-death.attack.complementaries.bamboo_spikes=%1$s was impaled on a spike
-death.attack.complementaries.bamboo_spikes.player=%1$s impaled on a spike whilst fighting %2$s
+death.attack.supplementaries.bamboo_spikes=%1$s was impaled on a spike
+death.attack.supplementaries.bamboo_spikes.player=%1$s impaled on a spike whilst fighting %2$s

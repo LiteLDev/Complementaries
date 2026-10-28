@@ -45,8 +45,9 @@ $tipColors = [ordered]@{
     7 = '#3f76e4' # blue (speed, water, night vision)
     8 = '#8932b8' # purple (others)
 }
-foreach ($i in $tipColors.Keys) {
-    $c = $tipColors[$i]
+foreach ($entry in $tipColors.GetEnumerator()) {
+    $i = $entry.Key
+    $c = $entry.Value
     $pal = $spikePal.Clone()
     $pal.p = Shade-Color $c 1.35
     $pal.T = $c
