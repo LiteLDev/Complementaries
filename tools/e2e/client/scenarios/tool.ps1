@@ -4,15 +4,16 @@
 $r = Invoke-SelfTest 'tool.*'
 if ($r.Fail -gt 0 -or $r.Pass -lt 15) { throw "tool selftests: pass=$($r.Pass) fail=$($r.Fail)" }
 
-function Hold-Use([int]$ms) {
+# Holds the use button for $ms, then releases it. Headless runs do it in one request (the input pipe
+# does not answer a second connection while the button is held); -Foreground uses SendInput.
+function Use-Held([int]$ms) {
     Move-Mouse 0.5 0.5 -Relative
-    [BsE2E.Native]::MouseButton(1, $false)
-    Start-Sleep -Milliseconds $ms
-}
-# the headless input pipe can be busy right after a screenshot: retry the release
-function Release-Use {
-    for ($i = 0; $i -lt 5; $i++) {
-        try { [BsE2E.Native]::MouseButton(1, $true); break } catch { if ($i -eq 4) { throw }; Start-Sleep -Milliseconds 500 }
+    if (Get-Command Send-HeadlessRaw -ErrorAction SilentlyContinue) {
+        Send-HeadlessRaw -Action click -Button right -HoldMs $ms
+    } else {
+        [BsE2E.Native]::MouseButton(1, $false)
+        Start-Sleep -Milliseconds $ms
+        [BsE2E.Native]::MouseButton(1, $true)
     }
     Start-Sleep -Milliseconds 200
 }
@@ -31,8 +32,7 @@ Start-Sleep -Milliseconds 500
 # slingshot: hold to charge (bow pose), release to fire the cobblestone
 Press-Key '1'
 $mark = Get-LogMark
-Hold-Use 1400
-Release-Use
+Use-Held 1400
 Start-Sleep -Milliseconds 150
 Save-Screenshot 'slingshot-flying' | Out-Null
 Wait-LogLine 'slingshot fired 1 projectile' 10 -Since $mark | Out-Null
@@ -50,8 +50,7 @@ Wait-LogLine 'confetti popper used' 10 -Since $mark | Out-Null
 
 # bubble blower: blow into the air, then place a bubble block on the ground
 Press-Key '4'
-Hold-Use 1500
-Release-Use
+Use-Held 1500
 Save-Screenshot 'bubbles' | Out-Null
 Invoke-Chat '/tp @s ~ ~ ~ 0 50'
 $mark = Get-LogMark
