@@ -11,10 +11,10 @@ below. Selftest area: `ctx.testPos(800..899)`.
 | Id (`complementaries:`) | Kind | Block states | Drops | Notes |
 | --- | --- | --- | --- | --- |
 | `relayer` | block | `minecraft:facing_direction` (6, placement trait), `complementaries:powered` (bool) | itself | stone-like, hardness 3.0 (pickaxe), not a redstone conductor |
-| `speaker_block` | block | `minecraft:cardinal_direction` (4, placement trait), `complementaries:powered` (bool) | itself | wood, hardness 1.0 (axe), flammable |
+| `speaker_block` | block | `minecraft:cardinal_direction` (4, placement trait), `complementaries:powered` (bool) | itself | wood, hardness 1.0 (axe), flammable; pistons cannot move it (it keeps a message, like a block entity) |
 | `crystal_display` | block | `minecraft:cardinal_direction`, `complementaries:power` (0-15), `complementaries:chain` (0 alone, 1 tens, 2 units) | itself | glass-like frame, hardness 0.5 |
 | `redstone_illuminator` | block | `complementaries:power` (0-15) | itself | light level = `power`; hardness 0.3, glass sounds |
-| `dispenser_minecart` | item + entity | entity is a chest-type minecart with a 9-slot inventory | item: itself; breaking the cart drops a minecart, a dispenser and the contents | stacks to 1 |
+| `dispenser_minecart` | item + entity | entity is a chest-type minecart with a 9-slot inventory | breaking the cart drops the cart item (not in creative) and its contents | stacks to 1 |
 
 Recipes *(reconstructed: the pattern is ours, the ingredients follow Supplementaries)*:
 
@@ -36,8 +36,8 @@ Recipes *(reconstructed: the pattern is ours, the ingredients follow Supplementa
   observer, redstone block, another relayer facing into it) or the power of a powered solid block.
 - When the input is above 0 the relayer is `powered` and emits a **strong** signal of 15 out of its
   front face (it powers the block in front, which in turn powers wires and components next to it,
-  like a repeater would). There is **no delay**: the output changes in the same redstone update as
-  the input.
+  like a repeater would). There is **no repeater delay** (see *Relayer timing* below for the one
+  Bedrock tick).
 - Side and front inputs are ignored. Relayers chain without delay.
 
 ### Speaker Block
@@ -124,5 +124,8 @@ Redstone Illuminator, Minecart with Dispenser.
   sent as chat lines, which Bedrock reads aloud when the player enables *Chat text-to-speech*.
 - **Speaker screen**: drawn as a server form on every client (Bedrock has no data-driven way to draw a
   block screen; the form has the same fields as the Java screen).
+- **Relayer timing**: Bedrock evaluates its circuits once per game tick and data-driven blocks cannot
+  react inside that evaluation, so a relayer follows its input on the next tick (a whole chain of
+  relayers still settles in that one tick). Java updates it within the same tick.
 - **Weak vs strong power**: Bedrock's circuit system does not separate weak and strong input power of a
   solid block, so a relayer behind a weakly powered block also turns on.

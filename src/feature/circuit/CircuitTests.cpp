@@ -279,36 +279,42 @@ CM_REGISTER_SELFTEST("circuit.dispenser_minecart", [](Context& ctx) -> ll::coro:
     // summoning right after the area loads can fail while the chunk is not ticking yet: retry
     bool summoned = co_await waitFor(40, [&] { return command("summon complementaries:dispenser_minecart " + at(rail)); });
     ctx.require(summoned, "summon command succeeds");
-    Actor* cart  = nullptr;
-    auto   find  = [&] {
+    // the cart is looked up again after every tick (no actor pointers across ticks)
+    std::int64_t cartId   = 0;
+    auto         findCart = [&]() -> Actor* {
         for (auto* a : ll::service::getLevel()->getRuntimeActorList()) {
-            if (a && a->getTypeName() == circuit::kCart
-                && a->getPosition().distanceTo(Vec3{rail.x + 0.5f, rail.y + 0.0f, rail.z + 0.5f}) < 3.f) {
-                cart = a;
-                return true;
+            if (!a || a->getTypeName() != circuit::kCart) continue;
+            if (cartId ? a->getOrCreateUniqueID().rawID == cartId
+                       : a->getPosition().distanceTo(Vec3{rail.x + 0.5f, rail.y + 0.0f, rail.z + 0.5f}) < 3.f) {
+                cartId = a->getOrCreateUniqueID().rawID;
+                return a;
             }
         }
-        return false;
+        return nullptr;
     };
-    co_await waitFor(20, find);
-    if (!cart) {
-        for (auto* a : ll::service::getLevel()->getRuntimeActorList()) {
-            if (a && !a->isPlayer()) ctx.info("actor " + a->getTypeName() + " at " + std::to_string(a->getPosition().x) + "," + std::to_string(a->getPosition().y) + "," + std::to_string(a->getPosition().z));
-        }
+    auto slot0 = [&]() -> int {
+        auto* cart = findCart();
+        if (!cart) return -1;
+        auto container = cart->getEntityContext().tryGetComponent<ContainerComponent>();
+        return container ? static_cast<int>(container->mContainer->getItem(0).mCount) : -1;
+    };
+    co_await waitFor(20, [&] { return findCart() != nullptr; });
+    {
+        auto* cart = findCart();
+        ctx.require(cart != nullptr, "the cart was summoned");
+        auto container = cart->getEntityContext().tryGetComponent<ContainerComponent>();
+        ctx.require(container.has_value(), "the cart has an inventory");
+        Container& inv = *container->mContainer;
+        ctx.check(inv.getContainerSize() == 9, "9 slots, got " + std::to_string(inv.getContainerSize()));
+        ItemStack arrows;
+        arrows.reinit("minecraft:arrow", 4, 0);
+        inv.setItem(0, arrows);
+        ctx.check(circuit::dispenseFromCart(*cart), "the cart fires");
+        ctx.check(inv.getItem(0).mCount == 3, "one arrow used, left " + std::to_string(static_cast<int>(inv.getItem(0).mCount)));
     }
-    ctx.require(cart != nullptr, "the cart was summoned");
-    auto container = cart->getEntityContext().tryGetComponent<ContainerComponent>();
-    ctx.require(container.has_value(), "the cart has an inventory");
-    Container& inv = *container->mContainer;
-    ctx.check(inv.getContainerSize() == 9, "9 slots, got " + std::to_string(inv.getContainerSize()));
-    ItemStack arrows;
-    arrows.reinit("minecraft:arrow", 4, 0);
-    inv.setItem(0, arrows);
-    ctx.check(circuit::dispenseFromCart(*cart), "the cart fires");
-    ctx.check(inv.getItem(0).mCount == 3, "one arrow used, left " + std::to_string(static_cast<int>(inv.getItem(0).mCount)));
     // a powered activator rail fires it by itself
     ctx.require(ctx.setBlock(shift(rail, 0, 0, -1), "minecraft:redstone_block"), "rail power placed");
-    bool fired = co_await waitFor(20, [&] { return inv.getItem(0).mCount <= 2; });
+    bool fired = co_await waitFor(20, [&] { int n = slot0(); return n >= 0 && n <= 2; });
     ctx.check(fired, "the cart fires on a powered activator rail");
-    cart->remove();
+    if (auto* cart = findCart()) cart->remove();
 });

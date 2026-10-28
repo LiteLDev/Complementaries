@@ -48,12 +48,14 @@ foreach ($on in $false, $true) {
         StoneBase $x $y
     }
     Save $blocks "relayer_front_$suffix" $front $stone
-    # side faces: the line runs from the back (bottom of the texture after rotation) to the front
+    # side faces (they rotate with the block, so the art is symmetric): a redstone channel ring
     $side = Grid 16 16 {
         param($x, $y)
-        if ($x -ge 7 -and $x -le 8 -and $y -ge 3 -and $y -le 12) { return $lit }
-        if ($y -ge 3 -and $y -le 5 -and [Math]::Abs($x - 7.5) -le (5 - $y) + 1.5) { return $lit }
-        if ($x -ge 6 -and $x -le 9 -and $y -ge 2 -and $y -le 13) { return 'd' }
+        $dx = [Math]::Abs($x - 7.5); $dy = [Math]::Abs($y - 7.5)
+        $ring = [Math]::Max($dx, $dy)
+        if ($ring -ge 3 -and $ring -le 4) { return $lit }
+        if ($ring -ge 2 -and $ring -le 5) { return 'd' }
+        if ($dx -le 1 -and $dy -le 1) { return 'k' }
         StoneBase $x $y
     }
     Save $blocks "relayer_side_$suffix" $side $stone
@@ -220,8 +222,9 @@ foreach ($dname in $digits.Keys) {
     foreach ($s in $segs.Keys) {
         $r = $segs[$s]
         $u = $d[0] + $r[0]; $v = $d[1] + $r[1]
-        # front face = north (z = -8), seen from the north: the viewer's left is +x
-        $x0 = 8 - ($u + $r[2]); $y0 = 16 - ($v + $r[3])
+        # front face = north (z = -8). Bedrock geometry mirrors x (model +x is world west), so the
+        # viewer's left (world east) is model -x
+        $x0 = $u - 8; $y0 = 16 - ($v + $r[3])
         $face = [ordered]@{ uv = @(0, 0); uv_size = @(1, 1); material_instance = 'segment' }
         $bones.Add([ordered]@{ name = "${dname}_$s"; parent = 'body'; pivot = @(0, 0, 0); cubes = @(
                     [ordered]@{ origin = @($x0, $y0, -8.05); size = @($r[2], $r[3], 0.05); uv = [ordered]@{ north = $face; south = $face; east = $face; west = $face; up = $face; down = $face } }

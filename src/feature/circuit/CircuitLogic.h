@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <array>
 #include <cstdint>
+#include <string>
+#include <string_view>
 
 namespace cm::feature::circuit {
 
@@ -125,6 +127,20 @@ struct Digits {
 
 /// Light level of a redstone illuminator receiving `power`.
 [[nodiscard]] constexpr int illuminatorLight(int power) { return std::clamp(power, 0, 15); }
+
+/// The first `maxChars` characters (UTF-8 code points) of `s`; never splits a character.
+[[nodiscard]] inline std::string truncateUtf8(std::string_view s, int maxChars) {
+    std::size_t i     = 0;
+    int         chars = 0;
+    while (i < s.size() && chars < maxChars) {
+        auto c   = static_cast<unsigned char>(s[i]);
+        int  len = c < 0x80 ? 1 : (c >> 5) == 0x6 ? 2 : (c >> 4) == 0xE ? 3 : (c >> 3) == 0x1E ? 4 : 1;
+        if (i + static_cast<std::size_t>(len) > s.size()) break;
+        i += static_cast<std::size_t>(len);
+        ++chars;
+    }
+    return std::string(s.substr(0, i));
+}
 
 /// Clamps a speaker volume to 1..range.
 [[nodiscard]] constexpr int clampVolume(int volume, int range) { return std::clamp(volume, 1, std::max(range, 1)); }

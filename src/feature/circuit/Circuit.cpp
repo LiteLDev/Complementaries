@@ -8,6 +8,7 @@
 #include "ll/api/event/EventBus.h"
 #include "ll/api/event/world/BlockChangedEvent.h"
 #include "ll/api/event/world/ServerLevelTickEvent.h"
+#include "ll/api/memory/Hook.h"
 #include "ll/api/service/Bedrock.h"
 
 #include "mc/deps/core/string/HashedString.h"
@@ -16,6 +17,8 @@
 #include "mc/world/level/Level.h"
 #include "mc/world/level/block/Block.h"
 #include "mc/world/level/block/BlockType.h"
+#include "mc/world/level/block/components/BlockRedstoneConsumerComponent.h"
+#include "mc/world/level/block/components/BlockRedstoneProducerComponent.h"
 #include "mc/world/level/dimension/Dimension.h"
 #include "mc/world/redstone/circuit/CircuitSceneGraph.h"
 #include "mc/world/redstone/circuit/CircuitSystem.h"
@@ -99,9 +102,12 @@ void loadBlocks() {
     if (!j || !j->is_array()) return;
     for (auto const& e : *j) {
         if (!e.is_array() || e.size() != 5) continue;
-        auto kind = static_cast<Kind>(e[0].get<int>());
-        if (kind == Kind::None) continue;
-        s.blocks[core::GlobalPos{e[1].get<int>(), e[2].get<int>(), e[3].get<int>(), e[4].get<int>()}] = kind;
+        bool ints = true;
+        for (auto const& v : e) ints = ints && v.is_number_integer();
+        if (!ints) continue;
+        int k = e[0].get<int>();
+        if (k <= static_cast<int>(Kind::None) || k > static_cast<int>(Kind::Illuminator)) continue;
+        s.blocks[core::GlobalPos{e[1].get<int>(), e[2].get<int>(), e[3].get<int>(), e[4].get<int>()}] = static_cast<Kind>(k);
     }
 }
 
@@ -132,9 +138,14 @@ BaseCircuitComponent* findComponent(Dimension& dim, BlockPos const& pos) {
     if (!sys) return nullptr;
     auto& map = sys->mSceneGraph->mAllComponents;
     if (map.empty()) return nullptr;
-    if (gHashMatches < 0) {
-        auto first   = map.begin();
-        gHashMatches = map.find(first->first) == first ? 1 : 0;
+    if (gHashMatches < 0 && map.size() >= 8) {
+        // our std::hash<BlockPos> must bucket like the game's: probe several stored keys
+        int probed = 0;
+        int found  = 0;
+        for (auto it = map.begin(); it != map.end() && probed < 32; ++it, ++probed) {
+            found += map.find(it->first) == it ? 1 : 0;
+        }
+        gHashMatches = found == probed ? 1 : 0;
         log().debug("circuit: component map lookup by {}", gHashMatches ? "hash" : "scan");
     }
     if (gHashMatches == 1) {
@@ -167,6 +178,8 @@ void evaluateRelayers(Level& level, std::vector<core::GlobalPos> const& relayers
         if (!region.hasChunksAt(pos, 0, false)) continue;
         auto const& block = region.getBlock(pos);
         if (kindOf(block) != Kind::Relayer) continue;
+        // no producer yet (chunk just loaded, circuit not rebuilt): keep the state until it exists
+        if (!findComponent(*dim, pos)) continue;
         int  facing  = facingOf(block);
         bool powered = relayerInput(region, pos, facing) > 0;
         if (updateState(region, pos, block, kPowered, powered ? 1 : 0)) {
@@ -195,7 +208,9 @@ int displayRow(BlockSource& region, BlockPos const& pos, int front, int& indexOu
 void evaluateConsumer(Dimension& dim, BlockSource& region, core::GlobalPos const& gp, Kind kind) {
     auto        pos      = game::blockPos(gp);
     auto const& block    = region.getBlock(pos);
-    int         strength = componentStrength(dim, pos).value_or(0);
+    auto        input    = componentStrength(dim, pos);
+    if (!input) return; // the circuit has not rebuilt our component yet: keep the current state
+    int strength = *input;
     switch (kind) {
     case Kind::Illuminator:
         updateState(region, pos, block, kPower, illuminatorLight(strength));
@@ -222,6 +237,46 @@ void evaluateConsumer(Dimension& dim, BlockSource& region, core::GlobalPos const
     default:
         break;
     }
+}
+
+/// A redstone component of one of our blocks is set up (placement, chunk load): make sure the
+/// block is tracked, so blocks the block-change event never saw (structures, lost saves) work too.
+void onComponentSetup(Block const& block, BlockSource& region, BlockPos const& pos) {
+    Kind k = kindOf(block);
+    if (k == Kind::None || region.getLevel().isClientSide()) return;
+    auto gp = game::globalPos(region, pos);
+    auto it = st().blocks.find(gp);
+    if (it != st().blocks.end() && it->second == k) return;
+    st().blocks[gp] = k;
+    st().dirty      = true;
+}
+
+LL_TYPE_STATIC_HOOK(
+    ConsumerSetupHook,
+    ll::memory::HookPriority::Normal,
+    BlockRedstoneConsumerComponent,
+    &BlockRedstoneConsumerComponent::setupRedstoneComponent,
+    void,
+    Block const&    block,
+    BlockSource&    region,
+    BlockPos const& pos
+) {
+    origin(block, region, pos);
+    onComponentSetup(block, region, pos);
+}
+
+LL_TYPE_STATIC_HOOK(
+    ProducerSetupHook,
+    ll::memory::HookPriority::Normal,
+    BlockRedstoneProducerComponent,
+    &BlockRedstoneProducerComponent::setupRedstoneComponent,
+    void,
+    Block const&    block,
+    BlockSource&    region,
+    BlockPos const& pos
+) {
+    origin(block, region, pos);
+    onComponentSetup(block, region, pos);
 }
 
 class CircuitModule {
@@ -266,6 +321,8 @@ public:
             clearCartCache();
         });
         if (game::db::available()) loadBlocks(); // BDS: the world already exists
+        ConsumerSetupHook::hook();
+        ProducerSetupHook::hook();
         installSpeaker();
         installCart();
     }
@@ -274,6 +331,8 @@ public:
         auto& bus = ll::event::EventBus::getInstance();
         bus.removeListener(mChanged);
         bus.removeListener(mTick);
+        ConsumerSetupHook::unhook();
+        ProducerSetupHook::unhook();
         uninstallSpeaker();
         uninstallCart();
         if (game::db::available()) saveBlocks();

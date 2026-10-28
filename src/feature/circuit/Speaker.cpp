@@ -193,7 +193,7 @@ void openSpeakerScreen(Player& player, core::GlobalPos const& pos) {
         auto        data = speakerData(pos);
         if (auto it = result->find("message"); it != result->end()) {
             if (auto const* s = std::get_if<std::string>(&it->second)) {
-                data.message = s->substr(0, static_cast<size_t>(std::max(cfg.speakerMaxLength, 0)));
+                data.message = truncateUtf8(*s, std::max(cfg.speakerMaxLength, 0));
             }
         }
         if (auto it = result->find("mode"); it != result->end()) {
@@ -214,7 +214,8 @@ void installSpeaker() {
     auto& bus = ll::event::EventBus::getInstance();
     gInteract = bus.emplaceListener<ll::event::PlayerInteractBlockEvent>([](ll::event::PlayerInteractBlockEvent& ev) {
         auto& player = ev.self();
-        auto  block  = ev.block();
+        if (player.isClientSide()) return; // client build: only the integrated server's player
+        auto block = ev.block();
         if (!block || kindOf(*block) != Kind::Speaker) return;
         if (player.isSneaking() && !ev.item().isNull()) return; // sneak + item: place / use the item
         ev.cancel();
@@ -227,8 +228,9 @@ void installSpeaker() {
         openSpeakerScreen(player, game::globalPos(player.getDimensionBlockSource(), ev.blockPos()));
     });
     gPlacing = bus.emplaceListener<ll::event::PlayerPlacingBlockEvent>([](ll::event::PlayerPlacingBlockEvent& ev) {
-        auto&       player = ev.self();
-        auto const& item   = player.getSelectedItem();
+        auto& player = ev.self();
+        if (player.isClientSide()) return;
+        auto const& item = player.getSelectedItem();
         if (item.isNull() || item.getTypeName() != kSpeaker) return;
         auto name = item.getCustomName();
         if (name.empty()) pendingNames().erase(player.getOrCreateUniqueID().rawID);
@@ -236,7 +238,8 @@ void installSpeaker() {
     });
     gPlaced = bus.emplaceListener<ll::event::PlayerPlacedBlockEvent>([](ll::event::PlayerPlacedBlockEvent& ev) {
         auto& player = ev.self();
-        auto  it     = pendingNames().find(player.getOrCreateUniqueID().rawID);
+        if (player.isClientSide()) return;
+        auto it = pendingNames().find(player.getOrCreateUniqueID().rawID);
         if (it == pendingNames().end()) return;
         std::string name = std::move(it->second);
         pendingNames().erase(it);
