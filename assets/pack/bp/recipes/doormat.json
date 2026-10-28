@@ -1,0 +1,13 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:doormat" },
+    "tags": ["crafting_table"],
+    "pattern": ["HH"],
+    "key": {
+      "H": { "item": "minecraft:wheat" }
+    },
+    "unlock": [{ "item": "minecraft:wheat" }],
+    "result": { "item": "complementaries:doormat", "count": 1 }
+  }
+}

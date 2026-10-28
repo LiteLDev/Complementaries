@@ -1,0 +1,14 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:notice_board" },
+    "tags": ["crafting_table"],
+    "pattern": ["WWW", "WPW", "WWW"],
+    "key": {
+      "W": { "tag": "minecraft:planks" },
+      "P": { "item": "minecraft:paper" }
+    },
+    "unlock": [{ "item": "minecraft:paper" }],
+    "result": { "item": "complementaries:notice_board", "count": 1 }
+  }
+}

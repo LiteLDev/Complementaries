@@ -1,0 +1,15 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:sign_post_warped",
+      "menu_category": { "category": "items", "group": "itemGroup.name.sign" }
+    },
+    "components": {
+      "minecraft:icon": { "textures": { "default": "complementaries_sign_post_warped" } },
+      "minecraft:display_name": { "value": "item.complementaries:sign_post_warped.name" },
+      "minecraft:max_stack_size": 16,
+      "minecraft:fuel": { "duration": 10 }
+    }
+  }
+}

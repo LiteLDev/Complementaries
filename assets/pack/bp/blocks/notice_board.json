@@ -1,0 +1,57 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:notice_board",
+      "menu_category": { "category": "items" },
+      "states": {
+        "complementaries:facing": [0, 1, 2, 3],
+        "complementaries:has_book": [0, 1],
+        "complementaries:powered": [0, 1]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 3.75 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 2.5 },
+      "minecraft:flammable": { "catch_chance_modifier": 5, "destroy_chance_modifier": 20 },
+      "minecraft:map_color": "#8f7748",
+      "minecraft:loot": "loot_tables/blocks/notice_board.json",
+      "minecraft:material_instances": {
+        "*": { "texture": "complementaries_notice_board_side", "render_method": "opaque" },
+        "up": { "texture": "complementaries_notice_board_top", "render_method": "opaque" },
+        "down": { "texture": "complementaries_notice_board_top", "render_method": "opaque" },
+        "north": { "texture": "complementaries_notice_board_front", "render_method": "opaque" }
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:has_book') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": { "texture": "complementaries_notice_board_side", "render_method": "opaque" },
+            "up": { "texture": "complementaries_notice_board_top", "render_method": "opaque" },
+            "down": { "texture": "complementaries_notice_board_top", "render_method": "opaque" },
+            "north": { "texture": "complementaries_notice_board_front_book", "render_method": "opaque" }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 0",
+        "components": { "minecraft:transformation": { "rotation": [0, 180, 0] } }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 1",
+        "components": { "minecraft:transformation": { "rotation": [0, 90, 0] } }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 2",
+        "components": { "minecraft:transformation": { "rotation": [0, 0, 0] } }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 3",
+        "components": { "minecraft:transformation": { "rotation": [0, -90, 0] } }
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:sign_post_crimson" },
+    "tags": ["crafting_table"],
+    "pattern": ["WW", "WW", " S"],
+    "key": {
+      "W": { "item": "minecraft:crimson_planks" },
+      "S": { "item": "minecraft:stick" }
+    },
+    "unlock": [{ "item": "minecraft:crimson_planks" }],
+    "result": { "item": "complementaries:sign_post_crimson", "count": 2 }
+  }
+}

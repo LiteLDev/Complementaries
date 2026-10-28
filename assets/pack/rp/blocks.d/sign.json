@@ -1,0 +1,4 @@
+{
+  "complementaries:notice_board": { "sound": "wood" },
+  "complementaries:doormat": { "sound": "cloth" }
+}

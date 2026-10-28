@@ -1,0 +1,44 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:doormat",
+      "menu_category": { "category": "items" },
+      "states": {
+        "complementaries:facing": [0, 1, 2, 3]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.complementaries.doormat",
+      "minecraft:collision_box": { "origin": [-8, 0, -8], "size": [16, 1, 16] },
+      "minecraft:selection_box": { "origin": [-8, 0, -8], "size": [16, 1, 16] },
+      "minecraft:light_dampening": 0,
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 0.15 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 0.1 },
+      "minecraft:flammable": { "catch_chance_modifier": 60, "destroy_chance_modifier": 20 },
+      "minecraft:map_color": "#a4864b",
+      "minecraft:loot": "loot_tables/blocks/doormat.json",
+      "minecraft:material_instances": {
+        "*": { "texture": "complementaries_doormat", "render_method": "opaque", "ambient_occlusion": false }
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:facing') == 0",
+        "components": { "minecraft:transformation": { "rotation": [0, 180, 0] } }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 1",
+        "components": { "minecraft:transformation": { "rotation": [0, 90, 0] } }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 2",
+        "components": { "minecraft:transformation": { "rotation": [0, 0, 0] } }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 3",
+        "components": { "minecraft:transformation": { "rotation": [0, -90, 0] } }
+      }
+    ]
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+    "controller.render.complementaries.sign_post_up": {
+      "arrays": {
+        "textures": {
+          "Array.woods": [
+            "Texture.oak",
+            "Texture.spruce",
+            "Texture.birch",
+            "Texture.jungle",
+            "Texture.acacia",
+            "Texture.dark_oak",
+            "Texture.mangrove",
+            "Texture.cherry",
+            "Texture.bamboo",
+            "Texture.crimson",
+            "Texture.warped",
+            "Texture.pale_oak"
+          ]
+        }
+      },
+      "geometry": "Geometry.default",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Array.woods[math.mod(math.floor(q.variant / 4), 16)]"
+      ],
+      "part_visibility": [
+        {
+          "*": false
+        },
+        {
+          "up_r": "math.mod(q.variant, 2) == 1 && math.mod(math.floor(q.variant / 2), 2) == 0"
+        },
+        {
+          "up_l": "math.mod(q.variant, 2) == 1 && math.mod(math.floor(q.variant / 2), 2) == 1"
+        }
+      ]
+    },
+    "controller.render.complementaries.sign_post_down": {
+      "arrays": {
+        "textures": {
+          "Array.woods": [
+            "Texture.oak",
+            "Texture.spruce",
+            "Texture.birch",
+            "Texture.jungle",
+            "Texture.acacia",
+            "Texture.dark_oak",
+            "Texture.mangrove",
+            "Texture.cherry",
+            "Texture.bamboo",
+            "Texture.crimson",
+            "Texture.warped",
+            "Texture.pale_oak"
+          ]
+        }
+      },
+      "geometry": "Geometry.default",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Array.woods[math.mod(math.floor(q.mark_variant / 4), 16)]"
+      ],
+      "part_visibility": [
+        {
+          "*": false
+        },
+        {
+          "down_r": "math.mod(q.mark_variant, 2) == 1 && math.mod(math.floor(q.mark_variant / 2), 2) == 0"
+        },
+        {
+          "down_l": "math.mod(q.mark_variant, 2) == 1 && math.mod(math.floor(q.mark_variant / 2), 2) == 1"
+        }
+      ]
+    },
+    "controller.render.complementaries.text_display": {
+      "geometry": "Geometry.default",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Texture.default"
+      ]
+    }
+  }
+}

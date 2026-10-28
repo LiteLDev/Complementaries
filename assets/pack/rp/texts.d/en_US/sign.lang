@@ -1,0 +1,16 @@
+item.complementaries:sign_post_oak.name=Oak Sign Post
+item.complementaries:sign_post_spruce.name=Spruce Sign Post
+item.complementaries:sign_post_birch.name=Birch Sign Post
+item.complementaries:sign_post_jungle.name=Jungle Sign Post
+item.complementaries:sign_post_acacia.name=Acacia Sign Post
+item.complementaries:sign_post_dark_oak.name=Dark Oak Sign Post
+item.complementaries:sign_post_mangrove.name=Mangrove Sign Post
+item.complementaries:sign_post_cherry.name=Cherry Sign Post
+item.complementaries:sign_post_bamboo.name=Bamboo Sign Post
+item.complementaries:sign_post_crimson.name=Crimson Sign Post
+item.complementaries:sign_post_warped.name=Warped Sign Post
+item.complementaries:sign_post_pale_oak.name=Pale Oak Sign Post
+tile.complementaries:notice_board.name=Notice Board
+tile.complementaries:doormat.name=Doormat
+entity.complementaries:sign_post.name=Sign Post
+entity.complementaries:text_display.name=Text
