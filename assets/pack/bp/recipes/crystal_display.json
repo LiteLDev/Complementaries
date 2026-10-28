@@ -1,0 +1,16 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:crystal_display" },
+    "tags": ["crafting_table"],
+    "pattern": ["SGS", "ARA", "SSS"],
+    "key": {
+      "S": { "item": "minecraft:smooth_stone" },
+      "G": { "item": "minecraft:glass_pane" },
+      "A": { "item": "minecraft:amethyst_shard" },
+      "R": { "item": "minecraft:redstone" }
+    },
+    "unlock": [{ "item": "minecraft:amethyst_shard" }],
+    "result": { "item": "complementaries:crystal_display" }
+  }
+}

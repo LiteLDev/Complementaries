@@ -1,0 +1,20 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "complementaries:dispenser_minecart",
+      "runtime_identifier": "minecraft:chest_minecart",
+      "is_spawnable": false,
+      "is_summonable": true
+    },
+    "components": {
+      "minecraft:type_family": { "family": ["minecart", "inanimate"] },
+      "minecraft:collision_box": { "width": 0.98, "height": 0.7 },
+      "minecraft:rail_movement": {},
+      "minecraft:inventory": { "container_type": "minecart_chest", "inventory_size": 9, "can_be_siphoned_from": true },
+      "minecraft:is_stackable": {},
+      "minecraft:physics": {},
+      "minecraft:pushable": { "is_pushable": true, "is_pushable_by_piston": true }
+    }
+  }
+}

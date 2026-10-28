@@ -1,0 +1,6 @@
+tile.complementaries:relayer.name=中继器
+tile.complementaries:speaker_block.name=扬声器
+tile.complementaries:crystal_display.name=晶体显示屏
+tile.complementaries:redstone_illuminator.name=红石照明器
+item.complementaries:dispenser_minecart.name=发射器矿车
+entity.complementaries:dispenser_minecart.name=发射器矿车

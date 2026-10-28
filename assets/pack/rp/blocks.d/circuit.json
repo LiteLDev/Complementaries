@@ -1,0 +1,6 @@
+{
+  "complementaries:relayer": { "sound": "stone" },
+  "complementaries:speaker_block": { "sound": "wood" },
+  "complementaries:crystal_display": { "sound": "glass" },
+  "complementaries:redstone_illuminator": { "sound": "glass" }
+}

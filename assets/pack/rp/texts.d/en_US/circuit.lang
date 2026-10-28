@@ -1,0 +1,6 @@
+tile.complementaries:relayer.name=Relayer
+tile.complementaries:speaker_block.name=Speaker Block
+tile.complementaries:crystal_display.name=Crystal Display
+tile.complementaries:redstone_illuminator.name=Redstone Illuminator
+item.complementaries:dispenser_minecart.name=Minecart with Dispenser
+entity.complementaries:dispenser_minecart.name=Minecart with Dispenser

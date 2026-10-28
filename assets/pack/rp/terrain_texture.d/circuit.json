@@ -1,0 +1,17 @@
+{
+  "complementaries_relayer_front_off": { "textures": "textures/blocks/relayer_front_off" },
+  "complementaries_relayer_front_on": { "textures": "textures/blocks/relayer_front_on" },
+  "complementaries_relayer_side_off": { "textures": "textures/blocks/relayer_side_off" },
+  "complementaries_relayer_side_on": { "textures": "textures/blocks/relayer_side_on" },
+  "complementaries_relayer_back": { "textures": "textures/blocks/relayer_back" },
+  "complementaries_speaker_block_front": { "textures": "textures/blocks/speaker_block_front" },
+  "complementaries_speaker_block_side": { "textures": "textures/blocks/speaker_block_side" },
+  "complementaries_speaker_block_top": { "textures": "textures/blocks/speaker_block_top" },
+  "complementaries_crystal_display": { "textures": "textures/blocks/crystal_display" },
+  "complementaries_crystal_display_front": { "textures": "textures/blocks/crystal_display_front" },
+  "complementaries_crystal_display_segment": { "textures": "textures/blocks/crystal_display_segment" },
+  "complementaries_redstone_illuminator_0": { "textures": "textures/blocks/redstone_illuminator_0" },
+  "complementaries_redstone_illuminator_1": { "textures": "textures/blocks/redstone_illuminator_1" },
+  "complementaries_redstone_illuminator_2": { "textures": "textures/blocks/redstone_illuminator_2" },
+  "complementaries_redstone_illuminator_3": { "textures": "textures/blocks/redstone_illuminator_3" }
+}

@@ -1,0 +1,12 @@
+{
+  "block.supplementaries.speaker_block": "Speaker Block",
+  "gui.supplementaries.speaker_block.edit": "Speaker Block",
+  "gui.supplementaries.speaker_block.message": "Message",
+  "gui.supplementaries.speaker_block.mode": "Mode",
+  "gui.supplementaries.speaker_block.chat_message": "Chat",
+  "gui.supplementaries.speaker_block.status_message": "Status message",
+  "gui.supplementaries.speaker_block.title_message": "Title",
+  "gui.supplementaries.speaker_block.narrator_message": "Narrator",
+  "gui.supplementaries.speaker_block.volume": "Volume",
+  "message.supplementaries.speaker": "{0}: {1}"
+}

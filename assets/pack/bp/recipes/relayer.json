@@ -1,0 +1,15 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:relayer" },
+    "tags": ["crafting_table"],
+    "pattern": ["CCC", "RQR", "CCC"],
+    "key": {
+      "C": { "item": "minecraft:cobblestone" },
+      "R": { "item": "minecraft:redstone" },
+      "Q": { "item": "minecraft:quartz" }
+    },
+    "unlock": [{ "item": "minecraft:redstone" }],
+    "result": { "item": "complementaries:relayer" }
+  }
+}
