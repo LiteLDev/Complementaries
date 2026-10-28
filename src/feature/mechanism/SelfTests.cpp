@@ -23,7 +23,7 @@ namespace {
 using cm::selftest::Context;
 using namespace cm::feature::mechanism;
 namespace game = cm::game;
-using V = rotation::Value;
+using V        = rotation::Value;
 
 BlockPos east(BlockPos const& p, int n = 1) { return offset(p, rotation::kEast, n); }
 BlockPos up(BlockPos const& p, int n = 1) { return offset(p, rotation::kUp, n); }
@@ -53,8 +53,8 @@ CM_REGISTER_SELFTEST("mechanism.blocks", [](Context& ctx) {
     for (auto id : {ids::kLauncher, ids::kHead, ids::kArm, ids::kBellows, ids::kTurnTable, ids::kCog, ids::kCrank})
         ctx.check(game::blockWith(id) != nullptr, std::string(id) + " is registered");
     for (Kind k : {Kind::Launcher, Kind::Bellows, Kind::TurnTable, Kind::Head, Kind::Arm, Kind::Crank}) {
-        std::string_view id = k == Kind::Launcher ? ids::kLauncher
-                            : k == Kind::Bellows  ? ids::kBellows
+        std::string_view id = k == Kind::Launcher  ? ids::kLauncher
+                            : k == Kind::Bellows   ? ids::kBellows
                             : k == Kind::TurnTable ? ids::kTurnTable
                             : k == Kind::Head      ? ids::kHead
                             : k == Kind::Arm       ? ids::kArm
@@ -141,7 +141,10 @@ CM_REGISTER_SELFTEST("mechanism.launcher_trampoline", [](Context& ctx) -> ll::co
     }
     ctx.check(fired, "a long fall onto the launcher fires it");
     co_await ctx.ticks(5);
-    ctx.check(player.getHealth() >= health, "no fall damage (" + std::to_string(player.getHealth()) + " < " + std::to_string(health) + ")");
+    ctx.check(
+        player.getHealth() >= health,
+        "no fall damage (" + std::to_string(player.getHealth()) + " < " + std::to_string(health) + ")"
+    );
     ctx.check(feetY(player) > static_cast<float>(p.y) + 2.f, "the player bounced up");
     co_await ctx.ticks(10);
     ctx.check(!boolStateOf(region.getBlock(p), "complementaries:extended"), "it retracts again (unpowered)");
@@ -158,15 +161,27 @@ CM_REGISTER_SELFTEST("mechanism.cog_chain", [](Context& ctx) -> ll::coro::CoroTa
     co_await ctx.ticks(8);
     for (int i = 1; i <= 3; ++i) {
         int pw = intStateOf(region.getBlock(east(p, i)), "complementaries:power", -1);
-        ctx.check(pw == 16 - i, "cog " + std::to_string(i) + " has power " + std::to_string(16 - i) + " (got " + std::to_string(pw) + ")");
+        ctx.check(
+            pw == 16 - i,
+            "cog " + std::to_string(i) + " has power " + std::to_string(16 - i) + " (got " + std::to_string(pw) + ")"
+        );
     }
     ctx.check(boolStateOf(region.getBlock(east(p, 1)), "complementaries:twisting"), "a powered cog twists");
-    ctx.check(idAt(region, east(p, 4)) == "minecraft:lit_redstone_lamp", "the cog chain lights a lamp (" + idAt(region, east(p, 4)) + ")");
+    ctx.check(
+        idAt(region, east(p, 4)) == "minecraft:lit_redstone_lamp",
+        "the cog chain lights a lamp (" + idAt(region, east(p, 4)) + ")"
+    );
     placeAir(region, p);
     co_await ctx.ticks(12);
     for (int i = 1; i <= 3; ++i)
-        ctx.check(intStateOf(region.getBlock(east(p, i)), "complementaries:power", -1) == 0, "cog " + std::to_string(i) + " turns off");
-    ctx.check(idAt(region, east(p, 4)) == "minecraft:redstone_lamp", "the lamp turns off (" + idAt(region, east(p, 4)) + ")");
+        ctx.check(
+            intStateOf(region.getBlock(east(p, i)), "complementaries:power", -1) == 0,
+            "cog " + std::to_string(i) + " turns off"
+        );
+    ctx.check(
+        idAt(region, east(p, 4)) == "minecraft:redstone_lamp",
+        "the lamp turns off (" + idAt(region, east(p, 4)) + ")"
+    );
 });
 
 CM_REGISTER_SELFTEST("mechanism.cog_repeater", [](Context& ctx) -> ll::coro::CoroTask<> {
@@ -182,13 +197,22 @@ CM_REGISTER_SELFTEST("mechanism.cog_repeater", [](Context& ctx) -> ll::coro::Cor
     int works = 0;
     for (std::string dir : {"east", "west"}) {
         ctx.require(
-            put(ctx, region, rep, "minecraft:unpowered_repeater", {{"minecraft:cardinal_direction", V{dir}}}),
+            put(ctx,
+                region,
+                rep,
+                "minecraft:unpowered_repeater",
+                {
+                    {"minecraft:cardinal_direction", V{dir}}
+        }),
             "repeater placed"
         );
         co_await ctx.ticks(12);
         auto [rs, rd] = componentInfo(region, rep);
-        ctx.info("repeater " + dir + " component: strength " + std::to_string(rs) + ", direction " + std::to_string(rd) + ", block " + idAt(region, rep));
-        int front = intStateOf(region.getBlock(east(p, 2)), "complementaries:power", -1);
+        ctx.info(
+            "repeater " + dir + " component: strength " + std::to_string(rs) + ", direction " + std::to_string(rd)
+            + ", block " + idAt(region, rep)
+        );
+        int front  = intStateOf(region.getBlock(east(p, 2)), "complementaries:power", -1);
         int beside = intStateOf(region.getBlock(side), "complementaries:power", -1);
         ctx.info("repeater " + dir + ": cog " + std::to_string(front) + ", side cog " + std::to_string(beside));
         ctx.check(beside == 0, "a repeater does not power sideways");
@@ -215,12 +239,15 @@ CM_REGISTER_SELFTEST("mechanism.crank_turns", [](Context& ctx) -> ll::coro::Coro
     ctx.check(crank::turn(region, up(p), true, nullptr) == 1, "sneak turn -> 1");
     co_await ctx.ticks(6);
     ctx.check(idAt(region, east(up(p))) == "minecraft:lit_redstone_lamp", "the crank powers its neighbours");
-    ctx.check(idAt(region, offset(p, rotation::kWest)) == "minecraft:lit_redstone_lamp", "the crank strongly powers its support");
+    ctx.check(
+        idAt(region, offset(p, rotation::kWest)) == "minecraft:lit_redstone_lamp",
+        "the crank strongly powers its support"
+    );
     ctx.check(crank::turn(region, up(p), true, nullptr) == 0, "sneak turn -> 0");
     ctx.check(crank::turn(region, up(p), true, nullptr) == 15, "wraps 0 -> 15");
     ctx.check(crank::turn(region, up(p), false, nullptr) == 0, "wraps 15 -> 0");
     // a crankable block behind the crank is turned too
-    int  calls = 0;
+    int  calls   = 0;
     bool lastCcw = false;
     registerCrankable("minecraft:stone", [&](BlockSource&, BlockPos const&, bool ccw, Player*) {
         ++calls;
@@ -252,9 +279,18 @@ CM_REGISTER_SELFTEST("mechanism.turn_table_rotates", [](Context& ctx) -> ll::cor
     ctx.require(co_await ctx.ensureLoaded(gp), "test area loaded");
     auto&    region = regionFor(ctx);
     BlockPos p      = game::blockPos(gp);
-    ctx.require(put(ctx, region, p, ids::kTurnTable, facingStates(Kind::TurnTable, rotation::kUp)), "turn table placed");
     ctx.require(
-        put(ctx, region, up(p), "minecraft:furnace", {{"minecraft:cardinal_direction", V{std::string("north")}}}),
+        put(ctx, region, p, ids::kTurnTable, facingStates(Kind::TurnTable, rotation::kUp)),
+        "turn table placed"
+    );
+    ctx.require(
+        put(ctx,
+            region,
+            up(p),
+            "minecraft:furnace",
+            {
+                {"minecraft:cardinal_direction", V{std::string("north")}}
+    }),
         "furnace placed"
     );
     co_await ctx.ticks(1);
@@ -270,7 +306,13 @@ CM_REGISTER_SELFTEST("mechanism.turn_table_rotates", [](Context& ctx) -> ll::cor
 
     // containers keep their contents
     ctx.require(
-        put(ctx, region, up(p), "minecraft:chest", {{"minecraft:cardinal_direction", V{std::string("south")}}}),
+        put(ctx,
+            region,
+            up(p),
+            "minecraft:chest",
+            {
+                {"minecraft:cardinal_direction", V{std::string("south")}}
+    }),
         "chest placed"
     );
     co_await ctx.ticks(1);
@@ -284,7 +326,6 @@ CM_REGISTER_SELFTEST("mechanism.turn_table_rotates", [](Context& ctx) -> ll::cor
     auto after = region.tryGetContainer(up(p));
     ctx.check(after.has_value() && after->getItem(0).mCount == 5, "the chest keeps its items");
     if (after) after->removeAllItems();
-
 });
 
 CM_REGISTER_SELFTEST("mechanism.turn_table_powered", [](Context& ctx) -> ll::coro::CoroTask<> {
@@ -292,8 +333,20 @@ CM_REGISTER_SELFTEST("mechanism.turn_table_powered", [](Context& ctx) -> ll::cor
     ctx.require(co_await ctx.ensureLoaded(gp), "test area loaded");
     auto&    region = regionFor(ctx);
     BlockPos p      = game::blockPos(gp);
-    ctx.require(put(ctx, region, p, ids::kTurnTable, facingStates(Kind::TurnTable, rotation::kUp)), "turn table placed");
-    ctx.require(put(ctx, region, up(p), "minecraft:oak_log", {{"pillar_axis", V{std::string("x")}}}), "log placed");
+    ctx.require(
+        put(ctx, region, p, ids::kTurnTable, facingStates(Kind::TurnTable, rotation::kUp)),
+        "turn table placed"
+    );
+    ctx.require(
+        put(ctx,
+            region,
+            up(p),
+            "minecraft:oak_log",
+            {
+                {"pillar_axis", V{std::string("x")}}
+    }),
+        "log placed"
+    );
     co_await ctx.ticks(2);
     ctx.check(!boolStateOf(region.getBlock(p), "complementaries:rotating"), "idle while unpowered");
     ctx.require(put(ctx, region, east(p), "minecraft:redstone_block"), "power placed");
@@ -351,4 +404,75 @@ CM_REGISTER_SELFTEST("mechanism.bellows_press", [](Context& ctx) -> ll::coro::Co
     ctx.check(maxStage >= 5, "a manual press runs one cycle (stage " + std::to_string(maxStage) + ")");
     co_await ctx.ticks(10);
     ctx.check(intStateOf(region.getBlock(p), "complementaries:stage", -1) == 0, "and stops");
+});
+
+CM_REGISTER_SELFTEST("mechanism.cog_torch", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto gp = ctx.testPos(750);
+    ctx.require(co_await ctx.ensureLoaded(gp), "test area loaded");
+    auto&    region = regionFor(ctx);
+    BlockPos c      = up(game::blockPos(gp)); // cog | torch hanging on it | another cog beside the torch
+    BlockPos torch  = east(c);
+    BlockPos beside = offset(torch, rotation::kNorth);
+    ctx.require(put(ctx, region, c, ids::kCog), "cog placed");
+    ctx.require(put(ctx, region, beside, ids::kCog), "side cog placed");
+    int survived = 0;
+    for (std::string dir : {"west", "east"}) {
+        ctx.require(
+            put(ctx,
+                region,
+                torch,
+                "minecraft:redstone_torch",
+                {
+                    {"torch_facing_direction", V{dir}}
+        }),
+            "torch placed"
+        );
+        co_await ctx.ticks(8);
+        std::string id  = idAt(region, torch);
+        int         own = intStateOf(region.getBlock(c), "complementaries:power", -1);
+        int         sid = intStateOf(region.getBlock(beside), "complementaries:power", -1);
+        ctx.info("torch " + dir + ": " + id + ", own cog " + std::to_string(own) + ", side cog " + std::to_string(sid));
+        if (id == "minecraft:redstone_torch") {
+            ++survived;
+            ctx.check(own == 0, "a torch does not power the block it hangs on (" + dir + ")");
+            ctx.check(sid == 15, "a torch powers the cog beside it (" + dir + ")");
+        }
+        placeAir(region, torch);
+        co_await ctx.ticks(4);
+    }
+    ctx.check(survived >= 1, "a torch can hang on a cog block");
+});
+
+CM_REGISTER_SELFTEST("mechanism.bellows_heats", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto gp = ctx.testPos(755);
+    ctx.require(co_await ctx.ensureLoaded(gp), "test area loaded");
+    auto&    region  = regionFor(ctx);
+    BlockPos p       = game::blockPos(gp); // bellows blowing east into a furnace
+    BlockPos furnace = east(p);
+    ctx.require(
+        put(ctx,
+            region,
+            furnace,
+            "minecraft:furnace",
+            {
+                {"minecraft:cardinal_direction", V{std::string("east")}}
+    }),
+        "furnace placed"
+    );
+    co_await ctx.ticks(1);
+    auto container = region.tryGetContainer(furnace);
+    ctx.require(container.has_value(), "furnace container");
+    ItemStack ore, coal;
+    ore.reinit("minecraft:raw_iron", 2, 0);
+    coal.reinit("minecraft:coal", 1, 0);
+    container->setItem(0, ore);
+    container->setItem(1, coal);
+    ctx.require(put(ctx, region, p, ids::kBellows, facingStates(Kind::Bellows, rotation::kEast)), "bellows placed");
+    ctx.require(put(ctx, region, offset(p, rotation::kWest), "minecraft:redstone_block"), "power placed");
+    // a furnace needs 200 ticks per item; the bellows blows half of the time, so ~135 ticks here
+    co_await ctx.ticks(170);
+    auto after = region.tryGetContainer(furnace);
+    int  out   = after ? after->getItem(2).mCount : -1;
+    ctx.check(out >= 1, "the furnace in front cooks faster (" + std::to_string(out) + " ingots after 170 ticks)");
+    if (after) after->removeAllItems();
 });

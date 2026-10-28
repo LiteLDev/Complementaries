@@ -32,12 +32,17 @@ std::map<core::GlobalPos, State>& states() {
 int launchEntities(BlockSource& region, BlockPos const& pos, int facing) {
     BlockPos front = offset(pos, facing);
     auto     v     = rotation::dirVec(facing);
-    // the front block, grown a little so that things resting on the base face are included
+    // the front block, grown a little towards the base so that things resting on its face are included
     constexpr float g = 0.1f;
-    AABB            box{
-        Vec3{static_cast<float>(front.x) - g, static_cast<float>(front.y) - g, static_cast<float>(front.z) - g},
-        Vec3{static_cast<float>(front.x) + 1 + g, static_cast<float>(front.y) + 1 + g, static_cast<float>(front.z) + 1 + g}
-    };
+    Vec3            lo{static_cast<float>(front.x), static_cast<float>(front.y), static_cast<float>(front.z)};
+    Vec3            hi{lo.x + 1.f, lo.y + 1.f, lo.z + 1.f};
+    if (v.x > 0) lo.x -= g;
+    if (v.x < 0) hi.x += g;
+    if (v.y > 0) lo.y -= g;
+    if (v.y < 0) hi.y += g;
+    if (v.z > 0) lo.z -= g;
+    if (v.z < 0) hi.z += g;
+    AABB  box{lo, hi};
     float vel = config().springLauncher.launcherVelocity;
     int   n   = 0;
     for (Actor* a : entitiesIn(region, box)) {
@@ -61,13 +66,18 @@ bool fire(BlockSource& region, BlockPos const& pos) {
     if (f < 0) return false;
     BlockPos front = offset(pos, f);
     if (!game::replaceable(region, front)) return false;
-    auto const* extended = withStates(base, {{"complementaries:extended", rotation::Value{true}}});
-    auto const* arm      = blockFrom(ids::kArm, facingStates(Kind::Arm, f));
+    auto const* extended = withStates(
+        base,
+        {
+            {"complementaries:extended", rotation::Value{true}}
+    }
+    );
+    auto const* arm = blockFrom(ids::kArm, facingStates(Kind::Arm, f));
     if (!extended || !arm) return false;
     place(region, pos, *extended);
     place(region, front, *arm);
     states()[game::globalPos(region, pos)] = {Phase::Extending, kStepTicks};
-    int n = launchEntities(region, pos, f);
+    int n                                  = launchEntities(region, pos, f);
     playSound(region, centerOf(pos), "complementaries.block.piston_launcher.extend", 0.5f, 0.7f);
     if (n > 0) playSound(region, centerOf(front), "complementaries.block.piston_launcher.launch", 0.8f, 1.f);
     log().info("mechanism: launcher at {} {} {} launched {} entities", pos.x, pos.y, pos.z, n);
@@ -75,9 +85,9 @@ bool fire(BlockSource& region, BlockPos const& pos) {
 }
 
 void tick(BlockSource& region, BlockPos const& pos, Block const& block) {
-    auto&    st  = states()[game::globalPos(region, pos)];
-    bool     ext = boolStateOf(block, "complementaries:extended");
-    int      f   = facingOf(block);
+    auto& st  = states()[game::globalPos(region, pos)];
+    bool  ext = boolStateOf(block, "complementaries:extended");
+    int   f   = facingOf(block);
     if (f < 0) return;
     BlockPos front = offset(pos, f);
 
@@ -92,7 +102,12 @@ void tick(BlockSource& region, BlockPos const& pos, Block const& block) {
             if (fk == Kind::Arm || fk == Kind::Head) placeAir(region, front);
             Block const& now = region.getBlock(pos);
             if (kindOf(now) == Kind::Launcher && boolStateOf(now, "complementaries:extended")) {
-                if (auto const* b = withStates(now, {{"complementaries:extended", rotation::Value{false}}}))
+                if (auto const* b = withStates(
+                        now,
+                        {
+                            {"complementaries:extended", rotation::Value{false}}
+                }
+                    ))
                     place(region, pos, *b);
             }
         }
@@ -108,7 +123,12 @@ void tick(BlockSource& region, BlockPos const& pos, Block const& block) {
     Kind fk = kindAt(region, front);
     if (fk != Kind::Head && fk != Kind::Arm) {
         // the head is gone (explosion, command...): retract
-        if (auto const* b = withStates(block, {{"complementaries:extended", rotation::Value{false}}}))
+        if (auto const* b = withStates(
+                block,
+                {
+                    {"complementaries:extended", rotation::Value{false}}
+        }
+            ))
             place(region, pos, *b);
         return;
     }
@@ -160,5 +180,7 @@ void playerBroke(BlockSource& region, BlockPos const& base, bool creative) {
 }
 
 void reset() { states().clear(); }
+
+void erase(core::GlobalPos const& pos) { states().erase(pos); }
 
 } // namespace cm::feature::mechanism::launcher

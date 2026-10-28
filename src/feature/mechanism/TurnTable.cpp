@@ -10,6 +10,7 @@
 #include "mc/world/level/BlockPos.h"
 #include "mc/world/level/BlockSource.h"
 #include "mc/world/level/block/Block.h"
+#include "mc/world/level/block/BlockType.h"
 #include "mc/world/phys/AABB.h"
 
 #include "feature/mechanism/Mechanism.h"
@@ -99,7 +100,12 @@ std::string rotateFront(BlockSource& region, BlockPos const& pos) {
     std::string id = b.getTypeName();
     auto const* nb = blockFrom(id, states);
     if (!nb || nb == &b) return {};
+    if (kindOf(*nb) == Kind::Crank && !crank::supported(region, front, facingOf(*nb))) return {};
     place(region, front, *nb);
+    if (!nb->getBlockType().canSurvive(region, front)) {
+        place(region, front, b); // e.g. a torch or a ladder turned away from its wall
+        return {};
+    }
     playSound(region, centerOf(front), "complementaries.block.turn_table.rotate", 0.7f, 1.f);
     return id;
 }
@@ -108,7 +114,13 @@ bool toggle(BlockSource& region, BlockPos const& pos) {
     Block const& b = region.getBlock(pos);
     if (kindOf(b) != Kind::TurnTable) return false;
     bool inv = !boolStateOf(b, "complementaries:inverted");
-    if (auto const* nb = withStates(b, {{"complementaries:inverted", rotation::Value{inv}}})) place(region, pos, *nb);
+    if (auto const* nb = withStates(
+            b,
+            {
+                {"complementaries:inverted", rotation::Value{inv}}
+    }
+        ))
+        place(region, pos, *nb);
     playSound(region, centerOf(pos), "random.click", 0.3f, inv ? 0.55f : 0.5f);
     states()[game::globalPos(region, pos)].counter = 0;
     log().info("mechanism: turn table at {} {} {} inverted={}", pos.x, pos.y, pos.z, inv);
@@ -116,13 +128,18 @@ bool toggle(BlockSource& region, BlockPos const& pos) {
 }
 
 void tick(BlockSource& region, BlockPos const& pos, Block const& block) {
-    auto const& cfg      = config().turnTable;
-    auto&       st       = states()[game::globalPos(region, pos)];
-    int         power    = cfg.enabled ? consumerPower(region, pos) : 0;
-    bool        rotating = power > 0;
-    Block const* cur     = &block;
+    auto const&  cfg      = config().turnTable;
+    auto&        st       = states()[game::globalPos(region, pos)];
+    int          power    = cfg.enabled ? consumerPower(region, pos) : 0;
+    bool         rotating = power > 0;
+    Block const* cur      = &block;
     if (boolStateOf(block, "complementaries:rotating") != rotating) {
-        if (auto const* nb = withStates(block, {{"complementaries:rotating", rotation::Value{rotating}}})) {
+        if (auto const* nb = withStates(
+                block,
+                {
+                    {"complementaries:rotating", rotation::Value{rotating}}
+        }
+            )) {
             place(region, pos, *nb);
             cur = nb;
         }
@@ -136,13 +153,12 @@ void tick(BlockSource& region, BlockPos const& pos, Block const& block) {
     bool ccw    = boolStateOf(*cur, "complementaries:inverted");
     if (++st.counter >= period) {
         st.counter = 0;
-        auto id    = rotateFront(region, pos);
-        if (!id.empty()) log().debug("mechanism: turn table at {} {} {} rotated {}", pos.x, pos.y, pos.z, id);
+        (void)rotateFront(region, pos);
     }
     if (f == rotation::kUp && cfg.rotateEntities) {
         AABB box{
-            Vec3{static_cast<float>(pos.x), static_cast<float>(pos.y) + 0.95f, static_cast<float>(pos.z)},
-            Vec3{static_cast<float>(pos.x) + 1.f, static_cast<float>(pos.y) + 1.5f, static_cast<float>(pos.z) + 1.f}
+            Vec3{static_cast<float>(pos.x),       static_cast<float>(pos.y) + 0.95f, static_cast<float>(pos.z)      },
+            Vec3{static_cast<float>(pos.x) + 1.f, static_cast<float>(pos.y) + 1.5f,  static_cast<float>(pos.z) + 1.f}
         };
         float step = 90.f / static_cast<float>(period) * (ccw ? -1.f : 1.f);
         for (Actor* a : entitiesIn(region, box)) {
@@ -154,5 +170,7 @@ void tick(BlockSource& region, BlockPos const& pos, Block const& block) {
 }
 
 void reset() { states().clear(); }
+
+void erase(core::GlobalPos const& pos) { states().erase(pos); }
 
 } // namespace cm::feature::mechanism::turntable

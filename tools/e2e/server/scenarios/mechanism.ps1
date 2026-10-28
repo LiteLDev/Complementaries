@@ -3,7 +3,7 @@
 # that a launcher placed by /setblock reacts to redstone placed by /setblock (tracking through the
 # block-change and redstone-setup hooks, not through a selftest helper).
 $r = Invoke-SelfTest 'mechanism.*'
-if ($r.Pass -lt 13) { throw "expected at least 13 mechanism selftests to pass, got $($r.Pass)" }
+if ($r.Pass -lt 15) { throw "expected at least 15 mechanism selftests to pass, got $($r.Pass)" }
 
 foreach ($id in 'piston_launcher', 'bellows', 'turn_table', 'cog_block', 'crank') {
     $mark = Get-LogMark

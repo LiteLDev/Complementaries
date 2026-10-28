@@ -26,6 +26,7 @@ struct State {
     bool active = false; ///< a cycle is running
     bool manual = false; ///< the running cycle is a manual press
     int  onTop  = 0;     ///< entities standing on it last tick
+    int  length = 10;    ///< length of the running cycle (fixed when it starts)
 };
 
 std::map<core::GlobalPos, State>& states() {
@@ -40,8 +41,16 @@ int cycleLength(int power) {
 
 AABB blockBox(BlockPos const& a, BlockPos const& b) {
     return AABB{
-        Vec3{static_cast<float>(std::min(a.x, b.x)), static_cast<float>(std::min(a.y, b.y)), static_cast<float>(std::min(a.z, b.z))},
-        Vec3{static_cast<float>(std::max(a.x, b.x) + 1), static_cast<float>(std::max(a.y, b.y) + 1), static_cast<float>(std::max(a.z, b.z) + 1)}
+        Vec3{
+             static_cast<float>(std::min(a.x, b.x)),
+             static_cast<float>(std::min(a.y, b.y)),
+             static_cast<float>(std::min(a.z, b.z))
+        },
+        Vec3{
+             static_cast<float>(std::max(a.x, b.x) + 1),
+             static_cast<float>(std::max(a.y, b.y) + 1),
+             static_cast<float>(std::max(a.z, b.z) + 1)
+        }
     };
 }
 
@@ -58,7 +67,8 @@ int entitiesOnTop(BlockSource& region, BlockPos const& pos) {
 }
 
 bool heatable(std::string_view id, Block const& block) {
-    if (id == "minecraft:lit_furnace" || id == "minecraft:lit_blast_furnace" || id == "minecraft:lit_smoker") return true;
+    if (id == "minecraft:lit_furnace" || id == "minecraft:lit_blast_furnace" || id == "minecraft:lit_smoker")
+        return true;
     if (id == "minecraft:campfire" || id == "minecraft:soul_campfire") return !boolStateOf(block, "extinguished");
     return false;
 }
@@ -91,7 +101,8 @@ void blow(BlockSource& region, BlockPos const& pos, int f, bool blowing, int t) 
 
     if (blowing) {
         if (t % 2 == 0) {
-            std::string effect = "complementaries:bellows_air_" + std::string(rotation::detail::kDirNames[static_cast<std::size_t>(f)]);
+            std::string effect =
+                "complementaries:bellows_air_" + std::string(rotation::detail::kDirNames[static_cast<std::size_t>(f)]);
             spawnParticle(region, mouth + dir * 0.1f, effect);
         }
         if (cfg.heatBlocks) {
@@ -127,8 +138,9 @@ void tick(BlockSource& region, BlockPos const& pos, Block const& block) {
     }
     int stage = 0;
     if (st.active) {
-        int T = cycleLength(power > 0 ? power : 15);
-        if (st.t >= T) st.t = 0;
+        // the length is chosen when a cycle starts, so losing power lets the current cycle finish
+        if (st.t == 0) st.length = cycleLength(power > 0 ? power : 15);
+        int    T     = st.length;
         double phase = static_cast<double>(st.t) / T;
         stage        = static_cast<int>(std::lround(7.0 * (1.0 - std::cos(2.0 * std::numbers::pi * phase)) / 2.0));
         bool blowing = st.t < T / 2;
@@ -142,7 +154,13 @@ void tick(BlockSource& region, BlockPos const& pos, Block const& block) {
         }
     }
     if (stage != intStateOf(block, "complementaries:stage", 0)) {
-        if (auto const* b = withStates(block, {{"complementaries:stage", rotation::Value{stage}}})) place(region, pos, *b);
+        if (auto const* b = withStates(
+                block,
+                {
+                    {"complementaries:stage", rotation::Value{stage}}
+        }
+            ))
+            place(region, pos, *b);
     }
 }
 
@@ -153,5 +171,7 @@ void press(BlockSource& region, BlockPos const& pos) {
 }
 
 void reset() { states().clear(); }
+
+void erase(core::GlobalPos const& pos) { states().erase(pos); }
 
 } // namespace cm::feature::mechanism::bellows

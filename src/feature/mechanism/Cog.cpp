@@ -44,10 +44,12 @@ void tickAll(BlockSource& region, std::vector<BlockPos> const& cogs) {
                 stack.push_back(n);
             }
         }
+        // over the cap: the rest is resolved as clusters of its own
+        for (auto const& rest : stack) visited.erase(keyOf(rest));
         // power a dust line or block got from this cluster is no input (no self-latching)
         auto ownCog = [&index](BlockPos const& q) { return index.contains(keyOf(q)); };
         // external inputs, then spread with a loss of one per cog (strongest first)
-        std::vector<int>                       power(nodes.size(), 0);
+        std::vector<int>                         power(nodes.size(), 0);
         std::priority_queue<std::pair<int, int>> queue;
         for (std::size_t i = 0; i < nodes.size(); ++i) {
             if (!enabled) continue;
@@ -78,8 +80,10 @@ void tickAll(BlockSource& region, std::vector<BlockPos> const& cogs) {
             if (cur == power[i] && twisted == (power[i] > 0)) continue;
             if (auto const* nb = withStates(
                     b,
-                    {{"complementaries:power", rotation::Value{power[i]}},
-                     {"complementaries:twisting", rotation::Value{power[i] > 0}}}
+                    {
+                        {"complementaries:power",    rotation::Value{power[i]}    },
+                        {"complementaries:twisting", rotation::Value{power[i] > 0}}
+            }
                 ))
                 place(region, nodes[i], *nb);
         }

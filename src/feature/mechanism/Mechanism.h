@@ -3,6 +3,7 @@
 // U7 mechanism: spring launcher, bellows, turn table, cog block and crank (docs/spec/mechanism.md).
 // Internal declarations shared by the unit's .cpp files. Everything runs on the server thread.
 
+#include <cstdint>
 #include <functional>
 #include <optional>
 #include <string>
@@ -51,8 +52,9 @@ struct MechanismConfig {
     } crank;
 };
 
-/// The config with values clamped to their ranges.
+/// The config with values clamped to their ranges (refreshed every tick and on install).
 [[nodiscard]] MechanismConfig const& config();
+void                                 refreshConfig();
 
 // ---- ids ----------------------------------------------------------------------------------------
 namespace ids {
@@ -78,9 +80,9 @@ enum class Kind { None, Launcher, Head, Arm, Bellows, TurnTable, Cog, Crank };
 using StateList = std::vector<std::pair<std::string, rotation::Value>>;
 
 /// The block's states as stored in its serialization id (names as in `/setblock`).
-[[nodiscard]] StateList statesOf(Block const& block);
+[[nodiscard]] StateList                      statesOf(Block const& block);
 [[nodiscard]] std::optional<rotation::Value> stateOf(Block const& block, std::string_view name);
-[[nodiscard]] int  intStateOf(Block const& block, std::string_view name, int fallback = 0);
+[[nodiscard]] int                            intStateOf(Block const& block, std::string_view name, int fallback = 0);
 [[nodiscard]] bool boolStateOf(Block const& block, std::string_view name, bool fallback = false);
 /// `id` with `states` (missing states keep their defaults). nullptr when the combination is unknown.
 [[nodiscard]] Block const* blockFrom(std::string_view id, StateList const& states);
@@ -103,16 +105,18 @@ bool placeAir(BlockSource& region, BlockPos const& pos);
 void dropItem(BlockSource& region, BlockPos const& pos, std::string_view id);
 
 // ---- redstone -----------------------------------------------------------------------------------
-/// Input strength of a consumer block (launcher, bellows, turn table): 0..15.
+/// Input strength of a consumer block (launcher, bellows, turn table): 0..15. A drop to 0 is only
+/// reported after 2 ticks: rewriting the block's own state (stage, rotating...) may rebuild its
+/// circuit component, which reads 0 until the next redstone update.
 [[nodiscard]] int consumerPower(BlockSource& region, BlockPos const& pos);
+/// Forgets the remembered power of `pos` (all positions when empty).
+void forgetPower(std::optional<core::GlobalPos> const& pos);
+/// Server ticks counted by the unit.
+[[nodiscard]] std::uint64_t currentTick();
 /// The signal the neighbour of `pos` in direction `dir` sends into `pos`. Cogs are not sources here,
 /// and power that a dust line / block got from a cog `ignore` accepts is not counted either.
-[[nodiscard]] int signalInto(
-    BlockSource&                                 region,
-    BlockPos const&                              pos,
-    int                                          dir,
-    std::function<bool(BlockPos const&)> const& ignore = {}
-);
+[[nodiscard]] int
+signalInto(BlockSource& region, BlockPos const& pos, int dir, std::function<bool(BlockPos const&)> const& ignore = {});
 /// Debug: (strength, direction) of the circuit component at `pos`, (-1, -1) if none.
 [[nodiscard]] std::pair<int, int> componentInfo(BlockSource& region, BlockPos const& pos);
 
@@ -125,20 +129,22 @@ void spawnParticle(BlockSource& region, Vec3 const& pos, std::string const& effe
 /// Sets an entity's velocity (players are sent the motion).
 void setMotion(Actor& actor, Vec3 const& motion);
 /// Turns an entity by `degrees` of yaw (players are sent the new head rotation).
-void turnEntity(Actor& actor, float degrees);
-void actionBar(Player& player, std::string const& text);
+void               turnEntity(Actor& actor, float degrees);
+void               actionBar(Player& player, std::string const& text);
 [[nodiscard]] Vec3 centerOf(BlockPos const& pos);
 
 // ---- runtime ------------------------------------------------------------------------------------
 /// Runs `fn` at the start of the next server tick (world edits outside of game callbacks).
 void defer(std::function<void()> fn);
 /// Starts / stops updating a ticking mechanism block.
-void track(BlockSource const& region, BlockPos const& pos);
-[[nodiscard]] bool isTracked(core::GlobalPos const& pos);
+void                       track(BlockSource const& region, BlockPos const& pos);
+[[nodiscard]] bool         isTracked(core::GlobalPos const& pos);
 [[nodiscard]] BlockSource* regionOf(int dim);
 
 // subsystems (one .cpp each); `tick` runs once per server tick for each loaded tracked block
 namespace launcher {
+/// Drops the runtime state of a removed block.
+void erase(core::GlobalPos const& pos);
 void tick(BlockSource& region, BlockPos const& pos, Block const& block);
 /// Extends now if possible (launching what is in front). Returns false if blocked / extended.
 bool fire(BlockSource& region, BlockPos const& pos);
@@ -151,6 +157,8 @@ void reset();
 } // namespace launcher
 
 namespace bellows {
+/// Drops the runtime state of a removed block.
+void erase(core::GlobalPos const& pos);
 void tick(BlockSource& region, BlockPos const& pos, Block const& block);
 /// One manual pump (player use / stepped on).
 void press(BlockSource& region, BlockPos const& pos);
@@ -158,6 +166,8 @@ void reset();
 } // namespace bellows
 
 namespace turntable {
+/// Drops the runtime state of a removed block.
+void erase(core::GlobalPos const& pos);
 void tick(BlockSource& region, BlockPos const& pos, Block const& block);
 /// Rotates the block in front of the table once. Returns the rotated block id ("" if nothing).
 std::string rotateFront(BlockSource& region, BlockPos const& pos);
@@ -176,6 +186,8 @@ namespace crank {
 int turn(BlockSource& region, BlockPos const& pos, bool ccw, Player* player);
 /// The block behind changed: pops the crank off when it lost its support.
 void check(BlockSource& region, BlockPos const& pos);
+/// A crank at `pos` pointing to `facing` would hang on a block that can hold it.
+[[nodiscard]] bool supported(BlockSource& region, BlockPos const& pos, int facing);
 } // namespace crank
 
 } // namespace cm::feature::mechanism

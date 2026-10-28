@@ -18,7 +18,7 @@ namespace cm::feature::mechanism::rotation {
 inline constexpr int kDown = 0, kUp = 1, kNorth = 2, kSouth = 3, kWest = 4, kEast = 5;
 
 struct Vec {
-    int x, y, z;
+    int                   x, y, z;
     friend constexpr bool operator==(Vec, Vec) = default;
 };
 
@@ -101,7 +101,7 @@ template <std::size_t N>
     int out = 0;
     for (std::size_t k = 0; k < N; ++k) {
         if (!(*i & (1 << k))) continue;
-        int r = rotateDir(bits[k], axis, ccw);
+        int r   = rotateDir(bits[k], axis, ccw);
         int idx = -1;
         for (std::size_t j = 0; j < N; ++j)
             if (bits[j] == r) idx = static_cast<int>(j);
@@ -168,7 +168,7 @@ template <std::size_t N>
         if (!s || s->size() != 1) return Result::Unchanged;
         int d = *s == "y" ? kUp : *s == "x" ? kEast : *s == "z" ? kSouth : -1;
         if (d < 0) return Result::Unchanged;
-        int r = rotateDir(d, axis, ccw);
+        int         r   = rotateDir(d, axis, ccw);
         std::string out = (r == kUp || r == kDown) ? "y" : (r == kEast || r == kWest) ? "x" : "z";
         if (name == "portal_axis" && out == "y") return Result::Unsupported;
         if (out == *s) return Result::Unchanged;
@@ -182,7 +182,7 @@ template <std::size_t N>
         if (!vertical(axis)) return Result::Unsupported;
         // 0 south, increasing clockwise seen from above (4 west, 8 north, 12 east)
         bool cwFromAbove = (axis == kUp) != ccw;
-        *i = ((*i + (cwFromAbove ? 4 : -4)) % 16 + 16) % 16;
+        *i               = ((*i + (cwFromAbove ? 4 : -4)) % 16 + 16) % 16;
         return Result::Changed;
     }
     if (name == "lever_direction") {

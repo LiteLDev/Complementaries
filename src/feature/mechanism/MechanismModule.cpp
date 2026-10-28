@@ -44,11 +44,11 @@ namespace {
 constexpr char const* kTrackedKey = "cm:mechanism:tracked";
 
 struct Runtime {
-    std::set<core::GlobalPos>           tracked;
-    bool                                dirty = false;
-    std::vector<std::function<void()>>  deferred;
+    std::set<core::GlobalPos>                                         tracked;
+    bool                                                              dirty = false;
+    std::vector<std::function<void()>>                                deferred;
     std::map<std::pair<std::int64_t, core::GlobalPos>, std::uint64_t> lastUse; ///< use debounce
-    std::uint64_t                       tick = 0;
+    std::uint64_t                                                     tick = 0;
 };
 
 Runtime& rt() {
@@ -87,6 +87,7 @@ void resetAll() {
     launcher::reset();
     bellows::reset();
     turntable::reset();
+    forgetPower(std::nullopt);
 }
 
 // world lifecycle listeners are registered once (the foundation has no removal)
@@ -101,6 +102,7 @@ struct WorldHooks {
 void onTick() {
     auto& r = rt();
     ++r.tick;
+    refreshConfig();
     if (!r.deferred.empty()) {
         auto jobs = std::move(r.deferred);
         r.deferred.clear();
@@ -129,6 +131,10 @@ void onTick() {
             cogs[it->dim].push_back(pos);
             break;
         default:
+            launcher::erase(*it);
+            bellows::erase(*it);
+            turntable::erase(*it);
+            forgetPower(*it);
             it      = r.tracked.erase(it);
             r.dirty = true;
             continue;
@@ -142,10 +148,10 @@ void onTick() {
 
 /// Debounces repeated use packets of one click (and of holding the use button too fast).
 bool debounced(Player const& player, core::GlobalPos const& pos) {
-    auto&  r   = rt();
-    auto   key = std::make_pair(player.getOrCreateUniqueID().rawID, pos);
-    auto   it  = r.lastUse.find(key);
-    bool   hit = it != r.lastUse.end() && r.tick - it->second < 4;
+    auto& r   = rt();
+    auto  key = std::make_pair(player.getOrCreateUniqueID().rawID, pos);
+    auto  it  = r.lastUse.find(key);
+    bool  hit = it != r.lastUse.end() && r.tick - it->second < 4;
     if (r.lastUse.size() > 256) r.lastUse.clear();
     r.lastUse[key] = r.tick;
     return hit;
@@ -226,7 +232,8 @@ void onBlockChanged(ll::event::BlockChangedEvent& ev) {
     Kind k = kindOf(ev.newBlock());
     if (k == Kind::None) return;
     if (isTicking(k)) track(ev.blockSource(), ev.pos());
-    if (k == Kind::Crank && kindOf(ev.previousBlock()) != Kind::Crank) {
+    // a crank placed against nothing, or turned off its support by a turn table, pops off
+    if (k == Kind::Crank && facingOf(ev.previousBlock()) != facingOf(ev.newBlock())) {
         int      dim = static_cast<int>(ev.blockSource().getDimensionId());
         BlockPos pos = ev.pos();
         defer([dim, pos] {
@@ -318,6 +325,8 @@ void track(BlockSource const& region, BlockPos const& pos) {
 
 bool isTracked(core::GlobalPos const& pos) { return rt().tracked.contains(pos); }
 
+std::uint64_t currentTick() { return rt().tick; }
+
 BlockSource* regionOf(int dim) {
     auto level = ll::service::getLevel();
     if (!level) return nullptr;
@@ -339,6 +348,7 @@ public:
         MechanismProducerSetupHook::hook();
         MechanismNeighborChangedHook::hook();
         MechanismFallDamageHook::hook();
+        refreshConfig();
         gInstalled = true;
         if (game::db::available()) loadTracked();
     }

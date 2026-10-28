@@ -37,7 +37,13 @@ int turn(BlockSource& region, BlockPos const& pos, bool ccw, Player* player) {
     Block const& b = region.getBlock(pos);
     if (kindOf(b) != Kind::Crank) return -1;
     int power = (intStateOf(b, "complementaries:power", 0) + (ccw ? 15 : 1)) % 16;
-    if (auto const* nb = withStates(b, {{"complementaries:power", rotation::Value{power}}})) place(region, pos, *nb);
+    if (auto const* nb = withStates(
+            b,
+            {
+                {"complementaries:power", rotation::Value{power}}
+    }
+        ))
+        place(region, pos, *nb);
     Vec3 c = centerOf(pos);
     playSound(region, c, "complementaries.block.crank", 0.6f, 0.6f + 0.04f * static_cast<float>(power));
     spawnParticle(region, c, "minecraft:redstone_wire_dust_particle");
@@ -53,18 +59,21 @@ int turn(BlockSource& region, BlockPos const& pos, bool ccw, Player* player) {
     return power;
 }
 
+bool supported(BlockSource& region, BlockPos const& pos, int facing) {
+    if (facing < 0) return false;
+    BlockPos support = offset(pos, rotation::opposite(facing));
+    if (!region.hasChunksAt(support, 0, false)) return true; // unknown: leave it alone
+    Block const& s = region.getBlock(support);
+    return !s.isAir()
+        && (s.mCachedComponentData->mIsSolid
+            || s.getBlockType().canProvideSupport(s, static_cast<uchar>(facing), BlockSupportType::Center));
+}
+
 void check(BlockSource& region, BlockPos const& pos) {
     Block const& b = region.getBlock(pos);
     if (kindOf(b) != Kind::Crank) return;
     int f = facingOf(b);
-    if (f < 0) return;
-    BlockPos support = offset(pos, rotation::opposite(f));
-    if (!region.hasChunksAt(support, 0, false)) return;
-    Block const& s = region.getBlock(support);
-    bool         ok = !s.isAir()
-             && (s.mCachedComponentData->mIsSolid
-                 || s.getBlockType().canProvideSupport(s, static_cast<uchar>(f), BlockSupportType::Center));
-    if (ok) return;
+    if (f < 0 || supported(region, pos, f)) return;
     dropItem(region, pos, ids::kCrank);
     placeAir(region, pos);
     log().info("mechanism: crank at {} {} {} lost its support", pos.x, pos.y, pos.z);

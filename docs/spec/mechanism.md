@@ -116,20 +116,21 @@ All periods are in game ticks (20 per second). "Powered" means the block receive
   heads/arms, our own turn tables' neighbours that would break. A successful rotation plays the item
   frame rotate sound.
 - **Entities**: an upward turn table spins entities standing on it (`rotateEntities`, default true):
-  their yaw turns by `90 / P` degrees per tick in the table's direction, and they are carried around the
-  centre of the block.
+  their yaw turns by `90 / P` degrees per tick in the table's direction (players are sent the new view
+  rotation).
 - **Toggling**: using the turn table (right-click) on any face other than its top, or on its top with an
   empty hand, toggles `inverted` (comparator click sound, pitch 0.55 / 0.5). Placing blocks on the top
   works as usual.
 
 ### 2.4 Cog block (`cog_block`)
-- A redstone conductor in block form: its power is the strongest signal it receives from a
-  non-cog neighbour (lever, button, plate, torch, repeater/comparator pointing into it, dust on top or
+- A redstone conductor in block form (like a block of redstone dust that connects in all six
+  directions): its power is the strongest signal it receives from a non-cog neighbour (lever, button, plate, torch, repeater/comparator pointing into it, dust on top or
   pointing into it, a powered block, a crank...), or the strongest neighbouring cog's power minus 1.
   A chain of cogs therefore loses one level per block, like redstone dust, and never keeps itself on.
-- It emits its power (weakly) to all six neighbours, so it powers lamps, pistons, dust, other mod
-  blocks, and is read by comparators like any producer. `twisting` is true while powered (the
-  turning texture).
+- It emits `power - 1` (weakly) to all six neighbours, so it powers lamps, pistons, dust, other mod
+  blocks, and is read by comparators like any producer. Power that a dust line or a block received
+  from the same cog cluster is not an input, so a cluster switches off as soon as its source does.
+  `twisting` is true while powered (the turning texture).
 - Updated every tick (redstone runs every 2 ticks, so there is at most one tick of extra delay per
   cluster, not per block: the whole connected cluster (up to 4096 cogs) is resolved at once).
 

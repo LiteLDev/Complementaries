@@ -67,7 +67,7 @@ TEST(MechanismRotation, LegacyHorizontalTables) {
     Value d = 2; // direction: north
     EXPECT_EQ(rot::rotateState("direction", d, rot::kUp, false), Result::Changed);
     EXPECT_EQ(std::get<int>(d), 3); // east
-    Value w = 3; // stairs: north
+    Value w = 3;                    // stairs: north
     EXPECT_EQ(rot::rotateState("weirdo_direction", w, rot::kUp, false), Result::Changed);
     EXPECT_EQ(std::get<int>(w), 0); // east
 }

@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <map>
 
 #include "ll/api/service/Bedrock.h"
 
@@ -30,10 +31,10 @@
 #include "mc/world/level/block/BlockType.h"
 #include "mc/world/level/dimension/Dimension.h"
 #include "mc/world/phys/AABB.h"
-#include "mc/world/redstone/circuit/components/CircuitComponentList.h"
 #include "mc/world/redstone/circuit/CircuitSceneGraph.h"
 #include "mc/world/redstone/circuit/CircuitSystem.h"
 #include "mc/world/redstone/circuit/components/BaseCircuitComponent.h"
+#include "mc/world/redstone/circuit/components/CircuitComponentList.h"
 #include "mc/world/redstone/circuit/components/CircuitComponentType.h"
 
 #include "feature/mechanism/Mechanism.h"
@@ -44,8 +45,17 @@ namespace cm::feature::mechanism {
 
 namespace rot = rotation;
 
-MechanismConfig const& config() {
+namespace {
+MechanismConfig& cachedConfig() {
     static MechanismConfig c;
+    return c;
+}
+} // namespace
+
+MechanismConfig const& config() { return cachedConfig(); }
+
+void refreshConfig() {
+    auto& c  = cachedConfig();
     c        = cm::config::get<MechanismConfig>();
     auto clf = [](float v, float lo, float hi) { return std::clamp(std::isfinite(v) ? v : lo, lo, hi); };
     c.springLauncher.launcherVelocity   = clf(c.springLauncher.launcherVelocity, 0.f, 16.f);
@@ -54,7 +64,6 @@ MechanismConfig const& config() {
     c.bellows.power                     = clf(c.bellows.power, 0.f, 16.f);
     c.bellows.range                     = std::clamp(c.bellows.range, 1, 16);
     c.turnTable.period                  = std::clamp(c.turnTable.period, 1, 256);
-    return c;
 }
 
 // ---- kinds --------------------------------------------------------------------------------------
@@ -81,7 +90,7 @@ Kind kindAt(BlockSource& region, BlockPos const& pos) {
 // ---- states -------------------------------------------------------------------------------------
 
 StateList statesOf(Block const& block) {
-    StateList           out;
+    StateList          out;
     CompoundTag const& tag = block.mSerializationId;
     if (!tag.contains("states")) return out;
     auto const& states = tag.at("states");
@@ -153,12 +162,7 @@ Block const* withStates(Block const& block, StateList const& changes) {
 }
 
 namespace {
-int dirOfName(std::string const* s) {
-    if (!s) return -1;
-    for (int d = 0; d < 6; ++d)
-        if (rot::detail::kDirNames[static_cast<std::size_t>(d)] == *s) return d;
-    return -1;
-}
+int         dirOfName(std::string const* s) { return s ? rot::detail::dirOfName(*s) : -1; }
 std::string nameOfDir(int d) { return std::string(rot::detail::kDirNames[static_cast<std::size_t>(d) % 6]); }
 } // namespace
 
@@ -188,12 +192,18 @@ StateList facingStates(Kind kind, int dir) {
     case Kind::Launcher:
     case Kind::Bellows:
     case Kind::TurnTable:
-        return {{"minecraft:facing_direction", rot::Value{nameOfDir(rot::opposite(dir))}}};
+        return {
+            {"minecraft:facing_direction", rot::Value{nameOfDir(rot::opposite(dir))}}
+        };
     case Kind::Head:
     case Kind::Arm:
-        return {{"complementaries:facing", rot::Value{dir}}};
+        return {
+            {"complementaries:facing", rot::Value{dir}}
+        };
     case Kind::Crank:
-        return {{"minecraft:block_face", rot::Value{nameOfDir(dir)}}};
+        return {
+            {"minecraft:block_face", rot::Value{nameOfDir(dir)}}
+        };
     default:
         return {};
     }
@@ -229,9 +239,33 @@ BaseCircuitComponent* componentAt(BlockSource& region, BlockPos const& pos) {
 }
 } // namespace
 
+namespace {
+struct PowerMemo {
+    int           power = 0;
+    std::uint64_t seen  = 0; ///< last tick with power > 0
+};
+std::map<core::GlobalPos, PowerMemo>& powerMemo() {
+    static std::map<core::GlobalPos, PowerMemo> m;
+    return m;
+}
+} // namespace
+
 int consumerPower(BlockSource& region, BlockPos const& pos) {
-    auto* c = componentAt(region, pos);
-    return c ? std::clamp(c->getStrength(), 0, 15) : 0;
+    auto* c   = componentAt(region, pos);
+    int   now = c ? std::clamp(c->getStrength(), 0, 15) : 0;
+    auto& m   = powerMemo()[game::globalPos(region, pos)];
+    if (now > 0) {
+        m = {now, currentTick()};
+        return now;
+    }
+    if (m.power > 0 && currentTick() - m.seen <= 2) return m.power;
+    m.power = 0;
+    return 0;
+}
+
+void forgetPower(std::optional<core::GlobalPos> const& pos) {
+    if (pos) powerMemo().erase(*pos);
+    else powerMemo().clear();
 }
 
 std::pair<int, int> componentInfo(BlockSource& region, BlockPos const& pos) {
@@ -277,12 +311,12 @@ int signalInto(BlockSource& region, BlockPos const& pos, int dir, std::function<
     case CircuitComponentType::PoweredBlockComponent:
         return strengthWithout(*c, ignore);
     case CircuitComponentType::RedstoneTorchCapacitor: {
-        // a torch powers everything but the block it stands on
+        // a torch powers everything but the block it stands on ("west": hangs on the block west of it)
         Block const& torch = region.getBlock(np);
         auto         v     = stateOf(torch, "torch_facing_direction");
         auto*        name  = v ? std::get_if<std::string>(&*v) : nullptr;
         int          d     = name ? dirOfName(name) : -1;
-        BlockPos     att   = (name && *name == "top") ? offset(np, rot::kDown) : d >= 2 ? offset(np, rot::opposite(d)) : np;
+        BlockPos     att   = (name && *name == "top") ? offset(np, rot::kDown) : d >= 2 ? offset(np, d) : np;
         return att == pos ? 0 : s;
     }
     case CircuitComponentType::RepeaterCapacitor:
@@ -336,15 +370,15 @@ Vec3 centerOf(BlockPos const& pos) {
 void playSound(BlockSource& region, Vec3 const& pos, std::string const& name, float volume, float pitch) {
     auto pkt = MinecraftPackets::createPacket(MinecraftPacketIds::PlaySound);
     if (!pkt) return;
-    auto& p    = static_cast<PlaySoundPacket&>(*pkt);
-    p.mName    = name;
-    p.mPos     = BlockPos{
+    auto& p = static_cast<PlaySoundPacket&>(*pkt);
+    p.mName = name;
+    p.mPos  = BlockPos{
         static_cast<int>(std::floor(pos.x * 8.f)),
         static_cast<int>(std::floor(pos.y * 8.f)),
         static_cast<int>(std::floor(pos.z * 8.f))
     };
-    p.mVolume  = volume;
-    p.mPitch   = pitch;
+    p.mVolume = volume;
+    p.mPitch  = pitch;
     p.sendTo(game::blockPosOf(pos), region.getDimensionId());
 }
 
@@ -366,10 +400,10 @@ void setMotion(Actor& actor, Vec3 const& motion) {
 }
 
 void turnEntity(Actor& actor, float degrees) {
-    Vec2 r = actor.getRotation();
-    r.y += degrees;
-    r.y = std::remainder(r.y, 360.f);
-    const_cast<Vec2&>(actor.getRotation()) = r;
+    Vec2 r                                  = actor.getRotation();
+    r.y                                    += degrees;
+    r.y                                     = std::remainder(r.y, 360.f);
+    const_cast<Vec2&>(actor.getRotation())  = r;
     actor.setYHeadRot(actor.getRotation().y);
     if (!actor.isPlayer() || actor.isSimulatedPlayer()) return;
     auto pkt = MinecraftPackets::createPacket(MinecraftPacketIds::MovePlayer);
@@ -386,7 +420,7 @@ void turnEntity(Actor& actor, float degrees) {
 
 void actionBar(Player& player, std::string const& text) {
     if (player.isSimulatedPlayer()) return;
-    auto                          pkt = TextPacket{};
+    auto                           pkt = TextPacket{};
     TextPacketPayload::MessageOnly message;
     message.mType = TextPacketType::Tip;
     message.mMessage->assign(text);
