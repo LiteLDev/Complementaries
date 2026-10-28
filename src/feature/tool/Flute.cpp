@@ -5,6 +5,7 @@
 #include <string>
 
 #include "mc/deps/core/math/Vec2.h"
+#include "mc/deps/core/string/HashedString.h"
 #include "mc/world/actor/Actor.h"
 #include "mc/world/actor/ActorFlags.h"
 #include "mc/world/actor/player/Player.h"
@@ -23,7 +24,8 @@ namespace cm::feature::tool::flute {
 
 namespace {
 
-constexpr int kDanceTicks = 200;
+constexpr int kDanceTicks    = 200;
+constexpr int kCooldownTicks = 20;
 
 struct Note {
     int          dim;
@@ -44,13 +46,11 @@ std::vector<Dancer>& dancers() {
     return v;
 }
 
-std::uint64_t now() {
-    auto* l = level();
-    return l ? l->getCurrentServerTick().tickID : 0;
-}
+std::uint64_t now() { return currentTick(); }
 
-std::string boundPrefix(Player const& player) {
-    auto text = trFor(player, "message.supplementaries.flute.bound", "Bound to: {}", "");
+std::string boundPrefix() {
+    // lore uses the server language (like the other tool lore lines) so it can be found again
+    auto text = tr("message.supplementaries.flute.bound", "Bound to: {}", "");
     return fmtCode("r7") + text;
 }
 
@@ -116,9 +116,12 @@ bool useInAir(Player& player) {
     if (!config().flute.enabled) return false;
     ItemStack item = player.getSelectedItem();
     if (!isItem(item, ids::Flute)) return false;
+    HashedString const category("complementaries:flute");
+    if (player.isItemOnCooldown(category)) return false;
+    player.startItemCooldown(category, kCooldownTicks, true);
     if (player.isSneaking() && !stringData(item, "cm_flute_pet").empty()) {
         removeData(item, "cm_flute_pet");
-        setLoreLine(item, boundPrefix(player), "");
+        setLoreLine(item, boundPrefix(), "");
         setMainhand(player, item);
         player.sendMessage(trFor(player, "message.supplementaries.flute.unbound", "Flute unbound"));
         return true;
@@ -138,7 +141,7 @@ bool useOnEntity(Player& player, Actor& target) {
     if (!isItem(item, ids::Flute)) return false;
     auto name = petName(target);
     setStringData(item, "cm_flute_pet", std::to_string(target.getOrCreateUniqueID().rawID));
-    setLoreLine(item, boundPrefix(player), boundPrefix(player) + name);
+    setLoreLine(item, boundPrefix(), boundPrefix() + name);
     setMainhand(player, item);
     player.sendMessage(trFor(player, "message.supplementaries.flute.bound", "Bound to: {}", name));
     particle(static_cast<int>(target.getDimensionId()), target.getPosition() + Vec3{0, 1.0f, 0}, "minecraft:heart_particle");

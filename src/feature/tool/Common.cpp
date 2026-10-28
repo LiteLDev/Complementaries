@@ -31,6 +31,7 @@
 #include "mc/world/level/BlockSource.h"
 #include "mc/world/level/GameType.h"
 #include "mc/world/level/Level.h"
+#include "mc/world/level/Tick.h"
 #include "mc/world/level/dimension/Dimension.h"
 
 #include "feature/tool/Tool.h"
@@ -46,6 +47,11 @@ ToolConfig const& config() { return cm::config::get<ToolConfig>(); }
 Level* level() {
     auto l = ll::service::getLevel();
     return l ? l.as_ptr() : nullptr;
+}
+
+std::uint64_t currentTick() {
+    auto* l = level();
+    return l ? l->getCurrentServerTick().tickID : 0;
 }
 
 ItemStack makeItem(std::string_view id, int count, int aux) {
@@ -291,7 +297,7 @@ Block const* blockWithStates(std::string const& id, States const& states) {
     }
     nbt.putCompound("states", std::move(st));
     if (auto b = Block::tryGetFromRegistry(nbt)) return b.as_ptr();
-    return type->mDefaultState;
+    return nullptr;
 }
 
 bool replaceKeepingData(BlockSource& region, BlockPos const& pos, Block const& block) {

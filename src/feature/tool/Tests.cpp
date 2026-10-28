@@ -331,9 +331,9 @@ CM_REGISTER_SELFTEST("tool.flute", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.check(wolf->getPosition().distanceTo(p.getPosition()) < 4.0f, "the bound wolf came to the player");
     ctx.check(p.getSelectedItem().getDamageValue() == 1, "the flute lost one durability");
     // unbound flute: parrots dance
-    hold(ctx, p, tool::makeItem(tool::ids::Flute));
     if (parrot) {
-        tool::flute::useInAir(p);
+        auto unbound = tool::makeItem(tool::ids::Flute);
+        tool::flute::callPets(p, unbound);
         ctx.check(parrot->getStatusFlag(ActorFlags::Dancing), "the parrot dances");
         parrot->remove();
     }

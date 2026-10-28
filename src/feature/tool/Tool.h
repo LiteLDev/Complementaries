@@ -104,6 +104,8 @@ inline constexpr std::string_view EmptySliceMap  = "complementaries:empty_slice_
     return out;
 }
 [[nodiscard]] Level* level();
+/// The current server tick (0 without a level).
+[[nodiscard]] std::uint64_t currentTick();
 /// An item stack of `id` (empty stack when the id is unknown).
 [[nodiscard]] ItemStack makeItem(std::string_view id, int count = 1, int aux = 0);
 [[nodiscard]] std::string itemId(ItemStackBase const& item);
@@ -155,7 +157,8 @@ void setLoreLine(ItemStackBase& item, std::string const& prefix, std::string con
 using StateValue = std::variant<int, float, bool, std::string>;
 using States     = std::vector<std::pair<std::string, StateValue>>;
 [[nodiscard]] States       blockStates(Block const& block);
-/// `id` with `states` (states the block doesn't have are dropped). nullptr if `id` is unknown.
+/// `id` with `states` (states the block doesn't have are dropped). nullptr if `id` is unknown or
+/// the combination is invalid.
 [[nodiscard]] Block const* blockWithStates(std::string const& id, States const& states);
 /// Replaces the block at `pos`, keeping its block entity data (contents, text, ...).
 bool                       replaceKeepingData(BlockSource& region, BlockPos const& pos, Block const& block);

@@ -73,7 +73,8 @@ bool lookingAtWater(Player& player) {
 Block const* cleanBlock(Block const& block) {
     auto washed = washedId(block.getTypeName());
     if (washed.empty()) return nullptr;
-    return blockWithStates(washed, blockStates(block));
+    if (auto const* b = blockWithStates(washed, blockStates(block))) return b;
+    return game::blockWith(washed);
 }
 
 bool washBlock(BlockSource& region, BlockPos const& pos) {

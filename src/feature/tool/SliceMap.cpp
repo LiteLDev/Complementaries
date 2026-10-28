@@ -33,6 +33,7 @@ namespace {
 
 constexpr int kSize     = 128;
 constexpr int kMaxDepth = 64;
+constexpr int kInitialColumns = 4096; ///< drawn at once when the map is made (the rest while held)
 constexpr std::uint32_t kVoid = 0xFF161210; ///< ABGR: nothing below the slice
 
 struct Slice {
@@ -187,7 +188,7 @@ ItemStack create(int dim, BlockPos const& centerPos, int y) {
     setLoreLine(map, loreFor(y).substr(0, 6), loreFor(y));
     slices()[uid.rawID] = Slice{dim, y, x0, z0, 0};
     game::db::save(dbKey(uid.rawID), {{"dim", dim}, {"y", y}, {"x0", x0}, {"z0", z0}});
-    render(uid.rawID, centerPos, static_cast<int>(64 * std::max(0.1f, config().sliceMap.rangeMultiplier)), kSize * kSize);
+    render(uid.rawID, centerPos, static_cast<int>(64 * std::max(0.1f, config().sliceMap.rangeMultiplier)), kInitialColumns);
     log().info("slice map {} created at height {}", uid.rawID, y);
     return map;
 }

@@ -44,10 +44,7 @@ std::map<Key, Bubble>& bubbles() {
     return m;
 }
 
-std::uint64_t now() {
-    auto* l = level();
-    return l ? l->getCurrentServerTick().tickID : 0;
-}
+std::uint64_t now() { return currentTick(); }
 
 Key keyOf(int dim, BlockPos const& pos) { return {dim, pos.x, pos.y, pos.z}; }
 

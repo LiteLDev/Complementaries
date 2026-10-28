@@ -36,6 +36,9 @@ namespace {
 
 constexpr float kGravity = 0.04f; ///< item entity gravity per tick
 constexpr int   kMaxAge  = 20 * 30;
+/// Pickup delay of a flying projectile, renewed every tick: an untracked one (world closed in
+/// flight) becomes an ordinary item soon after.
+constexpr int   kFlightPickupDelay = 40;
 
 struct Projectile {
     std::int64_t actor   = 0;
@@ -153,11 +156,13 @@ void startReturn(Projectile& p, Actor& a) {
 /// Tries to place the projectile's block on `face` of `hit`.
 bool tryPlace(Projectile& p, Actor& a, BlockSource& region, BlockPos const& hit, int face) {
     if (!config().slingshot.placeBlocks) return false;
+    // only plain block items: no multi-block structures, nothing carrying block-entity data
     Block const* block = p.ammo.mBlock;
-    if (!block) {
-        if (auto b = Block::tryGetFromRegistry(HashedString(itemId(p.ammo)))) block = b.as_ptr();
+    if (!block || block->isAir() || p.ammo.mUserData) return false;
+    auto id = itemId(p.ammo);
+    for (std::string_view part : {"bed", "door", "tall_grass", "large_fern", "sunflower", "lilac", "rose_bush", "peony", "pitcher_plant", "dripleaf"}) {
+        if (id.find(part) != std::string::npos && id.find("trapdoor") == std::string::npos) return false;
     }
-    if (!block || block->isAir()) return false;
     auto off = faceOffset(face);
     BlockPos target{hit.x + off.x, hit.y + off.y, hit.z + off.z};
     if (!game::replaceable(region, target)) return false;
@@ -269,7 +274,7 @@ bool launch(Player& owner, ItemStack const& ammo, Vec3 const& from, Vec3 const& 
     setIntData(flying, "cm_sling", ++gCounter);
     auto* ia = l->getSpawner().spawnItem(owner.getDimensionBlockSource(), flying, &owner, from, 0);
     if (!ia) return false;
-    ia->mPickupDelay = 0x7fff;
+    ia->mPickupDelay = kFlightPickupDelay;
     setVelocity(*ia, velocity);
     Projectile p;
     p.actor     = ia->getOrCreateUniqueID().rawID;
@@ -324,6 +329,7 @@ void tick() {
             continue;
         }
         ++p.age;
+        static_cast<ItemActor*>(a)->mPickupDelay = kFlightPickupDelay;
         auto& region = a->getDimensionBlockSource();
         if (p.returning) {
             tickReturn(p, *a);

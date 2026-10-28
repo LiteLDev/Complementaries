@@ -4,12 +4,14 @@
 
 #include "ll/api/event/EventBus.h"
 #include "ll/api/event/player/PlayerInteractBlockEvent.h"
+#include "ll/api/event/player/PlayerPickUpItemEvent.h"
 #include "ll/api/event/player/PlayerUseItemEvent.h"
 #include "ll/api/event/world/ServerLevelTickEvent.h"
 #include "ll/api/memory/Hook.h"
 
 #include "mc/world/Container.h"
 #include "mc/world/actor/Actor.h"
+#include "mc/world/actor/item/ItemActor.h"
 #include "mc/world/actor/player/Player.h"
 #include "mc/world/actor/player/PlayerItemInUse.h"
 #include "mc/world/gamemode/GameMode.h"
@@ -36,11 +38,6 @@ namespace {
 std::unordered_map<std::int64_t, std::uint64_t>& lastBlockUse() {
     static std::unordered_map<std::int64_t, std::uint64_t> m;
     return m;
-}
-
-std::uint64_t currentTick() {
-    auto* l = level();
-    return l ? l->getCurrentServerTick().tickID : 0;
 }
 
 bool recentlyUsedOnBlock(Player& player) {
@@ -186,7 +183,7 @@ LL_TYPE_INSTANCE_HOOK(
     HandSlot    handSlot
 ) {
     Player& player = mPlayer;
-    if (!player.isClientSide()) {
+    if (!player.isClientSide() && handSlot == HandSlot::Mainhand) {
         auto const& item = player.getSelectedItem();
         auto        id   = itemId(item);
         if (id.starts_with("complementaries:")) {
@@ -212,6 +209,11 @@ public:
         mListeners.push_back(bus.emplaceListener<ll::event::PlayerUseItemEvent>(onUseItem));
         mListeners.push_back(bus.emplaceListener<ll::event::PlayerInteractBlockEvent>(onInteractBlock));
         mListeners.push_back(bus.emplaceListener<ll::event::ServerLevelTickEvent>([](auto&) { onTick(); }));
+        // a projectile left over from a closed world: pick it up as the plain item
+        mListeners.push_back(bus.emplaceListener<ll::event::PlayerPickUpItemEvent>([](ll::event::PlayerPickUpItemEvent& ev) {
+            auto& stack = *ev.itemActor().mItem;
+            if (stack.mUserData && stack.mUserData->contains("cm_sling")) removeData(stack, "cm_sling");
+        }));
         ToolReleaseUsingHook::hook();
         ToolDispenseHook::hook();
         ToolInteractEntityHook::hook();

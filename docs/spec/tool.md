@@ -57,9 +57,10 @@ unit independent the Bedrock recipes use vanilla ingredients with the same shape
 - **Projectile**: the fired item flies as a real item entity (so every client renders the actual
   item, as Supplementaries renders the item), cannot be picked up while flying, speed
   `1.5 × power × slingshot.rangeMultiplier` blocks/tick, item gravity.
-- **Hitting a block**: a block item is placed on the face it hit if that space is replaceable and the
-  block may stand there (`slingshot.placeBlocks`), with the block's place sound; otherwise the item
-  drops where it hit and can be picked up. Ender pearls teleport the shooter to the impact point
+- **Hitting a block**: a plain block item is placed on the face it hit if that space is replaceable
+  and the block may stand there (`slingshot.placeBlocks`), with a place sound; otherwise (also for
+  multi-block items such as beds and doors, and items carrying data such as filled shulker boxes)
+  the item drops where it hit and can be picked up. Ender pearls teleport the shooter to the impact point
   (5 fall damage like a thrown pearl), eggs have a 1/8 chance to hatch a chick.
 - **Hitting an entity**: 1 damage (projectile damage from the shooter) plus knockback along the
   flight direction; the item then drops.
@@ -126,7 +127,8 @@ Using soap on something cleans it and uses one soap (not in creative):
 - **Binding**: use the flute on your own tamed pet: the flute stores the pet (lore
   "Bound to: <name>"). Sneak-use in the air unbinds it.
 - **Use (bound)**: only the bound pet is called, from up to `flute.boundDistance` (500) blocks in
-  the same dimension. If it is gone the binding is cleared.
+  the same dimension. A pet that can't be found (dead, or in unloaded chunks) is not called; the
+  binding stays until the flute is rebound or sneak-used.
 - 1 durability per tune, 1 s cooldown.
 
 ### Confetti popper
@@ -148,8 +150,9 @@ Using soap on something cleans it and uses one soap (not in creative):
   like an empty map) that shows the world **cut at the player's eye height** `Y`: for every column the
   first non-air block at or below `Y` (looking down at most 64 blocks), shaded by depth; columns with
   nothing below are dark. Lore "Height: Y".
-- While a player holds it, the area within `sliceMap.rangeMultiplier × 64` blocks of them is redrawn
-  progressively (about 1024 columns per tick), so caves appear as you explore.
+- Making the map draws the nearest 4096 columns at once; while a player holds it, the area within
+  `sliceMap.rangeMultiplier × 64` blocks of them is redrawn progressively (1024 columns every 5 ticks),
+  so caves appear as you explore.
 - Copying a slice map in a cartography table copies the image (vanilla); the copy is not updated.
 
 ## 3. Screens
