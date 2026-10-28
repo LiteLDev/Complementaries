@@ -4,10 +4,12 @@
 
 #include "ll/api/service/Bedrock.h"
 
+#include "mc/deps/core/math/Vec2.h"
 #include "mc/deps/core/math/Vec3.h"
 #include "mc/world/actor/Actor.h"
 #include "mc/world/actor/ActorDefinitionIdentifier.h"
 #include "mc/world/actor/Mob.h"
+#include "mc/server/SimulatedPlayer.h"
 #include "mc/world/actor/player/Player.h"
 #include "mc/world/item/ItemStack.h"
 #include "mc/world/level/BlockPos.h"
@@ -292,3 +294,27 @@ CM_REGISTER_SELFTEST("cannon.red_merchant", [](Context& ctx) -> ll::coro::CoroTa
     merchant->remove();
 });
 
+
+CM_REGISTER_SELFTEST("cannon.maneuver_follows_view", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto base = ctx.testPos(1585);
+    ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
+    auto  pos = placeCannon(ctx, base);
+    auto& c   = cannon::Cannons::get();
+    auto& p   = ctx.player();
+    co_await ctx.ticks(2);
+    // stand next to the cannon looking east and 10 degrees up
+    p.teleport(centerOf(east(pos, -2)), pos.dim, Vec2{0.0f, -90.0f});
+    co_await ctx.ticks(2);
+    Vec3 eye = p.getHeadPos();
+    static_cast<SimulatedPlayer&>(p).simulateLookAt(eye + Vec3{10.0f, 10.0f * std::tan(10.0f * 3.14159265f / 180.0f), 0.0f}, sim::LookDuration::Instant);
+    co_await ctx.ticks(1);
+    c.startManoeuvre(p, pos);
+    ctx.check(c.manoeuvring(p).has_value(), "the player maneuvers the cannon");
+    co_await ctx.ticks(3);
+    auto* d = c.at(pos);
+    ctx.require(d != nullptr, "cannon record");
+    ctx.check(std::abs(d->yaw - (-90.0f)) < 2.0f, "the barrel turned east (yaw " + std::to_string(d->yaw) + ")");
+    ctx.check(std::abs(d->pitch - 10.0f) < 4.0f, "the barrel follows the view's pitch (" + std::to_string(d->pitch) + ")");
+    c.stopManoeuvre(p, false);
+    ctx.check(!c.manoeuvring(p).has_value(), "maneuvering stopped");
+});
