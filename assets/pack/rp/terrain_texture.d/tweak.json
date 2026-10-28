@@ -1,0 +1,119 @@
+{
+  "cm_tweak_stick": {
+    "textures": "textures/blocks/tweak/stick"
+  },
+  "cm_tweak_blaze_rod": {
+    "textures": "textures/blocks/tweak/blaze_rod"
+  },
+  "cm_tweak_breeze_rod": {
+    "textures": "textures/blocks/tweak/breeze_rod"
+  },
+  "cm_tweak_gunpowder": {
+    "textures": "textures/blocks/tweak/gunpowder"
+  },
+  "cm_tweak_gunpowder_burning": {
+    "textures": "textures/blocks/tweak/gunpowder_burning"
+  },
+  "cm_tweak_gunpowder_embers": {
+    "textures": "textures/blocks/tweak/gunpowder_embers"
+  },
+  "cm_tweak_hanging_flower_pot": {
+    "textures": "textures/blocks/tweak/hanging_flower_pot"
+  },
+  "cm_tweak_plant_poppy": {
+    "textures": "textures/blocks/flower_rose"
+  },
+  "cm_tweak_plant_dandelion": {
+    "textures": "textures/blocks/flower_dandelion"
+  },
+  "cm_tweak_plant_blue_orchid": {
+    "textures": "textures/blocks/flower_blue_orchid"
+  },
+  "cm_tweak_plant_allium": {
+    "textures": "textures/blocks/flower_allium"
+  },
+  "cm_tweak_plant_azure_bluet": {
+    "textures": "textures/blocks/flower_houstonia"
+  },
+  "cm_tweak_plant_red_tulip": {
+    "textures": "textures/blocks/flower_tulip_red"
+  },
+  "cm_tweak_plant_orange_tulip": {
+    "textures": "textures/blocks/flower_tulip_orange"
+  },
+  "cm_tweak_plant_white_tulip": {
+    "textures": "textures/blocks/flower_tulip_white"
+  },
+  "cm_tweak_plant_pink_tulip": {
+    "textures": "textures/blocks/flower_tulip_pink"
+  },
+  "cm_tweak_plant_oxeye_daisy": {
+    "textures": "textures/blocks/flower_oxeye_daisy"
+  },
+  "cm_tweak_plant_cornflower": {
+    "textures": "textures/blocks/flower_cornflower"
+  },
+  "cm_tweak_plant_lily_of_the_valley": {
+    "textures": "textures/blocks/flower_lily_of_the_valley"
+  },
+  "cm_tweak_plant_wither_rose": {
+    "textures": "textures/blocks/flower_wither_rose"
+  },
+  "cm_tweak_plant_torchflower": {
+    "textures": "textures/blocks/torchflower"
+  },
+  "cm_tweak_plant_oak_sapling": {
+    "textures": "textures/blocks/sapling_oak"
+  },
+  "cm_tweak_plant_spruce_sapling": {
+    "textures": "textures/blocks/sapling_spruce"
+  },
+  "cm_tweak_plant_birch_sapling": {
+    "textures": "textures/blocks/sapling_birch"
+  },
+  "cm_tweak_plant_jungle_sapling": {
+    "textures": "textures/blocks/sapling_jungle"
+  },
+  "cm_tweak_plant_acacia_sapling": {
+    "textures": "textures/blocks/sapling_acacia"
+  },
+  "cm_tweak_plant_dark_oak_sapling": {
+    "textures": "textures/blocks/sapling_roofed_oak"
+  },
+  "cm_tweak_plant_cherry_sapling": {
+    "textures": "textures/blocks/cherry_sapling"
+  },
+  "cm_tweak_plant_mangrove_propagule": {
+    "textures": "textures/blocks/mangrove_propagule"
+  },
+  "cm_tweak_plant_red_mushroom": {
+    "textures": "textures/blocks/mushroom_red"
+  },
+  "cm_tweak_plant_brown_mushroom": {
+    "textures": "textures/blocks/mushroom_brown"
+  },
+  "cm_tweak_plant_deadbush": {
+    "textures": "textures/blocks/deadbush"
+  },
+  "cm_tweak_plant_crimson_fungus": {
+    "textures": "textures/blocks/crimson_fungus"
+  },
+  "cm_tweak_plant_warped_fungus": {
+    "textures": "textures/blocks/warped_fungus"
+  },
+  "cm_tweak_plant_crimson_roots": {
+    "textures": "textures/blocks/crimson_roots_pot"
+  },
+  "cm_tweak_plant_warped_roots": {
+    "textures": "textures/blocks/warped_roots_pot"
+  },
+  "cm_tweak_plant_bamboo": {
+    "textures": "textures/blocks/bamboo_sapling"
+  },
+  "cm_tweak_plant_open_eyeblossom": {
+    "textures": "textures/blocks/eyeblossom_blooming"
+  },
+  "cm_tweak_plant_closed_eyeblossom": {
+    "textures": "textures/blocks/eyeblossom_dormant"
+  }
+}

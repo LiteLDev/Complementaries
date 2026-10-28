@@ -1,0 +1,123 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:stick",
+      "menu_category": {
+        "category": "none",
+        "is_hidden_in_commands": true
+      },
+      "states": {
+        "complementaries:axis_x": [
+          0,
+          1
+        ],
+        "complementaries:axis_y": [
+          0,
+          1
+        ],
+        "complementaries:axis_z": [
+          0,
+          1
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.tweak_stick",
+        "bone_visibility": {
+          "axis_x": "q.block_state('complementaries:axis_x') == 1",
+          "axis_y": "q.block_state('complementaries:axis_y') == 1",
+          "axis_z": "q.block_state('complementaries:axis_z') == 1"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_tweak_stick",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          16,
+          16
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0
+      },
+      "minecraft:loot": "loot_tables/blocks/tweak_empty.json",
+      "minecraft:light_dampening": 0,
+      "minecraft:light_emission": 0,
+      "minecraft:map_color": "#7d5a2f",
+      "minecraft:flammable": {
+        "catch_chance_modifier": 30,
+        "destroy_chance_modifier": 60
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:axis_x') == 1 && q.block_state('complementaries:axis_y') == 0 && q.block_state('complementaries:axis_z') == 0",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              7,
+              -1
+            ],
+            "size": [
+              16,
+              2,
+              2
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:axis_y') == 1 && q.block_state('complementaries:axis_x') == 0 && q.block_state('complementaries:axis_z') == 0",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [
+              -1,
+              0,
+              -1
+            ],
+            "size": [
+              2,
+              16,
+              2
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:axis_z') == 1 && q.block_state('complementaries:axis_x') == 0 && q.block_state('complementaries:axis_y') == 0",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [
+              -1,
+              7,
+              -8
+            ],
+            "size": [
+              2,
+              2,
+              16
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

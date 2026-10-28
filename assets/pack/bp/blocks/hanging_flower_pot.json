@@ -1,0 +1,677 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:hanging_flower_pot",
+      "menu_category": {
+        "category": "none",
+        "is_hidden_in_commands": true
+      },
+      "states": {
+        "complementaries:plant_group": [
+          0,
+          1,
+          2
+        ],
+        "complementaries:plant": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.tweak_hanging_flower_pot",
+        "bone_visibility": {
+          "plant": "q.block_state('complementaries:plant_group') > 0 || q.block_state('complementaries:plant') > 0"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_tweak_hanging_flower_pot",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false
+        },
+        "plant": {
+          "texture": "cm_tweak_hanging_flower_pot",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -3,
+          0,
+          -3
+        ],
+        "size": [
+          6,
+          6,
+          6
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -3,
+          0,
+          -3
+        ],
+        "size": [
+          6,
+          16,
+          6
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0
+      },
+      "minecraft:loot": "loot_tables/blocks/tweak_empty.json",
+      "minecraft:light_dampening": 0,
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": [
+              "down"
+            ]
+          }
+        ]
+      },
+      "minecraft:map_color": "#9a4f33"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_poppy",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_dandelion",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_blue_orchid",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_allium",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_azure_bluet",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_red_tulip",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_orange_tulip",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_white_tulip",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_pink_tulip",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_oxeye_daisy",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_cornflower",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_lily_of_the_valley",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_wither_rose",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_torchflower",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 0 && q.block_state('complementaries:plant') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_oak_sapling",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_spruce_sapling",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_birch_sapling",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_jungle_sapling",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_acacia_sapling",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_dark_oak_sapling",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_cherry_sapling",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_mangrove_propagule",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_red_mushroom",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_brown_mushroom",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_deadbush",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_crimson_fungus",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_warped_fungus",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_crimson_roots",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_warped_roots",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_bamboo",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 1 && q.block_state('complementaries:plant') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_open_eyeblossom",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:plant_group') == 2 && q.block_state('complementaries:plant') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tweak_hanging_flower_pot",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "plant": {
+              "texture": "cm_tweak_plant_closed_eyeblossom",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          }
+        }
+      }
+    ]
+  }
+}

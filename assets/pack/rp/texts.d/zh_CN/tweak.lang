@@ -1,0 +1,7 @@
+tile.complementaries:stick.name=木棍
+tile.complementaries:blaze_rod.name=烈焰棒
+tile.complementaries:breeze_rod.name=旋风棒
+tile.complementaries:gunpowder.name=火药
+tile.complementaries:hanging_flower_pot.name=悬挂花盆
+entity.complementaries:throwable_brick.name=掷出的砖
+entity.complementaries:throwable_slimeball.name=掷出的黏液球

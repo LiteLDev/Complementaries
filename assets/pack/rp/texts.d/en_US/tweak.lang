@@ -1,0 +1,7 @@
+tile.complementaries:stick.name=Stick
+tile.complementaries:blaze_rod.name=Blaze Rod
+tile.complementaries:breeze_rod.name=Breeze Rod
+tile.complementaries:gunpowder.name=Gunpowder
+tile.complementaries:hanging_flower_pot.name=Hanging Flower Pot
+entity.complementaries:throwable_brick.name=Thrown Brick
+entity.complementaries:throwable_slimeball.name=Thrown Slimeball
