@@ -8,41 +8,45 @@ Behaviour reference: Supplementaries 4.0.2 (MC 1.21.1) and the soft-fluid system
 | Id | Kind | Notes |
 | -- | ---- | ----- |
 | `complementaries:jar` | block + block item | Glass, hardness 0.5, blast resistance 1, glass sounds, light from its contents. |
-| `complementaries:faucet` | block + block item | Iron, hardness 3, blast resistance 4.8, iron-bars sounds. |
-| `complementaries:jar_boat` | block + block item | "Boat in a Jar", decorative, glass, faces the player. |
-| `complementaries:jar_mob` | helper entity | Invisible, no hitbox, not saved as a mob: it only draws the mob captured in a jar (§3.6). |
+| `complementaries:faucet` | block + block item | Iron, hardness 3, blast resistance 4.8, metal sounds. |
+| `complementaries:jar_mob` | helper entity | Invisible, no hitbox, undamageable: it only draws the mob kept in a placed jar (§3.3). |
+
+"Boat in a Jar" (`complementaries:jar_boat`) belongs to the tableware unit (U13). A jar used on a
+boat gives that item when it is installed.
 
 ### Recipes
 
 - **Jar** (shaped): `G S G` / `G _ G` / `G G G`, `G` = glass, `S` = any wooden slab. 1 jar.
 - **Faucet** (shaped): `_ R _` / `I I I` / `_ _ I`, `R` = stick, `I` = iron ingot. 1 faucet.
-- **Boat in a Jar** (shapeless): jar + any boat.
 
 ### Block states
 
-Jar (`complementaries:jar`):
-- `complementaries:content` 0..63: what the jar shows (0 empty, 1..47 a fluid / fluid colour, 48..50
-  a cookie kind, 62/63 "light only" for luminous mobs). Drives the fluid texture, the cookie texture
-  and the light emission (`minecraft:light_emission` by permutation).
-- `complementaries:level` 0..12: fluid height in pixels or number of cookies.
+Bedrock int states hold at most 16 values, so the 0..63 `content` value (what the block shows) is
+split: `complementaries:kind` = content / 16 (0..3), `complementaries:fluid` = content % 16.
+Content: 0 empty, 1..16 a fluid (water, lava, honey, milk, mushroom stew, beetroot soup, rabbit
+stew, suspicious stew, experience, dragon's breath, ghast tear, magma cream, slime, powder snow,
+ominous, lumisene), 17..37 a potion colour (no effect, then one per effect), 48 cookie, 49 candy,
+50 other item, 62/63 "light only" (luminous mobs: 5 / 3).
+
+Jar (`complementaries:jar`): `kind`, `fluid`, `complementaries:level` 0..12 (fluid height in pixels
+or number of cookies). The light (`minecraft:light_emission`) and the fluid / cookie textures come
+from permutations on the content.
 
 Faucet (`complementaries:faucet`):
-- `minecraft:cardinal_direction` (placement direction = the face clicked, or north when placing on
-  a top/bottom face, as in Supplementaries: the spout points away from the block behind it),
+- `complementaries:facing` 0..3 (Java 2D: 0 S, 1 W, 2 N, 3 E): the spout points away from the
+  clicked face (north when placed on a top / bottom face), so the block behind is the source;
 - `complementaries:enabled` (toggled by hand), `complementaries:powered` (redstone),
-  open = enabled XOR powered,
-- `complementaries:connected` (a jar / beehive below: the faucet model sits lower, on the lid),
-- `complementaries:content` 0..63: the fluid behind the faucet (0 = none = Java `has_water` false);
-  drives the colour of the stream and the light (lum/2 clamped to 1..7).
-
-Boat in a Jar: `minecraft:cardinal_direction`, `complementaries:wood` 0..9 (oak, spruce, birch,
-jungle, acacia, dark oak, mangrove, cherry, bamboo, pale oak).
+  open = enabled XOR powered;
+- `complementaries:connected` (a jar / beehive below: the lowered model that sits on the lid);
+- `kind` / `fluid`: the fluid available behind (0 = none = Java `has_water` false): stream colour
+  and light (luminosity / 2 clamped to 1..7).
 
 ### Drops
 
 - Jar: always drops itself **with its contents** (fluid, cookies or mob are kept in the item, like
-  a shulker box). Breaking in creative drops nothing. Pistons destroy the jar (it drops).
-- Faucet, Boat in a Jar: themselves.
+  a shulker box), also when broken by an explosion or popped by a piston. Breaking in creative
+  drops nothing.
+- Faucet: itself.
 
 ## 2. Soft fluids
 
@@ -96,24 +100,26 @@ Rules (tank = jar):
 
 ### 3.2 Jar item
 
-- Placing needs **sneaking** while capturing is enabled (tooltip `[Sneak] to place`); a plain right
+- Placing needs **sneaking** while capturing is enabled; a plain right
   click with the item is used to release mobs or capture them.
 - **Capturing**: left click (attack) or right click a catchable mob with an empty jar item: the mob
-  is removed and stored in the item (catch sound). Catchable with jars: slime, magma cube, bee,
-  allay, frog, vex, silverfish, endermite (in the Supplementaries data), baby rabbits, every fish
-  (cod, salmon, pufferfish, tropical fish, axolotl, tadpole; stored as the fish with water), plus
-  `extraCatchable` from the config, plus every mob smaller than 0.625 x 0.875 blocks that is not a
-  monster when `autoDetect` is on, plus every mob when `allowAllMobs` is on. Never players.
+  is removed and stored in the item with all its data (catch sound). Catchable with jars (the
+  vanilla entries of Supplementaries' `jar_catchable` / `jar_baby_catchable` tags and bucketable
+  fish): slime, magma cube, bee, allay, frog, baby rabbits, and every fish (cod, salmon,
+  pufferfish, tropical fish, axolotl, tadpole; kept with water), plus `extraCatchable` from the
+  config, plus every non-monster mob smaller than 0.625 x 0.875 blocks (hitbox minus 0.125) when
+  `autoDetect` is on, plus every mob when `allowAllMobs` is on. Never players.
   Failures show `You can't catch this animal`, `You must tame this animal first` (tameable mobs
   that are not tamed by you when `requireTaming`), `You can only catch animals with less than X%
   health` (`healthThreshold`).
-- A boat captured with an empty jar gives a **Boat in a Jar**.
+- A boat caught with a jar gives a **Boat in a Jar** (`complementaries:jar_boat`, tableware unit).
 - **Releasing**: right click a block (not sneaking) with a jar holding a mob: the mob is spawned at
   the clicked point (it keeps its data: name, health, variant, ...); bees get angry at the player
   in survival; the jar empties (creative keeps it). Release sound: chicken egg at low pitch.
 - **Tooltip**: fluid `Water: 4 mBtl` style (`message.supplementaries.fluid_tooltip`), cookies
   `Cookie x5`, mob name; empty jars show the hint `Can store bowls, bottles, buckets, cookies and
-  small mobs`. On Bedrock this is item lore (visible to every client).
+  small mobs`. On Bedrock this is item lore (visible to every client, no client mod needed), written
+  when the contents change.
 - With `drinkFromJarItem` on, using a jar item that holds a food fluid drinks one bottle from it.
 
 ### 3.3 Visuals
@@ -121,9 +127,12 @@ Rules (tank = jar):
 - Fluid rises one pixel per bottle at capacity 12 (rounded proportionally otherwise), tinted per
   fluid; potions use their effect colour; lava, experience, dragon's breath and lumisene glow.
 - Cookies are stacked flat inside the jar (up to 12).
-- Fish (bucket contents) swim as flat sprites in water.
-- Other mobs are drawn inside the jar, scaled to fit (1 px margin), floating mobs (bee, allay, vex)
-  centred, others standing on the bottom.
+- Fish (cod, salmon, pufferfish, tropical fish, axolotl, tadpole) swim in a full jar of water.
+- Mobs are drawn inside the jar, scaled to fit, floating mobs (bee, allay, vex) and fish in the
+  middle, others standing on the bottom. A helper entity (`complementaries:jar_mob`) draws them with
+  the game's own models and textures (bee, slime, magma cube, allay, frog x3, vex, silverfish,
+  endermite, baby rabbit x6, the fish, axolotl x5), so vanilla clients see them too. The helper is
+  re-created when its chunk loads and removed with the jar.
 
 ### 3.4 Light
 
@@ -164,7 +173,7 @@ visuals are data driven (block states + the helper entity) and tooltips are item
 
 | Key | Default | Meaning |
 | --- | ------- | ------- |
-| `enabled` | true | Jar and Boat in a Jar behaviour. |
+| `enabled` | true | Jar behaviour. |
 | `capacity` | 12 | Jar fluid capacity in bottles (0..1024). |
 | `drinkFromJar` | false | Right click drinks / eats from a placed jar. |
 | `drinkFromJarItem` | false | Using a jar item drinks from it. |
@@ -184,7 +193,10 @@ visuals are data driven (block states + the helper entity) and tooltips are item
 
 ## 7. Commands
 
-None of its own. `/supplementaries selftest "jar.*"` runs this unit's tests.
+- `/supplementaries jardemo` (operators, Complementaries only): builds a row of filled jars (fluids,
+  potions, cookies, mobs, fish) and two running faucets 3 blocks south of the player, only where the
+  blocks are replaceable (air, grass, ...). Used by the e2e screenshots.
+- `/supplementaries selftest "jar.*"` runs this unit's tests.
 
 ## 8. Strings
 
@@ -195,13 +207,14 @@ None of its own. `/supplementaries selftest "jar.*"` runs this unit's tests.
 | `message.supplementaries.cage.fail` (owned by the cage unit) | You can't catch this animal |
 | `message.supplementaries.cage.fail_tamed` (cage) | You must tame this animal first |
 | `message.supplementaries.cage.fail_health` (cage) | You can only catch animals with less than {} health |
-| `message.supplementaries.cage.tooltip` (cage) | [{}] to place |
-| `fluid.supplementaries.experience` / `honey` / `milk` / `slime` / `lumisene` | Experience / Honey / Milk / Slime / Lumisene |
-| `cm.jar.fluid.<id>` | names of the other fluids (Water, Lava, Mushroom Stew, ...) |
+| `fluid.supplementaries.experience` / `honey` / `milk` / `slime` | Experience / Honey / Milk / Slime |
+| `cm.jar.fluid.<id>` | names of the other fluids (Water, Lava, Mushroom Stew, ..., Lumisene) |
+| `cm.jar.effect.<effect>` | potion effect names shown after "Potion" (Swiftness, ...) |
 | `cm.jar.cookies` | {} x{} |
-| `cm.jar.mob` | Mob: {} |
+| `cm.jar.mob` | {} |
+| `cm.jar.demo.done` / `cm.jar.demo.player` | Jar demo built. / Run it as a player. |
 
-Block names (RP `texts.d`): Jar, Faucet, Boat in a Jar.
+Block names (RP `texts.d`): Jar, Faucet.
 
 ## 9. Not ported
 
@@ -221,3 +234,10 @@ Block names (RP `texts.d`): Jar, Faucet, Boat in a Jar.
 - **"Pony jar"** easter egg (fluid + mob when the jar is renamed): Bedrock jars cannot be renamed
   as blocks.
 - **Faucet extraction from mod fluid tanks, finite fluids, kettles, sap logs**: no Bedrock source.
+- **Flat fish sprites**: Supplementaries draws jarred fish as 2D sprites; here they use the game's
+  fish models (no original fish art can be animated in a block without a client mod).
+- **Untamed tameable mobs** (with `allowAllMobs`): Bedrock exposes no "is tameable" flag to the
+  server, so only mobs tamed by another player are refused.
+- **Faucet redstone** reads the power of the neighbouring circuit components (wires, torches,
+  levers, powered blocks, repeaters / comparators facing it), which matches Java for every
+  ordinary setup.

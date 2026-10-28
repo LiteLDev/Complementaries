@@ -142,8 +142,7 @@ std::vector<std::string> tooltipFor(Contents const& c, Player const* viewer) {
     if (c.mob) lines.push_back(t("cm.jar.mob", "{}", c.mob->name));
     if (lines.empty()) {
         lines.push_back(t("message.supplementaries.jar", "Can store bowls, bottles, buckets, cookies and small mobs"));
-    }
-    for (auto& l : lines) l = "§r§7" + l;
+    }    for (auto& l : lines) l = "§r§7" + l;
     return lines;
 }
 

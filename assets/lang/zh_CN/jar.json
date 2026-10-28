@@ -39,5 +39,7 @@
   "cm.jar.effect.oozing": "渗浆",
   "cm.jar.effect.infestation": "寄生",
   "cm.jar.cookies": "{} x{}",
-  "cm.jar.mob": "{}"
+  "cm.jar.mob": "{}",
+  "cm.jar.demo.done": "玻璃罐演示已搭建。",
+  "cm.jar.demo.player": "请以玩家身份执行。"
 }

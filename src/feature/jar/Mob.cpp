@@ -141,10 +141,16 @@ int displayKindFor(std::string const& type, int variant, bool baby) {
     if (type == "minecraft:silverfish") return 9;
     if (type == "minecraft:endermite") return 10;
     if (type == "minecraft:rabbit") return 11 + std::clamp(variant, 0, 5);
+    if (type == "minecraft:axolotl") {
+        static constexpr int kAxolotl[5] = {24, 26, 27, 28, 29}; // lucy, cyan, gold, wild, blue
+        return kAxolotl[std::clamp(variant, 0, 4)];
+    }
     if (auto const* f = fishByType(type)) return f->display;
     (void)baby;
     return 0;
 }
+
+std::string prettyMobName(std::string_view type) { return prettyName(type); }
 
 CaptureFail canCatch(Actor& mob, Player const* player) {
     if (!mob.isAlive() || mob.isPlayer()) return CaptureFail::NotCatchable;

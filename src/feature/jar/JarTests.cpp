@@ -15,6 +15,7 @@
 #include "mc/world/level/BlockSource.h"
 #include "mc/world/level/Level.h"
 #include "mc/world/level/Spawner.h"
+#include "mc/world/level/dimension/DimensionType.h"
 #include "mc/world/level/block/Block.h"
 #include "mc/world/level/block/BlockType.h"
 #include "mc/world/level/block/components/BlockComponentDirectData.h"
@@ -352,7 +353,36 @@ CM_REGISTER_SELFTEST("jar.faucet_redstone", [](Context& ctx) -> ll::coro::CoroTa
     co_return;
 });
 
-CM_REGISTER_SELFTEST("jar.faucet_xp", [](Context& ctx) -> ll::coro::CoroTask<> {
+CM_REGISTER_SELFTEST("jar.demo", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto at = ctx.testPos(176);
+    ctx.require(co_await ctx.ensureLoaded(at), "test area loaded");
+    auto& player = ctx.player();
+    player.teleport(Vec3{static_cast<float>(at.x) + 0.5f, static_cast<float>(at.y), static_cast<float>(at.z) - 2.5f}, DimensionType(0));
+    co_await ctx.ticks(2);
+    auto placed = buildJarDemo(player);
+    for (auto const& p : placed) {
+        ctx.cleanupBlock(p);
+        suppressDrop(p);
+    }
+    ctx.check(placed.size() >= 18, "the demo placed its jars, faucets and cauldron (" + std::to_string(placed.size()) + ")");
+    int mobs = 0, fluids = 0;
+    for (auto const& p : placed) {
+        auto c = jarAt(p);
+        if (c.mob) ++mobs;
+        if (!c.fluid.empty()) ++fluids;
+    }
+    ctx.check(mobs == 5 && fluids >= 9, "mobs and fluids are stored");
+    co_await ctx.ticks(3);
+    int drawn = 0;
+    for (auto const& p : placed) drawn += hasDisplay(p) ? 1 : 0;
+    ctx.check(drawn == 5, "every mob is drawn (" + std::to_string(drawn) + ")");
+    for (auto const& p : placed) {
+        if (isBlock(blockAt(p), kFaucetId)) faucetRemoved(p);
+    }
+    co_return;
+});
+
+CM_REGISTER_SELFTEST("jar.faucet_xp",[](Context& ctx) -> ll::coro::CoroTask<> {
     auto below  = ctx.testPos(162);
     auto faucet = up(below);
     auto behind = faucet;

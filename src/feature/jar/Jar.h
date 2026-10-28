@@ -128,8 +128,12 @@ bool useJarItemOnMob(Player& player, Actor& target);
 bool releaseFromItem(Player& player, BlockPos const& clicked, Vec3 const& clickPos);
 /// A stored fish bucket from a bucket item id (nullopt if not a fish bucket).
 [[nodiscard]] std::optional<StoredMob> mobFromBucket(ItemStack const& bucket);
-/// Display kind of a stored mob (0 = not drawn), y offset in blocks and whether it floats.
+/// Display kind of a stored mob (0 = not drawn).
 [[nodiscard]] int displayKindFor(std::string const& type, int variant, bool baby);
+/// "minecraft:magma_cube" -> "Magma Cube".
+[[nodiscard]] std::string prettyMobName(std::string_view type);
+/// `/supplementaries jardemo`: the showcase row; returns the blocks it placed.
+std::vector<core::GlobalPos> buildJarDemo(Player& player);
 /// Keeps the helper entity that draws a jar's mob in sync with `c`.
 void syncDisplay(core::GlobalPos const& pos, Contents const& c);
 void removeDisplay(core::GlobalPos const& pos);

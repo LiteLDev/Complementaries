@@ -39,5 +39,7 @@
   "cm.jar.effect.oozing": "Oozing",
   "cm.jar.effect.infestation": "Infestation",
   "cm.jar.cookies": "{} x{}",
-  "cm.jar.mob": "{}"
+  "cm.jar.mob": "{}",
+  "cm.jar.demo.done": "Jar demo built.",
+  "cm.jar.demo.player": "Run it as a player."
 }
