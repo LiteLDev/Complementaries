@@ -132,7 +132,7 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
     int64_t    puid  = uid(player);
     auto       block = ev.block();
     int        face  = static_cast<int>(ev.face());
-    log().info("trap: interact {} with {} at {} {} {} face {} sneaking {}", player.getRealName(), id, at.x, at.y, at.z, face, player.isSneaking());
+    log().debug("trap: interact {} with {} at {} {} {} face {} sneaking {}", player.getRealName(), id, at.x, at.y, at.z, face, player.isSneaking());
     auto&      region = player.getDimensionBlockSource();
 
     if (id == kCageId && config().cage.enabled) {
