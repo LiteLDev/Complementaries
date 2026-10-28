@@ -16,7 +16,9 @@
 #include "mc/world/level/Level.h"
 #include "mc/world/level/Spawner.h"
 #include "mc/world/level/dimension/DimensionType.h"
+#include "mc/world/Container.h"
 #include "mc/world/level/block/Block.h"
+#include "mc/world/level/block/DispenserBlock.h"
 #include "mc/world/level/block/BlockType.h"
 #include "mc/world/level/block/components/BlockComponentDirectData.h"
 #include "mc/common/Brightness.h"
@@ -379,6 +381,31 @@ CM_REGISTER_SELFTEST("jar.demo", [](Context& ctx) -> ll::coro::CoroTask<> {
     for (auto const& p : placed) {
         if (isBlock(blockAt(p), kFaucetId)) faucetRemoved(p);
     }
+    co_return;
+});
+
+CM_REGISTER_SELFTEST("jar.dispenser", [](Context& ctx) -> ll::coro::CoroTask<> {
+    auto disp = ctx.testPos(180);
+    auto jar  = disp;
+    jar.x += 1;
+    ctx.require(co_await ctx.ensureLoaded(disp), "test area loaded");
+    ctx.require(placeJar(ctx, jar), "jar placed");
+    ctx.require(ctx.setBlock(disp, "minecraft:dispenser", {{"facing_direction", 5}}), "dispenser facing the jar");
+    auto* region = regionOf(disp.dim);
+    auto  cont   = region->tryGetContainer(game::blockPos(disp));
+    ctx.require(cont.has_value(), "the dispenser has a container");
+    cont->setItem(0, makeItem("minecraft:water_bucket"));
+    auto const& block = blockAt(disp);
+    static_cast<DispenserBlock const&>(block.getBlockType()).dispenseFrom(*region, game::blockPos(disp));
+    ctx.check(jarAt(jar).fluid == FluidStack{"water", 4}, "the dispenser poured the bucket into the jar");
+    ctx.check(isItem(cont->getItem(0), "minecraft:bucket"), "the empty bucket stays in the dispenser");
+    cont->setItem(0, makeItem("minecraft:glass_bottle", 2));
+    static_cast<DispenserBlock const&>(block.getBlockType()).dispenseFrom(*region, game::blockPos(disp));
+    ctx.check(jarAt(jar).fluid.count == 3, "a glass bottle was filled");
+    bool bottle = false;
+    for (int i = 0; i < cont->getContainerSize(); ++i) bottle = bottle || isItem(cont->getItem(i), "minecraft:potion");
+    ctx.check(bottle, "the water bottle went into the dispenser");
+    for (int i = 0; i < cont->getContainerSize(); ++i) cont->setItem(i, ItemStack::EMPTY_ITEM());
     co_return;
 });
 

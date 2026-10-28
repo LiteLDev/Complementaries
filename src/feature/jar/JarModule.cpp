@@ -3,6 +3,7 @@
 #include <charconv>
 #include <map>
 #include <set>
+#include <thread>
 #include <unordered_map>
 
 #include "ll/api/event/EventBus.h"
@@ -56,6 +57,7 @@ struct PendingPlace {
 };
 std::unordered_map<int64, PendingPlace> gPending;
 
+std::thread::id  gServerThread;
 BlockType const* gJarType    = nullptr;
 BlockType const* gFaucetType = nullptr;
 
@@ -112,7 +114,9 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
     auto const& conf  = cfg();
     auto        uid   = player.getOrCreateUniqueID().rawID;
 
-    if (conf.enabled && isBlock(block, kJarId) && jarWouldHandle(player, pos)) {
+    // like Java, sneaking with an item in hand skips the block's own use (places / uses the item)
+    bool secondaryUse = player.isSneaking() && !player.getSelectedItem().isNull();
+    if (conf.enabled && !secondaryUse && isBlock(block, kJarId) && jarWouldHandle(player, pos)) {
         ev.cancel();
         if (!firstClickThisTick(player)) return;
         later([uid, pos] {
@@ -120,8 +124,7 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
         });
         return;
     }
-    if (conf.faucetEnabled && isBlock(block, kFaucetId)) {
-        if (player.isSneaking() && !player.getSelectedItem().isNull()) return; // sneak-place against it
+    if (conf.faucetEnabled && !secondaryUse && isBlock(block, kFaucetId)) {
         ev.cancel();
         if (!firstClickThisTick(player)) return;
         later([pos] { toggleFaucet(pos); });
@@ -215,7 +218,7 @@ void onUseItem(ll::event::PlayerUseItemEvent& ev) {
 }
 
 void onBlockChanged(ll::event::BlockChangedEvent& ev) {
-    if (ev.layer() != 0) return;
+    if (ev.layer() != 0 || std::this_thread::get_id() != gServerThread) return; // world generation threads
     auto& region = ev.blockSource();
     if (region.getLevel().isClientSide()) return;
     auto const* prevType = &ev.previousBlock().getBlockType();
@@ -248,6 +251,7 @@ void onBlockChanged(ll::event::BlockChangedEvent& ev) {
 }
 
 void onTick() {
+    gServerThread = std::this_thread::get_id();
     ++gTick;
     auto work = std::move(gNext);
     gNext.clear();

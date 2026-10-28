@@ -9,7 +9,7 @@ Behaviour reference: Supplementaries 4.0.2 (MC 1.21.1) and the soft-fluid system
 | -- | ---- | ----- |
 | `complementaries:jar` | block + block item | Glass, hardness 0.5, blast resistance 1, glass sounds, light from its contents. |
 | `complementaries:faucet` | block + block item | Iron, hardness 3, blast resistance 4.8, metal sounds. |
-| `complementaries:jar_mob` | helper entity | Invisible, no hitbox, undamageable: it only draws the mob kept in a placed jar (§3.3). |
+| `complementaries:jar_mob` | helper entity | Invisible, no hitbox, undamageable: it only draws the mob kept in a placed jar (§3.4). |
 
 "Boat in a Jar" (`complementaries:jar_boat`) belongs to the tableware unit (U13). A jar used on a
 boat gives that item when it is installed.
@@ -86,6 +86,9 @@ Rules (tank = jar):
 
 ### 3.1 Interaction order (right click on a placed jar)
 
+Sneaking with an item in hand skips the jar (the item is used / placed instead), as everywhere in
+Java. Otherwise:
+
 1. Fluids (if `jarLiquids` and the jar holds no cookies and no mob): fill or empty the held
    container as in §2.
 2. Cookies (if `jarCookies` and the jar holds no fluid and no mob): a held item from the cookie
@@ -122,7 +125,14 @@ Rules (tank = jar):
   when the contents change.
 - With `drinkFromJarItem` on, using a jar item that holds a food fluid drinks one bottle from it.
 
-### 3.3 Visuals
+### 3.3 Dispensers
+
+A dispenser facing a jar (Supplementaries `dispensers` behaviours) uses a random stack it holds on
+the jar with the same rules as a player: empty containers are filled from the jar, filled ones
+are poured in (the empty container goes back into the dispenser, or is dropped when it is full),
+cookies and fish buckets go in. Items the jar cannot use are dispensed normally.
+
+### 3.4 Visuals
 
 - Fluid rises one pixel per bottle at capacity 12 (rounded proportionally otherwise), tinted per
   fluid; potions use their effect colour; lava, experience, dragon's breath and lumisene glow.
@@ -134,7 +144,7 @@ Rules (tank = jar):
   endermite, baby rabbit x6, the fish, axolotl x5), so vanilla clients see them too. The helper is
   re-created when its chunk loads and removed with the jar.
 
-### 3.4 Light
+### 3.5 Light
 
 Jar light = the fluid's luminosity (lava 15, lumisene 15, experience 5, dragon's breath 3), or the
 mob's (endermite 5).
@@ -142,7 +152,8 @@ mob's (endermite 5).
 ## 4. Faucet
 
 - Placed against a block: the spout points away from it; the block **behind** is the source.
-- Right click toggles `enabled` (faucet sound, pitch 1 when closing, 1.2 when opening).
+- Right click (with anything in hand, unless sneaking with an item) toggles `enabled` (click sound,
+  pitch 1 when closing, 1.2 when opening).
 - Redstone power toggles `powered`; it is open when exactly one of them is set.
 - While open, every time its cooldown is over it moves fluid from behind into the block below,
   cooldown 20 ticks per bottle moved:
@@ -187,6 +198,7 @@ visuals are data driven (block states + the helper entity) and tooltips are item
 | `persistentMobs` | false | Released mobs never despawn. |
 | `healthThreshold` | 100 | Only mobs under this health % are catchable (100 = any). |
 | `requireTaming` | true | Tameable mobs must be tamed by you. |
+| `dispensers` | true | Dispensers fill / empty jars (Supplementaries `general.dispensers`). |
 | `faucetEnabled` | true | Faucet behaviour. |
 | `spillItems` | true | Faucets drop items pulled from containers. |
 | `fillEntitiesBelow` | false | Faucets give pulled items to entities below. |

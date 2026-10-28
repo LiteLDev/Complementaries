@@ -58,6 +58,7 @@ struct JarConfig {
     bool                     persistentMobs    = false;
     int                      healthThreshold   = 100;
     bool                     requireTaming     = true;
+    bool                     dispensers        = true; ///< dispensers fill / empty jars
     bool                     faucetEnabled     = true;
     bool                     spillItems        = true;
     bool                     fillEntitiesBelow = false;
