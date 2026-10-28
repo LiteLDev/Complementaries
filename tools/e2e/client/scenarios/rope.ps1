@@ -75,11 +75,14 @@ Save-Screenshot 'rope-arrow' | Out-Null
 
 # Climbing: inside the rope column a survival player slides down like on a ladder (the HUD
 # position shows the height); the descent speed itself is checked by the rope.climbable selftest.
+Invoke-Chat '/setblock ~7 ~21 ~-4 oak_planks'
+Invoke-Chat '/fill ~7 ~1 ~-4 ~7 ~20 ~-4 complementaries:rope'
+Start-Sleep -Seconds 1
 Invoke-Chat '/gamemode survival'
-Invoke-Chat '/tp @s ~4 ~4 ~-2 facing ~5 ~4 ~-2'
+Invoke-Chat '/tp @s ~7 ~18 ~-4 facing ~8 ~18 ~-4'
 Start-Sleep -Milliseconds 300
-Save-Screenshot 'climb' | Out-Null
-Start-Sleep -Seconds 2
+Save-Screenshot 'climb' | Out-Null   # about 1 s after the teleport: a few blocks lower, not on the ground
+Start-Sleep -Seconds 5
 Invoke-Chat '/gamemode creative'
 
 $r = Invoke-SelfTest 'rope.*'
