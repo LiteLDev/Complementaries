@@ -14,7 +14,7 @@ runs the same server logic on the integrated server of local worlds.
 | Id | Kind | Block states (Bedrock) | Drops |
 |----|------|------------------------|-------|
 | `complementaries:goblet` | block + block item | `cm:fluid` 0..15 (see §2.1) | itself (the drink is lost) |
-| `complementaries:urn` | block + block item | `cm:treasure` 0..1 | itself; treasure urns drop `loot_tables/blocks/urn_treasure.json` (itself with Silk Touch) |
+| `complementaries:urn` | block + block item | `cm:treasure` 0..1 | itself; treasure urns drop `loot_tables/blocks/urn_treasure.json` |
 | `complementaries:planter` | block + block item | — | itself |
 | `complementaries:flower_box` | block + block item | `minecraft:cardinal_direction` (front, towards the player), `cm:wall` 0..1, `cm:flower0..2` 0..15 | itself + the planted flowers |
 | `complementaries:book_pile` | block, no item | `minecraft:cardinal_direction`, `cm:book0..3` 0..7 (0 empty, 1-6 plain book colours, 7 enchanted) | the exact books (NBT kept) |
@@ -63,7 +63,7 @@ Book piles have no item; they are made by placing books (§2.5).
   `loot_tables/blocks/urn_treasure.json` (common: string, bones, rotten flesh, arrows, coal, gold
   nuggets, seeds, emerald / rare: gold ingot, diamond, emerald, enchanted book, music disc) and, with
   `urnEntitySpawnChance` (default 0.1), releases a mob from `urnSpawnMobs` (default
-  `minecraft:silverfish`). With Silk Touch the urn itself drops (as a plain urn, no loot).
+  `minecraft:silverfish`).
 - An arrow / trident / any projectile that hits an urn breaks it.
 
 ### 2.3 Planter
@@ -113,6 +113,13 @@ Book piles have no item; they are made by placing books (§2.5).
 ### 2.8 Jar Boat
 - Decorative boat in a glass jar, faces the player when placed.
 - Generated in shipwreck treasure chests with chance `jarBoatShipwreckChance` (default 0.25).
+
+### 2.9 Common rules
+- Like Java block use, a click while sneaking with an item in hand is left to the item (goblet,
+  flower box and pancake ignore it); book piles are the exception: placing and adding books needs
+  sneaking.
+- In creative, held items are not used up, and a bottle exchange only hands out the result when the
+  player has none yet.
 
 ## 3. Screens
 
@@ -174,7 +181,7 @@ Log lines (for e2e): `tableware: goblet filled with <fluid>`, `tableware: goblet
 - Book pile enchanting power: hook on `EnchantingContainerManagerModel::recalculateOptions` (sets the
   table position) and `EnchantUtils::getEnchantCosts` (adds the pile power to the bookcase count).
 - Urn projectile break: hook on `ProjectileComponent::onHit`.
-- Jar boat loot: hook on `LootTable::fill` for `shipwreck_treasure`.
+- Jar boat loot: hook on `LootTable::fill` for `chests/shipwrecktreasure.json`.
 
 ## 8. Not ported
 
