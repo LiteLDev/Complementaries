@@ -5,11 +5,10 @@
 
 #include "mc/deps/core/math/Vec3.h"
 #include "mc/legacy/ActorUniqueID.h"
-#include "mc/server/commands/CommandPermissionLevel.h"
-#include "mc/server/commands/ServerCommandOrigin.h"
-#include "mc/world/level/dimension/DimensionType.h"
 #include "mc/scripting/modules/minecraft/ScriptFacing.h"
 #include "mc/server/SimulatedPlayer.h"
+#include "mc/server/commands/CommandPermissionLevel.h"
+#include "mc/server/commands/ServerCommandOrigin.h"
 #include "mc/world/actor/player/Inventory.h"
 #include "mc/world/actor/player/Player.h"
 #include "mc/world/item/ItemStack.h"
@@ -19,6 +18,7 @@
 #include "mc/world/level/block/Block.h"
 #include "mc/world/level/block/BlockProperty.h"
 #include "mc/world/level/block/BlockType.h"
+#include "mc/world/level/dimension/DimensionType.h"
 
 #include "feature/rope/Common.h"
 #include "feature/rope/Rope.h"
@@ -58,7 +58,7 @@ void clearColumn(Context& ctx, GlobalPos base, int h) {
 }
 
 int countItem(Player& p, std::string_view id) {
-    int  n   = 0;
+    int   n   = 0;
     auto& inv = p.getInventory();
     for (int i = 0; i < inv.getContainerSize(); ++i) {
         auto const& s = inv.getItem(i);
@@ -152,7 +152,10 @@ CM_REGISTER_SELFTEST("rope.add_and_remove_down", [](Context& ctx) -> ll::coro::C
     ctx.check(b && b->y == base.y + 3, "second added rope under the first");
     co_await ctx.ticks(3);
     ctx.check(idAt(ctx, up(base, 3)) == rope::kRope, "added ropes stay");
-    ctx.check(game::blockPos(up(base, 3)) == rope::ropes::bottomOf(r, game::blockPos(up(base, 5))), "bottom of the column");
+    ctx.check(
+        game::blockPos(up(base, 3)) == rope::ropes::bottomOf(r, game::blockPos(up(base, 5))),
+        "bottom of the column"
+    );
     auto removed = rope::ropes::removeRopeDown(r, game::blockPos(up(base, 5)));
     ctx.check(removed && removed->y == base.y + 3, "removes the lowest rope");
     co_await ctx.ticks(2);
@@ -168,11 +171,19 @@ CM_REGISTER_SELFTEST("rope.player_extend_and_pull", [](Context& ctx) -> ll::coro
     ctx.require(ctx.setBlock(up(base, 4), std::string(rope::kRope)), "rope");
     co_await ctx.ticks(2);
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
-    sp.teleport(Vec3{static_cast<float>(base.x) + 1.5f, static_cast<float>(base.y), static_cast<float>(base.z) + 0.5f}, sp.getDimensionId());
+    sp.teleport(
+        Vec3{static_cast<float>(base.x) + 1.5f, static_cast<float>(base.y), static_cast<float>(base.z) + 0.5f},
+        sp.getDimensionId()
+    );
     co_await ctx.ticks(2);
     int slot = ctx.give(sp, rope::makeStack(rope::kRope, 3), 0);
     ctx.require(slot == 0, "rope in slot 0");
-    bool used = sp.simulateUseItemInSlotOnBlock(0, game::blockPos(up(base, 4)), ScriptModuleMinecraft::ScriptFacing::East, Vec3{1.0f, 0.5f, 0.5f});
+    bool used = sp.simulateUseItemInSlotOnBlock(
+        0,
+        game::blockPos(up(base, 4)),
+        ScriptModuleMinecraft::ScriptFacing::East,
+        Vec3{1.0f, 0.5f, 0.5f}
+    );
     ctx.info(std::string("use item on rope: ") + (used ? "ok" : "refused"));
     co_await ctx.ticks(4);
     ctx.check(idAt(ctx, up(base, 3)) == rope::kRope, "using a rope on a rope extends it downwards");
@@ -181,7 +192,10 @@ CM_REGISTER_SELFTEST("rope.player_extend_and_pull", [](Context& ctx) -> ll::coro
     sp.getInventory().setItem(0, ItemStack::EMPTY_ITEM());
     sp.refreshInventory();
     co_await ctx.ticks(1);
-    ctx.check(rope::ropes::onUse(sp, game::blockPos(up(base, 4)), 5, ItemStack::EMPTY_ITEM()), "empty-hand use is handled");
+    ctx.check(
+        rope::ropes::onUse(sp, game::blockPos(up(base, 4)), 5, ItemStack::EMPTY_ITEM()),
+        "empty-hand use is handled"
+    );
     co_await ctx.ticks(4);
     ctx.check(idAt(ctx, up(base, 3)) != rope::kRope, "pulling removes the lowest rope");
     ctx.check(idAt(ctx, up(base, 4)) == rope::kRope, "the clicked rope stays");
@@ -193,15 +207,30 @@ CM_REGISTER_SELFTEST("rope.bell", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     clearColumn(ctx, base, 8);
     ctx.require(ctx.setBlock(up(base, 6), "minecraft:oak_planks"), "support");
-    ctx.require(ctx.setBlock(up(base, 5), "minecraft:bell", {{"attachment", 1}}), "bell");
+    ctx.require(
+        ctx.setBlock(
+            up(base, 5),
+            "minecraft:bell",
+            {
+                {"attachment", 1}
+    }
+        ),
+        "bell"
+    );
     co_await ctx.ticks(2);
     ctx.require(idAt(ctx, up(base, 5)) == "minecraft:bell", "bell placed");
     ctx.setBlock(up(base, 4), std::string(rope::kRope));
     ctx.setBlock(up(base, 3), std::string(rope::kRope));
     co_await ctx.ticks(3);
     ctx.check(idAt(ctx, up(base, 3)) == rope::kRope, "rope hangs under the bell");
-    ctx.check(rope::ropes::ringConnectedBell(regionOf(ctx), game::blockPos(up(base, 3)), &ctx.player()), "the bell rings");
-    ctx.check(!rope::ropes::ringConnectedBell(regionOf(ctx), game::blockPos(up(base, 6)), &ctx.player()), "no bell above planks");
+    ctx.check(
+        rope::ropes::ringConnectedBell(regionOf(ctx), game::blockPos(up(base, 3)), &ctx.player()),
+        "the bell rings"
+    );
+    ctx.check(
+        !rope::ropes::ringConnectedBell(regionOf(ctx), game::blockPos(up(base, 6)), &ctx.player()),
+        "no bell above planks"
+    );
 });
 
 CM_REGISTER_SELFTEST("rope.pulley", [](Context& ctx) -> ll::coro::CoroTask<> {
@@ -224,14 +253,20 @@ CM_REGISTER_SELFTEST("rope.pulley", [](Context& ctx) -> ll::coro::CoroTask<> {
     ctx.require(ctx.setBlock(up(base, 3), "minecraft:oak_planks"), "hanging block");
     ctx.check(rope::turnPulley(r, pp, false), "unwind pushes the block down");
     co_await ctx.ticks(2);
-    ctx.check(idAt(ctx, up(base, 3)) == rope::kRope && idAt(ctx, up(base, 2)) == "minecraft:oak_planks", "block lowered");
+    ctx.check(
+        idAt(ctx, up(base, 3)) == rope::kRope && idAt(ctx, up(base, 2)) == "minecraft:oak_planks",
+        "block lowered"
+    );
     ctx.cleanupBlock(up(base, 2));
     ctx.check(rope::pulley::contentAt(top).count == 0, "pulley empty");
     ctx.check(stateAt(ctx, top, "complementaries:type") == 0, "pulley shows nothing");
     ctx.check(!rope::turnPulley(r, pp, false), "nothing to unwind");
     ctx.check(rope::turnPulley(r, pp, true), "wind 1");
     co_await ctx.ticks(2);
-    ctx.check(idAt(ctx, up(base, 3)) == "minecraft:oak_planks" && idAt(ctx, up(base, 2)) != "minecraft:oak_planks", "block pulled up");
+    ctx.check(
+        idAt(ctx, up(base, 3)) == "minecraft:oak_planks" && idAt(ctx, up(base, 2)) != "minecraft:oak_planks",
+        "block pulled up"
+    );
     ctx.check(rope::pulley::contentAt(top).count == 1, "rope back on the pulley");
     ctx.check(rope::turnPulley(r, pp, true) && rope::turnPulley(r, pp, true), "wind 2 and 3");
     co_await ctx.ticks(2);
@@ -265,7 +300,16 @@ CM_REGISTER_SELFTEST("rope.flax_growth", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     clearColumn(ctx, base, 4);
     auto soil = up(base, -1);
-    ctx.require(ctx.setBlock(soil, "minecraft:farmland", {{"moisturized_amount", 7}}), "farmland");
+    ctx.require(
+        ctx.setBlock(
+            soil,
+            "minecraft:farmland",
+            {
+                {"moisturized_amount", 7}
+    }
+        ),
+        "farmland"
+    );
     ctx.require(ctx.setBlock(base, std::string(rope::kFlaxCrop)), "crop");
     co_await ctx.ticks(2);
     auto& r   = regionOf(ctx);
@@ -274,7 +318,10 @@ CM_REGISTER_SELFTEST("rope.flax_growth", [](Context& ctx) -> ll::coro::CoroTask<
     for (int i = 0; i < 4; ++i) rope::flax::growthTick(r, pos, true);
     co_await ctx.ticks(2);
     ctx.check(stateAt(ctx, base, "complementaries:age") == 4, "age 4 after 4 growth ticks");
-    ctx.check(idAt(ctx, up(base)) == rope::kFlaxCrop && stateAt(ctx, up(base), "complementaries:upper") == 1, "upper half grew");
+    ctx.check(
+        idAt(ctx, up(base)) == rope::kFlaxCrop && stateAt(ctx, up(base), "complementaries:upper") == 1,
+        "upper half grew"
+    );
     ctx.check(stateAt(ctx, up(base), "complementaries:age") == 4, "upper half has the same age");
     for (int i = 0; i < 5; ++i) rope::flax::growthTick(r, pos, true);
     co_await ctx.ticks(1);
@@ -291,7 +338,16 @@ CM_REGISTER_SELFTEST("rope.flax_blocked_and_bonemeal", [](Context& ctx) -> ll::c
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     clearColumn(ctx, base, 4);
     auto soil = up(base, -1);
-    ctx.require(ctx.setBlock(soil, "minecraft:farmland", {{"moisturized_amount", 7}}), "farmland");
+    ctx.require(
+        ctx.setBlock(
+            soil,
+            "minecraft:farmland",
+            {
+                {"moisturized_amount", 7}
+    }
+        ),
+        "farmland"
+    );
     ctx.require(ctx.setBlock(base, std::string(rope::kFlaxCrop)), "crop");
     ctx.require(ctx.setBlock(up(base), "minecraft:stone"), "blocked above");
     co_await ctx.ticks(1);
@@ -317,7 +373,10 @@ CM_REGISTER_SELFTEST("rope.rope_arrow", [](Context& ctx) -> ll::coro::CoroTask<>
     auto wall = up(base, 5);
     ctx.require(ctx.setBlock(wall, "minecraft:stone"), "wall");
     auto& sp = ctx.player();
-    sp.teleport(Vec3{static_cast<float>(base.x) + 2.5f, static_cast<float>(base.y), static_cast<float>(base.z) + 0.5f}, sp.getDimensionId());
+    sp.teleport(
+        Vec3{static_cast<float>(base.x) + 2.5f, static_cast<float>(base.y), static_cast<float>(base.z) + 0.5f},
+        sp.getDimensionId()
+    );
     co_await ctx.ticks(2);
     int   before = countItem(sp, "minecraft:arrow");
     auto* arrow  = rope::arrow::shoot(sp, 3, 0.2f, false);
@@ -330,7 +389,10 @@ CM_REGISTER_SELFTEST("rope.rope_arrow", [](Context& ctx) -> ll::coro::CoroTask<>
     for (int i = 1; i <= 5; ++i) ctx.cleanupBlock(up(east(base), i));
     co_await ctx.ticks(5);
     ctx.check(idAt(ctx, east(wall)) == rope::kRope, "rope placed on the hit face");
-    ctx.check(idAt(ctx, up(east(wall), -1)) == rope::kRope && idAt(ctx, up(east(wall), -2)) == rope::kRope, "ropes added below");
+    ctx.check(
+        idAt(ctx, up(east(wall), -1)) == rope::kRope && idAt(ctx, up(east(wall), -2)) == rope::kRope,
+        "ropes added below"
+    );
     ctx.check(idAt(ctx, up(east(wall), -3)) != rope::kRope, "no rope beyond the charges");
     // a player walking over it picks up a plain arrow (no charge left)
     if (auto* a = sp.getLevel().fetchEntity(uid, false)) {
@@ -347,8 +409,8 @@ CM_REGISTER_SELFTEST("rope.rope_arrow_items", [](Context& ctx) -> ll::coro::Coro
     clearColumn(ctx, base, 8);
     auto& sp = ctx.player();
     // crafted rope arrows carry their charges in the aux value until normalized
-    auto crafted      = rope::makeStack(rope::kRopeArrow, 1, 5);
-    int  slot         = ctx.give(sp, crafted, 0);
+    auto crafted = rope::makeStack(rope::kRopeArrow, 1, 5);
+    int  slot    = ctx.give(sp, crafted, 0);
     ctx.require(slot == 0, "rope arrow given");
     rope::arrow::normalize(sp);
     auto const& n = sp.getInventory().getItem(0);
@@ -359,7 +421,10 @@ CM_REGISTER_SELFTEST("rope.rope_arrow_items", [](Context& ctx) -> ll::coro::Coro
     ctx.setBlock(up(base, 4), std::string(rope::kRope));
     ctx.setBlock(up(base, 3), std::string(rope::kRope));
     co_await ctx.ticks(2);
-    sp.teleport(Vec3{static_cast<float>(base.x) + 1.5f, static_cast<float>(base.y), static_cast<float>(base.z) + 0.5f}, sp.getDimensionId());
+    sp.teleport(
+        Vec3{static_cast<float>(base.x) + 1.5f, static_cast<float>(base.y), static_cast<float>(base.z) + 0.5f},
+        sp.getDimensionId()
+    );
     co_await ctx.ticks(2);
     static_cast<SimulatedPlayer&>(sp).simulateUseItemInSlotOnBlock(
         0,
@@ -368,7 +433,10 @@ CM_REGISTER_SELFTEST("rope.rope_arrow_items", [](Context& ctx) -> ll::coro::Coro
         Vec3{1.0f, 0.5f, 0.5f}
     );
     co_await ctx.ticks(4);
-    ctx.check(idAt(ctx, up(base, 3)) != rope::kRope && idAt(ctx, up(base, 4)) != rope::kRope, "ropes wound into the arrow");
+    ctx.check(
+        idAt(ctx, up(base, 3)) != rope::kRope && idAt(ctx, up(base, 4)) != rope::kRope,
+        "ropes wound into the arrow"
+    );
     ctx.check(idAt(ctx, up(base, 5)) == rope::kRope, "ropes above the clicked one stay");
     ctx.check(sp.getInventory().getItem(0).getDamageValue() == rope::kArrowCharges - 7, "arrow gained 2 charges");
 });
@@ -381,7 +449,10 @@ CM_REGISTER_SELFTEST("rope.climbable", [](Context& ctx) -> ll::coro::CoroTask<> 
     for (int i = 0; i < 6; ++i) ctx.setBlock(up(base, i), std::string(rope::kRope));
     co_await ctx.ticks(3);
     auto& sp = ctx.player();
-    sp.teleport(Vec3{static_cast<float>(base.x) + 0.5f, static_cast<float>(base.y) + 3.0f, static_cast<float>(base.z) + 0.5f}, sp.getDimensionId());
+    sp.teleport(
+        Vec3{static_cast<float>(base.x) + 0.5f, static_cast<float>(base.y) + 3.0f, static_cast<float>(base.z) + 0.5f},
+        sp.getDimensionId()
+    );
     co_await ctx.ticks(10);
     ctx.check(sp.onClimbableBlock(), "a player inside a rope is climbing");
     ctx.check(sp.getPosition().y > static_cast<float>(base.y) + 1.0f, "the rope slows the fall");
@@ -411,8 +482,9 @@ CM_REGISTER_SELFTEST("rope.wild_flax_feature", [](Context& ctx) -> ll::coro::Cor
         }
     }
     co_await ctx.ticks(1);
-    auto            level = ll::service::getLevel();
-    ServerCommandOrigin origin("complementaries-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(0));
+    auto level = ll::service::getLevel();
+    ServerCommandOrigin
+        origin("complementaries-selftest", level->asServer(), CommandPermissionLevel::Owner, DimensionType(0));
     ll::command::CommandRegistrar::getServerInstance().executeCommand(
         "place feature complementaries:wild_flax_feature " + std::to_string(base.x) + " " + std::to_string(base.y) + " "
             + std::to_string(base.z),

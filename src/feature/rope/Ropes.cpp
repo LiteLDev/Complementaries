@@ -23,8 +23,8 @@
 namespace cm::feature::rope::ropes {
 
 namespace {
-std::set<core::GlobalPos> gDirty;  ///< changed blocks: their rope neighbours are recomputed next tick
 std::set<core::GlobalPos> gUpdate; ///< ropes to recompute next tick
+std::set<core::GlobalPos> gRetry;  ///< ropes next to unloaded chunks, retried every second
 
 constexpr int kMaxDistance = 7;
 
@@ -36,7 +36,8 @@ bool supportsFromAbove(BlockSource& r, BlockPos const& above) {
     if (b.isAir() || isRope(b)) return false;
     if (b.canProvideSupport(0, BlockSupportType::Center)) return true; // sturdy bottom face
     auto const& t = b.getBlockType();
-    return isChain(b) || isBell(b) || t.isFenceBlock() || t.isWallBlock() || t.isThinFenceBlock() || isPulley(b);
+    return isChain(b) || isBell(b) || b.getTypeName().ends_with("lantern") || t.isFenceBlock() || t.isWallBlock()
+        || t.isThinFenceBlock() || isPulley(b);
 }
 
 /// A sturdy side face the rope may be tied to (`towardRope` = face of the neighbour that touches the rope).
@@ -81,9 +82,9 @@ struct Shape {
 
 Shape shapeAt(BlockSource& r, BlockPos const& pos) {
     Shape s;
-    s.distance = distanceAt(r, pos);
-    s.up       = hangs(r, pos);
-    s.down     = attachesBelow(r.getBlock(neighbor(pos, 0)));
+    s.distance    = distanceAt(r, pos);
+    s.up          = hangs(r, pos);
+    s.down        = attachesBelow(r.getBlock(neighbor(pos, 0)));
     bool* side[6] = {nullptr, nullptr, &s.north, &s.south, &s.west, &s.east};
     int   h       = 0;
     for (int f = 2; f < 6; ++f) {
@@ -93,8 +94,8 @@ Shape shapeAt(BlockSource& r, BlockPos const& pos) {
         if (isRope(nb)) c = !(s.up && hangs(r, np)); // two hanging ropes side by side stay apart
         else if (connectsSide(nb)) c = true;
         else if (config().blockSideAttachment && !s.up && sideSupport(r, np, oppositeFace(f))) c = true;
-        *side[f] = c;
-        h += c ? 1 : 0;
+        *side[f]  = c;
+        h        += c ? 1 : 0;
     }
     bool vertical = s.up || s.down;
     bool straight = h == 0 || (h == 2 && !vertical && ((s.north && s.south) || (s.west && s.east)));
@@ -105,14 +106,16 @@ Shape shapeAt(BlockSource& r, BlockPos const& pos) {
 Block const* ropeWith(Block const& base, Shape const& s) {
     return &withStates(
         base,
-        {{"complementaries:up", s.up},
-         {"complementaries:down", s.down},
-         {"complementaries:north", s.north},
-         {"complementaries:south", s.south},
-         {"complementaries:west", s.west},
-         {"complementaries:east", s.east},
-         {"complementaries:knot", s.knot},
-         {"complementaries:distance", std::min(s.distance, kMaxDistance)}}
+        {
+            {"complementaries:up", s.up},
+            {"complementaries:down", s.down},
+            {"complementaries:north", s.north},
+            {"complementaries:south", s.south},
+            {"complementaries:west", s.west},
+            {"complementaries:east", s.east},
+            {"complementaries:knot", s.knot},
+            {"complementaries:distance", std::min(s.distance, kMaxDistance)}
+    }
     );
 }
 
@@ -147,7 +150,10 @@ bool update(BlockSource& r, BlockPos const& pos) {
     if (!loaded(r, pos)) return false;
     auto const& b = r.getBlock(pos);
     if (!isRope(b)) return false;
-    if (!neighboursLoaded(r, pos)) return true; // never judge a rope by an unloaded neighbour
+    if (!neighboursLoaded(r, pos)) { // never judge a rope by an unloaded neighbour: retry later
+        gRetry.insert(gpos(r, pos));
+        return true;
+    }
     auto s = shapeAt(r, pos);
     if (s.distance >= kMaxDistance) {
         destroy(r, pos, true);
@@ -204,10 +210,10 @@ bool ringConnectedBell(BlockSource& r, BlockPos const& pos, Actor* by) {
 
 bool onUse(Player& player, BlockPos const& pos, int face, ItemStack const& held) {
     (void)face;
-    auto&       r   = player.getDimensionBlockSource();
-    auto const  id  = itemId(held);
-    auto const  uid = player.getOrCreateUniqueID().rawID;
-    auto const  dim = static_cast<int>(r.getDimensionId());
+    auto&      r   = player.getDimensionBlockSource();
+    auto const id  = itemId(held);
+    auto const uid = player.getOrCreateUniqueID().rawID;
+    auto const dim = static_cast<int>(r.getDimensionId());
     if (id == kRope) {
         auto target = neighbor(bottomOf(r, pos), 0);
         if (!loaded(r, target) || !replaceable(r, target)) return false; // normal placement on the face
@@ -215,10 +221,17 @@ bool onUse(Player& player, BlockPos const& pos, int face, ItemStack const& held)
             auto* pl = playerById(uid);
             auto* rg = serverRegion(dim);
             if (!pl || !rg) return;
+            if (survival(*pl) && itemId(pl->getSelectedItem()) != kRope) return; // switched items meanwhile
             if (auto placed = addRopeDown(*rg, pos)) {
                 consumeSelected(*pl);
                 blockSound(*rg, *placed, rg->getBlock(*placed), true, *pl);
-                log().info("rope: {} extended a rope down to {} {} {}", pl->getRealName(), placed->x, placed->y, placed->z);
+                log().info(
+                    "rope: {} extended a rope down to {} {} {}",
+                    pl->getRealName(),
+                    placed->x,
+                    placed->y,
+                    placed->z
+                );
             }
         });
         return true;
@@ -237,7 +250,13 @@ bool onUse(Player& player, BlockPos const& pos, int face, ItemStack const& held)
             if (auto removed = removeRopeDown(*rg, neighbor(pos, 0), true)) {
                 if (survival(*pl)) giveOrDrop(*pl, makeStack(kRope, 1));
                 blockSound(*rg, *removed, rope, false, *pl);
-                log().info("rope: {} pulled up a rope from {} {} {}", pl->getRealName(), removed->x, removed->y, removed->z);
+                log().info(
+                    "rope: {} pulled up a rope from {} {} {}",
+                    pl->getRealName(),
+                    removed->x,
+                    removed->y,
+                    removed->z
+                );
             }
         });
         return true;
@@ -255,34 +274,32 @@ bool refusePlacement(Player& player, BlockPos const& clicked, int face) {
 
 void onBlockChanged(BlockSource& region, BlockPos const& pos, Block const& prev, Block const& next) {
     (void)prev;
-    auto g = gpos(region, pos);
-    gDirty.insert(g);
-    if (isRope(next)) gUpdate.insert(g);
+    if (!types().rope) return;
+    if (isRope(next)) gUpdate.insert(gpos(region, pos));
+    // like neighbour updates: the ropes around a changed block are recomputed next tick
+    for (int f = 0; f < 6; ++f) {
+        auto n = neighbor(pos, f);
+        if (n.y < region.getMinHeight() || n.y >= region.getMaxHeight()) continue;
+        if (isRope(region.getBlock(n))) gUpdate.insert(gpos(region, n));
+    }
 }
 
 void tick() {
-    if (gDirty.empty() && gUpdate.empty()) return;
-    auto dirty  = std::move(gDirty);
-    auto update = std::move(gUpdate);
-    gDirty.clear();
-    gUpdate.clear();
-    for (auto const& g : dirty) {
-        auto* r = serverRegion(g.dim);
-        if (!r) continue;
-        auto p = game::blockPos(g);
-        for (int f = 0; f < 6; ++f) {
-            auto n = neighbor(p, f);
-            if (loaded(*r, n) && isRope(r->getBlock(n))) update.insert(gpos(*r, n));
-        }
+    if (!gRetry.empty() && now() % 20 == 0) {
+        gUpdate.insert(gRetry.begin(), gRetry.end());
+        gRetry.clear();
     }
+    if (gUpdate.empty()) return;
+    auto update = std::move(gUpdate);
+    gUpdate.clear();
     for (auto const& g : update) {
         if (auto* r = serverRegion(g.dim)) ropes::update(*r, game::blockPos(g));
     }
 }
 
 void reset() {
-    gDirty.clear();
     gUpdate.clear();
+    gRetry.clear();
 }
 
 } // namespace cm::feature::rope::ropes

@@ -84,7 +84,7 @@ std::string const& chainId() { return gChainId; }
 int stateOf(Block const& b, std::string_view name) { return game::intState(b, name).value_or(0); }
 
 Block const& withStates(Block const& b, std::vector<std::pair<std::string_view, int>> const& states) {
-    Block const* out = &b;
+    Block const* out  = &b;
     auto const&  type = b.getBlockType();
     for (auto const& [name, value] : states) {
         if (auto const* state = type.getBlockState(HashedString(std::string(name)))) {
@@ -122,9 +122,7 @@ BlockSource* serverRegion(int dim) {
     return &d->getBlockSourceFromMainChunkSource();
 }
 
-bool isServerRegion(BlockSource const& region) {
-    return !const_cast<BlockSource&>(region).getLevel().isClientSide();
-}
+bool isServerRegion(BlockSource const& region) { return !const_cast<BlockSource&>(region).getLevel().isClientSide(); }
 
 bool loaded(BlockSource& region, BlockPos const& pos) {
     return pos.y >= region.getMinHeight() && pos.y < region.getMaxHeight() && region.hasChunksAt(pos, 0, false);
@@ -205,11 +203,13 @@ void consumeSelected(Player& player, int n) {
 
 // ---- deferred work -------------------------------------------------------------------------------
 namespace {
-std::uint64_t                                      gNow = 0;
+std::uint64_t                                       gNow = 0;
 std::multimap<std::uint64_t, std::function<void()>> gLater;
 } // namespace
 
-void later(int ticks, std::function<void()> fn) { gLater.emplace(gNow + static_cast<std::uint64_t>(std::max(ticks, 1)), std::move(fn)); }
+void later(int ticks, std::function<void()> fn) {
+    gLater.emplace(gNow + static_cast<std::uint64_t>(std::max(ticks, 1)), std::move(fn));
+}
 
 std::uint64_t now() { return gNow; }
 

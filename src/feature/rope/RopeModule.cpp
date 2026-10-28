@@ -97,7 +97,8 @@ void onInteract(ll::event::PlayerInteractBlockEvent& ev) {
     int          face = static_cast<int>(ev.face());
     auto const&  item = ev.item();
     auto const   id   = itemId(item);
-    bool const   ours = isRope(b) || isPulley(b) || (isFlaxCrop(b) && id == "minecraft:bone_meal") || b.getTypeName() == kCrank;
+    bool const   ours =
+        isRope(b) || isPulley(b) || (isFlaxCrop(b) && id == "minecraft:bone_meal") || b.getTypeName() == kCrank;
     if (ours) {
         bool handled = false;
         if (repeatedUse(player, gpos(region, pos), handled)) {
@@ -128,6 +129,7 @@ void onInteract(ll::event::PlayerInteractBlockEvent& ev) {
             auto* pl = playerById(uid);
             auto* r  = serverRegion(dim);
             if (!pl || !r) return;
+            if (survival(*pl) && itemId(pl->getSelectedItem()) != "minecraft:bone_meal") return;
             if (flax::boneMeal(*r, pos)) {
                 consumeSelected(*pl);
                 log().info("rope: {} used bone meal on flax", pl->getRealName());

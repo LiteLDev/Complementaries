@@ -31,9 +31,9 @@
 namespace cm::feature::rope::arrow {
 
 namespace {
-constexpr char const* kKey        = "cm:rope:arrows";
-constexpr int         kLifetime   = 1200; ///< ticks a stuck arrow stays (like vanilla arrows)
-constexpr int         kUseTicks   = 72000;
+constexpr char const* kKey      = "cm:rope:arrows";
+constexpr int         kLifetime = 1200; ///< ticks a stuck arrow stays (like vanilla arrows)
+constexpr int         kUseTicks = 72000;
 
 struct Tracked {
     int                     charges = 0;
@@ -48,7 +48,9 @@ std::map<std::int64_t, Tracked> gArrows;
 bool isRopeArrowItem(ItemStackBase const& s) { return !s.isNull() && s.getTypeName() == kRopeArrow; }
 bool isArrowItem(ItemStackBase const& s) { return !s.isNull() && s.getTypeName() == "minecraft:arrow"; }
 
-int chargesOfItem(ItemStackBase const& s) { return std::clamp(kArrowCharges - static_cast<int>(s.getDamageValue()), 0, kArrowCharges); }
+int chargesOfItem(ItemStackBase const& s) {
+    return std::clamp(kArrowCharges - static_cast<int>(s.getDamageValue()), 0, kArrowCharges);
+}
 
 void setCharges(ItemStack& s, int charges) {
     s.setDamageValue(static_cast<short>(kArrowCharges - std::clamp(charges, 0, kArrowCharges)));
@@ -102,8 +104,8 @@ LL_TYPE_INSTANCE_HOOK(
     RangedWeaponItem,
     &RangedWeaponItem::$use,
     ItemStack&,
-    ItemStack&  instance,
-    Player&     player,
+    ItemStack& instance,
+    Player&    player,
     ::HandSlot handSlot
 ) {
     auto& result = origin(instance, player, handSlot);
@@ -140,7 +142,7 @@ LL_TYPE_INSTANCE_HOOK(
 
     ItemStack ammo = slot == -2 ? player->getOffhandSlot() : player->getInventory().getItem(slot);
     normalize(*player);
-    ammo         = slot == -2 ? player->getOffhandSlot() : player->getInventory().getItem(slot);
+    ammo          = slot == -2 ? player->getOffhandSlot() : player->getInventory().getItem(slot);
     bool creative = player->isCreative();
     shoot(*player, chargesOfItem(ammo), f, creative);
     if (!creative) {
@@ -183,15 +185,11 @@ Actor* shoot(Player& shooter, int charges, float power, bool creative) {
     auto& region = shooter.getDimensionBlockSource();
     auto  dir    = shooter.getViewVector(1.0f);
     auto  pos    = shooter.getHeadPos();
-    auto* actor  = shooter.getLevel().getSpawner().spawnProjectile(
-        region,
-        ActorDefinitionIdentifier(std::string(kRopeArrow)),
-        &shooter,
-        pos,
-        dir
-    );
+    auto* actor  = shooter.getLevel()
+                       .getSpawner()
+                       .spawnProjectile(region, ActorDefinitionIdentifier(std::string(kRopeArrow)), &shooter, pos, dir);
     if (!actor) return nullptr;
-    float speed = power * 3.0f;
+    float speed                                                 = power * 3.0f;
     actor->mBuiltInComponents->mStateVectorComponent->mPosDelta = Vec3{dir.x * speed, dir.y * speed, dir.z * speed};
     track(*actor, charges, !creative);
     shooter.getLevel().broadcastSoundEvent(
@@ -233,7 +231,7 @@ void onHitBlock(Actor& a, BlockPos const& hit, int face) {
     auto const* rope = ropes::shapedRope(r, target);
     if (!rope || !set(r, target, *rope)) return;
     st.charges -= 1;
-    st.anchor = target;
+    st.anchor   = target;
     blockSound(r, target, *rope, true, a);
     log().info("rope: rope arrow placed a rope at {} {} {}", target.x, target.y, target.z);
 }
@@ -260,12 +258,12 @@ void tick() {
         }
         st.anchor.reset();
         // picked up by a player walking over it
-        auto const& p    = a->getPosition();
-        Player*     who  = nullptr;
+        auto const& p   = a->getPosition();
+        Player*     who = nullptr;
         a->getLevel().forEachPlayer([&](Player& pl) {
             if (pl.getDimensionId() != a->getDimensionId() || !pl.isAlive()) return true;
-            auto const  q = pl.getFeetPos();
-            float dx = q.x - p.x, dz = q.z - p.z, dy = q.y - p.y;
+            auto const q  = pl.getFeetPos();
+            float      dx = q.x - p.x, dz = q.z - p.z, dy = q.y - p.y;
             if (dx * dx + dz * dz <= 1.5f * 1.5f && dy > -2.5f && dy < 1.5f) {
                 who = &pl;
                 return false;
@@ -276,7 +274,15 @@ void tick() {
             if (st.pickup && survival(*who)) {
                 giveOrDrop(*who, st.charges > 0 ? ropeArrowItem(st.charges) : makeStack("minecraft:arrow", 1));
             }
-            a->getLevel().broadcastSoundEvent(r, SharedTypes::Legacy::LevelSoundEvent::Pop, p, -1, ActorSoundIdentifier(*who), false, std::nullopt);
+            a->getLevel().broadcastSoundEvent(
+                r,
+                SharedTypes::Legacy::LevelSoundEvent::Pop,
+                p,
+                -1,
+                ActorSoundIdentifier(*who),
+                false,
+                std::nullopt
+            );
             log().info("rope: {} picked up a rope arrow ({} charges)", who->getRealName(), st.charges);
             a->remove();
             done.push_back(uid);
@@ -323,7 +329,7 @@ void normalize(Player& player) {
     auto& inv     = player.getInventory();
     bool  changed = false;
     auto  fix     = [&](ItemStack s) -> std::optional<ItemStack> {
-        if (!isRopeArrowItem(s) || s.mAuxValue <= 0) return std::nullopt;
+        if (!isRopeArrowItem(s) || s.mAuxValue <= 0 || s.getDamageValue() != 0) return std::nullopt;
         int charges = std::clamp(static_cast<int>(s.mAuxValue), 0, kArrowCharges);
         s.mAuxValue = 0;
         setCharges(s, charges);
@@ -347,9 +353,9 @@ void load() {
     if (auto j = game::db::load(kKey); j && j->is_array()) {
         for (auto const& e : *j) {
             Tracked t;
-            t.charges = e.value("charges", 0);
-            t.pickup  = e.value("pickup", true);
-            t.hit     = e.value("hit", false);
+            t.charges                                = e.value("charges", 0);
+            t.pickup                                 = e.value("pickup", true);
+            t.hit                                    = e.value("hit", false);
             gArrows[e.value("uid", std::int64_t{0})] = t;
         }
     }
@@ -357,7 +363,13 @@ void load() {
 
 void save() {
     nlohmann::json arr = nlohmann::json::array();
-    for (auto const& [uid, t] : gArrows) arr.push_back({{"uid", uid}, {"charges", t.charges}, {"pickup", t.pickup}, {"hit", t.hit}});
+    for (auto const& [uid, t] : gArrows)
+        arr.push_back({
+            {"uid",     uid      },
+            {"charges", t.charges},
+            {"pickup",  t.pickup },
+            {"hit",     t.hit    }
+        });
     if (arr.empty()) game::db::erase(kKey);
     else game::db::save(kKey, arr);
 }

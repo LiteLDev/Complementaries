@@ -12,10 +12,12 @@
 #include "mc/world/level/BlockPos.h"
 #include "mc/world/level/BlockSource.h"
 #include "mc/world/level/Level.h"
+#include "mc/world/level/Weather.h"
 #include "mc/world/level/block/Block.h"
 #include "mc/world/level/block/BrightnessPair.h"
 #include "mc/world/level/block/FarmBlock.h"
 #include "mc/world/level/block/block_events/BlockRandomTickEvent.h"
+#include "mc/world/level/dimension/Dimension.h"
 
 #include "feature/rope/Common.h"
 #include "game/Blocks.h"
@@ -25,8 +27,8 @@
 namespace cm::feature::rope::flax {
 
 namespace {
-constexpr char const* kKey      = "cm:rope:flax";
-constexpr int         kMaxAge   = 7;
+constexpr char const* kKey       = "cm:rope:flax";
+constexpr int         kMaxAge    = 7;
 constexpr int         kDoubleAge = 4; ///< from this age the crop is two blocks tall
 
 std::set<core::GlobalPos> gCrops;   ///< lower halves
@@ -38,16 +40,21 @@ bool upper(Block const& b) { return stateOf(b, "complementaries:upper") != 0; }
 int  age(Block const& b) { return stateOf(b, "complementaries:age"); }
 
 Block const* crop(int a, bool up) {
-    return game::blockWith(kFlaxCrop, {{"complementaries:age", a}, {"complementaries:upper", up ? 1 : 0}});
+    return game::blockWith(
+        kFlaxCrop,
+        {
+            {"complementaries:age",   a         },
+            {"complementaries:upper", up ? 1 : 0}
+    }
+    );
 }
 
 int lightAt(BlockSource& r, BlockPos const& pos) {
-    auto pair    = r.getBrightnessPair(pos);
-    int  sky     = static_cast<int>(pair.sky.get().mValue);
-    int  blk     = static_cast<int>(pair.block.get().mValue);
-    int  t       = r.getLevel().getTime() % 24000;
-    int  darken  = (t > 13000 && t < 23000) ? 11 : 0;
-    return std::max(blk, sky - darken);
+    // Java crops read the raw brightness without the night darkening: flax grows at night too
+    auto pair = r.getBrightnessPair(pos);
+    int  sky  = static_cast<int>(pair.sky.get().mValue);
+    int  blk  = static_cast<int>(pair.block.get().mValue);
+    return std::max(blk, sky);
 }
 
 /// Java crop growth speed: farmland under and around the crop, halved by crowded rows.
@@ -135,10 +142,11 @@ LL_TYPE_INSTANCE_HOOK(
     void,
     BlockEvents::BlockRandomTickEvent& event
 ) {
-    BlockSource& r   = event.mRegion;
-    BlockPos     pos = event.mPos.get();
-    if (isServerRegion(r) && isFlaxCrop(r.getBlock(neighbor(pos, 1)))
-        && stateOf(r.getBlock(pos), "moisturized_amount") == 0 && !waterNear(r, pos)) {
+    BlockSource& r     = event.mRegion;
+    BlockPos     pos   = event.mPos.get();
+    auto         above = neighbor(pos, 1);
+    if (isServerRegion(r) && isFlaxCrop(r.getBlock(above)) && stateOf(r.getBlock(pos), "moisturized_amount") == 0
+        && !waterNear(r, pos) && !r.getDimension().mWeather->isRainingAt(r, above)) {
         return; // stays dry farmland under the crop
     }
     origin(event);
@@ -193,16 +201,16 @@ void onBlockChanged(BlockSource& region, BlockPos const& pos, Block const& prev,
             auto* r = serverRegion(g.dim);
             if (!r) return;
             if (drops) spawnDrops(*r, g, a);
-            auto above = neighbor(game::blockPos(g), 1);
-            auto const& ab = r->getBlock(above);
+            auto        above = neighbor(game::blockPos(g), 1);
+            auto const& ab    = r->getBlock(above);
             if (isFlaxCrop(ab) && upper(ab)) setAir(*r, above);
         });
     } else {
         later(1, [g, drops] {
             auto* r = serverRegion(g.dim);
             if (!r) return;
-            auto below = neighbor(game::blockPos(g), 0);
-            auto const& bb = r->getBlock(below);
+            auto        below = neighbor(game::blockPos(g), 0);
+            auto const& bb    = r->getBlock(below);
             if (isFlaxCrop(bb) && !upper(bb)) {
                 if (!drops) noDrops(gpos(*r, below));
                 setAir(*r, below);
@@ -238,7 +246,8 @@ void load() {
     gCrops.clear();
     if (auto j = game::db::load(kKey); j && j->is_array()) {
         for (auto const& e : *j) {
-            if (e.is_array() && e.size() == 4) gCrops.insert({e[0].get<int>(), e[1].get<int>(), e[2].get<int>(), e[3].get<int>()});
+            if (e.is_array() && e.size() == 4)
+                gCrops.insert({e[0].get<int>(), e[1].get<int>(), e[2].get<int>(), e[3].get<int>()});
         }
     }
     gDirty = false;

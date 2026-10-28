@@ -25,7 +25,8 @@ namespace cm::feature::rope::pulley {
 namespace {
 constexpr int kMaxStack = 64;
 
-std::map<core::GlobalPos, Content> gCache;
+std::map<core::GlobalPos, Content>       gCache;
+std::map<core::GlobalPos, std::uint64_t> gLastTurn; ///< tick of the last turn of each pulley
 
 std::string dbKey(core::GlobalPos const& p) { return "cm:rope:pulley:" + p.key(); }
 
@@ -46,8 +47,14 @@ int typeFor(Content const& c) {
 void refreshState(BlockSource& r, BlockPos const& pos, Content const& c, bool flip) {
     auto const& b = r.getBlock(pos);
     if (!isPulley(b)) return;
-    int  flipped = stateOf(b, "complementaries:flipped");
-    auto const& nb = withStates(b, {{"complementaries:type", typeFor(c)}, {"complementaries:flipped", flip ? !flipped : flipped}});
+    int         flipped = stateOf(b, "complementaries:flipped");
+    auto const& nb      = withStates(
+        b,
+        {
+            {"complementaries:type",    typeFor(c)               },
+            {"complementaries:flipped", flip ? !flipped : flipped}
+    }
+    );
     if (&nb != &b) set(r, pos, nb);
 }
 
@@ -84,10 +91,20 @@ Content contentAt(core::GlobalPos const& pos) {
 void setContent(core::GlobalPos const& pos, Content const& c) {
     gCache[pos] = c;
     if (c.count <= 0 || c.item.empty()) game::db::erase(dbKey(pos));
-    else game::db::save(dbKey(pos), {{"item", c.item}, {"count", c.count}});
+    else
+        game::db::save(
+            dbKey(pos),
+            {
+                {"item",  c.item },
+                {"count", c.count}
+        }
+        );
 }
 
-void reset() { gCache.clear(); }
+void reset() {
+    gCache.clear();
+    gLastTurn.clear();
+}
 
 } // namespace cm::feature::rope::pulley
 
@@ -101,7 +118,7 @@ bool turnPulley(BlockSource& r, BlockPos const& pos, bool clockwise, Actor* by) 
     // the column of rope / chain hanging under the pulley
     BlockPos    top = neighbor(pos, 0);
     std::string kind;
-    BlockPos    bottom = top;
+    BlockPos    bottom    = top;
     bool        hasColumn = false;
     if (loaded(r, top)) {
         kind = pulley::columnItem(r.getBlock(top));
@@ -122,17 +139,30 @@ bool turnPulley(BlockSource& r, BlockPos const& pos, bool clockwise, Actor* by) 
         if (c.count >= pulley::kMaxStack) return false;
         auto const& piece = r.getBlock(bottom);
         auto        hang  = neighbor(bottom, 0);
-        if (config().pulleyMovesBlocks && movable(r, hang) && pulley::columnItem(r.getBlock(hang)).empty()) {
+        // only a block that hangs (nothing under it) is pulled up: never the ground
+        auto under   = neighbor(hang, 0);
+        bool hanging = movable(r, hang) && pulley::columnItem(r.getBlock(hang)).empty() && loaded(r, under)
+                    && replaceable(r, under);
+        if (config().pulleyMovesBlocks && hanging) {
             if (!pulley::moveBlock(r, hang, bottom)) return false;
         } else if (!setAir(r, bottom)) {
             return false;
         }
-        c.item = kind;
+        c.item   = kind;
         c.count += 1;
         pulley::setContent(g, c);
+        pulley::gLastTurn[g] = now();
         pulley::refreshState(r, pos, c, true);
         if (by) blockSound(r, bottom, piece, false, *by);
-        log().info("rope: pulley at {} {} {} wound in {} ({} left on it: {})", pos.x, pos.y, pos.z, kind, c.item, c.count);
+        log().info(
+            "rope: pulley at {} {} {} wound in {} ({} left on it: {})",
+            pos.x,
+            pos.y,
+            pos.z,
+            kind,
+            c.item,
+            c.count
+        );
         return true;
     }
 
@@ -143,7 +173,8 @@ bool turnPulley(BlockSource& r, BlockPos const& pos, bool clockwise, Actor* by) 
     if (!loaded(r, target)) return false;
     if (!replaceable(r, target)) {
         auto below = neighbor(target, 0);
-        if (!config().pulleyMovesBlocks || !movable(r, target) || !loaded(r, below) || !replaceable(r, below)) return false;
+        if (!config().pulleyMovesBlocks || !movable(r, target) || !loaded(r, below) || !replaceable(r, below))
+            return false;
         if (!pulley::moveBlock(r, target, below)) return false;
     }
     auto const* block = pulley::blockForItem(c.item);
@@ -151,9 +182,18 @@ bool turnPulley(BlockSource& r, BlockPos const& pos, bool clockwise, Actor* by) 
     c.count -= 1;
     if (c.count <= 0) c = {};
     pulley::setContent(g, c);
+    pulley::gLastTurn[g] = now();
     pulley::refreshState(r, pos, c, true);
     if (by) blockSound(r, target, *block, true, *by);
-    log().info("rope: pulley at {} {} {} lowered a piece to {} {} {}", pos.x, pos.y, pos.z, target.x, target.y, target.z);
+    log().info(
+        "rope: pulley at {} {} {} lowered a piece to {} {} {}",
+        pos.x,
+        pos.y,
+        pos.z,
+        target.x,
+        target.y,
+        target.z
+    );
     return true;
 }
 
@@ -190,8 +230,8 @@ void putHeld(Player& p, core::GlobalPos g) {
             p.sendMessage(trFor(p, "cm.rope.pulley.full", "The pulley is full"));
             return;
         }
-        int n   = std::min<int>(room, held.mCount);
-        c.item  = id;
+        int n    = std::min<int>(room, held.mCount);
+        c.item   = id;
         c.count += n;
         if (survival(p)) consumeSelected(p, n);
         setContent(g, c);
@@ -226,7 +266,8 @@ void openForm(Player& player, core::GlobalPos g) {
             [g](Player& p) { putHeld(p, g); }
         );
     }
-    if (c.count > 0) form.appendButton(trFor(player, "cm.rope.pulley.take", "Take out"), [g](Player& p) { takeOut(p, g); });
+    if (c.count > 0)
+        form.appendButton(trFor(player, "cm.rope.pulley.take", "Take out"), [g](Player& p) { takeOut(p, g); });
     form.appendButton(trFor(player, "cm.rope.pulley.turn_cw", "Turn clockwise"), [g](Player& p) {
         withPulley(p, g, [&](BlockSource& r, BlockPos const& pos) { turnPulley(r, pos, true, &p); });
     });
@@ -240,7 +281,7 @@ void openForm(Player& player, core::GlobalPos g) {
 
 bool onUse(Player& player, BlockPos const& pos) {
     if (player.isSneaking() && !player.getSelectedItem().isNull()) return false; // place against it
-    auto g = gpos(player.getDimensionBlockSource(), pos);
+    auto g   = gpos(player.getDimensionBlockSource(), pos);
     auto uid = player.getOrCreateUniqueID().rawID;
     later(1, [uid, g] {
         if (auto* p = playerById(uid)) openForm(*p, g);
@@ -264,11 +305,15 @@ void onCrankUsed(Player& player, BlockPos const& crankPos, Block const& crank) {
     bool clockwise = !player.isSneaking();
     auto uid       = player.getOrCreateUniqueID().rawID;
     auto dim       = static_cast<int>(r.getDimensionId());
+    auto usedAt    = now();
     for (auto const& c : candidates) {
         if (!loaded(r, c) || !isPulley(r.getBlock(c))) continue;
-        later(1, [uid, dim, c, clockwise] {
+        later(1, [uid, dim, c, clockwise, usedAt] {
             auto* rg = serverRegion(dim);
-            if (rg) turnPulley(*rg, c, clockwise, playerById(uid));
+            if (!rg) return;
+            // the crank unit may turn the pulley itself (turnPulley): then this fallback stays quiet
+            if (auto it = gLastTurn.find(gpos(*rg, c)); it != gLastTurn.end() && it->second >= usedAt) return;
+            turnPulley(*rg, c, clockwise, playerById(uid));
         });
         return;
     }
@@ -294,14 +339,23 @@ void onBlockChanged(BlockSource& region, BlockPos const& pos, Block const& prev,
         if (gRestoring.erase(g)) return;
         if (stateOf(prev, "minecraft:block_face") == stateOf(next, "minecraft:block_face")) return;
         if (!nextToTurnTable(region, pos)) return;
-        Block const* original = &prev;
-        later(1, [g, original] {
+        int face = stateOf(prev, "minecraft:block_face");
+        later(1, [g, face] {
             auto* r = serverRegion(g.dim);
             if (!r) return;
             auto p = game::blockPos(g);
             if (!loaded(*r, p) || !isPulley(r->getBlock(p))) return;
-            gRestoring.insert(g);
-            if (!set(*r, p, *original)) gRestoring.erase(g);
+            auto const& cur      = r->getBlock(p);
+            auto const& restored = withStates(
+                cur,
+                {
+                    {"minecraft:block_face", face}
+            }
+            );
+            if (&restored != &cur) {
+                gRestoring.insert(g);
+                if (!set(*r, p, restored)) gRestoring.erase(g);
+            }
             turnPulley(*r, p, true, nullptr);
         });
         return;
@@ -313,7 +367,11 @@ void onBlockChanged(BlockSource& region, BlockPos const& pos, Block const& prev,
     if (c.count <= 0) return;
     later(1, [g, c] {
         if (auto* r = serverRegion(g.dim)) {
-            dropAt(*r, Vec3{static_cast<float>(g.x) + 0.5f, static_cast<float>(g.y) + 0.5f, static_cast<float>(g.z) + 0.5f}, makeStack(c.item, c.count));
+            dropAt(
+                *r,
+                Vec3{static_cast<float>(g.x) + 0.5f, static_cast<float>(g.y) + 0.5f, static_cast<float>(g.z) + 0.5f},
+                makeStack(c.item, c.count)
+            );
         }
     });
 }

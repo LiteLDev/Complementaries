@@ -24,26 +24,26 @@ class Vec3;
 
 namespace cm::feature::rope {
 
-inline constexpr std::string_view kRope       = "complementaries:rope";
-inline constexpr std::string_view kRopeArrow  = "complementaries:rope_arrow";
-inline constexpr std::string_view kPulley     = "complementaries:pulley_block";
-inline constexpr std::string_view kFlaxCrop   = "complementaries:flax_crop";
-inline constexpr std::string_view kWildFlax   = "complementaries:wild_flax";
-inline constexpr std::string_view kFlaxBlock  = "complementaries:flax_block";
-inline constexpr std::string_view kFlax       = "complementaries:flax";
-inline constexpr std::string_view kFlaxSeeds  = "complementaries:flax_seeds";
-inline constexpr std::string_view kCrank      = "complementaries:crank";
-inline constexpr std::string_view kTurnTable  = "complementaries:turn_table";
+inline constexpr std::string_view kRope         = "complementaries:rope";
+inline constexpr std::string_view kRopeArrow    = "complementaries:rope_arrow";
+inline constexpr std::string_view kPulley       = "complementaries:pulley_block";
+inline constexpr std::string_view kFlaxCrop     = "complementaries:flax_crop";
+inline constexpr std::string_view kWildFlax     = "complementaries:wild_flax";
+inline constexpr std::string_view kFlaxBlock    = "complementaries:flax_block";
+inline constexpr std::string_view kFlax         = "complementaries:flax";
+inline constexpr std::string_view kFlaxSeeds    = "complementaries:flax_seeds";
+inline constexpr std::string_view kCrank        = "complementaries:crank";
+inline constexpr std::string_view kTurnTable    = "complementaries:turn_table";
 inline constexpr int              kArrowCharges = 32; ///< rope arrow max durability
 
 /// `config/rope.json`.
 struct RopeConfig {
-    int    version             = 1;
-    bool   blockSideAttachment = true;
-    bool   bellRinging         = true;
-    int    bellChainLength     = 16;
-    bool   ropeArrowEnabled    = true;
-    bool   pulleyMovesBlocks   = true;
+    int    version              = 1;
+    bool   blockSideAttachment  = true;
+    bool   bellRinging          = true;
+    int    bellChainLength      = 16;
+    bool   ropeArrowEnabled     = true;
+    bool   pulleyMovesBlocks    = true;
     double flaxGrowthMultiplier = 1.0;
 };
 [[nodiscard]] RopeConfig const& config();
@@ -82,9 +82,9 @@ bool markRopeClimbable();
 [[nodiscard]] BlockPos neighbor(BlockPos const& pos, int face);
 [[nodiscard]] int      oppositeFace(int face);
 /// The server block source of dimension `dim` (nullptr when the dimension is not loaded).
-[[nodiscard]] BlockSource* serverRegion(int dim);
-[[nodiscard]] bool         isServerRegion(BlockSource const& region);
-[[nodiscard]] bool         loaded(BlockSource& region, BlockPos const& pos);
+[[nodiscard]] BlockSource*    serverRegion(int dim);
+[[nodiscard]] bool            isServerRegion(BlockSource const& region);
+[[nodiscard]] bool            loaded(BlockSource& region, BlockPos const& pos);
 [[nodiscard]] core::GlobalPos gpos(BlockSource const& region, BlockPos const& pos);
 
 // ---- world edits ---------------------------------------------------------------------------------
@@ -100,13 +100,13 @@ bool destroy(BlockSource& region, BlockPos const& pos, bool drops);
 void blockSound(BlockSource& region, BlockPos const& pos, Block const& block, bool place, Actor const& by);
 
 // ---- items ---------------------------------------------------------------------------------------
-[[nodiscard]] ItemStack makeStack(std::string_view id, int count, int aux = 0);
+[[nodiscard]] ItemStack   makeStack(std::string_view id, int count, int aux = 0);
 [[nodiscard]] std::string itemId(ItemStackBase const& item);
 /// Adds `item` to the inventory (drops the rest at the player's feet).
 void giveOrDrop(Player& player, ItemStack const& item);
 void dropAt(BlockSource& region, Vec3 const& pos, ItemStack const& item);
 /// Removes `n` of the selected item (survival only).
-void consumeSelected(Player& player, int n = 1);
+void               consumeSelected(Player& player, int n = 1);
 [[nodiscard]] bool survival(Player const& player);
 /// The online player with this unique id (nullptr when gone).
 [[nodiscard]] Player* playerById(std::int64_t uid);
@@ -156,7 +156,7 @@ struct Content {
     int         count = 0;
 };
 [[nodiscard]] Content contentAt(core::GlobalPos const& pos);
-void setContent(core::GlobalPos const& pos, Content const& c);
+void                  setContent(core::GlobalPos const& pos, Content const& c);
 } // namespace pulley
 
 namespace flax {
@@ -172,7 +172,7 @@ bool boneMeal(BlockSource& region, BlockPos const& pos);
 /// One random growth tick of the crop at `pos` (forced = ignore the chance).
 bool growthTick(BlockSource& region, BlockPos const& pos, bool forced);
 /// Marks a position whose next removal must not drop items (creative players).
-void noDrops(core::GlobalPos const& pos);
+void                      noDrops(core::GlobalPos const& pos);
 [[nodiscard]] std::size_t tracked();
 } // namespace flax
 
