@@ -117,7 +117,18 @@ CM_REGISTER_SELFTEST("blackboard.draw", [](Context& ctx) -> ll::coro::CoroTask<>
     ctx.check(boardAt(gp).get(3, 4) == 1, "the pixel under the cursor is white");
     ctx.check(dye.mCount == 4, "chalk is not consumed");
     co_await ctx.ticks(2);
-    ctx.check(displaysAt(region, pos).size() == 2, "two display entities render the drawing");
+    auto displays = displaysAt(region, pos);
+    ctx.check(displays.size() == 2, "two display entities render the drawing");
+    for (auto* d : displays) {
+        int colors = displayProperty(*d, "complementaries:colors");
+        int half   = displayProperty(*d, "complementaries:half");
+        if (half == 0) {
+            ctx.check(colors == 2, "the top half uses white");
+            ctx.check(displayProperty(*d, "complementaries:p11") == (1 << 4), "pixel (3, 4) is in property 11");
+        } else {
+            ctx.check(half == 1 && colors == 0, "the bottom half is blank");
+        }
+    }
     // the absolute hit position works too
     auto abs = hitFor(front, 10, 12);
     abs      = Vec3{abs.x + pos.x, abs.y + pos.y, abs.z + pos.z};

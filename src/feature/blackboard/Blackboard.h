@@ -61,6 +61,8 @@ struct BlackboardConfig {
 void setBoard(BlockSource& region, BlockPos const& pos, Board const& board);
 /// The display entities of the board at `pos` (both halves, unordered).
 [[nodiscard]] std::vector<Actor*> displaysAt(BlockSource& region, BlockPos const& pos);
+/// An int property of a display entity (-1 if missing).
+[[nodiscard]] int displayProperty(Actor& actor, std::string_view name);
 
 // ---- items ------------------------------------------------------------------------------------
 /// The board data an item carries (nullopt for a blank item or another item).

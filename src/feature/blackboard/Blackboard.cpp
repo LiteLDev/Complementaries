@@ -28,6 +28,9 @@
 #include "mc/world/actor/player/Player.h"
 #include "mc/world/actor/state/ActorPropertyUtils.h"
 #include "mc/world/actor/state/PropertyComponent.h"
+#include "mc/world/actor/state/PropertyContainer.h"
+#include "mc/world/actor/state/PropertyMetadata.h"
+#include "mc/world/actor/state/PropertyValues.h"
 #include "mc/world/item/ItemInstance.h"
 #include "mc/world/item/ItemStack.h"
 #include "mc/world/level/BlockPos.h"
@@ -117,24 +120,34 @@ BlockSource* regionOf(int dim) {
 
 std::string halfTag(int half) { return half ? "cm_bb_1" : "cm_bb_0"; }
 
-void setIntProperty(Actor& actor, PropertyComponent const& props, std::string_view name, int value) {
-    ActorPropertyUtils::tryQueueIntValue(props, actor, HashedString::computeHash(name), value);
-}
-
+/// Writes entity properties directly (the game's queue only applies them during entity events) and
+/// marks them dirty so they are synced to the clients.
 void writeDisplay(Actor& actor, int half, int front, Board const& board) {
     auto props = actor.getEntityContext().tryGetComponent<PropertyComponent>();
     if (!props) return;
-    setIntProperty(actor, *props, "complementaries:half", half);
-    setIntProperty(actor, *props, "complementaries:facing", front);
-    setIntProperty(actor, *props, "complementaries:colors", static_cast<int>(colorMask(board.px, half * 8, 8)));
-    ActorPropertyUtils::tryQueueBoolValue(*props, actor, HashedString::computeHash("complementaries:glow"), board.glow);
+    auto& container = *props->mPropertyContainer;
+    auto& values    = *container.mValues;
+    auto  setInt    = [&](std::string_view name, int v) {
+        auto idx = container._getPropertyTypeArrayIndex(HashedString::computeHash(name), PropertyMetadata::ContainedType::IntProperty);
+        if (!idx || *idx >= values.mIntValues->size()) return;
+        if ((*values.mIntValues)[*idx] == v) return;
+        (*values.mIntValues)[*idx] = v;
+        props->mDirtyIntProperties->set(*idx);
+    };
+    setInt("complementaries:half", half);
+    setInt("complementaries:facing", front);
+    setInt("complementaries:colors", static_cast<int>(colorMask(board.px, half * 8, 8)));
     auto packed = packHalf(board.px, half);
-    for (std::size_t k = 0; k < packed.size(); ++k) {
-        setIntProperty(actor, *props, "complementaries:p" + std::to_string(k), packed[k]);
+    for (std::size_t k = 0; k < packed.size(); ++k) setInt("complementaries:p" + std::to_string(k), packed[k]);
+    auto glow = container._getPropertyTypeArrayIndex(
+        HashedString::computeHash("complementaries:glow"),
+        PropertyMetadata::ContainedType::BoolProperty
+    );
+    if (glow && *glow < values.mBoolValues->size() && (*values.mBoolValues)[*glow] != board.glow) {
+        (*values.mBoolValues)[*glow] = board.glow;
+        props->mDirtyBoolProperties->set(*glow);
     }
-    actor._applyPendingPropertyChanges();
 }
-
 Actor* spawnDisplay(BlockSource& region, BlockPos const& pos, int half) {
     auto snbt = std::format(
         R"({{identifier:"{}",Pos:[{}f,{}f,{}f],Rotation:[0.0f,0.0f],Tags:["{}"]}})",
@@ -478,6 +491,15 @@ void setBoard(BlockSource& region, BlockPos const& pos, Board const& board) {
     auto gp = game::globalPos(region, pos);
     storeBoard(gp, board);
     syncDisplays(region, pos, board, frontOf(region.getBlock(pos)));
+}
+
+int displayProperty(Actor& actor, std::string_view name) {
+    auto props = actor.getEntityContext().tryGetComponent<PropertyComponent>();
+    if (!props) return -1;
+    auto& container = *props->mPropertyContainer;
+    auto  idx = container._getPropertyTypeArrayIndex(HashedString::computeHash(name), PropertyMetadata::ContainedType::IntProperty);
+    if (!idx || *idx >= container.mValues->mIntValues->size()) return -1;
+    return (*container.mValues->mIntValues)[*idx];
 }
 
 std::vector<Actor*> displaysAt(BlockSource& region, BlockPos const& pos) {
