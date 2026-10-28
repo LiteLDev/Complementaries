@@ -26,7 +26,9 @@
 namespace cm::feature::instrument {
 
 namespace {
-constexpr std::size_t kVtableCopy = 256; ///< entries copied (BlockType has ~140 virtual functions)
+/// Entries copied: every virtual function of BlockType (the last one is `entityInside`) plus a few spare
+/// slots in case the data-driven block class appends some.
+constexpr std::size_t kSpareSlots = 8;
 
 struct Table {
     void**                   original = nullptr;
@@ -71,12 +73,14 @@ std::vector<BlockType const*> ourTypes() {
 } // namespace
 
 void installComparators() {
-    auto hasIdx = ll::memory::getVtableIndex(&BlockType::hasComparatorSignal);
-    auto getIdx = ll::memory::getVtableIndex(&BlockType::getComparatorSignal);
-    if (!hasIdx || !getIdx || *hasIdx >= kVtableCopy || *getIdx >= kVtableCopy) {
+    auto hasIdx  = ll::memory::getVtableIndex(&BlockType::hasComparatorSignal);
+    auto getIdx  = ll::memory::getVtableIndex(&BlockType::getComparatorSignal);
+    auto lastIdx = ll::memory::getVtableIndex(&BlockType::entityInside);
+    if (!hasIdx || !getIdx || !lastIdx || *hasIdx > *lastIdx || *getIdx > *lastIdx) {
         log().warn("instrument: comparator vtable slots not found; comparators won't read instruments");
         return;
     }
+    std::size_t const count = *lastIdx + 1 + kSpareSlots;
     for (auto const* type : ourTypes()) {
         auto** vptr = *reinterpret_cast<void** const*>(type);
         if (ours(vptr)) continue;
@@ -87,9 +91,9 @@ void installComparators() {
         if (!table) {
             Table t;
             t.original   = vptr;
-            t.entries    = std::make_unique<void*[]>(kVtableCopy + 1);
+            t.entries    = std::make_unique<void*[]>(count + 1);
             t.entries[0] = vptr[-1];
-            for (std::size_t i = 0; i < kVtableCopy; ++i) t.entries[i + 1] = vptr[i];
+            for (std::size_t i = 0; i < count; ++i) t.entries[i + 1] = vptr[i];
             t.entries[*hasIdx + 1] = reinterpret_cast<void*>(&hasSignal);
             t.entries[*getIdx + 1] = reinterpret_cast<void*>(&getSignal);
             tables().push_back(std::move(t));

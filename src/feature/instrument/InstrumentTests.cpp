@@ -23,6 +23,7 @@
 
 #include "feature/instrument/Instrument.h"
 #include "game/Blocks.h"
+#include "game/WorldDb.h"
 #include "selftest/SelfTest.h"
 
 namespace {
@@ -148,6 +149,7 @@ CM_REGISTER_SELFTEST("instrument.globe_skins", [](Context& ctx) -> ll::coro::Cor
     r.sheared = true;
     ctx.check(ins::globe::skinFor(r, 0) == 14, "sheared wins");
     rec->name  = "moon";
+    rec->skin  = -1;
     rec->dirty = true;
     co_await ctx.ticks(2);
     ctx.check(ins::state(blockAt(ctx, pos), "complementaries:skin", -1) == 12, "a globe named moon shows the moon");
@@ -155,6 +157,7 @@ CM_REGISTER_SELFTEST("instrument.globe_skins", [](Context& ctx) -> ll::coro::Cor
 });
 
 CM_REGISTER_SELFTEST("instrument.globe_seed", [](Context& ctx) {
+    auto saved  = cm::game::db::load("cm:instrument:globe_seed"); // a custom seed of this world, kept
     auto before = ins::globe::seed();
     ins::globe::setSeed(before + 12345, true);
     ctx.check(ins::globe::seed() == before + 12345, "custom seed is used");
@@ -166,6 +169,10 @@ CM_REGISTER_SELFTEST("instrument.globe_seed", [](Context& ctx) {
     ctx.check(ins::globe::seed() == level->getLevelSeed64().mValue, "reset goes back to the world seed");
     int variant = ins::globe::mapVariant();
     ctx.check(variant >= 0 && variant < 16, "map variant in range");
+    if (saved) {
+        cm::game::db::save("cm:instrument:globe_seed", *saved);
+        ins::globe::resetSeedCache();
+    }
 });
 
 CM_REGISTER_SELFTEST("instrument.globe_survival", [](Context& ctx) -> ll::coro::CoroTask<> {
@@ -295,6 +302,7 @@ CM_REGISTER_SELFTEST("instrument.persistence", [](Context& ctx) -> ll::coro::Cor
     auto* rec = co_await place(ctx, pos, std::string(ins::kGlobe));
     rec->name    = "earth";
     rec->sheared = true;
+    rec->skin    = -1;
     rec->dirty   = true;
     co_await ctx.ticks(2);
     ctx.check(ins::state(blockAt(ctx, pos), "complementaries:skin", -1) == 14, "sheared skin");

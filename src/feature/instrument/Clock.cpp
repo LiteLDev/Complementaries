@@ -12,6 +12,8 @@
 #include "mc/world/level/BlockSource.h"
 #include "mc/world/level/Level.h"
 #include "mc/world/level/block/Block.h"
+#include "mc/world/level/storage/GameRuleId.h"
+#include "mc/world/level/storage/GameRules.h"
 
 #include "feature/instrument/Instrument.h"
 #include "mod/I18n.h"
@@ -21,6 +23,14 @@ namespace cm::feature::instrument::clock {
 
 namespace {
 bool canReadTime(BlockSource& region) { return isNaturalDimension(region) || config().worksInUnnaturalDimensions; }
+
+bool daylightCycle() {
+    auto level = ll::service::getLevel();
+    if (!level) return false;
+    GameRuleId id{};
+    id.mValue = static_cast<int>(GameRules::GameRulesIndex::DoDaylightCycle);
+    return level->getGameRules().getBool(id, true);
+}
 } // namespace
 
 int dayTime() {
@@ -53,7 +63,7 @@ void tick(Record& rec, BlockSource& region, BlockPos const& pos, Block const& bl
             rec.power = power;
             rec.dirty = true;
         }
-        if (rec.initDone) {
+        if (rec.initDone && daylightCycle()) {
             int realMinute = (time % 1000) * 60 / 1000;
             playSound(
                 region,

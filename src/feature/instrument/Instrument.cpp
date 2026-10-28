@@ -110,6 +110,7 @@ std::int64_t                            gTick   = 0;
 bool                                    gLoaded = false;
 std::unordered_map<std::int64_t, std::pair<std::int64_t, core::GlobalPos>> gLastUse; ///< player -> (tick, pos)
 std::unordered_map<std::int64_t, std::pair<std::int64_t, std::string>>     gPlacingName;
+std::unordered_map<std::int64_t, std::int64_t>                             gLastClock;
 
 std::string dbKey(core::GlobalPos const& pos) { return std::string(kKeyPrefix) + pos.key(); }
 
@@ -183,6 +184,7 @@ void loadWorld() {
     gNext.clear();
     gLastUse.clear();
     gPlacingName.clear();
+    gLastClock.clear();
     globe::resetSeedCache();
     if (!game::db::available()) return;
     std::vector<std::string> keys;
@@ -236,25 +238,20 @@ void removed(Record& rec, BlockSource& region) {
         log().info("instrument: hourglass at {} broken, dropped {}", rec.pos.key(), rec.item);
     }
     if ((rec.kind == Kind::Globe || rec.kind == Kind::GlobeSepia) && !rec.name.empty()) {
-        // the loot table drops an unnamed globe this tick: give it back its name (Java: copy_name)
-        auto id   = std::string(idOf(rec.kind));
-        auto name = rec.name;
-        auto gpos = rec.pos;
-        nextTick([id, name, gpos] {
-            auto* r = regionOf(gpos.dim);
-            if (!r) return;
-            AABB box{
-                Vec3{static_cast<float>(gpos.x) - 1.f, static_cast<float>(gpos.y) - 1.f, static_cast<float>(gpos.z) - 1.f},
-                Vec3{static_cast<float>(gpos.x) + 2.f, static_cast<float>(gpos.y) + 2.f, static_cast<float>(gpos.z) + 2.f}
-            };
-            for (auto* a : r->getEntities(box, 1.f, ActorType::ItemEntity)) {
-                auto& item = static_cast<ItemActor*>(a)->item();
-                if (item.getTypeName() == id && item.getCustomName().empty()) {
-                    item.setCustomName(Bedrock::Safety::RedactableString(name));
-                    break;
-                }
+        // The loot table dropped an unnamed globe when the block broke (the previous tick): give it back
+        // its name (Java: copy_name). Only items still inside the block cell count.
+        auto  id = idOf(rec.kind);
+        AABB  box{
+            Vec3{static_cast<float>(pos.x) - 0.25f, static_cast<float>(pos.y) - 0.25f, static_cast<float>(pos.z) - 0.25f},
+            Vec3{static_cast<float>(pos.x) + 1.25f, static_cast<float>(pos.y) + 1.25f, static_cast<float>(pos.z) + 1.25f}
+        };
+        for (auto* a : region.getEntities(box, 0.f, ActorType::ItemEntity)) {
+            auto& item = static_cast<ItemActor*>(a)->item();
+            if (item.getTypeName() == id && item.getCustomName().empty()) {
+                item.setCustomName(Bedrock::Safety::RedactableString(rec.name));
+                break;
             }
-        });
+        }
     }
     core::GlobalPos const key = rec.pos;
     gErased.push_back(key);
@@ -335,6 +332,7 @@ void onTick() {
         dispatch(rec, *region, pos, block);
     }
 }
+} // namespace
 
 std::int64_t playerKey(Player const& p) { return p.getOrCreateUniqueID().rawID; }
 
@@ -357,6 +355,17 @@ void consumeSelected(Player& player) {
     player.sendInventory(false);
 }
 
+namespace {
+/// A vanilla clock used on anything: show the time (once per click; the client repeats while held and
+/// may send both a block and an air use for the same click).
+void clockItemUsed(Player& player) {
+    if (!config().clockRightClick) return;
+    auto& last = gLastClock[playerKey(player)];
+    if (gTick - last < 4) return;
+    last = gTick;
+    clock::showTime(player, player.getDimensionBlockSource());
+}
+
 int facingId(std::string const& dir) {
     if (dir == "down") return 0;
     if (dir == "up") return 1;
@@ -376,7 +385,7 @@ void onInteract(ll::event::PlayerInteractBlockEvent& ev) {
     Block const* block  = ev.block() ? ev.block().as_ptr() : &player.getDimensionBlockSource().getBlock(ev.blockPos());
     auto kind = kindOf(*block);
     if (kind == Kind::None) {
-        if (itemId == "minecraft:clock" && config().clockRightClick) clock::showTime(player, player.getDimensionBlockSource());
+        if (itemId == "minecraft:clock") clockItemUsed(player);
         return;
     }
     if (!enabled(kind)) return;
@@ -426,6 +435,8 @@ void onInteract(ll::event::PlayerInteractBlockEvent& ev) {
                 auto  pos   = game::blockPos(gpos);
                 auto const& b = region->getBlock(pos);
                 if (kindOf(b) != Kind::Clock || state(b, "complementaries:two_faced") == 1) return;
+                auto const& held = p->getSelectedItem();
+                if (held.isNull() || held.getTypeName() != kClock) return; // switched items meanwhile
                 if (apply(*region, pos, b, withStates(b, {{"complementaries:two_faced", 1}}))) {
                     consumeSelected(*p);
                     playSound(*region, pos, "dig.wood", 1.f, 0.8f);
@@ -458,8 +469,8 @@ void onUseItem(ll::event::PlayerUseItemEvent& ev) {
         auto y = static_cast<int>(std::floor(player.getFeetPos().y + 0.001f));
         actionBar(player, trFor(player, "message.supplementaries.altimeter", "Y: {}", y));
         log().info("instrument: altimeter used by {} at y {}", player.getRealName(), y);
-    } else if (id == "minecraft:clock" && config().clockRightClick) {
-        clock::showTime(player, player.getDimensionBlockSource());
+    } else if (id == "minecraft:clock") {
+        clockItemUsed(player);
     }
 }
 
@@ -481,6 +492,7 @@ void onPlaced(ll::event::PlayerPlacedBlockEvent& ev) {
     auto& region = ev.self().getDimensionBlockSource();
     if (auto* rec = ensure(region, ev.pos())) {
         rec->name  = name;
+        rec->skin  = -1;
         rec->dirty = true;
         if (!name.empty()) log().info("instrument: placed globe named '{}' at {}", name, rec->pos.key());
     }

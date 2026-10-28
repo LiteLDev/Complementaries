@@ -89,7 +89,8 @@ in Java they are block entities, which pistons do not push).
   where clocks don't work (`works_in_unnatural_dimensions` false) the hands spin randomly.
 - Every 20 ticks (while `doDaylightCycle`): comparator power `clamp(daytime / 1500, 0, 15)` updates and a tick
   sound plays (`block.clock.tick_1`/`_2` alternating by minute, volume 0.08). Comparators read 0 in unnatural
-  dimensions.
+  dimensions. (Complementaries also updates the power with the cycle off, so `/time set` moves it; only the
+  tick sound needs the cycle.)
 - Use (empty hand or any item that is not a clock block placed on the back): shows the time on the action bar,
   `H:MM` 24 h (default) or `H:MM AM/PM` (`clock_24h` false); obfuscated random time in unnatural dimensions.
 - `clock_right_click` (default true): using a vanilla clock item anywhere shows the same message.
@@ -196,3 +197,4 @@ Client options of Supplementaries are server options here, because the server dr
 | Hopper insertion/extraction for the hourglass | hoppers only talk to block-entity containers |
 | Earth-day / Christmas / April-fools variants, supporter globes, Create/Flywheel compat | seasonal or mod-integration extras |
 | Soap washing a placed sepia globe | belongs to the soap unit (the soap recipe is provided) |
+| Item hint tooltips (`Sold by the Wandering Trader`, `Accepts any dust, sand or powder`, `Reacts to weather`) | Bedrock items show no extra tooltip lines without per-stack lore; the strings are kept for the units that add lore |

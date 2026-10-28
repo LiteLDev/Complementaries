@@ -82,6 +82,8 @@ struct Record {
     // clock
     int power = 0;
     // runtime (not saved)
+    int  skin       = -1;    ///< cached globe skin (-1 = recompute after a name / shear / config change)
+    bool skinRandom = false; ///< `globeRandomWorld` the skin was computed with
     int  signal    = 0; ///< current comparator output
     bool dirty     = true;
     bool initDone  = false;
@@ -97,6 +99,11 @@ void                       forEach(std::function<void(Record&)> const& fn);
 void                       nextTick(std::function<void()> fn);
 /// Game tick counter of the server level.
 [[nodiscard]] std::int64_t gameTick();
+/// Players are looked up again by unique id after a tick (never keep Player* across ticks).
+[[nodiscard]] std::int64_t playerKey(Player const& player);
+[[nodiscard]] Player*      playerByKey(std::int64_t key);
+/// Removes one item from the player's selected stack (not in creative).
+void                       consumeSelected(Player& player);
 
 // ---- block helpers (Util.cpp) ---------------------------------------------------------------------
 [[nodiscard]] int          state(Block const& block, std::string_view name, int fallback = 0);

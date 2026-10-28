@@ -116,6 +116,7 @@ void spin(Record& rec, BlockSource& region, BlockPos const& pos) {
 bool use(Record& rec, Player& player, BlockSource& region, BlockPos const& pos, bool shears) {
     if (shears) {
         rec.sheared = !rec.sheared;
+        rec.skin    = -1;
         rec.dirty   = true;
         playSound(region, pos, "mob.sheep.shear", 1.f, 1.f);
         log().info("instrument: globe at {} {}", rec.pos.key(), rec.sheared ? "sheared" : "unsheared");
@@ -158,9 +159,13 @@ void tick(Record& rec, BlockSource& region, BlockPos const& pos, Block const& bl
     }
     float display = static_cast<float>(faceRot(rec)) + std::max(rec.yaw, 0.f);
     int   angle   = static_cast<int>(std::floor(display / 22.5f + 0.5f)) % 16;
-    auto  next    = withStates(
+    if (rec.skin < 0 || rec.skinRandom != config().globeRandomWorld) {
+        rec.skin       = skinFor(rec, rec.pos.dim);
+        rec.skinRandom = config().globeRandomWorld;
+    }
+    auto next = withStates(
         block,
-        {{"complementaries:angle", angle}, {"complementaries:skin", skinFor(rec, rec.pos.dim)}, {"complementaries:map", mapVariant()}}
+        {{"complementaries:angle", angle}, {"complementaries:skin", rec.skin}, {"complementaries:map", mapVariant()}}
     );
     apply(region, pos, block, next);
     int signal = rec.yaw != 0.f ? 15 : faceRot(rec) / 90 + 1;

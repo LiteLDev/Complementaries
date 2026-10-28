@@ -129,14 +129,8 @@ bool use(Record& rec, Player& player, BlockSource&, BlockPos const&, Block const
     auto const& item      = player.getSelectedItem();
     bool        handEmpty = item.isNull();
     auto        gpos      = rec.pos;
-    std::int64_t key      = player.getOrCreateUniqueID().rawID;
-    auto lookup = [key]() -> Player* {
-        auto level = ll::service::getLevel();
-        if (!level) return nullptr;
-        ActorUniqueID id;
-        id.rawID = key;
-        return level->getPlayer(id);
-    };
+    auto        key       = playerKey(player);
+    auto        lookup    = [key] { return playerByKey(key); };
     if (handEmpty && player.isSneaking()) {
         if (!vertical(stringState(block, "minecraft:block_face"))) return false;
         nextTick([gpos] {
@@ -178,14 +172,9 @@ bool use(Record& rec, Player& player, BlockSource&, BlockPos const&, Block const
         auto* p = lookup();
         auto* region = regionOf(gpos.dim);
         if (!r || !p || !region || !r->item.empty()) return;
-        auto held = p->getSelectedItem();
-        if (held.isNull() || held.getTypeName() != id) return;
-        if (!p->isCreative()) {
-            held.remove(1);
-            if (held.mCount == 0) held = ItemStack();
-            p->setSelectedItem(held);
-            p->sendInventory(false);
-        }
+        auto const& held = p->getSelectedItem();
+        if (held.isNull() || held.getTypeName() != id) return; // switched items meanwhile
+        consumeSelected(*p);
         insert(*r, *region, game::blockPos(gpos), id, aux);
     });
     return true;

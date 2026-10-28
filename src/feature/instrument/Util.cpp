@@ -37,9 +37,15 @@
 namespace cm::feature::instrument {
 
 namespace {
-BlockState const* stateOf(Block const& block, std::string_view name) {
-    return block.getBlockType().getBlockState(HashedString(std::string(name)));
+/// Hashed state names are built once (the tick loop asks for the same few names all the time).
+HashedString const& hashed(std::string_view name) {
+    static std::map<std::string, HashedString, std::less<>> cache;
+    auto it = cache.find(name);
+    if (it == cache.end()) it = cache.emplace(std::string(name), HashedString(std::string(name))).first;
+    return it->second;
 }
+
+BlockState const* stateOf(Block const& block, std::string_view name) { return block.getBlockType().getBlockState(hashed(name)); }
 
 } // namespace
 
