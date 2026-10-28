@@ -1,0 +1,31 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:bubble_blower",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "cm_bubble_blower",
+      "minecraft:display_name": {
+        "value": "item.complementaries:bubble_blower.name"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:durability": {
+        "max_durability": 250
+      },
+      "minecraft:use_modifiers": {
+        "use_duration": 3600,
+        "movement_modifier": 0.6
+      },
+      "minecraft:use_animation": "spyglass",
+      "minecraft:enchantable": {
+        "slot": "crossbow",
+        "value": 1
+      }
+    }
+  }
+}

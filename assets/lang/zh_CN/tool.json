@@ -1,0 +1,12 @@
+{
+  "message.supplementaries.flute.bound": "已绑定：{}",
+  "message.supplementaries.flute.unbound": "长笛已解除绑定",
+  "message.supplementaries.flute.not_your_pet": "这不是你的宠物",
+  "message.supplementaries.slice_map": "高度：{}",
+  "message.supplementaries.antique": "古旧",
+  "message.supplementaries.bubble_blower.empty": "需要肥皂",
+  "enchantment.supplementaries.stasis": "凝滞",
+  "cm.tool.enchant.done": "已附加 {} {}",
+  "cm.tool.enchant.cleared": "已移除忠诚与凝滞",
+  "cm.tool.enchant.no_item": "请手持弹弓或泡泡机"
+}
