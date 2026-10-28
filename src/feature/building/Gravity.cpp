@@ -9,13 +9,19 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
+#include <mutex>
+#include <optional>
 #include <random>
+#include <set>
+#include <tuple>
 #include <vector>
 
 #include "ll/api/service/Bedrock.h"
 
 #include "mc/deps/core/math/Vec3.h"
 #include "mc/deps/shared_types/legacy/LevelSoundEvent.h"
+#include "mc/world/actor/ActorSoundIdentifier.h"
+#include "mc/world/actor/player/Player.h"
 #include "mc/world/level/BlockPos.h"
 #include "mc/world/level/BlockSource.h"
 #include "mc/world/level/Level.h"
@@ -36,19 +42,35 @@ struct Pending {
     int           dim;
     BlockPos      pos;
     std::uint64_t due;
+    std::uint64_t since; ///< when it was first scheduled (unloaded chunks retry for a while)
 };
+using PosKey = std::tuple<int, int, int, int>;
 
+// Falls are scheduled from neighbour updates; keep the queue safe should one come from another thread.
+std::mutex           gMutex;
 std::vector<Pending> gPending;
+std::set<PosKey>     gPendingKeys;
 std::uint64_t        gTick = 0;
+
+constexpr std::uint64_t kRetryTicks = 20 * 60 * 5; ///< keep retrying a fall in an unloaded chunk for 5 minutes
+
+PosKey keyOf(int dim, BlockPos const& pos) { return {dim, pos.x, pos.y, pos.z}; }
+
+void fallStepLoaded(BlockSource& region, BlockPos const& pos);
 
 bool isWater(Block const& b) {
     auto const& name = b.getTypeName();
     return name == "minecraft:water" || name == "minecraft:flowing_water";
 }
 
-/// One step of a falling block at `pos`.
-void fallStep(BlockSource& region, BlockPos const& pos) {
-    if (!region.hasChunksAt(pos, 1, false)) return;
+/// One step of a falling block at `pos`. False when its chunks aren't loaded (try again later).
+bool fallStep(BlockSource& region, BlockPos const& pos) {
+    if (!region.hasChunksAt(pos, 1, false)) return false;
+    fallStepLoaded(region, pos);
+    return true;
+}
+
+void fallStepLoaded(BlockSource& region, BlockPos const& pos) {
     auto const& block = region.getBlock(pos);
     Kind        kind  = kindOf(block);
     if (!fallsLikeSand(kind)) return;
@@ -126,8 +148,18 @@ bool touchesWater(BlockSource& region, BlockPos const& pos) {
 void dissolve(BlockSource& region, BlockPos const& pos) {
     game::clearBlock(region, pos);
     auto& level = region.getLevel();
-    Vec3  c{static_cast<float>(pos.x) + 0.5f, static_cast<float>(pos.y) + 0.5f, static_cast<float>(pos.z) + 0.5f};
-    level.playSound(SharedTypes::Legacy::LevelSoundEvent::Fizz, c, 0.5f, 2.6f);
+    Vec3  c = pos.center();
+    // broadcast the fizz to the players around (the sound needs an actor identity: any player there)
+    auto  dim = region.getDimensionId();
+    Player* listener = nullptr;
+    level.forEachPlayer([&](Player& p) {
+        if (p.getDimensionId() != dim) return true;
+        listener = &p;
+        return false;
+    });
+    if (listener) {
+        level.broadcastSoundEvent(region, SharedTypes::Legacy::LevelSoundEvent::Fizz, c, -1, ActorSoundIdentifier(*listener), false, std::nullopt);
+    }
     level.spawnParticleEffect("minecraft:water_evaporation_bucket_emitter", c, &region.getDimension());
 }
 
@@ -157,32 +189,43 @@ void rainTick(BlockSource& region, BlockPos const& pos, bool wash) {
 }
 
 void scheduleFall(BlockSource& region, BlockPos const& pos, int delay) {
-    int dim = static_cast<int>(region.getDimensionId());
-    for (auto const& p : gPending) {
-        if (p.dim == dim && p.pos == pos) return;
-    }
-    gPending.push_back({dim, pos, gTick + static_cast<std::uint64_t>(std::max(delay, 1))});
+    int             dim = static_cast<int>(region.getDimensionId());
+    std::lock_guard lock(gMutex);
+    if (!gPendingKeys.insert(keyOf(dim, pos)).second) return;
+    gPending.push_back({dim, pos, gTick + static_cast<std::uint64_t>(std::max(delay, 1)), gTick});
 }
 
-void tickGravity() {
-    ++gTick;
-    if (gPending.empty()) return;
+void tickGravity(std::uint64_t tick) {
+    std::vector<Pending> due;
+    {
+        std::lock_guard lock(gMutex);
+        gTick = tick;
+        if (gPending.empty()) return;
+        std::erase_if(gPending, [&due](Pending const& p) {
+            if (p.due > gTick) return false;
+            due.push_back(p);
+            gPendingKeys.erase(keyOf(p.dim, p.pos));
+            return true;
+        });
+    }
     auto level = ll::service::getLevel();
     if (!level) return;
-    std::vector<Pending> due;
-    std::erase_if(gPending, [&due](Pending const& p) {
-        if (p.due > gTick) return false;
-        due.push_back(p);
-        return true;
-    });
     for (auto const& p : due) {
         auto dim = level->getDimension(p.dim).lock();
         if (!dim) continue;
-        fallStep(dim->getBlockSourceFromMainChunkSource(), p.pos);
+        auto& region = dim->getBlockSourceFromMainChunkSource();
+        if (!fallStep(region, p.pos) && tick - p.since < kRetryTicks) {
+            std::lock_guard lock(gMutex);
+            if (gPendingKeys.insert(keyOf(p.dim, p.pos)).second) gPending.push_back({p.dim, p.pos, tick + 20, p.since});
+        }
     }
 }
 
-void clearGravity() { gPending.clear(); }
+void clearGravity() {
+    std::lock_guard lock(gMutex);
+    gPending.clear();
+    gPendingKeys.clear();
+}
 
 int addAsh(BlockSource& region, BlockPos const& pos, int layers) {
     if (layers <= 0 || !region.hasChunksAt(pos, 0, false)) return 0;

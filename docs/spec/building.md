@@ -109,8 +109,9 @@ The soap block is made from soap items, which belong to the unit that adds soap;
 ### Stairs, slabs, walls
 
 - Slabs place on the bottom or top half (click position, as vanilla). Using a slab on a single slab
-  of the same kind from the matching side (top face of a bottom slab, bottom face of a top slab, or
-  a slab in the placement position) makes a double slab. Double slabs drop 2.
+  of the same kind from its empty side (top face or upper half of a side of a bottom slab, bottom
+  face or lower half of a side of a top slab, or a slab in the placement position) makes a double
+  slab. Double slabs drop 2.
 - Stairs face the player and are upside down when placed on the top half of a face or on a ceiling.
   They join neighbouring stairs into inner and outer corners like vanilla stairs (this unit's stairs
   and every vanilla stairs block).
@@ -121,8 +122,8 @@ The soap block is made from soap items, which belong to the unit that adds soap;
 ### Daub and timber frames
 
 - Timber frames are see-through and have full collision.
-- Braces: placed `flipped` when you click the right half of a face (seen from the player), so the
-  diagonal runs the way you pointed.
+- Braces: placed `flipped` when you click the right half of the face (as you look at it; on the
+  top or bottom face, the half to the player's right), so the diagonal runs the way you pointed.
 - Using `daub` on a timber frame / brace / cross brace turns it into the daub variant (the brace keeps
   its direction) and uses one daub (`replaceDaub`, default true).
 - Using a timber frame / brace / cross brace item on a `daub` block puts the frame around it (the
@@ -205,5 +206,6 @@ Mod strings (`assets/lang/<locale>/building.json`) are only the log/self-test de
   for collision (Java walls are 1.5).
 - **`basaltAsh` toggle**: the basalt deltas ash is a behavior pack feature rule; it can't be switched
   off at run time.
-- **Random ticks**: our blocks get a periodic tick (every 20 to 120 s, `minecraft:tick`) instead of
-  vanilla random ticks; rain washing and dissolving run on it at the same average rate.
+- **Random ticks**: custom blocks get no vanilla random ticks, so ash and sugar cubes keep a queued
+  block tick in their chunk's tick queue (every 20 to 120 s, saved with the chunk); rain washing and
+  dissolving run on it at about the vanilla average rate.

@@ -81,7 +81,7 @@ bool itemHasTag(ItemStack const& item, char const* tag) {
     return item.hasTag(ItemTag{HashedString(tag)});
 }
 
-Vec3 center(BlockPos const& p) { return Vec3{static_cast<float>(p.x) + 0.5f, static_cast<float>(p.y) + 0.5f, static_cast<float>(p.z) + 0.5f}; }
+Vec3 center(BlockPos const& p) { return p.center(); }
 
 void dropItem(BlockSource& region, BlockPos const& pos, ItemStack const& item) {
     region.getLevel().getSpawner().spawnItem(region, item, nullptr, center(pos), 0);
@@ -153,10 +153,24 @@ std::uint64_t                              gTicks = 0;
 
 /// The flipped state of a brace placed by `player` (`face` / `click` of the click): the diagonal
 /// follows the half of the face the player pointed at.
-bool braceFlipped(Player const& player, unsigned char /*face*/, Vec3 const& click) {
-    auto  frac    = [](float v) { return v - std::floor(v); };
-    auto [dx, dz] = game::facingOffset((game::playerFacing(player) + 1) & 3); // the player's right
-    return (frac(click.x) - 0.5f) * static_cast<float>(dx) + (frac(click.z) - 0.5f) * static_cast<float>(dz) > 0.0f;
+bool braceFlipped(Player const& player, unsigned char face, Vec3 const& click) {
+    auto frac = [](float v) { return v - std::floor(v); };
+    float fx = frac(click.x), fz = frac(click.z);
+    switch (face) {
+    case 2: // north face, seen from the north: right is west
+        return fx < 0.5f;
+    case 3: // south face: right is east
+        return fx > 0.5f;
+    case 4: // west face, seen from the west: right is south
+        return fz > 0.5f;
+    case 5: // east face: right is north
+        return fz < 0.5f;
+    default: {
+        // top / bottom: along the player's right
+        auto [dx, dz] = game::facingOffset((game::playerFacing(player) + 1) & 3);
+        return (fx - 0.5f) * static_cast<float>(dx) + (fz - 0.5f) * static_cast<float>(dz) > 0.0f;
+    }
+    }
 }
 
 // ---- interactions -------------------------------------------------------------------------------
@@ -192,12 +206,15 @@ interactionFor(Player& player, BlockSource& region, ItemStack const& item, Block
         auto single = [&](Block const& b) { return b.getTypeName() == itemId && stateOf(b, "complementaries:double").value_or(1) == 0; };
         std::optional<BlockPos> target;
         if (single(clicked)) {
-            int half = stateOf(clicked, "minecraft:vertical_half").value_or(0);
-            if ((face == 1 && half == 0) || (face == 0 && half == 1)) target = pos;
+            // Java: the top face of a bottom slab, or a side in its empty half (and the mirror for top slabs)
+            int  half  = stateOf(clicked, "minecraft:vertical_half").value_or(0);
+            bool upper = click.y - std::floor(click.y) > 0.5f;
+            if (half == 0 && (face == 1 || (face >= 2 && upper))) target = pos;
+            if (half == 1 && (face == 0 || (face >= 2 && !upper))) target = pos;
         }
         if (!target && single(region.getBlock(side))) target = side;
         if (!target) return {};
-        return [t = *target, side, itemId](Player& p, BlockSource& r) {
+        return [t = *target, itemId](Player& p, BlockSource& r) {
             auto const& b = r.getBlock(t);
             if (b.getTypeName() != itemId) return;
             if (auto const* d = withState(b, "complementaries:double", 1); d && game::setBlock(r, t, *d)) {
@@ -205,7 +222,6 @@ interactionFor(Player& player, BlockSource& region, ItemStack const& item, Block
                 playBlockSound(p, r, Sound::Place, t, *d);
                 log().info("building: double slab {} at {} {} {}", itemId, t.x, t.y, t.z);
             }
-            resyncBlock(p, r, side);
         };
     }
 
@@ -216,13 +232,12 @@ interactionFor(Player& player, BlockSource& region, ItemStack const& item, Block
         if (stackable(clicked) && face == 1) target = pos;
         else if (stackable(region.getBlock(side))) target = side;
         if (!target) return {};
-        return [t = *target, side](Player& p, BlockSource& r) {
+        return [t = *target](Player& p, BlockSource& r) {
             if (addAsh(r, t, 1) > 0) {
                 consumeHeld(p);
                 playBlockSound(p, r, Sound::Place, t, r.getBlock(t));
                 log().info("building: ash layer added at {} {} {}", t.x, t.y, t.z);
             }
-            resyncBlock(p, r, side);
         };
     }
 
@@ -244,7 +259,7 @@ interactionFor(Player& player, BlockSource& region, ItemStack const& item, Block
 
     // daub into a timber frame
     if (itemId == kDaub && cKind == Kind::Timber && cfg().replaceDaub) {
-        return [pos, side](Player& p, BlockSource& r) {
+        return [pos](Player& p, BlockSource& r) {
             auto const& b    = r.getBlock(pos);
             std::string daub = replacePrefix(b.getTypeName(), "timber_", "daub_");
             if (kindOf(b) != Kind::Timber || daub.empty()) return;
@@ -253,7 +268,6 @@ interactionFor(Player& player, BlockSource& region, ItemStack const& item, Block
             consumeHeld(p);
             playBlockSound(p, r, Sound::Place, pos, *nb);
             log().info("building: filled {} with daub at {} {} {}", b.getTypeName(), pos.x, pos.y, pos.z);
-            resyncBlock(p, r, side);
         };
     }
 
@@ -262,14 +276,13 @@ interactionFor(Player& player, BlockSource& region, ItemStack const& item, Block
         std::string daubVariant = replacePrefix(itemId, "timber_", "daub_");
         if (!daubVariant.empty() && player.isSneaking() == cfg().swapOnShift) {
             bool flipped = braceFlipped(player, face, click);
-            return [pos, side, daubVariant, flipped](Player& p, BlockSource& r) {
+            return [pos, daubVariant, flipped](Player& p, BlockSource& r) {
                 if (r.getBlock(pos).getTypeName() != kDaub) return;
                 auto const* nb = game::blockWith(daubVariant, {{"complementaries:flipped", flipped ? 1 : 0}});
                 if (!nb || !game::setBlock(r, pos, *nb)) return;
                 consumeHeld(p);
                 playBlockSound(p, r, Sound::Place, pos, *nb);
                 log().info("building: framed daub as {} at {} {} {}", daubVariant, pos.x, pos.y, pos.z);
-                resyncBlock(p, r, side);
             };
         }
     }
@@ -312,9 +325,15 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
     last.handled = static_cast<bool>(action);
     if (!action) return;
     ev.cancel();
-    mce::UUID id = player.getUuid();
-    defer([id, action = std::move(action)] {
-        if (auto* p = playerByUuid(id)) action(*p, p->getDimensionBlockSource());
+    mce::UUID      id   = player.getUuid();
+    BlockPos const side = adjacent(ev.blockPos(), static_cast<unsigned char>(ev.face()));
+    defer([id, side, action = std::move(action)] {
+        auto* p = playerByUuid(id);
+        if (!p) return;
+        auto& r = p->getDimensionBlockSource();
+        action(*p, r);
+        // the client may have drawn the block it predicted next to the clicked one: undo it
+        resyncBlock(*p, r, side);
     });
 }
 
@@ -329,10 +348,13 @@ void onPlaced(ll::event::PlayerPlacedBlockEvent& ev) {
     switch (kind) {
     case Kind::Stairs: {
         // Java stairs face the player's look direction
-        if (auto const* nb = withState(block, "minecraft:cardinal_direction", game::playerFacing(player))) {
-            game::setBlock(region, pos, *nb);
+        int facing = game::playerFacing(player);
+        int placed = stateOf(block, "minecraft:cardinal_direction").value_or(-1);
+        if (placed != facing) {
+            if (auto const* nb = withState(block, "minecraft:cardinal_direction", facing)) game::setBlock(region, pos, *nb);
         }
         updateShape(region, pos);
+        log().info("building: placed {} facing {} (predicted {})", block.getTypeName(), facing, placed);
         break;
     }
     case Kind::Wall:
@@ -379,7 +401,7 @@ void onTick(ll::event::ServerLevelTickEvent&) {
         gNextTick.clear();
         for (auto& fn : run) fn();
     }
-    tickGravity();
+    tickGravity(gTicks);
 }
 
 bool onFeather(Actor const& actor) {
@@ -448,6 +470,7 @@ LL_TYPE_INSTANCE_HOOK(
     if ((kind != Kind::Ash && kind != Kind::SugarCube) || !serverSide(region)) return;
     if (&region.getBlock(pos) != this) return;
     ensureWeatherTick(region, pos, *this); // the next periodic tick
+    scheduleFall(region, pos);             // in case it was left floating (chunk unloaded mid-fall)
     auto& weather = region.getDimension().mWeather;
     if (!weather) return;
     BlockPos above{pos.x, pos.y + 1, pos.z};

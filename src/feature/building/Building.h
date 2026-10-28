@@ -92,7 +92,7 @@ void ensureWeatherTick(BlockSource& region, BlockPos const& pos, Block const& bl
 /// Rain on a periodic tick: a sugar cube dissolves, ash loses a layer when `wash` (1 in 2).
 void rainTick(BlockSource& region, BlockPos const& pos, bool wash);
 /// Runs due falls (server tick).
-void tickGravity();
+void tickGravity(std::uint64_t tick);
 void clearGravity();
 
 // ---- ash (Gravity.cpp) --------------------------------------------------------------------------

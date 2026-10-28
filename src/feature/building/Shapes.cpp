@@ -53,17 +53,20 @@ Kind classify(std::string const& name) {
 }
 
 /// HashedString of a state name, built once per name.
+struct StringHash {
+    using is_transparent = void;
+    std::size_t operator()(std::string_view s) const noexcept { return std::hash<std::string_view>{}(s); }
+};
+
 HashedString const& stateName(std::string_view name) {
-    thread_local std::unordered_map<std::string, HashedString> names;
-    auto it = names.find(std::string(name));
+    thread_local std::unordered_map<std::string, HashedString, StringHash, std::equal_to<>> names;
+    auto it = names.find(name);
     if (it == names.end()) it = names.emplace(std::string(name), HashedString(std::string(name))).first;
     return it->second;
 }
 
-constexpr std::array<std::pair<int, int>, 4> kOffsets{{{0, 1}, {-1, 0}, {0, -1}, {1, 0}}}; // S W N E
-
 BlockPos offset(BlockPos const& pos, int facing, int dy = 0) {
-    auto [dx, dz] = kOffsets[facing & 3];
+    auto [dx, dz] = game::facingOffset(facing);
     return BlockPos{pos.x + dx, pos.y + dy, pos.z + dz};
 }
 
