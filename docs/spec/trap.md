@@ -181,8 +181,10 @@ Complementaries additions: `cm.trap.charges` "Charges: {}", `cm.trap.infinite` "
   (mining, explosion, `/setblock`), except when a creative player broke it.
 - Items carry data in their user NBT: tipped spikes `{CmPotion, CmCharges}` (lore: effects,
   charges), full cages `{CmMob, CmMobName}` (lore: mob name, sneak hint). Crafted tipped spikes
-  carry the potion id as aux value (one BP recipe per harmful lingering potion) and get their NBT
-  when placed or picked.
+  carry the potion id as aux value (one BP recipe per harmful lingering potion), read like the NBT
+  when placed.
+- Cages and tipped spikes are immovable (`minecraft:movable`), like Java blocks with a block entity;
+  plain spikes and fodder can be pushed.
 - Spikes: a server tick scans living entities against spike blocks (Java `entityInside`).
   Damage cause `contact`; the death message is replaced with the Supplementaries keys (RP text).
 - Cage display: the captured mob is shown by a real copy of the mob inside the cage, frozen
