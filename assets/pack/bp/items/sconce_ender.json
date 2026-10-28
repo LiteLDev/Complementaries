@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.120",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:sconce_ender",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "complementaries_sconce_ender",
+      "minecraft:display_name": {
+        "value": "tile.complementaries:sconce_ender.name"
+      },
+      "minecraft:block_placer": {
+        "block": "complementaries:sconce_ender",
+        "replace_block_item": true
+      }
+    }
+  }
+}

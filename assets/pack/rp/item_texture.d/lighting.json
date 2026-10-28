@@ -1,0 +1,71 @@
+{
+  "complementaries_sconce": {
+    "textures": "textures/items/sconce"
+  },
+  "complementaries_sconce_soul": {
+    "textures": "textures/items/sconce_soul"
+  },
+  "complementaries_sconce_ender": {
+    "textures": "textures/items/sconce_ender"
+  },
+  "complementaries_sconce_glow": {
+    "textures": "textures/items/sconce_glow"
+  },
+  "complementaries_sconce_green": {
+    "textures": "textures/items/sconce_green"
+  },
+  "complementaries_sconce_lever": {
+    "textures": "textures/items/sconce_lever"
+  },
+  "complementaries_candle_holder": {
+    "textures": "textures/items/candle_holder"
+  },
+  "complementaries_candle_holder_white": {
+    "textures": "textures/items/candle_holder_white"
+  },
+  "complementaries_candle_holder_orange": {
+    "textures": "textures/items/candle_holder_orange"
+  },
+  "complementaries_candle_holder_magenta": {
+    "textures": "textures/items/candle_holder_magenta"
+  },
+  "complementaries_candle_holder_light_blue": {
+    "textures": "textures/items/candle_holder_light_blue"
+  },
+  "complementaries_candle_holder_yellow": {
+    "textures": "textures/items/candle_holder_yellow"
+  },
+  "complementaries_candle_holder_lime": {
+    "textures": "textures/items/candle_holder_lime"
+  },
+  "complementaries_candle_holder_pink": {
+    "textures": "textures/items/candle_holder_pink"
+  },
+  "complementaries_candle_holder_gray": {
+    "textures": "textures/items/candle_holder_gray"
+  },
+  "complementaries_candle_holder_light_gray": {
+    "textures": "textures/items/candle_holder_light_gray"
+  },
+  "complementaries_candle_holder_cyan": {
+    "textures": "textures/items/candle_holder_cyan"
+  },
+  "complementaries_candle_holder_purple": {
+    "textures": "textures/items/candle_holder_purple"
+  },
+  "complementaries_candle_holder_blue": {
+    "textures": "textures/items/candle_holder_blue"
+  },
+  "complementaries_candle_holder_brown": {
+    "textures": "textures/items/candle_holder_brown"
+  },
+  "complementaries_candle_holder_green": {
+    "textures": "textures/items/candle_holder_green"
+  },
+  "complementaries_candle_holder_red": {
+    "textures": "textures/items/candle_holder_red"
+  },
+  "complementaries_candle_holder_black": {
+    "textures": "textures/items/candle_holder_black"
+  }
+}
