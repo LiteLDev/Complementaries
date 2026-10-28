@@ -9,6 +9,7 @@
 
 #include "mc/deps/core/math/Vec3.h"
 #include "mc/world/actor/player/Player.h"
+#include "mc/world/effect/MobEffectInstance.h"
 #include "mc/world/item/Item.h"
 #include "mc/world/item/ItemStack.h"
 #include "mc/world/level/BlockPos.h"
@@ -16,7 +17,6 @@
 #include "mc/world/level/Level.h"
 #include "mc/world/level/Spawner.h"
 #include "mc/world/level/block/Block.h"
-#include "mc/world/effect/MobEffectInstance.h"
 
 #include "game/Blocks.h"
 #include "game/WorldDb.h"
@@ -138,11 +138,11 @@ void setJar(core::GlobalPos const& pos, Contents const& c) {
     syncDisplay(pos, c);
     // faucets fed by this jar (beside it) or pouring into it (above) show its fluid
     core::GlobalPos const near[] = {
-        {pos.dim, pos.x, pos.y + 1, pos.z},
-        {pos.dim, pos.x + 1, pos.y, pos.z},
-        {pos.dim, pos.x - 1, pos.y, pos.z},
-        {pos.dim, pos.x, pos.y, pos.z + 1},
-        {pos.dim, pos.x, pos.y, pos.z - 1},
+        {pos.dim, pos.x,     pos.y + 1, pos.z    },
+        {pos.dim, pos.x + 1, pos.y,     pos.z    },
+        {pos.dim, pos.x - 1, pos.y,     pos.z    },
+        {pos.dim, pos.x,     pos.y,     pos.z + 1},
+        {pos.dim, pos.x,     pos.y,     pos.z - 1},
     };
     for (auto const& n : near) {
         if (faucetKnown(n)) faucetNeighborChanged(n);
@@ -204,7 +204,8 @@ bool useJar(Player& player, core::GlobalPos const& pos) {
     }
 
     // 2. cookies
-    if (conf.jarCookies && c.fluid.empty() && !c.mob && isCookie(hand) && c.items.size() < static_cast<size_t>(kMaxCookies)) {
+    if (conf.jarCookies && c.fluid.empty() && !c.mob && isCookie(hand)
+        && c.items.size() < static_cast<size_t>(kMaxCookies)) {
         ItemStack one = hand;
         one.set(1);
         c.items.push_back(storeItem(one));
@@ -272,13 +273,15 @@ bool jarWouldHandle(Player const& player, core::GlobalPos const& pos) {
     ItemStack hand = player.getSelectedItem();
     if (conf.jarLiquids && c.items.empty() && !c.mob) {
         FluidStack tank = c.fluid;
-        if ((hand.isNull() || hand.getAuxValue() == 0) && fillItem(tank, hand.isNull() ? "" : hand.getTypeName())) return true;
+        if ((hand.isNull() || hand.getAuxValue() == 0) && fillItem(tank, hand.isNull() ? "" : hand.getTypeName()))
+            return true;
         if (auto d = fluidFromItem(refOf(hand))) {
             Tank t{c.fluid, capacity()};
             if (t.add(d->fluid, true) == d->fluid.count) return true;
         }
     }
-    if (conf.jarCookies && c.fluid.empty() && !c.mob && isCookie(hand) && c.items.size() < static_cast<size_t>(kMaxCookies)) {
+    if (conf.jarCookies && c.fluid.empty() && !c.mob && isCookie(hand)
+        && c.items.size() < static_cast<size_t>(kMaxCookies)) {
         return true;
     }
     if (c.items.empty() && c.fluid.empty()) {

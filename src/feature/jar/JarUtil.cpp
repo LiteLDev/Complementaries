@@ -142,7 +142,8 @@ std::vector<std::string> tooltipFor(Contents const& c, Player const* viewer) {
     if (c.mob) lines.push_back(t("cm.jar.mob", "{}", c.mob->name));
     if (lines.empty()) {
         lines.push_back(t("message.supplementaries.jar", "Can store bowls, bottles, buckets, cookies and small mobs"));
-    }    for (auto& l : lines) l = "§r§7" + l;
+    }
+    for (auto& l : lines) l = "§r§7" + l;
     return lines;
 }
 
@@ -194,7 +195,8 @@ void swapHeld(Player& player, ItemStack const& result) {
             bool  found = false;
             for (int i = 0; i < inv.getContainerSize() && !found; ++i) {
                 auto const& s = inv.getItem(i);
-                found         = !s.isNull() && s.getTypeName() == result.getTypeName() && s.getAuxValue() == result.getAuxValue();
+                found =
+                    !s.isNull() && s.getTypeName() == result.getTypeName() && s.getAuxValue() == result.getAuxValue();
             }
             if (!found) {
                 ItemStack copy = result;
@@ -214,17 +216,23 @@ void swapHeld(Player& player, ItemStack const& result) {
 void playSound(BlockSource& region, Vec3 const& pos, std::string_view name, float volume, float pitch) {
     auto packet = MinecraftPackets::createPacket(MinecraftPacketIds::PlaySound);
     if (!packet) return;
-    auto& p           = static_cast<PlaySoundPacket&>(*packet);
-    p.mName           = std::string(name);
-    p.mPos            = BlockPos{
+    auto& p = static_cast<PlaySoundPacket&>(*packet);
+    p.mName = std::string(name);
+    p.mPos  = BlockPos{
         static_cast<int>(std::floor(pos.x * 8.f)),
         static_cast<int>(std::floor(pos.y * 8.f)),
         static_cast<int>(std::floor(pos.z * 8.f)),
     };
     p.mVolume = volume;
     p.mPitch  = pitch;
-    p.sendTo(BlockPos{static_cast<int>(std::floor(pos.x)), static_cast<int>(std::floor(pos.y)), static_cast<int>(std::floor(pos.z))},
-             region.getDimensionId());
+    p.sendTo(
+        BlockPos{
+            static_cast<int>(std::floor(pos.x)),
+            static_cast<int>(std::floor(pos.y)),
+            static_cast<int>(std::floor(pos.z))
+        },
+        region.getDimensionId()
+    );
 }
 
 } // namespace cm::feature::jar

@@ -81,11 +81,26 @@ Block const* vanillaBlock(std::string_view id, Block::BlockStatesType const& sta
     return b ? b.as_ptr() : nullptr;
 }
 
-bool place(BlockSource& region, BlockPos const& pos, Block const* block) { return block && game::setBlock(region, pos, *block); }
+bool place(BlockSource& region, BlockPos const& pos, Block const* block) {
+    return block && game::setBlock(region, pos, *block);
+}
 
 Block const* cauldron(int javaLevel, std::string const& liquid) {
-    if (javaLevel <= 0) return vanillaBlock("minecraft:cauldron", {{"fill_level", 0}, {"cauldron_liquid", std::string("water")}});
-    return vanillaBlock("minecraft:cauldron", {{"fill_level", std::min(javaLevel, 3) * 2}, {"cauldron_liquid", liquid}});
+    if (javaLevel <= 0)
+        return vanillaBlock(
+            "minecraft:cauldron",
+            {
+                {"fill_level",      0                   },
+                {"cauldron_liquid", std::string("water")}
+        }
+        );
+    return vanillaBlock(
+        "minecraft:cauldron",
+        {
+            {"fill_level", std::min(javaLevel, 3) * 2},
+            {"cauldron_liquid", liquid}
+    }
+    );
 }
 
 /// Java cauldron level (0..3) of a Bedrock cauldron (fill_level 0..6).
@@ -112,8 +127,15 @@ bool powered(BlockSource& region, BlockPos const& pos) {
     auto& dim = region.getDimension();
     auto* cs  = dim.mCircuitSystem.get();
     if (!cs) return false;
-    auto const& all = cs->mSceneGraph->mAllComponents;
-    static constexpr int d[6][3] = {{0, -1, 0}, {0, 1, 0}, {0, 0, -1}, {0, 0, 1}, {-1, 0, 0}, {1, 0, 0}};
+    auto const&          all     = cs->mSceneGraph->mAllComponents;
+    static constexpr int d[6][3] = {
+        {0,  -1, 0 },
+        {0,  1,  0 },
+        {0,  0,  -1},
+        {0,  0,  1 },
+        {-1, 0,  0 },
+        {1,  0,  0 }
+    };
     for (auto const& o : d) {
         BlockPos n{pos.x + o[0], pos.y + o[1], pos.z + o[2]};
         auto     it = all.find(n);
@@ -123,7 +145,14 @@ bool powered(BlockSource& region, BlockPos const& pos) {
         auto type = c.getCircuitComponentType();
         if (type == CircuitComponentType::RepeaterCapacitor || type == CircuitComponentType::ComparatorCapacitor) {
             // these only power the block they face: facing id 2 N, 3 S, 4 W, 5 E
-            static constexpr int f[6][3] = {{0, -1, 0}, {0, 1, 0}, {0, 0, -1}, {0, 0, 1}, {-1, 0, 0}, {1, 0, 0}};
+            static constexpr int f[6][3] = {
+                {0,  -1, 0 },
+                {0,  1,  0 },
+                {0,  0,  -1},
+                {0,  0,  1 },
+                {-1, 0,  0 },
+                {1,  0,  0 }
+            };
             int dir = c.getDirection();
             if (dir < 0 || dir > 5) continue;
             if (n.x + f[dir][0] != pos.x || n.y + f[dir][1] != pos.y || n.z + f[dir][2] != pos.z) continue;
@@ -155,22 +184,42 @@ Source findSource(BlockSource& region, BlockPos const& at) {
     if (b.isAir()) return {};
     auto name = b.getTypeName();
     if (name == "minecraft:cauldron") {
-        int lvl    = cauldronLevel(b);
+        int  lvl    = cauldronLevel(b);
         auto liquid = vanillaString(b, "cauldron_liquid");
         if (lvl > 0) {
-            if (liquid == "water") return {SourceKind::Cauldron, {{"water", lvl}, 1}};
-            if (liquid == "lava" && lvl >= 3) return {SourceKind::Cauldron, {{"lava", kBucket}, kBucket}};
-            if (liquid == "powder_snow") return {SourceKind::Cauldron, {{"powder_snow", lvl}, 1}};
+            if (liquid == "water")
+                return {
+                    SourceKind::Cauldron,
+                    {{"water", lvl}, 1}
+                };
+            if (liquid == "lava" && lvl >= 3)
+                return {
+                    SourceKind::Cauldron,
+                    {{"lava", kBucket}, kBucket}
+                };
+            if (liquid == "powder_snow")
+                return {
+                    SourceKind::Cauldron,
+                    {{"powder_snow", lvl}, 1}
+                };
         }
         return {};
     }
     if (isBeehive(b)) {
-        if (vanillaInt(b, "honey_level") >= 5) return {SourceKind::Beehive, {{"honey", 1}, 1}};
+        if (vanillaInt(b, "honey_level") >= 5)
+            return {
+                SourceKind::Beehive,
+                {{"honey", 1}, 1}
+            };
         return {};
     }
     if (name == kJarId) {
         auto c = jarAt(game::globalPos(region, at));
-        if (jarAcceptsFluid(c) && !c.fluid.empty()) return {SourceKind::Jar, {c.fluid, 1}};
+        if (jarAcceptsFluid(c) && !c.fluid.empty())
+            return {
+                SourceKind::Jar,
+                {c.fluid, 1}
+            };
         return {};
     }
     if (name == "minecraft:brewing_stand") {
@@ -178,7 +227,11 @@ Source findSource(BlockSource& region, BlockPos const& at) {
             for (int i = 1; i <= 3 && i < cont->getContainerSize(); ++i) {
                 if (auto d = fluidFromItem(refOf(cont->getItem(i)))) {
                     d->fluid.count = 1;
-                    return {SourceKind::Brewing, {d->fluid, 1}, i};
+                    return {
+                        SourceKind::Brewing,
+                        {d->fluid, 1},
+                        i
+                    };
                 }
             }
         }
@@ -188,10 +241,16 @@ Source findSource(BlockSource& region, BlockPos const& at) {
     auto const& liquid = region.getLiquidBlock(at);
     auto        ln     = liquid.getTypeName();
     if ((ln == "minecraft:water" || ln == "minecraft:flowing_water") && vanillaInt(liquid, "liquid_depth", 1) == 0) {
-        return {SourceKind::Liquid, {{"water", kBucket}, 1}};
+        return {
+            SourceKind::Liquid,
+            {{"water", kBucket}, 1}
+        };
     }
     if ((ln == "minecraft:lava" || ln == "minecraft:flowing_lava") && vanillaInt(liquid, "liquid_depth", 1) == 0) {
-        return {SourceKind::Liquid, {{"lava", kBucket}, kBucket}};
+        return {
+            SourceKind::Liquid,
+            {{"lava", kBucket}, kBucket}
+        };
     }
     return {};
 }
@@ -206,11 +265,21 @@ void drain(BlockSource& region, BlockPos const& at, Source const& s, int amount)
         break;
     }
     case SourceKind::Beehive:
-        place(region, at, vanillaBlock(b.getTypeName(), {{"honey_level", 0}, {"direction", vanillaInt(b, "direction")}}));
+        place(
+            region,
+            at,
+            vanillaBlock(
+                b.getTypeName(),
+                {
+                    {"honey_level", 0},
+                    {"direction", vanillaInt(b, "direction")}
+        }
+            )
+        );
         break;
     case SourceKind::Jar: {
-        auto pos = game::globalPos(region, at);
-        auto c   = jarAt(pos);
+        auto pos       = game::globalPos(region, at);
+        auto c         = jarAt(pos);
         c.fluid.count -= std::min(amount, c.fluid.count);
         if (c.fluid.count <= 0) c.fluid = {};
         setJar(pos, c);
@@ -273,7 +342,17 @@ std::optional<int> fillBelow(BlockSource& region, BlockPos const& below, Offer c
     }
     if (isBeehive(b)) {
         if (f.fluid == "honey" && offer.minAmount == 1 && vanillaInt(b, "honey_level") == 0) {
-            place(region, below, vanillaBlock(name, {{"honey_level", 5}, {"direction", vanillaInt(b, "direction")}}));
+            place(
+                region,
+                below,
+                vanillaBlock(
+                    name,
+                    {
+                        {"honey_level", 5},
+                        {"direction", vanillaInt(b, "direction")}
+            }
+                )
+            );
             return offer.minAmount;
         }
         return 0;
@@ -295,9 +374,9 @@ std::optional<int> fillBelow(BlockSource& region, BlockPos const& below, Offer c
     if (name == "minecraft:brewing_stand") {
         auto cont = region.tryGetContainer(below);
         if (!cont) return std::nullopt;
-        int                                 need = offer.minAmount;
+        int                                  need = offer.minAmount;
         std::vector<std::pair<int, ItemRef>> put;
-        FluidStack                          pool = f;
+        FluidStack                           pool = f;
         for (int i = 1; i <= 3 && i < cont->getContainerSize() && need > 0; ++i) {
             if (!isItem(cont->getItem(i), "minecraft:glass_bottle")) continue;
             FluidStack one = pool;
@@ -314,10 +393,21 @@ std::optional<int> fillBelow(BlockSource& region, BlockPos const& below, Offer c
     if (name == "minecraft:sponge") return offer.minAmount;
     if (b.isAir() && f.fluid == "experience") {
         int xp = 0;
-        for (int i = 0; i < offer.minAmount; ++i) xp += 3 + static_cast<int>(rng()() % 5) + static_cast<int>(rng()() % 5);
-        Vec3 at{static_cast<float>(below.x) + 0.5f, static_cast<float>(below.y) + 0.875f, static_cast<float>(below.z) + 0.5f};
+        for (int i = 0; i < offer.minAmount; ++i)
+            xp += 3 + static_cast<int>(rng()() % 5) + static_cast<int>(rng()() % 5);
+        Vec3 at{
+            static_cast<float>(below.x) + 0.5f,
+            static_cast<float>(below.y) + 0.875f,
+            static_cast<float>(below.z) + 0.5f
+        };
         ExperienceOrb::spawnOrbs(region, at, xp, ExperienceOrb::DropType::FromBlock, nullptr);
-        playSound(region, at, "mob.chicken.plop", 0.3f, 0.5f + (static_cast<float>(rng()() % 100) / 100.f - 0.5f) / 4.f);
+        playSound(
+            region,
+            at,
+            "mob.chicken.plop",
+            0.3f,
+            0.5f + (static_cast<float>(rng()() % 100) / 100.f - 0.5f) / 4.f
+        );
         return offer.minAmount;
     }
     if (f.fluid == "water") {
@@ -341,8 +431,8 @@ std::optional<int> fillBelow(BlockSource& region, BlockPos const& below, Offer c
 ItemStack extractItem(BlockSource& region, BlockPos const& at) {
     auto cont = region.tryGetContainer(at);
     if (!cont) return {};
-    int size  = cont->getContainerSize();
-    int first = 0, last = size - 1;
+    int  size  = cont->getContainerSize();
+    int  first = 0, last = size - 1;
     auto name = region.getBlock(at).getTypeName();
     if (name == "minecraft:furnace" || name == "minecraft:lit_furnace" || name == "minecraft:blast_furnace"
         || name == "minecraft:lit_blast_furnace" || name == "minecraft:smoker" || name == "minecraft:lit_smoker") {
@@ -363,7 +453,7 @@ ItemStack extractItem(BlockSource& region, BlockPos const& at) {
 
 bool giveToEntityBelow(BlockSource& region, BlockPos const& pos, ItemStack const& item) {
     AABB box{
-        Vec3{static_cast<float>(pos.x), static_cast<float>(pos.y) - 0.75f, static_cast<float>(pos.z)},
+        Vec3{static_cast<float>(pos.x),       static_cast<float>(pos.y) - 0.75f, static_cast<float>(pos.z)      },
         Vec3{static_cast<float>(pos.x) + 1.f, static_cast<float>(pos.y) + 0.25f, static_cast<float>(pos.z) + 1.f}
     };
     auto list = region.getEntities(box, 0.f);
@@ -426,16 +516,26 @@ int tryExtract(FaucetView const& v) {
         }
         // nothing below takes it: like Supplementaries, try the item interaction next
     }
-    bool connected = stateOf(*v.block, kStateConnected) != 0;
-    auto const& conf = cfg();
+    bool        connected = stateOf(*v.block, kStateConnected) != 0;
+    auto const& conf      = cfg();
     if (!connected && (conf.spillItems || conf.fillEntitiesBelow)) {
         auto item = extractItem(region, behind);
         if (!item.isNull()) {
             bool given = conf.fillEntitiesBelow && giveToEntityBelow(region, v.pos, item);
             if (!given) {
-                Vec3 at{static_cast<float>(v.pos.x) + 0.5f, static_cast<float>(v.pos.y), static_cast<float>(v.pos.z) + 0.5f};
+                Vec3 at{
+                    static_cast<float>(v.pos.x) + 0.5f,
+                    static_cast<float>(v.pos.y),
+                    static_cast<float>(v.pos.z) + 0.5f
+                };
                 if (auto level = ll::service::getLevel()) level->getSpawner().spawnItem(region, item, nullptr, at, 0);
-                playSound(region, at, "mob.chicken.plop", 0.3f, 0.5f + (static_cast<float>(rng()() % 100) / 100.f - 0.5f) / 4.f);
+                playSound(
+                    region,
+                    at,
+                    "mob.chicken.plop",
+                    0.3f,
+                    0.5f + (static_cast<float>(rng()() % 100) / 100.f - 0.5f) / 4.f
+                );
             }
             return kCooldownPerBottle;
         }
@@ -460,8 +560,16 @@ void drip(FaucetView const& v) {
     if (!level) return;
     float dx = (static_cast<float>(rng()() % 100) / 100.f - 0.5f) * 0.125f;
     float dz = (static_cast<float>(rng()() % 100) / 100.f - 0.5f) * 0.125f;
-    Vec3  at{static_cast<float>(v.pos.x) + 0.5f + dx, static_cast<float>(v.pos.y) + 0.25f, static_cast<float>(v.pos.z) + 0.5f + dz};
-    level->spawnParticleEffect(content == 2 ? "minecraft:lava_drip_particle" : "minecraft:water_drip_particle", at, &v.region->getDimension());
+    Vec3  at{
+        static_cast<float>(v.pos.x) + 0.5f + dx,
+        static_cast<float>(v.pos.y) + 0.25f,
+        static_cast<float>(v.pos.z) + 0.5f + dz
+    };
+    level->spawnParticleEffect(
+        content == 2 ? "minecraft:lava_drip_particle" : "minecraft:water_drip_particle",
+        at,
+        &v.region->getDimension()
+    );
 }
 
 } // namespace
@@ -484,9 +592,20 @@ void toggleFaucet(core::GlobalPos const& pos) {
     auto v = view(pos);
     if (!v) return;
     bool enabled = stateOf(*v->block, kStateEnabled) != 0;
-    playSound(*v->region, Vec3{static_cast<float>(pos.x) + 0.5f, static_cast<float>(pos.y) + 0.5f, static_cast<float>(pos.z) + 0.5f},
-              "random.click", 1.f, enabled ? 1.f : 1.2f);
-    setStates(*v->region, v->pos, {{kStateEnabled, enabled ? 0 : 1}});
+    playSound(
+        *v->region,
+        Vec3{static_cast<float>(pos.x) + 0.5f, static_cast<float>(pos.y) + 0.5f, static_cast<float>(pos.z) + 0.5f},
+        "random.click",
+        1.f,
+        enabled ? 1.f : 1.2f
+    );
+    setStates(
+        *v->region,
+        v->pos,
+        {
+            {kStateEnabled, enabled ? 0 : 1}
+    }
+    );
     gFaucets[pos].dirty = true;
     log().info("faucet: toggled at {} ({})", pos.key(), enabled ? "closed" : "opened");
 }
@@ -523,7 +642,13 @@ void tickFaucets() {
         } else {
             bool p = powered(*v->region, v->pos);
             if (p != (stateOf(*v->block, kStatePowered) != 0)) {
-                setStates(*v->region, v->pos, {{kStatePowered, p ? 1 : 0}});
+                setStates(
+                    *v->region,
+                    v->pos,
+                    {
+                        {kStatePowered, p ? 1 : 0}
+                }
+                );
                 v = view(pos);
                 if (!v) continue;
             }

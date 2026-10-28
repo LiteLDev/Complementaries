@@ -36,7 +36,10 @@ inline constexpr std::string_view kStateConnected = "complementaries:connected";
 inline constexpr std::string_view kStateFacing    = "complementaries:facing"; ///< Java 2D: 0 S, 1 W, 2 N, 3 E
 
 [[nodiscard]] inline std::vector<std::pair<std::string_view, int>> contentStates(int content) {
-    return {{kStateKind, (content >> 4) & 3}, {kStateFluid, content & 15}};
+    return {
+        {kStateKind,  (content >> 4) & 3},
+        {kStateFluid, content & 15      }
+    };
 }
 /// The `content` value of a jar / faucet block.
 [[nodiscard]] int contentOf(Block const& block);
@@ -68,7 +71,7 @@ struct JarConfig {
 [[nodiscard]] int              capacity();
 
 // ---- blocks ------------------------------------------------------------------------------------
-[[nodiscard]] bool isBlock(Block const& block, std::string_view id);
+[[nodiscard]] bool         isBlock(Block const& block, std::string_view id);
 [[nodiscard]] BlockSource* regionOf(int dim);
 [[nodiscard]] int          stateOf(Block const& block, std::string_view state, int fallback = 0);
 /// Any block state (vanilla ones too), read from the block's serialization tag.
@@ -139,9 +142,9 @@ std::vector<core::GlobalPos> buildJarDemo(Player& player);
 void syncDisplay(core::GlobalPos const& pos, Contents const& c);
 void removeDisplay(core::GlobalPos const& pos);
 /// A jar with a drawn mob exists at `pos` (world load): the display is spawned once loaded.
-void wantDisplay(core::GlobalPos const& pos);
+void               wantDisplay(core::GlobalPos const& pos);
 [[nodiscard]] bool hasDisplay(core::GlobalPos const& pos);
-void clearDisplays();
+void               clearDisplays();
 /// Removes display entities whose jar is gone, spawns missing ones (periodic).
 void reconcileDisplays();
 
@@ -154,10 +157,10 @@ void toggleFaucet(core::GlobalPos const& pos);
 /// One server tick of every faucet.
 void tickFaucets();
 /// Runs one transfer attempt now (ignores the cooldown). Returns the cooldown it would set.
-int  runFaucetOnce(core::GlobalPos const& pos);
-void loadFaucets();
-void saveFaucets();
-void clearFaucets();
+int                runFaucetOnce(core::GlobalPos const& pos);
+void               loadFaucets();
+void               saveFaucets();
+void               clearFaucets();
 [[nodiscard]] bool faucetKnown(core::GlobalPos const& pos);
 
 // ---- lifecycle --------------------------------------------------------------------------------

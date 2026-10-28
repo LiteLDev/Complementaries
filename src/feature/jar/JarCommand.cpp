@@ -40,10 +40,10 @@ Contents demoFluid(std::string id, int n, int data = 0, std::string bottle = {})
 
 /// Places a block where nothing would be lost (air, grass, ...).
 bool put(
-    BlockSource&                                    region,
-    core::GlobalPos const&                          p,
-    std::string_view                                id,
-    std::vector<core::GlobalPos>&                   placed,
+    BlockSource&                                         region,
+    core::GlobalPos const&                               p,
+    std::string_view                                     id,
+    std::vector<core::GlobalPos>&                        placed,
     std::vector<std::pair<std::string_view, int>> const& states = {}
 ) {
     auto bp = game::blockPos(p);
@@ -97,14 +97,30 @@ std::vector<core::GlobalPos> buildJarDemo(Player& player) {
     core::GlobalPos src1{dim, x0 - 3, o.y + 1, o.z + 1};
     if (put(region, lowJar, kJarId, placed)) setJar(lowJar, {});
     if (put(region, src1, kJarId, placed)) setJar(src1, demoFluid("lava", 12));
-    if (put(region, faucet1, kFaucetId, placed, {{kStateFacing, 2}, {kStateEnabled, 1}})) faucetPlaced(faucet1);
+    if (put(region,
+            faucet1,
+            kFaucetId,
+            placed,
+            {
+                {kStateFacing,  2},
+                {kStateEnabled, 1}
+    }))
+        faucetPlaced(faucet1);
 
     core::GlobalPos cauldron{dim, x0 - 6, o.y, o.z};
     core::GlobalPos faucet2{dim, x0 - 6, o.y + 1, o.z};
     core::GlobalPos src2{dim, x0 - 6, o.y + 1, o.z + 1};
     put(region, cauldron, "minecraft:cauldron", placed);
     if (put(region, src2, kJarId, placed)) setJar(src2, demoFluid("water", 12));
-    if (put(region, faucet2, kFaucetId, placed, {{kStateFacing, 2}, {kStateEnabled, 1}})) faucetPlaced(faucet2);
+    if (put(region,
+            faucet2,
+            kFaucetId,
+            placed,
+            {
+                {kStateFacing,  2},
+                {kStateEnabled, 1}
+    }))
+        faucetPlaced(faucet2);
     log().info("jar: demo built at {}", o.key());
     return placed;
 }

@@ -12,9 +12,9 @@
 #include "mc/deps/nbt/CompoundTag.h"
 #include "mc/deps/nbt/CompoundTagVariant.h"
 #include "mc/deps/nbt/ListTag.h"
+#include "mc/legacy/ActorUniqueID.h"
 #include "mc/world/actor/Actor.h"
 #include "mc/world/actor/ActorDefinitionIdentifier.h"
-#include "mc/legacy/ActorUniqueID.h"
 #include "mc/world/actor/Mob.h"
 #include "mc/world/actor/player/Player.h"
 #include "mc/world/item/ItemStack.h"
@@ -44,13 +44,13 @@ struct FishInfo {
     int              display;
 };
 constexpr FishInfo kFish[] = {
-    {"minecraft:cod", "minecraft:cod_bucket", 20},
-    {"minecraft:salmon", "minecraft:salmon_bucket", 21},
-    {"minecraft:pufferfish", "minecraft:pufferfish_bucket", 22},
-    {"minecraft:tropicalfish", "minecraft:tropical_fish_bucket", 23},
+    {"minecraft:cod",           "minecraft:cod_bucket",           20},
+    {"minecraft:salmon",        "minecraft:salmon_bucket",        21},
+    {"minecraft:pufferfish",    "minecraft:pufferfish_bucket",    22},
+    {"minecraft:tropicalfish",  "minecraft:tropical_fish_bucket", 23},
     {"minecraft:tropical_fish", "minecraft:tropical_fish_bucket", 23},
-    {"minecraft:axolotl", "minecraft:axolotl_bucket", 24},
-    {"minecraft:tadpole", "minecraft:tadpole_bucket", 25},
+    {"minecraft:axolotl",       "minecraft:axolotl_bucket",       24},
+    {"minecraft:tadpole",       "minecraft:tadpole_bucket",       25},
 };
 
 FishInfo const* fishByType(std::string_view type) {
@@ -76,7 +76,7 @@ bool jarCatchable(std::string_view type) {
 bool isBoat(std::string_view type) { return type == "minecraft:boat" || type == "minecraft:chest_boat"; }
 
 std::string prettyName(std::string_view type) {
-    auto        pos  = type.find(':');
+    auto        pos = type.find(':');
     std::string name(pos == std::string_view::npos ? type : type.substr(pos + 1));
     bool        up = true;
     for (auto& ch : name) {
@@ -105,9 +105,9 @@ struct DisplayInfo {
 };
 DisplayInfo displayInfo(int kind) {
     switch (kind) {
-    case 1:  // bee
-    case 4:  // allay
-    case 8:  // vex
+    case 1: // bee
+    case 4: // allay
+    case 8: // vex
         return {true, 0};
     case 10: // endermite
         return {false, 5};
@@ -156,10 +156,11 @@ CaptureFail canCatch(Actor& mob, Player const* player) {
     if (!mob.isAlive() || mob.isPlayer()) return CaptureFail::NotCatchable;
     auto const& conf = cfg();
     auto        type = mob.getTypeName();
-    bool        listed = conf.allowAllMobs
-                 || std::find(conf.extraCatchable.begin(), conf.extraCatchable.end(), type) != conf.extraCatchable.end();
+    bool listed      = conf.allowAllMobs
+                    || std::find(conf.extraCatchable.begin(), conf.extraCatchable.end(), type) != conf.extraCatchable.end();
     if (!listed) {
-        bool ok = jarCatchable(type) || (type == "minecraft:rabbit" && mob.isBaby()) || fishByType(type) || isBoat(type);
+        bool ok =
+            jarCatchable(type) || (type == "minecraft:rabbit" && mob.isBaby()) || fishByType(type) || isBoat(type);
         if (!ok && conf.autoDetect && !mob.hasFamily(HashedString("monster"))) {
             auto const& box    = mob.getAABB();
             float       margin = 0.125f;
@@ -174,7 +175,8 @@ CaptureFail canCatch(Actor& mob, Player const* player) {
     }
     if (conf.healthThreshold < 100 && !isBoat(type)) {
         int hp = mob.getHealth(), max = mob.getMaxHealth();
-        if (max > 0 && static_cast<float>(hp) > static_cast<float>(max) * (static_cast<float>(conf.healthThreshold) / 100.f)) {
+        if (max > 0
+            && static_cast<float>(hp) > static_cast<float>(max) * (static_cast<float>(conf.healthThreshold) / 100.f)) {
             return CaptureFail::Health;
         }
     }
@@ -225,7 +227,8 @@ Actor* releaseMob(BlockSource& region, StoredMob const& m, Vec3 const& pos, floa
     }
     if (!actor) {
         auto type = m.type == "minecraft:tropical_fish" ? std::string("minecraft:tropicalfish") : m.type;
-        actor     = level->getSpawner().spawnMob(region, ActorDefinitionIdentifier(type), nullptr, pos, false, false, false);
+        actor =
+            level->getSpawner().spawnMob(region, ActorDefinitionIdentifier(type), nullptr, pos, false, false, false);
     }
     if (actor && cfg().persistentMobs) actor->setPersistent();
     return actor;
@@ -242,7 +245,9 @@ bool useJarItemOnMob(Player& player, Actor& target) {
     if (fail != CaptureFail::None) {
         switch (fail) {
         case CaptureFail::Tamed:
-            player.sendMessage(trFor(player, "message.supplementaries.cage.fail_tamed", "You must tame this animal first"));
+            player.sendMessage(
+                trFor(player, "message.supplementaries.cage.fail_tamed", "You must tame this animal first")
+            );
             break;
         case CaptureFail::Health:
             player.sendMessage(trFor(
@@ -277,7 +282,7 @@ bool useJarItemOnMob(Player& player, Actor& target) {
     auto stored = captureMob(target);
     if (!stored) return false;
     target.remove();
-    contents.mob = std::move(*stored);
+    contents.mob   = std::move(*stored);
     ItemStack full = held;
     full.set(1);
     setItemContents(full, contents, &player);
@@ -296,10 +301,14 @@ bool releaseFromItem(Player& player, BlockPos const& clicked, Vec3 const& clickP
     Vec3  at     = clickPos;
     // the event's click position may be relative to the block
     if (at.x >= 0.f && at.x <= 1.f && at.y >= 0.f && at.y <= 1.f && at.z >= 0.f && at.z <= 1.f) {
-        at = Vec3{static_cast<float>(clicked.x) + at.x, static_cast<float>(clicked.y) + at.y, static_cast<float>(clicked.z) + at.z};
+        at = Vec3{
+            static_cast<float>(clicked.x) + at.x,
+            static_cast<float>(clicked.y) + at.y,
+            static_cast<float>(clicked.z) + at.z
+        };
     }
-    float yaw    = player.getRotation().y + 180.f;
-    auto* actor  = releaseMob(region, *contents->mob, at, yaw);
+    float yaw   = player.getRotation().y + 180.f;
+    auto* actor = releaseMob(region, *contents->mob, at, yaw);
     if (!actor) return false;
     if (!player.isCreative() && contents->mob->type == "minecraft:bee") actor->setTarget(&player);
     playSound(region, at, "mob.chicken.plop", 1.f, 0.05f);

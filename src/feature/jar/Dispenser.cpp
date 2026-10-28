@@ -61,12 +61,22 @@ void useOne(::Container& cont, int slot) {
 }
 
 /// One dispense into the jar at `jarPos`. Returns true when the jar used the item.
-bool dispenseIntoJar(BlockSource& region, BlockPos const& dispenser, BlockPos const& jarBp, ::Container& cont, int slot) {
+bool dispenseIntoJar(
+    BlockSource&    region,
+    BlockPos const& dispenser,
+    BlockPos const& jarBp,
+    ::Container&    cont,
+    int             slot
+) {
     auto const& conf = cfg();
     auto        pos  = game::globalPos(region, jarBp);
     auto        c    = jarAt(pos);
     ItemStack   item = cont.getItem(slot);
-    Vec3        front{static_cast<float>(jarBp.x) + 0.5f, static_cast<float>(jarBp.y) + 0.5f, static_cast<float>(jarBp.z) + 0.5f};
+    Vec3        front{
+        static_cast<float>(jarBp.x) + 0.5f,
+        static_cast<float>(jarBp.y) + 0.5f,
+        static_cast<float>(jarBp.z) + 0.5f
+    };
     (void)dispenser;
 
     if (conf.jarLiquids && c.items.empty() && !c.mob) {
@@ -134,7 +144,14 @@ LL_TYPE_INSTANCE_HOOK(
     if (conf.enabled && conf.dispensers && !region.getLevel().isClientSide()) {
         auto const& self = region.getBlock(pos);
         if (self.getTypeName() == "minecraft:dispenser") {
-            static constexpr int d[6][3] = {{0, -1, 0}, {0, 1, 0}, {0, 0, -1}, {0, 0, 1}, {-1, 0, 0}, {1, 0, 0}};
+            static constexpr int d[6][3] = {
+                {0,  -1, 0 },
+                {0,  1,  0 },
+                {0,  0,  -1},
+                {0,  0,  1 },
+                {-1, 0,  0 },
+                {1,  0,  0 }
+            };
             int      face = vanillaInt(self, "facing_direction", 0);
             BlockPos target{pos.x + d[face % 6][0], pos.y + d[face % 6][1], pos.z + d[face % 6][2]};
             if (isBlock(region.getBlock(target), kJarId)) {

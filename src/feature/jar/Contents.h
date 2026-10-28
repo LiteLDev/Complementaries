@@ -26,10 +26,10 @@ struct StoredItem {
 
 /// A captured mob.
 struct StoredMob {
-    std::string type;    ///< entity id ("minecraft:bee")
-    std::string name;    ///< display name (custom name or the type's name)
-    std::string nbt;     ///< hex of the binary entity tag (empty when it came from a bucket)
-    std::string bucket;  ///< fish kept as a bucket ("minecraft:cod_bucket"), shown with water
+    std::string type;        ///< entity id ("minecraft:bee")
+    std::string name;        ///< display name (custom name or the type's name)
+    std::string nbt;         ///< hex of the binary entity tag (empty when it came from a bucket)
+    std::string bucket;      ///< fish kept as a bucket ("minecraft:cod_bucket"), shown with water
     int         display = 0; ///< jar_mob display kind (0 = not drawn)
     int         light   = 0; ///< light the mob gives the jar
     bool        baby    = false;

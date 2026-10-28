@@ -5,7 +5,9 @@
 namespace cm::feature::jar {
 
 void to_json(nlohmann::json& j, StoredItem const& s) {
-    j = nlohmann::json{{"id", s.id}};
+    j = nlohmann::json{
+        {"id", s.id}
+    };
     if (s.aux) j["aux"] = s.aux;
     if (!s.nbt.empty()) j["nbt"] = s.nbt;
 }
@@ -17,7 +19,11 @@ void from_json(nlohmann::json const& j, StoredItem& s) {
 }
 
 void to_json(nlohmann::json& j, StoredMob const& s) {
-    j = nlohmann::json{{"type", s.type}, {"name", s.name}, {"display", s.display}};
+    j = nlohmann::json{
+        {"type",    s.type   },
+        {"name",    s.name   },
+        {"display", s.display}
+    };
     if (!s.nbt.empty()) j["nbt"] = s.nbt;
     if (!s.bucket.empty()) j["bucket"] = s.bucket;
     if (s.light) j["light"] = s.light;
@@ -58,10 +64,15 @@ void from_json(nlohmann::json const& j, Contents& c) {
 }
 
 JarVisual visualFor(Contents const& c, int capacity) {
-    if (!c.fluid.empty()) return {contentFor(c.fluid), Tank{c.fluid, capacity}.pixelLevel()};
+    if (!c.fluid.empty())
+        return {
+            contentFor(c.fluid),
+            Tank{c.fluid, capacity}
+            .pixelLevel()
+        };
     if (!c.items.empty()) {
         auto const& id      = c.items.front().id;
-        int         content = id == "minecraft:cookie" ? kContentCookie
+        int         content = id == "minecraft:cookie"      ? kContentCookie
                             : id == "complementaries:candy" ? kContentCandy
                                                             : kContentItem;
         return {content, std::min(static_cast<int>(c.items.size()), kMaxCookies)};

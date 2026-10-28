@@ -19,42 +19,90 @@ constexpr std::string_view kBowlId    = "minecraft:bowl";
 std::vector<FluidDef> makeFluids() {
     std::string const bottle(kBottleId), bucket(kBucketId), bowl(kBowlId);
     return {
-        {"water", "cm.jar.fluid.water", "Water", 0, 1, FoodKind::None, "",
-         {{"minecraft:water_bucket", bucket, kBucket}, {std::string(kPotion), bottle, kBottle}}},
-        {"lava", "cm.jar.fluid.lava", "Lava", 15, 2, FoodKind::None, "", {{"minecraft:lava_bucket", bucket, kBucket}}},
-        {"honey", "fluid.supplementaries.honey", "Honey", 0, 3, FoodKind::WholeItem, "minecraft:honey_bottle",
-         {{"minecraft:honey_bottle", bottle, kBottle}, {"minecraft:honey_block", "", 4}}},
-        {"milk", "fluid.supplementaries.milk", "Milk", 0, 4, FoodKind::Milk, "minecraft:milk_bucket",
-         {{"minecraft:milk_bucket", bucket, kBucket}}},
-        {"mushroom_stew", "cm.jar.fluid.mushroom_stew", "Mushroom Stew", 0, 5, FoodKind::Stew, "minecraft:mushroom_stew",
-         {{"minecraft:mushroom_stew", bowl, kBowl}}},
-        {"beetroot_soup", "cm.jar.fluid.beetroot_soup", "Beetroot Soup", 0, 6, FoodKind::Stew, "minecraft:beetroot_soup",
-         {{"minecraft:beetroot_soup", bowl, kBowl}}},
-        {"rabbit_stew", "cm.jar.fluid.rabbit_stew", "Rabbit Stew", 0, 7, FoodKind::Stew, "minecraft:rabbit_stew",
-         {{"minecraft:rabbit_stew", bowl, kBowl}}},
-        {"suspicious_stew", "cm.jar.fluid.suspicious_stew", "Suspicious Stew", 0, 8, FoodKind::SuspiciousStew,
-         "minecraft:suspicious_stew", {{"minecraft:suspicious_stew", bowl, kBowl}}},
-        {"experience", "fluid.supplementaries.experience", "Experience", 5, 9, FoodKind::Experience,
-         "minecraft:experience_bottle", {{"minecraft:experience_bottle", bottle, kBottle}}},
-        {"dragon_breath", "cm.jar.fluid.dragon_breath", "Dragon's Breath", 3, 10, FoodKind::None, "",
-         {{"minecraft:dragon_breath", bottle, kBottle}}},
-        {"ghast_tear", "cm.jar.fluid.ghast_tear", "Ghast Tear", 0, 11, FoodKind::None, "",
-         {{"minecraft:ghast_tear", "", kBottle}}},
-        {"magma_cream", "cm.jar.fluid.magma_cream", "Magma Cream", 0, 12, FoodKind::None, "",
-         {{"minecraft:magma_cream", "", kBottle}}},
-        {"slime", "fluid.supplementaries.slime", "Slime", 0, 13, FoodKind::None, "",
-         {{"minecraft:slime_ball", "", kBottle}, {"minecraft:slime", "", 9}}},
-        {"powder_snow", "cm.jar.fluid.powder_snow", "Powder Snow", 0, 14, FoodKind::None, "",
-         {{"minecraft:powder_snow_bucket", bucket, 3}}},
-        {"ominous", "cm.jar.fluid.ominous", "Ominous Bottle", 0, 15, FoodKind::WholeItem, "minecraft:ominous_bottle",
-         {{"minecraft:ominous_bottle", bottle, kBottle}}},
-        {"lumisene", "cm.jar.fluid.lumisene", "Lumisene", 15, 16, FoodKind::WholeItem,
-         "complementaries:lumisene_bottle",
-         {{"complementaries:lumisene_bottle", bottle, kBottle}, {"complementaries:lumisene_bucket", bucket, kBucket}}},
-        {"potion", "cm.jar.fluid.potion", "Potion", 0, kContentFirstPotion, FoodKind::WholeItem, std::string(kPotion),
+        {"water",
+         "cm.jar.fluid.water",                   "Water",
+         0,                                                             1,
+         FoodKind::None,
+         "",                                                                                                     {{"minecraft:water_bucket", bucket, kBucket}, {std::string(kPotion), bottle, kBottle}}                      },
+        {"lava",            "cm.jar.fluid.lava", "Lava",            15, 2,                   FoodKind::None, "", {{"minecraft:lava_bucket", bucket, kBucket}}                                                                },
+        {"honey",
+         "fluid.supplementaries.honey",          "Honey",
+         0,                                                             3,
+         FoodKind::WholeItem,
+         "minecraft:honey_bottle",                                                                               {{"minecraft:honey_bottle", bottle, kBottle}, {"minecraft:honey_block", "", 4}}                             },
+        {"milk",
+         "fluid.supplementaries.milk",           "Milk",
+         0,                                                             4,
+         FoodKind::Milk,
+         "minecraft:milk_bucket",                                                                                {{"minecraft:milk_bucket", bucket, kBucket}}                                                                },
+        {"mushroom_stew",
+         "cm.jar.fluid.mushroom_stew",           "Mushroom Stew",
+         0,                                                             5,
+         FoodKind::Stew,
+         "minecraft:mushroom_stew",                                                                              {{"minecraft:mushroom_stew", bowl, kBowl}}                                                                  },
+        {"beetroot_soup",
+         "cm.jar.fluid.beetroot_soup",           "Beetroot Soup",
+         0,                                                             6,
+         FoodKind::Stew,
+         "minecraft:beetroot_soup",                                                                              {{"minecraft:beetroot_soup", bowl, kBowl}}                                                                  },
+        {"rabbit_stew",
+         "cm.jar.fluid.rabbit_stew",             "Rabbit Stew",
+         0,                                                             7,
+         FoodKind::Stew,
+         "minecraft:rabbit_stew",                                                                                {{"minecraft:rabbit_stew", bowl, kBowl}}                                                                    },
+        {"suspicious_stew",
+         "cm.jar.fluid.suspicious_stew",         "Suspicious Stew",
+         0,                                                             8,
+         FoodKind::SuspiciousStew,
+         "minecraft:suspicious_stew",                                                                            {{"minecraft:suspicious_stew", bowl, kBowl}}                                                                },
+        {"experience",
+         "fluid.supplementaries.experience",     "Experience",
+         5,                                                             9,
+         FoodKind::Experience,
+         "minecraft:experience_bottle",                                                                          {{"minecraft:experience_bottle", bottle, kBottle}}                                                          },
+        {"dragon_breath",
+         "cm.jar.fluid.dragon_breath",           "Dragon's Breath",
+         3,                                                             10,
+         FoodKind::None,
+         "",                                                                                                     {{"minecraft:dragon_breath", bottle, kBottle}}                                                              },
+        {"ghast_tear",
+         "cm.jar.fluid.ghast_tear",              "Ghast Tear",
+         0,                                                             11,
+         FoodKind::None,
+         "",                                                                                                     {{"minecraft:ghast_tear", "", kBottle}}                                                                     },
+        {"magma_cream",
+         "cm.jar.fluid.magma_cream",             "Magma Cream",
+         0,                                                             12,
+         FoodKind::None,
+         "",                                                                                                     {{"minecraft:magma_cream", "", kBottle}}                                                                    },
+        {"slime",
+         "fluid.supplementaries.slime",          "Slime",
+         0,                                                             13,
+         FoodKind::None,
+         "",                                                                                                     {{"minecraft:slime_ball", "", kBottle}, {"minecraft:slime", "", 9}}                                         },
+        {"powder_snow",
+         "cm.jar.fluid.powder_snow",             "Powder Snow",
+         0,                                                             14,
+         FoodKind::None,
+         "",                                                                                                     {{"minecraft:powder_snow_bucket", bucket, 3}}                                                               },
+        {"ominous",
+         "cm.jar.fluid.ominous",                 "Ominous Bottle",
+         0,                                                             15,
+         FoodKind::WholeItem,
+         "minecraft:ominous_bottle",                                                                             {{"minecraft:ominous_bottle", bottle, kBottle}}                                                             },
+        {"lumisene",
+         "cm.jar.fluid.lumisene",                "Lumisene",
+         15,                                                            16,
+         FoodKind::WholeItem,
+         "complementaries:lumisene_bottle",                                                                      {{"complementaries:lumisene_bottle", bottle, kBottle}, {"complementaries:lumisene_bucket", bucket, kBucket}}},
+        {"potion",
+         "cm.jar.fluid.potion",                  "Potion",
+         0,                                                             kContentFirstPotion,
+         FoodKind::WholeItem,
+         std::string(kPotion),
          {{std::string(kPotion), bottle, kBottle},
           {std::string(kSplash), bottle, kBottle},
-          {std::string(kLingering), bottle, kBottle}}},
+          {std::string(kLingering), bottle, kBottle}}                                                                                                                                                                        },
     };
 }
 
@@ -165,10 +213,16 @@ std::optional<Drained> fluidFromItem(ItemRef const& item) {
     if (isPotionItem(item.id)) {
         // a plain water bottle is water; every other potion keeps its type and bottle kind
         if (item.id == kPotion && item.aux == 0) {
-            return Drained{FluidStack{"water", kBottle, 0, ""}, std::string(kBottleId)};
+            return Drained{
+                FluidStack{"water", kBottle, 0, ""},
+                std::string(kBottleId)
+            };
         }
         if (item.aux == 0) return std::nullopt; // splash / lingering water bottles are not water
-        return Drained{FluidStack{"potion", kBottle, item.aux, item.id}, std::string(kBottleId)};
+        return Drained{
+            FluidStack{"potion", kBottle, item.aux, item.id},
+            std::string(kBottleId)
+        };
     }
     for (auto const& f : fluids()) {
         for (auto const& c : f.containers) {
@@ -235,7 +289,10 @@ int Tank::pixelLevel() const {
 }
 
 void to_json(nlohmann::json& j, FluidStack const& s) {
-    j = nlohmann::json{{"fluid", s.fluid}, {"count", s.count}};
+    j = nlohmann::json{
+        {"fluid", s.fluid},
+        {"count", s.count}
+    };
     if (s.data) j["data"] = s.data;
     if (!s.bottle.empty()) j["bottle"] = s.bottle;
 }

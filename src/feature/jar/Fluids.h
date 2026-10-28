@@ -28,10 +28,10 @@ struct ItemRef {
 
 /// An amount of one soft fluid. Two stacks mix only when `sameKind` (same fluid and same data).
 struct FluidStack {
-    std::string fluid;  ///< fluid id ("water", "potion", ...); empty = no fluid
+    std::string fluid; ///< fluid id ("water", "potion", ...); empty = no fluid
     int         count = 0;
-    int         data  = 0;  ///< potion type, ominous level, suspicious stew kind (item aux)
-    std::string bottle;     ///< potions: the bottle item ("minecraft:splash_potion", ...)
+    int         data  = 0; ///< potion type, ominous level, suspicious stew kind (item aux)
+    std::string bottle;    ///< potions: the bottle item ("minecraft:splash_potion", ...)
 
     [[nodiscard]] bool empty() const { return fluid.empty() || count <= 0; }
     [[nodiscard]] bool sameKind(FluidStack const& o) const {
@@ -43,11 +43,11 @@ struct FluidStack {
 /// How a fluid is eaten / drunk (Supplementaries "food provider").
 enum class FoodKind {
     None,
-    WholeItem,   ///< acts like using the item itself (honey bottle, potion, ominous bottle, lumisene)
-    Stew,        ///< bowl food: nutrition and saturation of the item / 2
+    WholeItem, ///< acts like using the item itself (honey bottle, potion, ominous bottle, lumisene)
+    Stew,      ///< bowl food: nutrition and saturation of the item / 2
     SuspiciousStew,
-    Milk,        ///< removes one effect
-    Experience,  ///< gives the experience of one bottle
+    Milk,       ///< removes one effect
+    Experience, ///< gives the experience of one bottle
 };
 
 struct Container {
@@ -63,7 +63,7 @@ struct FluidDef {
     int                    light  = 0;   ///< luminosity 0..15
     int                    visual = 0;   ///< jar / faucet `content` state (see contentFor)
     FoodKind               food   = FoodKind::None;
-    std::string            foodItem;     ///< item whose effect a sip has
+    std::string            foodItem; ///< item whose effect a sip has
     std::vector<Container> containers;
 };
 
@@ -72,13 +72,13 @@ struct FluidDef {
 [[nodiscard]] FluidDef const*              fluidDef(std::string_view id);
 
 // ---- content state (jar / faucet visuals) ----------------------------------------------------
-inline constexpr int kContentEmpty     = 0;
+inline constexpr int kContentEmpty       = 0;
 inline constexpr int kContentFirstPotion = 17;
-inline constexpr int kContentCookie    = 48;
-inline constexpr int kContentCandy     = 49;
-inline constexpr int kContentItem      = 50;
-inline constexpr int kContentLight5    = 62;
-inline constexpr int kContentLight3    = 63;
+inline constexpr int kContentCookie      = 48;
+inline constexpr int kContentCandy       = 49;
+inline constexpr int kContentItem        = 50;
+inline constexpr int kContentLight5      = 62;
+inline constexpr int kContentLight3      = 63;
 
 /// The `content` state value showing `stack` (0 when empty).
 [[nodiscard]] int contentFor(FluidStack const& stack);
@@ -90,8 +90,8 @@ inline constexpr int kContentLight3    = 63;
 // ---- items <-> fluids ------------------------------------------------------------------------
 
 struct Drained {
-    FluidStack fluid;     ///< what the filled item holds
-    std::string emptyId;  ///< what is left in the hand ("" = nothing)
+    FluidStack  fluid;   ///< what the filled item holds
+    std::string emptyId; ///< what is left in the hand ("" = nothing)
 };
 
 /// The fluid inside a filled item (water bucket, potion, stew, ...), if any.
@@ -123,7 +123,7 @@ struct Tank {
 };
 
 // ---- JSON ------------------------------------------------------------------------------------
-void       to_json(nlohmann::json& j, FluidStack const& s);
-void       from_json(nlohmann::json const& j, FluidStack& s);
+void to_json(nlohmann::json& j, FluidStack const& s);
+void from_json(nlohmann::json const& j, FluidStack& s);
 
 } // namespace cm::feature::jar

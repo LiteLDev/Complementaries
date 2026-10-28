@@ -30,8 +30,8 @@ TEST(JarFluids, BucketsAndBottles) {
 }
 
 TEST(JarFluids, PotionsKeepTheirKind) {
-    auto swift = fluidFromItem({"minecraft:potion", 14});
-    auto slow  = fluidFromItem({"minecraft:potion", 17});
+    auto swift     = fluidFromItem({"minecraft:potion", 14});
+    auto slow      = fluidFromItem({"minecraft:potion", 17});
     auto lingering = fluidFromItem({"minecraft:lingering_potion", 14});
     ASSERT_TRUE(swift && slow && lingering);
     Tank t{{}, 12};
@@ -65,16 +65,47 @@ TEST(JarFluids, AirContainers) {
 }
 
 TEST(JarFluids, LevelsAndComparator) {
-    EXPECT_EQ((Tank{{"water", 12}, 12}.pixelLevel()), 12);
-    EXPECT_EQ((Tank{{"water", 6}, 12}.pixelLevel()), 6);
-    EXPECT_EQ((Tank{{"water", 1}, 24}.pixelLevel()), 1);
+    EXPECT_EQ(
+        (Tank{
+            {"water", 12},
+            12
+    }
+             .pixelLevel()),
+        12
+    );
+    EXPECT_EQ(
+        (Tank{
+            {"water", 6},
+            12
+    }
+             .pixelLevel()),
+        6
+    );
+    EXPECT_EQ(
+        (Tank{
+            {"water", 1},
+            24
+    }
+             .pixelLevel()),
+        1
+    );
     EXPECT_EQ((Tank{{}, 12}.comparatorOutput()), 0);
-    EXPECT_EQ((Tank{{"water", 6}, 12}.comparatorOutput()), 8);
+    EXPECT_EQ(
+        (Tank{
+            {"water", 6},
+            12
+    }
+             .comparatorOutput()),
+        8
+    );
 }
 
 TEST(JarContents, JsonRoundTripAndVisuals) {
     Contents c;
-    c.items = {{"minecraft:cookie", 0, ""}, {"minecraft:cookie", 0, "0a00"}};
+    c.items = {
+        {"minecraft:cookie", 0, ""    },
+        {"minecraft:cookie", 0, "0a00"}
+    };
     auto back = nlohmann::json(c).get<Contents>();
     EXPECT_EQ(back, c);
     EXPECT_EQ(visualFor(c, 12).content, kContentCookie);

@@ -107,12 +107,12 @@ bool holdsJar(Player const& player) { return isItem(player.getSelectedItem(), kJ
 void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
     auto& player = ev.self();
     if (player.isClientSide()) return;
-    auto& region = player.getDimensionBlockSource();
-    auto  bp     = ev.blockPos();
-    auto  pos    = game::globalPos(region, bp);
-    auto const& block = region.getBlock(bp);
-    auto const& conf  = cfg();
-    auto        uid   = player.getOrCreateUniqueID().rawID;
+    auto&       region = player.getDimensionBlockSource();
+    auto        bp     = ev.blockPos();
+    auto        pos    = game::globalPos(region, bp);
+    auto const& block  = region.getBlock(bp);
+    auto const& conf   = cfg();
+    auto        uid    = player.getOrCreateUniqueID().rawID;
 
     // like Java, sneaking with an item in hand skips the block's own use (places / uses the item)
     bool secondaryUse = player.isSneaking() && !player.getSelectedItem().isNull();
@@ -162,11 +162,11 @@ void onPlacing(ll::event::PlayerPlacingBlockEvent& ev) {
 void onPlaced(ll::event::PlayerPlacedBlockEvent& ev) {
     auto& player = ev.self();
     if (player.isClientSide()) return;
-    auto&       region  = player.getDimensionBlockSource();
-    auto        bp      = ev.pos();
-    auto        pos     = game::globalPos(region, bp);
-    auto const& placed  = ev.placedBlock();
-    auto        uid     = player.getOrCreateUniqueID().rawID;
+    auto&        region = player.getDimensionBlockSource();
+    auto         bp     = ev.pos();
+    auto         pos    = game::globalPos(region, bp);
+    auto const&  placed = ev.placedBlock();
+    auto         uid    = player.getOrCreateUniqueID().rawID;
     PendingPlace pending;
     if (auto it = gPending.find(uid); it != gPending.end()) {
         pending = std::move(it->second);
@@ -176,7 +176,13 @@ void onPlaced(ll::event::PlayerPlacedBlockEvent& ev) {
         setJar(pos, pending.jar.value_or(Contents{}));
         log().info("jar: {} placed a jar at {}", player.getRealName(), pos.key());
     } else if (isBlock(placed, kFaucetId)) {
-        setStates(region, bp, {{kStateFacing, faceToFacing(pending.face)}});
+        setStates(
+            region,
+            bp,
+            {
+                {kStateFacing, faceToFacing(pending.face)}
+        }
+        );
         faucetPlaced(pos);
         log().info("faucet: {} placed a faucet at {}", player.getRealName(), pos.key());
     }
@@ -186,7 +192,8 @@ void onDestroy(ll::event::PlayerDestroyBlockEvent& ev) {
     auto& player = ev.self();
     if (player.isClientSide()) return;
     auto& region = player.getDimensionBlockSource();
-    if (player.isCreative() && isBlock(region.getBlock(ev.pos()), kJarId)) gNoDrop.insert(game::globalPos(region, ev.pos()));
+    if (player.isCreative() && isBlock(region.getBlock(ev.pos()), kJarId))
+        gNoDrop.insert(game::globalPos(region, ev.pos()));
 }
 
 void onAttack(ll::event::PlayerAttackEvent& ev) {
@@ -226,7 +233,7 @@ void onBlockChanged(ll::event::BlockChangedEvent& ev) {
     auto const& bp       = ev.pos();
     if (prevType != newType) {
         if (gJarType && prevType == gJarType) {
-            auto pos = game::globalPos(region, bp);
+            auto pos  = game::globalPos(region, bp);
             bool drop = !gNoDrop.erase(pos);
             later([pos, drop] {
                 auto c = jarAt(pos);
@@ -242,7 +249,14 @@ void onBlockChanged(ll::event::BlockChangedEvent& ev) {
         }
         if (gFaucetType && prevType == gFaucetType) faucetRemoved(game::globalPos(region, bp));
     }
-    static constexpr int d[6][3] = {{0, -1, 0}, {0, 1, 0}, {0, 0, -1}, {0, 0, 1}, {-1, 0, 0}, {1, 0, 0}};
+    static constexpr int d[6][3] = {
+        {0,  -1, 0 },
+        {0,  1,  0 },
+        {0,  0,  -1},
+        {0,  0,  1 },
+        {-1, 0,  0 },
+        {1,  0,  0 }
+    };
     int dim = static_cast<int>(region.getDimensionId());
     for (auto const& o : d) {
         core::GlobalPos n{dim, bp.x + o[0], bp.y + o[1], bp.z + o[2]};
@@ -321,7 +335,8 @@ LL_TYPE_INSTANCE_HOOK(
     ::HandSlot    handSlot
 ) {
     Player& player = mPlayer;
-    if (!player.isClientSide() && isItem(player.getSelectedItem(), kJarId) && useJarItemOnMob(player, entity)) return true;
+    if (!player.isClientSide() && isItem(player.getSelectedItem(), kJarId) && useJarItemOnMob(player, entity))
+        return true;
     return origin(entity, location, handSlot);
 }
 
