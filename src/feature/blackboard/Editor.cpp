@@ -80,23 +80,23 @@ std::map<std::int64_t, std::shared_ptr<Session>>& sessions() {
     return s;
 }
 
+/// The board under the cursor as 16 lines of coloured block characters (a 48 column canvas is
+/// wider than the form), with the cursor in red and the board's place in the canvas on top.
 std::string renderPreview(Session const& s) {
     auto [cu, cv] = s.cursor();
+    int         u0 = cu / kSize * kSize, v0 = cv / kSize * kSize;
     std::string out;
-    for (int v = 0; v < s.height(); ++v) {
+    if (s.canvas.cols > 1 || s.canvas.rows > 1) {
+        out += std::format("§7{} / {}  ·  {} / {}\n", cu / kSize + 1, s.canvas.cols, cv / kSize + 1, s.canvas.rows);
+    }
+    for (int v = v0; v < v0 + kSize; ++v) {
         int last = -1;
-        for (int u = 0; u < s.width(); ++u) {
-            int         code;
-            char const* glyph = "█";
-            if (!s.hasBoard(u, v)) {
-                code  = 100;
-                glyph = "░";
-            } else {
-                code = s.pixel(u, v);
-            }
+        for (int u = u0; u < u0 + kSize; ++u) {
+            int         code  = s.hasBoard(u, v) ? s.pixel(u, v) : 100;
+            char const* glyph = code == 100 ? "\u2591" : "\u2588";
             if (u == cu && v == cv) {
                 code  = 101;
-                glyph = "▓";
+                glyph = "\u2593";
             }
             if (code != last) {
                 out += code == 100 ? "§8" : code == 101 ? "§c" : std::string(formatCodeOf(static_cast<std::uint8_t>(code)));
@@ -108,7 +108,6 @@ std::string renderPreview(Session const& s) {
     }
     return out;
 }
-
 void refresh(Session& s) { s.preview.setData(renderPreview(s)); }
 
 void applySession(Session& s) {

@@ -24,16 +24,14 @@
         "c15": "textures/entity/blackboard/c15"
       },
       "geometry": {
-        "top": "geometry.complementaries.blackboard_display_top",
-        "bottom": "geometry.complementaries.blackboard_display_bottom"
-      },
-      "animations": {
-        "facing": "animation.complementaries.blackboard_display.facing"
-      },
-      "scripts": {
-        "animate": [
-          "facing"
-        ]
+        "f0_h0": "geometry.complementaries.blackboard_display_f0_h0",
+        "f0_h1": "geometry.complementaries.blackboard_display_f0_h1",
+        "f1_h0": "geometry.complementaries.blackboard_display_f1_h0",
+        "f1_h1": "geometry.complementaries.blackboard_display_f1_h1",
+        "f2_h0": "geometry.complementaries.blackboard_display_f2_h0",
+        "f2_h1": "geometry.complementaries.blackboard_display_f2_h1",
+        "f3_h0": "geometry.complementaries.blackboard_display_f3_h0",
+        "f3_h1": "geometry.complementaries.blackboard_display_f3_h1"
       },
       "render_controllers": [
         {

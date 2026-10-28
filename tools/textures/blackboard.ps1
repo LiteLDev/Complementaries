@@ -6,7 +6,7 @@
 # Outputs (all original art / generated files):
 #   textures/blocks/blackboard_front.png, blackboard_side.png      the block
 #   textures/entity/blackboard/c1..c15.png                         chalk of each pixel value
-#   models/entity/blackboard_display.geo.json                      one quad per pixel (2 halves)
+#   models/entity/blackboard_display.geo.json                      one quad per pixel (4 facings x 2 halves)
 #   render_controllers/blackboard_display.render_controllers.json  one controller per colour (+ glow)
 #   entity/blackboard_display.entity.json                          client entity
 #
@@ -94,33 +94,47 @@ foreach ($v in $colors.Keys) {
 }
 
 # ---- display geometry -------------------------------------------------------------------------
-# Local frame: the board front faces north (-z) at z = -3 px (the board is 5 px thick at the back of
-# the block); the entity sits at the block's bottom centre. Column 0 is on the viewer's left
-# (east, +x, for a viewer looking south at a north-facing board). An animation turns the root
-# bone to the board's facing.
-$frontZ = -3.05
-function New-HalfGeometry([int]$half) {
+# One geometry per facing (0 north, 1 east, 2 south, 3 west: the direction the drawing faces) and
+# half (0 = rows 0-7, 1 = rows 8-15); the render controllers pick `facing * 2 + half`. The entity
+# stands at the block's bottom centre with yaw 0.
+#
+# World frame (pixels from the block centre): the board fills the back 5 px of the block, so its
+# front face is 3 px behind the centre: plane = -d * 3 for the facing direction d. The quads sit
+# 0.05 px in front of it. Column 0 is on the viewer's left; columns grow towards the viewer's right
+# r = counter-clockwise(d). Entity models face -z and are turned 180 degrees in game (a mob with yaw
+# 0 faces +z), so model coordinates are the world ones with x and z negated. Each zero-thickness
+# quad is textured on both sides, so the face naming and culling don't matter.
+$dirs = @(@(0, -1), @(1, 0), @(0, 1), @(-1, 0)) # d = (x, z) per facing
+function New-Geometry([int]$facing, [int]$half) {
+    $dx = $dirs[$facing][0]; $dz = $dirs[$facing][1]
+    $rx = $dz; $rz = - $dx # counter-clockwise of d, seen from above
+    $plane = 2.95
     $bones = [System.Collections.Generic.List[object]]::new()
-    $bones.Add([ordered]@{ name = 'root'; pivot = @(0, 0, 0) })
     for ($n = 0; $n -lt 128; $n++) {
         $row = $half * 8 + [int][Math]::Floor($n / 16)
         $col = $n % 16
-        $x = 7 - $col
         $y = 15 - $row
+        $a = -8 + $col; $b = -7 + $col # extent along r
+        if ($rx -ne 0) {
+            $x0 = [Math]::Min($rx * $a, $rx * $b); $sx = 1
+            $z0 = - $dz * $plane; $sz = 0
+        } else {
+            $z0 = [Math]::Min($rz * $a, $rz * $b); $sz = 1
+            $x0 = - $dx * $plane; $sx = 0
+        }
+        # world -> model: negate x and z
+        $mx = - ($x0 + $sx); $mz = - ($z0 + $sz)
+        $uv = [ordered]@{ uv = @($col, $row); uv_size = @(1, 1) }
+        $faces = if ($sz -eq 0) { [ordered]@{ north = $uv; south = $uv } } else { [ordered]@{ east = $uv; west = $uv } }
         $bones.Add([ordered]@{
                 name   = "p$n"
-                parent = 'root'
                 pivot  = @(0, 0, 0)
-                cubes  = @([ordered]@{
-                        origin = @($x, $y, $frontZ)
-                        size   = @(1, 1, 0)
-                        uv     = [ordered]@{ north = [ordered]@{ uv = @($col, $row); uv_size = @(1, 1) } }
-                    })
+                cubes  = @([ordered]@{ origin = @($mx, $y, $mz); size = @($sx, 1, $sz); uv = $faces })
             })
     }
     return [ordered]@{
         description = [ordered]@{
-            identifier            = "geometry.complementaries.blackboard_display_$(@('top', 'bottom')[$half])"
+            identifier            = "geometry.complementaries.blackboard_display_f$($facing)_h$half"
             texture_width         = 16
             texture_height        = 16
             visible_bounds_width  = 2
@@ -130,18 +144,19 @@ function New-HalfGeometry([int]$half) {
         bones       = $bones
     }
 }
-$geo = [ordered]@{ format_version = '1.16.0'; 'minecraft:geometry' = @((New-HalfGeometry 0), (New-HalfGeometry 1)) }
+$geos = foreach ($f in 0..3) { foreach ($h in 0..1) { New-Geometry $f $h } }
+$geo = [ordered]@{ format_version = '1.16.0'; 'minecraft:geometry' = @($geos) }
 $geoPath = Join-Path $rp 'models/entity/blackboard_display.geo.json'
 New-Item -ItemType Directory -Force (Split-Path $geoPath) | Out-Null
 $geo | ConvertTo-Json -Depth 20 -Compress | Set-Content -NoNewline -Encoding utf8NoBOM $geoPath
 
 # ---- render controllers -------------------------------------------------------------------------
+$geoNames = foreach ($f in 0..3) { foreach ($h in 0..1) { "Geometry.f$($f)_h$h" } }
 $controllers = [ordered]@{}
 $entityControllers = [System.Collections.Generic.List[object]]::new()
 foreach ($glow in @($false, $true)) {
     foreach ($v in $colors.Keys) {
         $vis = [System.Collections.Generic.List[object]]::new()
-        $vis.Add([ordered]@{ '*' = $false })
         for ($n = 0; $n -lt 128; $n++) {
             $k = [int][Math]::Floor($n / 6)
             $div = [int][Math]::Pow(16, $n % 6)
@@ -149,8 +164,8 @@ foreach ($glow in @($false, $true)) {
         }
         $name = "controller.render.complementaries.blackboard_c$v" + $(if ($glow) { '_glow' } else { '' })
         $rc = [ordered]@{
-            arrays          = [ordered]@{ geometries = [ordered]@{ 'Array.halves' = @('Geometry.top', 'Geometry.bottom') } }
-            geometry        = "Array.halves[q.property('complementaries:half')]"
+            arrays          = [ordered]@{ geometries = [ordered]@{ 'Array.geos' = @($geoNames) } }
+            geometry        = "Array.geos[q.property('complementaries:facing') * 2 + q.property('complementaries:half')]"
             materials       = @([ordered]@{ '*' = 'Material.default' })
             textures        = @("Texture.c$v")
             part_visibility = $vis
@@ -170,6 +185,8 @@ New-Item -ItemType Directory -Force (Split-Path $rcPath) | Out-Null
 # ---- client entity --------------------------------------------------------------------------------
 $textures = [ordered]@{}
 foreach ($v in $colors.Keys) { $textures["c$v"] = "textures/entity/blackboard/c$v" }
+$geometry = [ordered]@{}
+foreach ($f in 0..3) { foreach ($h in 0..1) { $geometry["f$($f)_h$h"] = "geometry.complementaries.blackboard_display_f$($f)_h$h" } }
 $client = [ordered]@{
     format_version             = '1.10.0'
     'minecraft:client_entity' = [ordered]@{
@@ -177,12 +194,7 @@ $client = [ordered]@{
             identifier         = 'complementaries:blackboard_display'
             materials          = [ordered]@{ default = 'entity_alphatest' }
             textures           = $textures
-            geometry           = [ordered]@{
-                top    = 'geometry.complementaries.blackboard_display_top'
-                bottom = 'geometry.complementaries.blackboard_display_bottom'
-            }
-            animations         = [ordered]@{ facing = 'animation.complementaries.blackboard_display.facing' }
-            scripts            = [ordered]@{ animate = @('facing') }
+            geometry           = $geometry
             render_controllers = $entityControllers
             enable_attachables = $false
             hide_armor         = $true
@@ -192,5 +204,4 @@ $client = [ordered]@{
 $cePath = Join-Path $rp 'entity/blackboard_display.entity.json'
 New-Item -ItemType Directory -Force (Split-Path $cePath) | Out-Null
 $client | ConvertTo-Json -Depth 20 | Set-Content -Encoding utf8NoBOM $cePath
-
 Write-Host 'blackboard textures and renderer written'

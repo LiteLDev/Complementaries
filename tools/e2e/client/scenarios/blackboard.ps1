@@ -80,14 +80,20 @@ Click 0.5 0.5 -Relative -Right
 Wait-LogLine 'blackboard: editor opened at 0:0:-60:3' 15 -Since $mark | Out-Null
 Start-Sleep -Seconds 2
 Save-Screenshot 'editor' | Out-Null
+Move-Mouse 0.5 0.5 -Relative
+Scroll -10
+Start-Sleep -Milliseconds 800
+Save-Screenshot 'editor-scrolled' | Out-Null
 Close-Screen
 Start-Sleep -Seconds 1
 
 # The item keeps the drawing: break the top middle board (drops with destroy) and pick it up.
 Invoke-Chat '/clear @s'
+Invoke-Chat '/gamemode survival'
 Invoke-Chat '/setblock 0 -59 3 air destroy'
 Invoke-Chat '/tp @s 0.5 -60 2.5'
 Start-Sleep -Seconds 2
 Open-Inventory
 Save-Screenshot 'inventory' | Out-Null
 Close-Screen
+Invoke-Chat '/gamemode creative'
