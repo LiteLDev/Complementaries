@@ -107,7 +107,7 @@ inline constexpr std::string_view EmptySliceMap  = "complementaries:empty_slice_
 /// The current server tick (0 without a level).
 [[nodiscard]] std::uint64_t currentTick();
 /// An item stack of `id` (empty stack when the id is unknown).
-[[nodiscard]] ItemStack makeItem(std::string_view id, int count = 1, int aux = 0);
+[[nodiscard]] ItemStack   makeItem(std::string_view id, int count = 1, int aux = 0);
 [[nodiscard]] std::string itemId(ItemStackBase const& item);
 [[nodiscard]] bool        isItem(ItemStackBase const& item, std::string_view id);
 [[nodiscard]] bool        isCreative(Player const& player);
@@ -119,7 +119,7 @@ inline constexpr std::string_view EmptySliceMap  = "complementaries:empty_slice_
 [[nodiscard]] float       length(Vec3 const& v);
 [[nodiscard]] Vec3        normalized(Vec3 const& v);
 /// Unit offset of a Bedrock face id (0 down, 1 up, 2 north, 3 south, 4 west, 5 east).
-[[nodiscard]] BlockPos faceOffset(int face);
+[[nodiscard]] BlockPos     faceOffset(int face);
 [[nodiscard]] BlockSource* regionOf(int dim);
 
 /// Plays a named sound (vanilla or resource-pack sound event) to players near `pos`.
@@ -145,9 +145,9 @@ void consumeOffhand(Player& player, int count = 1);
 void damageMainhand(Player& player, int amount = 1);
 
 /// Integer custom data of an item stack (`cm_*` keys in its user data).
-[[nodiscard]] int intData(ItemStackBase const& item, std::string const& key, int fallback = 0);
-void              setIntData(ItemStackBase& item, std::string const& key, int value);
-void              removeData(ItemStackBase& item, std::string const& key);
+[[nodiscard]] int         intData(ItemStackBase const& item, std::string const& key, int fallback = 0);
+void                      setIntData(ItemStackBase& item, std::string const& key, int value);
+void                      removeData(ItemStackBase& item, std::string const& key);
 [[nodiscard]] std::string stringData(ItemStackBase const& item, std::string const& key);
 void                      setStringData(ItemStackBase& item, std::string const& key, std::string const& value);
 /// Replaces lore lines that start with `prefix` by `line` (removes them when `line` is empty).
@@ -156,12 +156,12 @@ void setLoreLine(ItemStackBase& item, std::string const& prefix, std::string con
 /// Block states by name (`Block::BlockStatesType` style: int / bool / string values).
 using StateValue = std::variant<int, float, bool, std::string>;
 using States     = std::vector<std::pair<std::string, StateValue>>;
-[[nodiscard]] States       blockStates(Block const& block);
+[[nodiscard]] States blockStates(Block const& block);
 /// `id` with `states` (states the block doesn't have are dropped). nullptr if `id` is unknown or
 /// the combination is invalid.
 [[nodiscard]] Block const* blockWithStates(std::string const& id, States const& states);
 /// Replaces the block at `pos`, keeping its block entity data (contents, text, ...).
-bool                       replaceKeepingData(BlockSource& region, BlockPos const& pos, Block const& block);
+bool replaceKeepingData(BlockSource& region, BlockPos const& pos, Block const& block);
 
 /// Supplementaries' Stasis enchantment (stored as `cm_stasis`, see docs/spec/tool.md).
 [[nodiscard]] int stasisLevel(ItemStackBase const& item);
@@ -171,26 +171,26 @@ void              setStasisLevel(ItemStackBase& item, int level);
 // ---- slingshot (Slingshot.cpp) ------------------------------------------------------------------
 namespace slingshot {
 /// Charge time in ticks for this slingshot (Quick Charge aware).
-[[nodiscard]] int   chargeTicks(ItemStackBase const& sling);
+[[nodiscard]] int chargeTicks(ItemStackBase const& sling);
 /// Power 0..1 after `usedTicks` of charging (bow-like curve).
 [[nodiscard]] float power(int usedTicks, ItemStackBase const& sling);
 /// Fires from `player` (release after `usedTicks`). Returns the number of projectiles launched.
-int                 release(Player& player, ItemStack const& sling, int usedTicks);
+int release(Player& player, ItemStack const& sling, int usedTicks);
 /// Launches one projectile carrying `ammo` (count 1) from `from` with `velocity`.
-bool                launch(Player& owner, ItemStack const& ammo, Vec3 const& from, Vec3 const& velocity, int loyalty, int stasis);
-void                tick();
-void                clear();
-[[nodiscard]] int   activeProjectiles();
+bool launch(Player& owner, ItemStack const& ammo, Vec3 const& from, Vec3 const& velocity, int loyalty, int stasis);
+void tick();
+void clear();
+[[nodiscard]] int activeProjectiles();
 } // namespace slingshot
 
 // ---- bubble blower + bubble block (Bubble.cpp) ---------------------------------------------------
 namespace bubble {
 /// One tick of blowing (called while the player keeps using the blower).
-void               blowTick(Player& player, int usedTicks);
+void blowTick(Player& player, int usedTicks);
 /// Use on a block face: places a bubble block in front of it. True when handled.
-bool               useOnBlock(Player& player, BlockPos const& clicked, int face);
+bool useOnBlock(Player& player, BlockPos const& clicked, int face);
 /// Use in the air: refill from soap in the other hand. True when refilled.
-bool               tryRefill(Player& player);
+bool tryRefill(Player& player);
 /// Places a bubble block (tracked; pops after its lifetime).
 bool               placeBubble(int dim, BlockPos const& pos, int lifetime);
 void               pop(int dim, BlockPos const& pos);
@@ -206,14 +206,14 @@ namespace soap {
 /// The clean form of a block (nullptr when it is already clean / not washable).
 [[nodiscard]] Block const* cleanBlock(Block const& block);
 /// Washes the block at `pos` (signs too). True when something changed.
-bool                       washBlock(BlockSource& region, BlockPos const& pos);
+bool washBlock(BlockSource& region, BlockPos const& pos);
 /// Washes an item stack in place. True when something changed.
-bool                       washItem(ItemStack& item);
+bool washItem(ItemStack& item);
 /// Washes an entity (sheep). True when something changed.
-bool                       washEntity(Actor& target);
-bool                       useOnBlock(Player& player, BlockPos const& pos);
-bool                       useOnEntity(Player& player, Actor& target);
-bool                       useInAir(Player& player);
+bool washEntity(Actor& target);
+bool useOnBlock(Player& player, BlockPos const& pos);
+bool useOnEntity(Player& player, Actor& target);
+bool useInAir(Player& player);
 } // namespace soap
 
 // ---- wrench (Wrench.cpp) ------------------------------------------------------------------------
@@ -253,25 +253,25 @@ bool               useInAir(Player& player);
 void               setAntiqueItem(ItemStackBase& item, bool antique);
 [[nodiscard]] bool isSign(Block const& block);
 /// Sign text colour / glow of both sides (`color` ARGB).
-bool               setSignLook(BlockSource& region, BlockPos const& pos, std::uint32_t color, bool glow);
+bool setSignLook(BlockSource& region, BlockPos const& pos, std::uint32_t color, bool glow);
 [[nodiscard]] std::optional<std::uint32_t> signColor(BlockSource& region, BlockPos const& pos);
 } // namespace antique
 
 // ---- slice map (SliceMap.cpp) -------------------------------------------------------------------
 namespace slicemap {
 /// Turns the held empty slice map into a filled slice map. True when done.
-bool                         useInAir(Player& player);
+bool useInAir(Player& player);
 /// Creates a filled slice map item at height `y` around `center`.
-[[nodiscard]] ItemStack      create(int dim, BlockPos const& center, int y);
+[[nodiscard]] ItemStack create(int dim, BlockPos const& center, int y);
 /// Height of a slice map item (nullopt for other items).
 [[nodiscard]] std::optional<int> sliceHeight(ItemStackBase const& item);
 /// Renders `columns` columns of the map (progressively); returns how many were drawn.
-int                          render(std::int64_t mapId, BlockPos const& around, int radius, int columns);
+int render(std::int64_t mapId, BlockPos const& around, int radius, int columns);
 /// The map pixel (ABGR) at map coordinates (x, z).
 [[nodiscard]] std::optional<std::uint32_t> pixel(std::int64_t mapId, int x, int z);
-[[nodiscard]] std::int64_t   mapIdOf(ItemStackBase const& item);
-void                         tick();
-void                         clear();
+[[nodiscard]] std::int64_t                 mapIdOf(ItemStackBase const& item);
+void                                       tick();
+void                                       clear();
 } // namespace slicemap
 
 } // namespace cm::feature::tool

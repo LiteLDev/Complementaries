@@ -19,11 +19,11 @@ namespace cm::feature::tool::wrench {
 namespace {
 
 struct V3 {
-    int x = 0, y = 0, z = 0;
+    int  x = 0, y = 0, z = 0;
     bool operator==(V3 const&) const = default;
 };
 
-V3 cross(V3 a, V3 b) { return {a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x}; }
+V3  cross(V3 a, V3 b) { return {a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x}; }
 int dot(V3 a, V3 b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
 
 /// Rotates `v` by 90 degrees about the unit axis `n`: clockwise as seen from the tip of `n`
@@ -36,7 +36,9 @@ V3 rot(V3 v, V3 n, bool ccw) {
 }
 
 // Bedrock face order: 0 down, 1 up, 2 north, 3 south, 4 west, 5 east.
-constexpr std::array<V3, 6> kFaces = {{{0, -1, 0}, {0, 1, 0}, {0, 0, -1}, {0, 0, 1}, {-1, 0, 0}, {1, 0, 0}}};
+constexpr std::array<V3, 6> kFaces = {
+    {{0, -1, 0}, {0, 1, 0}, {0, 0, -1}, {0, 0, 1}, {-1, 0, 0}, {1, 0, 0}}
+};
 constexpr std::array<std::string_view, 6> kFaceNames = {"down", "up", "north", "south", "west", "east"};
 
 int faceIndex(V3 v) {
@@ -46,9 +48,9 @@ int faceIndex(V3 v) {
 }
 
 /// A horizontal order of directions as faces (e.g. {south, west, north, east}).
-using Order = std::array<int, 4>;
-constexpr Order kSWNE    = {3, 4, 2, 5}; // "direction" of most blocks
-constexpr Order kEWSN    = {5, 4, 3, 2}; // stairs "weirdo_direction", trapdoor "direction"
+using Order           = std::array<int, 4>;
+constexpr Order kSWNE = {3, 4, 2, 5}; // "direction" of most blocks
+constexpr Order kEWSN = {5, 4, 3, 2}; // stairs "weirdo_direction", trapdoor "direction"
 
 int orderIndex(Order const& o, int face) {
     for (int i = 0; i < 4; ++i)
@@ -61,9 +63,9 @@ bool contains(std::string_view s, std::string_view part) { return s.find(part) !
 /// Blocks whose rotation would break a structure or detach them.
 bool unrotatable(std::string_view id) {
     static constexpr std::array<std::string_view, 22> parts = {
-        "bed", "_door", "minecraft:door", "piston_arm", "portal", "torch", "ladder", "wall_sign", "wall_banner",
-        "button", "lever", "tripwire", "vine", "cocoa", "bell", "tall_grass", "large_fern", "sunflower",
-        "lilac", "rose_bush", "peony", "pitcher_plant",
+        "bed",         "_door",     "minecraft:door", "piston_arm", "portal", "torch",         "ladder", "wall_sign",
+        "wall_banner", "button",    "lever",          "tripwire",   "vine",   "cocoa",         "bell",   "tall_grass",
+        "large_fern",  "sunflower", "lilac",          "rose_bush",  "peony",  "pitcher_plant",
     };
     for (auto p : parts)
         if (contains(id, p)) return true;
@@ -72,8 +74,18 @@ bool unrotatable(std::string_view id) {
 
 bool sixWay(std::string_view id) {
     static constexpr std::array<std::string_view, 12> six = {
-        "observer", "dispenser", "dropper", "piston", "barrel", "end_rod", "lightning_rod", "command_block",
-        "amethyst_cluster", "amethyst_bud", "crafter", "chain",
+        "observer",
+        "dispenser",
+        "dropper",
+        "piston",
+        "barrel",
+        "end_rod",
+        "lightning_rod",
+        "command_block",
+        "amethyst_cluster",
+        "amethyst_bud",
+        "crafter",
+        "chain",
     };
     for (auto p : six)
         if (contains(id, p)) return true;
@@ -112,8 +124,8 @@ Block const* rotated(Block const& block, int face, bool ccw) {
             s       = kFaceNames[rotHorizontal(fi, ccw)];
             changed = true;
         } else if ((name == "direction" || name == "weirdo_direction") && std::holds_alternative<int>(value)) {
-            Order const& o  = (name == "weirdo_direction" || contains(id, "trapdoor")) ? kEWSN : kSWNE;
-            int&         v  = std::get<int>(value);
+            Order const& o = (name == "weirdo_direction" || contains(id, "trapdoor")) ? kEWSN : kSWNE;
+            int&         v = std::get<int>(value);
             if (v < 0 || v > 3) continue;
             v       = orderIndex(o, rotHorizontal(o[v], ccw));
             changed = true;
@@ -121,11 +133,16 @@ Block const* rotated(Block const& block, int face, bool ccw) {
             int& v  = std::get<int>(value);
             v       = ((v + (ccw ? -4 : 4)) % 16 + 16) % 16;
             changed = true;
-        } else if ((name == "facing_direction" && std::holds_alternative<int>(value))
-                   || ((name == "minecraft:facing_direction" || name == "minecraft:block_face") && std::holds_alternative<std::string>(value))) {
+        } else if (
+            (name == "facing_direction" && std::holds_alternative<int>(value))
+            || ((name == "minecraft:facing_direction" || name == "minecraft:block_face")
+                && std::holds_alternative<std::string>(value))
+        ) {
             int cur = -1;
             if (std::holds_alternative<int>(value)) cur = std::get<int>(value);
-            else cur = std::find(kFaceNames.begin(), kFaceNames.end(), std::get<std::string>(value)) - kFaceNames.begin();
+            else
+                cur =
+                    std::find(kFaceNames.begin(), kFaceNames.end(), std::get<std::string>(value)) - kFaceNames.begin();
             if (cur < 0 || cur > 5) continue;
             int next;
             if (sixWay(id) || !verticalClick) {
@@ -139,9 +156,9 @@ Block const* rotated(Block const& block, int face, bool ccw) {
             else value = std::string(kFaceNames[next]);
             changed = true;
         } else if (name == "pillar_axis" && std::holds_alternative<std::string>(value)) {
-            auto& s   = std::get<std::string>(value);
-            V3    a   = s == "x" ? V3{1, 0, 0} : s == "z" ? V3{0, 0, 1} : V3{0, 1, 0};
-            V3    r   = rot(a, axis, ccw);
+            auto&       s = std::get<std::string>(value);
+            V3          a = s == "x" ? V3{1, 0, 0} : s == "z" ? V3{0, 0, 1} : V3{0, 1, 0};
+            V3          r = rot(a, axis, ccw);
             std::string n = r.x ? "x" : r.z ? "z" : "y";
             if (n == s) continue;
             s       = n;
@@ -153,8 +170,8 @@ Block const* rotated(Block const& block, int face, bool ccw) {
             } else if (v >= 2 && v <= 5) {
                 // ascending east / west / north / south as faces
                 constexpr std::array<int, 4> asc = {5, 4, 2, 3};
-                int f = rotHorizontal(asc[v - 2], ccw);
-                v     = static_cast<int>(std::find(asc.begin(), asc.end(), f) - asc.begin()) + 2;
+                int                          f   = rotHorizontal(asc[v - 2], ccw);
+                v = static_cast<int>(std::find(asc.begin(), asc.end(), f) - asc.begin()) + 2;
             } else if (v >= 6 && v <= 9) {
                 v = 6 + ((v - 6 + (ccw ? 3 : 1)) % 4);
             } else {
@@ -176,7 +193,8 @@ bool rotateAt(BlockSource& region, BlockPos const& pos, int face, bool ccw) {
     // an extended piston has its arm in front
     if (contains(id, "piston")) {
         for (auto o : kFaces) {
-            if (contains(game::blockIdAt(region, BlockPos{pos.x + o.x, pos.y + o.y, pos.z + o.z}), "piston_arm")) return false;
+            if (contains(game::blockIdAt(region, BlockPos{pos.x + o.x, pos.y + o.y, pos.z + o.z}), "piston_arm"))
+                return false;
         }
     }
     auto const* next = rotated(block, face, ccw);

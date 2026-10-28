@@ -25,7 +25,9 @@ namespace {
 constexpr std::uint32_t kAntiqueColor = 0xFF4E3220; ///< sepia ink
 constexpr std::uint32_t kBlack        = 0xFF000000;
 
-std::string dbKey(int dim, BlockPos const& pos) { return std::format("cm:tool:antique:{}:{}:{}:{}", dim, pos.x, pos.y, pos.z); }
+std::string dbKey(int dim, BlockPos const& pos) {
+    return std::format("cm:tool:antique:{}:{}:{}:{}", dim, pos.x, pos.y, pos.z);
+}
 
 SignBlockActor* signAt(BlockSource& region, BlockPos const& pos) {
     auto* ba = region.getBlockEntity(pos);

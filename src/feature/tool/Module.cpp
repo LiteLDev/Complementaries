@@ -47,7 +47,7 @@ bool recentlyUsedOnBlock(Player& player) {
 
 /// Runs `fn(player)` next tick if the player is still there and still holds `id`.
 void deferForPlayer(Player& player, std::string_view id, std::function<void(Player&)> fn) {
-    std::int64_t uid = player.getOrCreateUniqueID().rawID;
+    std::int64_t uid    = player.getOrCreateUniqueID().rawID;
     lastBlockUse()[uid] = currentTick();
     nextTick([uid, id = std::string(id), fn = std::move(fn)] {
         auto* p = playerById(uid);
@@ -85,10 +85,10 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
     if (item.isNull()) return;
     auto id = itemId(item);
     if (!id.starts_with("complementaries:")) return;
-    BlockPos pos  = ev.blockPos();
-    int      face = static_cast<int>(ev.face());
-    auto&    region = player.getDimensionBlockSource();
-    auto const& block = region.getBlock(pos);
+    BlockPos    pos    = ev.blockPos();
+    int         face   = static_cast<int>(ev.face());
+    auto&       region = player.getDimensionBlockSource();
+    auto const& block  = region.getBlock(pos);
     if (id == ids::Wrench) {
         if (!config().wrench.enabled) return;
         if (config().wrench.bypassWhenSneaking && player.isSneaking()) return;
@@ -164,7 +164,11 @@ LL_TYPE_INSTANCE_HOOK(
 ) {
     if (config().confettiPopper.enabled && isItem(container.getItem(slot), ids::ConfettiPopper)) {
         auto off = faceOffset(face);
-        confetti::burst(static_cast<int>(region.getDimensionId()), pos, Vec3{static_cast<float>(off.x), static_cast<float>(off.y) + 0.1f, static_cast<float>(off.z)});
+        confetti::burst(
+            static_cast<int>(region.getDimensionId()),
+            pos,
+            Vec3{static_cast<float>(off.x), static_cast<float>(off.y) + 0.1f, static_cast<float>(off.z)}
+        );
         container.removeItem(slot, 1);
         log().info("confetti popper fired by a dispenser");
         return true;
@@ -210,10 +214,12 @@ public:
         mListeners.push_back(bus.emplaceListener<ll::event::PlayerInteractBlockEvent>(onInteractBlock));
         mListeners.push_back(bus.emplaceListener<ll::event::ServerLevelTickEvent>([](auto&) { onTick(); }));
         // a projectile left over from a closed world: pick it up as the plain item
-        mListeners.push_back(bus.emplaceListener<ll::event::PlayerPickUpItemEvent>([](ll::event::PlayerPickUpItemEvent& ev) {
-            auto& stack = *ev.itemActor().mItem;
-            if (stack.mUserData && stack.mUserData->contains("cm_sling")) removeData(stack, "cm_sling");
-        }));
+        mListeners.push_back(
+            bus.emplaceListener<ll::event::PlayerPickUpItemEvent>([](ll::event::PlayerPickUpItemEvent& ev) {
+                auto& stack = *ev.itemActor().mItem;
+                if (stack.mUserData && stack.mUserData->contains("cm_sling")) removeData(stack, "cm_sling");
+            })
+        );
         ToolReleaseUsingHook::hook();
         ToolDispenseHook::hook();
         ToolInteractEntityHook::hook();

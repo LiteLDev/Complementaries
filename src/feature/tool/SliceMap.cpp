@@ -31,16 +31,16 @@ namespace cm::feature::tool::slicemap {
 
 namespace {
 
-constexpr int kSize     = 128;
-constexpr int kMaxDepth = 64;
-constexpr int kInitialColumns = 4096; ///< drawn at once when the map is made (the rest while held)
-constexpr std::uint32_t kVoid = 0xFF161210; ///< ABGR: nothing below the slice
+constexpr int           kSize           = 128;
+constexpr int           kMaxDepth       = 64;
+constexpr int           kInitialColumns = 4096;       ///< drawn at once when the map is made (the rest while held)
+constexpr std::uint32_t kVoid           = 0xFF161210; ///< ABGR: nothing below the slice
 
 struct Slice {
-    int dim = 0;
-    int y   = 0;
-    int cx  = 0; ///< world x of map pixel 0
-    int cz  = 0;
+    int dim    = 0;
+    int y      = 0;
+    int cx     = 0; ///< world x of map pixel 0
+    int cz     = 0;
     int cursor = 0;
 };
 
@@ -69,7 +69,9 @@ MapItemSavedData* dataOf(std::int64_t id) {
 }
 
 std::uint32_t abgr(mce::Color const& c, float shade) {
-    auto byte = [shade](float f) { return static_cast<std::uint32_t>(std::lround(std::clamp(f * shade, 0.0f, 1.0f) * 255.0f)); };
+    auto byte = [shade](float f) {
+        return static_cast<std::uint32_t>(std::lround(std::clamp(f * shade, 0.0f, 1.0f) * 255.0f));
+    };
     return 0xFF000000u | (byte(c.b) << 16) | (byte(c.g) << 8) | byte(c.r);
 }
 
@@ -127,13 +129,14 @@ std::int64_t mapIdOf(ItemStackBase const& item) {
 }
 
 std::optional<int> sliceHeight(ItemStackBase const& item) {
-    if (!isItem(item, "minecraft:filled_map") || !item.mUserData || !item.mUserData->contains("cm_slice")) return std::nullopt;
+    if (!isItem(item, "minecraft:filled_map") || !item.mUserData || !item.mUserData->contains("cm_slice"))
+        return std::nullopt;
     return intData(item, "cm_slice", 0);
 }
 
 int render(std::int64_t mapId, BlockPos const& around, int radius, int columns) {
-    auto* s    = sliceOf(mapId);
-    auto* data = dataOf(mapId);
+    auto* s      = sliceOf(mapId);
+    auto* data   = dataOf(mapId);
     auto* region = s ? regionOf(s->dim) : nullptr;
     if (!s || !data || !region) return 0;
     auto& pixels = *data->mPixels;
@@ -142,7 +145,7 @@ int render(std::int64_t mapId, BlockPos const& around, int radius, int columns) 
     int  x0 = kSize, z0 = kSize, x1 = -1, z1 = -1;
     long r2 = static_cast<long>(radius) * radius;
     while (drawn < columns && visited < kSize * kSize) {
-        int idx  = s->cursor;
+        int idx   = s->cursor;
         s->cursor = (s->cursor + 1) % (kSize * kSize);
         ++visited;
         int  px = idx % kSize, pz = idx / kSize;
@@ -154,10 +157,10 @@ int render(std::int64_t mapId, BlockPos const& around, int radius, int columns) 
         ++drawn;
         if (pixels[idx] == *c) continue;
         pixels[idx] = *c;
-        x0 = std::min(x0, px);
-        z0 = std::min(z0, pz);
-        x1 = std::max(x1, px);
-        z1 = std::max(z1, pz);
+        x0          = std::min(x0, px);
+        z0          = std::min(z0, pz);
+        x1          = std::max(x1, px);
+        z1          = std::max(z1, pz);
     }
     if (x1 >= 0) markDirty(*data, x0, z0, x1, z1);
     return drawn;
@@ -175,10 +178,10 @@ ItemStack create(int dim, BlockPos const& centerPos, int y) {
     auto* l = level();
     if (!l) return ItemStack::EMPTY_ITEM();
     // the same grid as vanilla maps of scale 0: 128 x 128 blocks
-    int  x0  = static_cast<int>(std::floor((centerPos.x + 64.0) / kSize)) * kSize - 64;
-    int  z0  = static_cast<int>(std::floor((centerPos.z + 64.0) / kSize)) * kSize - 64;
-    auto uid = l->getNewUniqueID();
-    auto& data = l->createMapSavedData(uid, BlockPos{x0 + 64, 0, z0 + 64}, DimensionType(dim), 0);
+    int   x0     = static_cast<int>(std::floor((centerPos.x + 64.0) / kSize)) * kSize - 64;
+    int   z0     = static_cast<int>(std::floor((centerPos.z + 64.0) / kSize)) * kSize - 64;
+    auto  uid    = l->getNewUniqueID();
+    auto& data   = l->createMapSavedData(uid, BlockPos{x0 + 64, 0, z0 + 64}, DimensionType(dim), 0);
     data.mLocked = true;
     data.mPixels->assign(kSize * kSize, kVoid);
     ItemStack map = makeItem("minecraft:filled_map");
@@ -187,8 +190,21 @@ ItemStack create(int dim, BlockPos const& centerPos, int y) {
     setIntData(map, "cm_slice", y);
     setLoreLine(map, loreFor(y).substr(0, 6), loreFor(y));
     slices()[uid.rawID] = Slice{dim, y, x0, z0, 0};
-    game::db::save(dbKey(uid.rawID), {{"dim", dim}, {"y", y}, {"x0", x0}, {"z0", z0}});
-    render(uid.rawID, centerPos, static_cast<int>(64 * std::max(0.1f, config().sliceMap.rangeMultiplier)), kInitialColumns);
+    game::db::save(
+        dbKey(uid.rawID),
+        {
+            {"dim", dim},
+            {"y",   y  },
+            {"x0",  x0 },
+            {"z0",  z0 }
+    }
+    );
+    render(
+        uid.rawID,
+        centerPos,
+        static_cast<int>(64 * std::max(0.1f, config().sliceMap.rangeMultiplier)),
+        kInitialColumns
+    );
     log().info("slice map {} created at height {}", uid.rawID, y);
     return map;
 }
@@ -208,7 +224,13 @@ bool useInAir(Player& player) {
         if (!player.add(copy)) player.drop(map, false);
         player.sendInventory(false);
     }
-    playSound(static_cast<int>(player.getDimensionId()), player.getPosition(), "ui.cartography_table.take_result", 1.0f, 1.0f);
+    playSound(
+        static_cast<int>(player.getDimensionId()),
+        player.getPosition(),
+        "ui.cartography_table.take_result",
+        1.0f,
+        1.0f
+    );
     return true;
 }
 
@@ -220,8 +242,8 @@ void tick() {
     l->forEachPlayer([radius](Player& p) {
         for (auto const* item : {&p.getSelectedItem(), &p.getOffhandSlot()}) {
             if (!sliceHeight(*item)) continue;
-            auto id = mapIdOf(*item);
-            auto* s = id ? sliceOf(id) : nullptr;
+            auto  id = mapIdOf(*item);
+            auto* s  = id ? sliceOf(id) : nullptr;
             if (s && s->dim == static_cast<int>(p.getDimensionId())) render(id, p.getFeetBlockPos(), radius, 1024);
         }
         return true;

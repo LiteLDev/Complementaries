@@ -84,18 +84,21 @@ int callPets(Player& player, ItemStack& fluteItem) {
         std::int64_t id = 0;
         try {
             id = std::stoll(bound);
-        } catch (...) {
-        }
+        } catch (...) {}
         auto* pet = id ? actorById(id) : nullptr;
         if (pet && pet->getDimensionId() == player.getDimensionId()
-            && pet->getPosition().distanceTo(player.getPosition()) <= static_cast<float>(config().flute.boundDistance)) {
+            && pet->getPosition().distanceTo(player.getPosition())
+                   <= static_cast<float>(config().flute.boundDistance)) {
             bringPet(player, *pet, 0);
             ++count;
         }
     } else {
         float r = static_cast<float>(std::max(1, config().flute.unboundRadius));
         Vec3  p = player.getPosition();
-        AABB  box{Vec3{p.x - r, p.y - r, p.z - r}, Vec3{p.x + r, p.y + r, p.z + r}};
+        AABB  box{
+            Vec3{p.x - r, p.y - r, p.z - r},
+            Vec3{p.x + r, p.y + r, p.z + r}
+        };
         std::vector<Actor*> pets;
         for (Actor* a : player.getDimensionBlockSource().fetchEntities(&player, box, false, false)) {
             if (!a->isAlive()) continue;
@@ -144,7 +147,11 @@ bool useOnEntity(Player& player, Actor& target) {
     setLoreLine(item, boundPrefix(), boundPrefix() + name);
     setMainhand(player, item);
     player.sendMessage(trFor(player, "message.supplementaries.flute.bound", "Bound to: {}", name));
-    particle(static_cast<int>(target.getDimensionId()), target.getPosition() + Vec3{0, 1.0f, 0}, "minecraft:heart_particle");
+    particle(
+        static_cast<int>(target.getDimensionId()),
+        target.getPosition() + Vec3{0, 1.0f, 0},
+        "minecraft:heart_particle"
+    );
     log().info("flute bound to {} by {}", name, player.getRealName());
     return true;
 }
@@ -168,7 +175,8 @@ void tick() {
         auto t = now();
         for (auto const& d : dancers()) {
             if (d.until > t) continue;
-            if (auto* a = actorById(d.actor)) SynchedActorDataAccess::setActorFlag(a->getEntityContext(), ActorFlags::Dancing, false);
+            if (auto* a = actorById(d.actor))
+                SynchedActorDataAccess::setActorFlag(a->getEntityContext(), ActorFlags::Dancing, false);
         }
         std::erase_if(dancers(), [t](Dancer const& d) { return d.until <= t; });
     }

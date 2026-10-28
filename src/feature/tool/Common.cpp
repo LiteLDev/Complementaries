@@ -4,20 +4,16 @@
 
 #include "ll/api/service/Bedrock.h"
 
+#include "game/Blocks.h"
+#include "mc/dataloadhelper/DefaultDataLoadHelper.h"
 #include "mc/deps/core/math/Vec2.h"
 #include "mc/deps/core/string/HashedString.h"
+#include "mc/deps/nbt/ByteTag.h"
 #include "mc/deps/nbt/CompoundTag.h"
 #include "mc/deps/nbt/CompoundTagVariant.h"
-#include "mc/dataloadhelper/DefaultDataLoadHelper.h"
-#include "mc/deps/nbt/ByteTag.h"
 #include "mc/deps/nbt/FloatTag.h"
 #include "mc/deps/nbt/IntTag.h"
 #include "mc/deps/nbt/StringTag.h"
-#include "mc/world/item/SaveContextFactory.h"
-#include "mc/world/level/block/Block.h"
-#include "mc/world/level/block/BlockType.h"
-#include "mc/world/level/block/actor/BlockActor.h"
-#include "game/Blocks.h"
 #include "mc/network/MinecraftPacketIds.h"
 #include "mc/network/MinecraftPackets.h"
 #include "mc/network/packet/PlaySoundPacket.h"
@@ -26,12 +22,16 @@
 #include "mc/world/actor/player/Player.h"
 #include "mc/world/item/Item.h"
 #include "mc/world/item/ItemStack.h"
+#include "mc/world/item/SaveContextFactory.h"
 #include "mc/world/item/enchanting/Enchant.h"
 #include "mc/world/item/enchanting/EnchantUtils.h"
 #include "mc/world/level/BlockSource.h"
 #include "mc/world/level/GameType.h"
 #include "mc/world/level/Level.h"
 #include "mc/world/level/Tick.h"
+#include "mc/world/level/block/Block.h"
+#include "mc/world/level/block/BlockType.h"
+#include "mc/world/level/block/actor/BlockActor.h"
 #include "mc/world/level/dimension/Dimension.h"
 
 #include "feature/tool/Tool.h"
@@ -131,10 +131,10 @@ BlockSource* regionOf(int dim) {
 void playSound(int dim, Vec3 const& pos, std::string const& name, float volume, float pitch) {
     auto packet = MinecraftPackets::createPacket(MinecraftPacketIds::PlaySound);
     if (!packet) return;
-    auto& pkt   = static_cast<PlaySoundPacket&>(*packet);
-    pkt.mName   = name;
+    auto& pkt = static_cast<PlaySoundPacket&>(*packet);
+    pkt.mName = name;
     // the protocol carries the position in 1/8 blocks
-    pkt.mPos    = BlockPos{
+    pkt.mPos = BlockPos{
         static_cast<int>(std::floor(pos.x * 8.0f)),
         static_cast<int>(std::floor(pos.y * 8.0f)),
         static_cast<int>(std::floor(pos.z * 8.0f)),
@@ -267,7 +267,7 @@ void setLoreLine(ItemStackBase& item, std::string const& prefix, std::string con
 }
 
 States blockStates(Block const& block) {
-    States       out;
+    States      out;
     auto const& ser = *block.mSerializationId;
     if (!ser.contains("states")) return out;
     auto const& st = ser["states"];
@@ -275,7 +275,8 @@ States blockStates(Block const& block) {
     for (auto const& [name, v] : st.items()) {
         if (v.hold<IntTag>()) out.emplace_back(name, static_cast<int>(v.get<IntTag>().data));
         else if (v.hold<ByteTag>()) out.emplace_back(name, v.get<ByteTag>().data != 0);
-        else if (v.hold<StringTag>()) out.emplace_back(name, std::string(static_cast<std::string const&>(v.get<StringTag>())));
+        else if (v.hold<StringTag>())
+            out.emplace_back(name, std::string(static_cast<std::string const&>(v.get<StringTag>())));
         else if (v.hold<FloatTag>()) out.emplace_back(name, v.get<FloatTag>().data);
     }
     return out;

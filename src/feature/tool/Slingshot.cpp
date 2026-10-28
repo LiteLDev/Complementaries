@@ -38,21 +38,21 @@ constexpr float kGravity = 0.04f; ///< item entity gravity per tick
 constexpr int   kMaxAge  = 20 * 30;
 /// Pickup delay of a flying projectile, renewed every tick: an untracked one (world closed in
 /// flight) becomes an ordinary item soon after.
-constexpr int   kFlightPickupDelay = 40;
+constexpr int kFlightPickupDelay = 40;
 
 struct Projectile {
-    std::int64_t actor   = 0;
-    std::int64_t owner   = 0;
-    ItemStack    ammo;          ///< the item without the in-flight marker
+    std::int64_t actor = 0;
+    std::int64_t owner = 0;
+    ItemStack    ammo; ///< the item without the in-flight marker
     Vec3         lastPos;
     Vec3         stasisVel;
-    int          age        = 0;
-    int          loyalty    = 0;
-    int          stasis     = 0;
-    bool         falling    = false; ///< stasis projectile slowed down: normal gravity again
-    bool         returning  = false;
-    int          returnAge  = 0;
-    bool         done       = false;
+    int          age       = 0;
+    int          loyalty   = 0;
+    int          stasis    = 0;
+    bool         falling   = false; ///< stasis projectile slowed down: normal gravity again
+    bool         returning = false;
+    int          returnAge = 0;
+    bool         done      = false;
 };
 
 std::vector<Projectile>& projectiles() {
@@ -63,7 +63,7 @@ std::vector<Projectile>& projectiles() {
 int gCounter = 0;
 
 bool blacklisted(ItemStack const& item) {
-    auto id = itemId(item);
+    auto        id   = itemId(item);
     auto const& list = config().slingshot.ammoBlacklist;
     return std::find(list.begin(), list.end(), id) != list.end();
 }
@@ -108,7 +108,7 @@ Vec3 rotateY(Vec3 const& v, float degrees) {
 
 /// Segment a->b against a box: the entry fraction in [0, 1], or nullopt.
 std::optional<float> segmentHits(Vec3 const& a, Vec3 const& b, AABB const& box) {
-    float tmin = 0.0f, tmax = 1.0f;
+    float       tmin = 0.0f, tmax = 1.0f;
     float const from[3] = {a.x, a.y, a.z};
     float const to[3]   = {b.x, b.y, b.z};
     float const lo[3]   = {box.min.x, box.min.y, box.min.z};
@@ -160,10 +160,20 @@ bool tryPlace(Projectile& p, Actor& a, BlockSource& region, BlockPos const& hit,
     Block const* block = p.ammo.mBlock;
     if (!block || block->isAir() || p.ammo.mUserData) return false;
     auto id = itemId(p.ammo);
-    for (std::string_view part : {"bed", "door", "tall_grass", "large_fern", "sunflower", "lilac", "rose_bush", "peony", "pitcher_plant", "dripleaf"}) {
+    for (std::string_view part :
+         {"bed",
+          "door",
+          "tall_grass",
+          "large_fern",
+          "sunflower",
+          "lilac",
+          "rose_bush",
+          "peony",
+          "pitcher_plant",
+          "dripleaf"}) {
         if (id.find(part) != std::string::npos && id.find("trapdoor") == std::string::npos) return false;
     }
-    auto off = faceOffset(face);
+    auto     off = faceOffset(face);
     BlockPos target{hit.x + off.x, hit.y + off.y, hit.z + off.z};
     if (!game::replaceable(region, target)) return false;
     if (!block->getBlockType().mayPlace(region, target)) return false;
@@ -190,10 +200,18 @@ void hitBlock(Projectile& p, Actor& a, BlockSource& region, BlockPos const& hit,
         return;
     }
     if (id == "minecraft:egg") {
-        auto* l = level();
+        auto*                   l = level();
         static std::minstd_rand rng{std::random_device{}()};
         if (l && rng() % 8 == 0) {
-            l->getSpawner().spawnMob(region, ActorDefinitionIdentifier("minecraft:chicken<minecraft:entity_born>"), nullptr, hitPos, false, true, false);
+            l->getSpawner().spawnMob(
+                region,
+                ActorDefinitionIdentifier("minecraft:chicken<minecraft:entity_born>"),
+                nullptr,
+                hitPos,
+                false,
+                true,
+                false
+            );
         }
         particle(dim, hitPos, "minecraft:egg_destroy_emitter");
         finish(p, a);
@@ -208,13 +226,21 @@ void hitBlock(Projectile& p, Actor& a, BlockSource& region, BlockPos const& hit,
         return;
     }
     auto off = faceOffset(face);
-    dropAt(region, p.ammo, Vec3{hitPos.x + off.x * 0.2f, hitPos.y + std::max(0, off.y) * 0.1f, hitPos.z + off.z * 0.2f});
+    dropAt(
+        region,
+        p.ammo,
+        Vec3{hitPos.x + off.x * 0.2f, hitPos.y + std::max(0, off.y) * 0.1f, hitPos.z + off.z * 0.2f}
+    );
     finish(p, a);
 }
 
 void hitEntity(Projectile& p, Actor& a, Actor& target, Vec3 const& dir) {
     auto* owner = playerById(p.owner);
-    target.hurtByCause(1.0f, SharedTypes::Legacy::ActorDamageCause::Projectile, owner ? optional_ref<Actor>(*owner) : std::nullopt);
+    target.hurtByCause(
+        1.0f,
+        SharedTypes::Legacy::ActorDamageCause::Projectile,
+        owner ? optional_ref<Actor>(*owner) : std::nullopt
+    );
     if (!target.isType(ActorType::ItemEntity)) {
         Vec3 push = normalized(Vec3{dir.x, 0, dir.z});
         auto v    = target.getPosDelta();
@@ -277,9 +303,9 @@ bool launch(Player& owner, ItemStack const& ammo, Vec3 const& from, Vec3 const& 
     ia->mPickupDelay = kFlightPickupDelay;
     setVelocity(*ia, velocity);
     Projectile p;
-    p.actor     = ia->getOrCreateUniqueID().rawID;
-    p.owner     = owner.getOrCreateUniqueID().rawID;
-    p.ammo      = ammo;
+    p.actor = ia->getOrCreateUniqueID().rawID;
+    p.owner = owner.getOrCreateUniqueID().rawID;
+    p.ammo  = ammo;
     p.ammo.set(1);
     p.lastPos   = from;
     p.stasisVel = velocity;
@@ -293,14 +319,14 @@ int release(Player& player, ItemStack const& sling, int usedTicks) {
     if (!config().slingshot.enabled) return 0;
     float pw = power(usedTicks, sling);
     if (pw < 0.1f) return 0;
-    int   multishot = enchantLevel(sling, static_cast<int>(Enchant::Type::Multishot));
-    int   loyalty   = enchantLevel(sling, static_cast<int>(Enchant::Type::Loyalty));
-    int   stasis    = stasisLevel(sling);
-    Vec3  dir       = lookVector(player);
-    Vec3  from      = eyePos(player) - Vec3{0, 0.15f, 0} + dir * 0.3f;
-    float speed     = 1.5f * pw * config().slingshot.rangeMultiplier;
-    std::vector<float> angles = multishot > 0 ? std::vector<float>{0.0f, -10.0f, 10.0f} : std::vector<float>{0.0f};
-    int fired = 0;
+    int                multishot = enchantLevel(sling, static_cast<int>(Enchant::Type::Multishot));
+    int                loyalty   = enchantLevel(sling, static_cast<int>(Enchant::Type::Loyalty));
+    int                stasis    = stasisLevel(sling);
+    Vec3               dir       = lookVector(player);
+    Vec3               from      = eyePos(player) - Vec3{0, 0.15f, 0} + dir * 0.3f;
+    float              speed     = 1.5f * pw * config().slingshot.rangeMultiplier;
+    std::vector<float> angles    = multishot > 0 ? std::vector<float>{0.0f, -10.0f, 10.0f} : std::vector<float>{0.0f};
+    int                fired     = 0;
     for (float angle : angles) {
         ItemStack ammo = takeAmmo(player);
         if (ammo.isNull()) break;
@@ -330,7 +356,7 @@ void tick() {
         }
         ++p.age;
         static_cast<ItemActor*>(a)->mPickupDelay = kFlightPickupDelay;
-        auto& region = a->getDimensionBlockSource();
+        auto& region                             = a->getDimensionBlockSource();
         if (p.returning) {
             tickReturn(p, *a);
             continue;
@@ -345,10 +371,10 @@ void tick() {
         Vec3 next = pos + vel;
 
         // the closest of: a block on the path, a living entity on the path
-        float        bestT = 2.0f;
-        HitResult    blockHit;
-        bool         hasBlock = false;
-        blockHit              = region.clip(
+        float     bestT = 2.0f;
+        HitResult blockHit;
+        bool      hasBlock = false;
+        blockHit           = region.clip(
             p.lastPos,
             next,
             false,
@@ -360,7 +386,7 @@ void tick() {
             [](BlockSource const&, Block const&, bool) { return true; },
             false
         );
-        Vec3 seg = next - p.lastPos;
+        Vec3  seg    = next - p.lastPos;
         float segLen = length(seg);
         if (blockHit.mType == HitResultType::Tile && segLen > 1e-5f) {
             hasBlock = true;
@@ -368,11 +394,20 @@ void tick() {
         }
         Actor* target = nullptr;
         AABB   sweep{
-            Vec3{std::min(p.lastPos.x, next.x) - 1.0f, std::min(p.lastPos.y, next.y) - 1.0f, std::min(p.lastPos.z, next.z) - 1.0f},
-            Vec3{std::max(p.lastPos.x, next.x) + 1.0f, std::max(p.lastPos.y, next.y) + 1.0f, std::max(p.lastPos.z, next.z) + 1.0f}
+            Vec3{
+                 std::min(p.lastPos.x, next.x) - 1.0f,
+                 std::min(p.lastPos.y, next.y) - 1.0f,
+                 std::min(p.lastPos.z, next.z) - 1.0f
+            },
+            Vec3{
+                 std::max(p.lastPos.x, next.x) + 1.0f,
+                 std::max(p.lastPos.y, next.y) + 1.0f,
+                 std::max(p.lastPos.z, next.z) + 1.0f
+            }
         };
         for (Actor* other : region.fetchEntities(a, sweep, true, false)) {
-            if (other->isType(ActorType::ItemEntity) || !other->hasCategory(ActorCategory::Mob) || !other->isAlive()) continue;
+            if (other->isType(ActorType::ItemEntity) || !other->hasCategory(ActorCategory::Mob) || !other->isAlive())
+                continue;
             if (p.age < 6 && other->getOrCreateUniqueID().rawID == p.owner) continue;
             AABB box = other->getAABB();
             box.min  = box.min - Vec3{0.15f, 0.15f, 0.15f};

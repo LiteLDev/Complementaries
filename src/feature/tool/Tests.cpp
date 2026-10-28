@@ -3,7 +3,10 @@
 #include <cmath>
 
 #include "mc/deps/core/math/Vec2.h"
+#include "mc/deps/core/string/HashedString.h"
+#include "mc/deps/nbt/CompoundTag.h"
 #include "mc/deps/shared_types/legacy/actor/PaletteColor.h"
+#include "mc/scripting/modules/minecraft/ScriptFacing.h"
 #include "mc/server/SimulatedPlayer.h"
 #include "mc/server/sim/LookDuration.h"
 #include "mc/world/actor/Actor.h"
@@ -24,9 +27,6 @@
 #include "mc/world/level/Spawner.h"
 #include "mc/world/level/block/Block.h"
 #include "mc/world/level/block/BlockType.h"
-#include "mc/deps/core/string/HashedString.h"
-#include "mc/deps/nbt/CompoundTag.h"
-#include "mc/scripting/modules/minecraft/ScriptFacing.h"
 
 #include "feature/tool/Tool.h"
 #include "game/Blocks.h"
@@ -39,8 +39,12 @@ using cm::selftest::Context;
 namespace tool = cm::feature::tool;
 namespace game = cm::game;
 
-BlockPos bp(cm::core::GlobalPos const& p, int dx = 0, int dy = 0, int dz = 0) { return BlockPos{p.x + dx, p.y + dy, p.z + dz}; }
-cm::core::GlobalPos gp(cm::core::GlobalPos const& p, int dx = 0, int dy = 0, int dz = 0) { return {p.dim, p.x + dx, p.y + dy, p.z + dz}; }
+BlockPos bp(cm::core::GlobalPos const& p, int dx = 0, int dy = 0, int dz = 0) {
+    return BlockPos{p.x + dx, p.y + dy, p.z + dz};
+}
+cm::core::GlobalPos gp(cm::core::GlobalPos const& p, int dx = 0, int dy = 0, int dz = 0) {
+    return {p.dim, p.x + dx, p.y + dy, p.z + dz};
+}
 
 std::string stateString(Block const& b, std::string const& name) {
     for (auto const& [n, v] : tool::blockStates(b)) {
@@ -58,11 +62,12 @@ void hold(Context& ctx, Player& p, ItemStack const& item) { ctx.give(p, item, p.
 Mob* spawnMob(Player& near, std::string const& id, Vec3 const& pos) {
     auto* l = tool::level();
     if (!l) return nullptr;
-    return l->getSpawner().spawnMob(near.getDimensionBlockSource(), ActorDefinitionIdentifier(id), nullptr, pos, false, true, false);
+    return l->getSpawner()
+        .spawnMob(near.getDimensionBlockSource(), ActorDefinitionIdentifier(id), nullptr, pos, false, true, false);
 }
 
 int countItem(Player& p, std::string_view id) {
-    int  n   = 0;
+    int   n   = 0;
     auto& inv = p.getInventory();
     for (int i = 0; i < inv.getContainerSize(); ++i)
         if (tool::isItem(inv.getItem(i), id)) n += inv.getItem(i).mCount;
@@ -73,13 +78,28 @@ int countItem(Player& p, std::string_view id) {
 } // namespace
 
 CM_REGISTER_SELFTEST("tool.content", [](Context& ctx) {
-    for (auto id : {tool::ids::Slingshot, tool::ids::BubbleBlower, tool::ids::Soap, tool::ids::Wrench, tool::ids::Flute,
-                    tool::ids::ConfettiPopper, tool::ids::AntiqueInk, tool::ids::EmptySliceMap}) {
+    for (auto id :
+         {tool::ids::Slingshot,
+          tool::ids::BubbleBlower,
+          tool::ids::Soap,
+          tool::ids::Wrench,
+          tool::ids::Flute,
+          tool::ids::ConfettiPopper,
+          tool::ids::AntiqueInk,
+          tool::ids::EmptySliceMap}) {
         ctx.check(!tool::makeItem(id).isNull(), std::string(id) + " is registered (behavior pack)");
     }
     ctx.check(game::blockWith(tool::ids::BubbleBlock) != nullptr, "bubble_block is registered");
-    ctx.check(tool::config().version >= 1 && tool::config().slingshot.chargeTime == 20, "tool config defaults are loaded");
-    ctx.check(tool::fmtCode("r7") == "\xc2\xa7r\xc2\xa7" "7", "format codes");
+    ctx.check(
+        tool::config().version >= 1 && tool::config().slingshot.chargeTime == 20,
+        "tool config defaults are loaded"
+    );
+    ctx.check(
+        tool::fmtCode("r7")
+            == "\xc2\xa7r\xc2\xa7"
+               "7",
+        "format codes"
+    );
 });
 
 CM_REGISTER_SELFTEST("tool.slingshot_power", [](Context& ctx) {
@@ -88,27 +108,34 @@ CM_REGISTER_SELFTEST("tool.slingshot_power", [](Context& ctx) {
     ctx.check(tool::slingshot::power(0, sling) == 0.0f, "no power without charging");
     ctx.check(std::abs(tool::slingshot::power(20, sling) - 1.0f) < 1e-4f, "full power at full charge");
     ctx.check(std::abs(tool::slingshot::power(80, sling) - 1.0f) < 1e-4f, "power is capped");
-    ctx.check(tool::slingshot::power(10, sling) > 0.3f && tool::slingshot::power(10, sling) < 1.0f, "half charge gives partial power");
+    ctx.check(
+        tool::slingshot::power(10, sling) > 0.3f && tool::slingshot::power(10, sling) < 1.0f,
+        "half charge gives partial power"
+    );
 });
 
 CM_REGISTER_SELFTEST("tool.slingshot_places_block", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(1600);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
-    auto& p = ctx.player();
+    auto& p    = ctx.player();
     auto  wall = gp(base, 0, 2, 0);
     ctx.require(ctx.setBlock(wall, "minecraft:gold_block"), "wall placed");
     for (int dy = -2; dy <= 2; ++dy)
         for (int dz = -1; dz <= 1; ++dz) ctx.cleanupBlock(gp(wall, -1, dy, dz));
     Vec3 from{static_cast<float>(wall.x) - 3.5f, static_cast<float>(wall.y) + 0.6f, static_cast<float>(wall.z) + 0.5f};
     int  before = tool::slingshot::activeProjectiles();
-    ctx.require(tool::slingshot::launch(p, tool::makeItem("minecraft:cobblestone"), from, Vec3{0.9f, 0.1f, 0.0f}, 0, 0), "projectile launched");
+    ctx.require(
+        tool::slingshot::launch(p, tool::makeItem("minecraft:cobblestone"), from, Vec3{0.9f, 0.1f, 0.0f}, 0, 0),
+        "projectile launched"
+    );
     ctx.check(tool::slingshot::activeProjectiles() == before + 1, "projectile is tracked");
     auto& region = p.getDimensionBlockSource();
     bool  placed = false;
     for (int t = 0; t < 60 && !placed; ++t) {
         co_await ctx.ticks(1);
         for (int dy = -2; dy <= 2 && !placed; ++dy)
-            for (int dz = -1; dz <= 1 && !placed; ++dz) placed = game::blockIdAt(region, bp(wall, -1, dy, dz)) == "minecraft:cobblestone";
+            for (int dz = -1; dz <= 1 && !placed; ++dz)
+                placed = game::blockIdAt(region, bp(wall, -1, dy, dz)) == "minecraft:cobblestone";
     }
     ctx.check(placed, "the cobblestone was placed against the wall");
     ctx.check(tool::slingshot::activeProjectiles() == before, "projectile finished");
@@ -142,10 +169,16 @@ CM_REGISTER_SELFTEST("tool.slingshot_loyalty", [](Context& ctx) -> ll::coro::Cor
     auto& p    = ctx.player();
     auto  wall = gp(base, 0, 2, 0);
     ctx.require(ctx.setBlock(wall, "minecraft:gold_block"), "wall placed");
-    p.teleport(Vec3{static_cast<float>(wall.x) - 4.5f, static_cast<float>(base.y) + 1.0f, static_cast<float>(wall.z) + 0.5f}, p.getDimensionId());
+    p.teleport(
+        Vec3{static_cast<float>(wall.x) - 4.5f, static_cast<float>(base.y) + 1.0f, static_cast<float>(wall.z) + 0.5f},
+        p.getDimensionId()
+    );
     co_await ctx.ticks(2);
     Vec3 from{static_cast<float>(wall.x) - 3.0f, static_cast<float>(wall.y) + 0.6f, static_cast<float>(wall.z) + 0.5f};
-    ctx.require(tool::slingshot::launch(p, tool::makeItem("minecraft:bone"), from, Vec3{0.8f, 0.1f, 0.0f}, 2, 0), "projectile launched");
+    ctx.require(
+        tool::slingshot::launch(p, tool::makeItem("minecraft:bone"), from, Vec3{0.8f, 0.1f, 0.0f}, 2, 0),
+        "projectile launched"
+    );
     bool back = false;
     for (int t = 0; t < 200 && !back; ++t) {
         co_await ctx.ticks(1);
@@ -171,7 +204,10 @@ CM_REGISTER_SELFTEST("tool.bubble_block", [](Context& ctx) -> ll::coro::CoroTask
     // standing on a bubble pops it shortly after
     ctx.require(tool::bubble::placeBubble(b.dim, bp(b), 20 * 60), "second bubble placed");
     auto& p = ctx.player();
-    p.teleport(Vec3{static_cast<float>(b.x) + 0.5f, static_cast<float>(b.y) + 1.0f, static_cast<float>(b.z) + 0.5f}, p.getDimensionId());
+    p.teleport(
+        Vec3{static_cast<float>(b.x) + 0.5f, static_cast<float>(b.y) + 1.0f, static_cast<float>(b.z) + 0.5f},
+        p.getDimensionId()
+    );
     bool popped = false;
     for (int t = 0; t < 40 && !popped; ++t) {
         co_await ctx.ticks(1);
@@ -183,16 +219,22 @@ CM_REGISTER_SELFTEST("tool.bubble_block", [](Context& ctx) -> ll::coro::CoroTask
 CM_REGISTER_SELFTEST("tool.bubble_blower", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(1620);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
-    auto& p  = ctx.player();
-    auto& sp = static_cast<SimulatedPlayer&>(p);
+    auto& p      = ctx.player();
+    auto& sp     = static_cast<SimulatedPlayer&>(p);
     auto  ground = gp(base, 0, 1, 0);
     ctx.require(ctx.setBlock(ground, "minecraft:stone"), "ground placed");
     ctx.cleanupBlock(gp(ground, 0, 1, 0));
     hold(ctx, p, tool::makeItem(tool::ids::BubbleBlower));
     ctx.require(tool::bubble::useOnBlock(p, bp(ground), 1), "used on a block");
     auto& region = p.getDimensionBlockSource();
-    ctx.check(game::blockIdAt(region, bp(ground, 0, 1)) == tool::ids::BubbleBlock, "bubble block placed on the clicked face");
-    ctx.check(p.getSelectedItem().getDamageValue() == tool::config().bubbleBlower.bubbleBlockCost, "placing costs charges");
+    ctx.check(
+        game::blockIdAt(region, bp(ground, 0, 1)) == tool::ids::BubbleBlock,
+        "bubble block placed on the clicked face"
+    );
+    ctx.check(
+        p.getSelectedItem().getDamageValue() == tool::config().bubbleBlower.bubbleBlockCost,
+        "placing costs charges"
+    );
     tool::bubble::pop(ground.dim, bp(ground, 0, 1));
     // blowing uses charges while the use button is held
     int before = p.getSelectedItem().getDamageValue();
@@ -216,10 +258,10 @@ CM_REGISTER_SELFTEST("tool.soap_blocks", [](Context& ctx) -> ll::coro::CoroTask<
         char const* to;
     };
     Case cases[] = {
-        {"minecraft:red_wool", "minecraft:white_wool"},
-        {"minecraft:light_blue_stained_glass", "minecraft:glass"},
-        {"minecraft:lime_terracotta", "minecraft:hardened_clay"},
-        {"minecraft:cyan_carpet", "minecraft:white_carpet"},
+        {"minecraft:red_wool",                 "minecraft:white_wool"   },
+        {"minecraft:light_blue_stained_glass", "minecraft:glass"        },
+        {"minecraft:lime_terracotta",          "minecraft:hardened_clay"},
+        {"minecraft:cyan_carpet",              "minecraft:white_carpet" },
     };
     int dx = 0;
     for (auto const& c : cases) {
@@ -232,7 +274,16 @@ CM_REGISTER_SELFTEST("tool.soap_blocks", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.require(ctx.setBlock(white, "minecraft:white_wool"), "placed white wool");
     ctx.check(!tool::soap::washBlock(region, bp(white)), "white wool is already clean");
     auto piston = gp(base, dx++, 1, 0);
-    ctx.require(ctx.setBlock(piston, "minecraft:sticky_piston", {{"facing_direction", 2}}), "placed a sticky piston");
+    ctx.require(
+        ctx.setBlock(
+            piston,
+            "minecraft:sticky_piston",
+            {
+                {"facing_direction", 2}
+    }
+        ),
+        "placed a sticky piston"
+    );
     ctx.check(tool::soap::washBlock(region, bp(piston)), "washed the sticky piston");
     auto const& washed = region.getBlock(bp(piston));
     ctx.check(washed.getTypeName() == "minecraft:piston", "sticky piston -> piston");
@@ -245,7 +296,10 @@ CM_REGISTER_SELFTEST("tool.soap_items_and_sheep", [](Context& ctx) -> ll::coro::
     ctx.check(tool::soap::washItem(helmet), "dyed leather is washable");
     ctx.check(!helmet.mUserData || !helmet.mUserData->contains("customColor"), "leather dye removed");
     auto wool = tool::makeItem("minecraft:red_wool", 5);
-    ctx.check(tool::soap::washItem(wool) && tool::isItem(wool, "minecraft:white_wool") && wool.mCount == 5, "a stack of red wool -> white wool");
+    ctx.check(
+        tool::soap::washItem(wool) && tool::isItem(wool, "minecraft:white_wool") && wool.mCount == 5,
+        "a stack of red wool -> white wool"
+    );
     auto box = tool::makeItem("minecraft:red_shulker_box");
     tool::setIntData(box, "cm_probe", 7);
     ctx.check(tool::soap::washItem(box) && tool::isItem(box, "minecraft:undyed_shulker_box"), "shulker box undyed");
@@ -256,7 +310,11 @@ CM_REGISTER_SELFTEST("tool.soap_items_and_sheep", [](Context& ctx) -> ll::coro::
     auto base = ctx.testPos(1630);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
     auto& p     = ctx.player();
-    auto* sheep = spawnMob(p, "minecraft:sheep", Vec3{static_cast<float>(base.x) + 0.5f, static_cast<float>(base.y) + 1.0f, static_cast<float>(base.z) + 0.5f});
+    auto* sheep = spawnMob(
+        p,
+        "minecraft:sheep",
+        Vec3{static_cast<float>(base.x) + 0.5f, static_cast<float>(base.y) + 1.0f, static_cast<float>(base.z) + 0.5f}
+    );
     ctx.require(sheep != nullptr, "sheep spawned");
     ActorColor::setColor(*sheep->mEntityData->mData, SharedTypes::Legacy::PaletteColor::Red);
     hold(ctx, p, tool::makeItem(tool::ids::Soap, 3));
@@ -268,21 +326,97 @@ CM_REGISTER_SELFTEST("tool.soap_items_and_sheep", [](Context& ctx) -> ll::coro::
 });
 
 CM_REGISTER_SELFTEST("tool.wrench_states", [](Context& ctx) {
-    auto check = [&](char const* id, tool::States const& states, int face, bool ccw, std::string const& state, std::string const& expected) {
+    auto check = [&](char const*         id,
+                     tool::States const& states,
+                     int                 face,
+                     bool                ccw,
+                     std::string const&  state,
+                     std::string const&  expected) {
         auto const* b = tool::blockWithStates(id, states);
         if (!b) return ctx.check(false, std::string("block ") + id);
         auto const* r = tool::wrench::rotated(*b, face, ccw);
         if (!r) return ctx.check(false, std::string("rotated ") + id);
-        ctx.check(stateString(*r, state) == expected, std::string(id) + " " + state + " -> " + expected + " (got " + stateString(*r, state) + ")");
+        ctx.check(
+            stateString(*r, state) == expected,
+            std::string(id) + " " + state + " -> " + expected + " (got " + stateString(*r, state) + ")"
+        );
     };
-    check("minecraft:furnace", {{"minecraft:cardinal_direction", std::string("north")}}, 1, false, "minecraft:cardinal_direction", "east");
-    check("minecraft:furnace", {{"minecraft:cardinal_direction", std::string("north")}}, 1, true, "minecraft:cardinal_direction", "west");
-    check("minecraft:oak_log", {{"pillar_axis", std::string("y")}}, 2, false, "pillar_axis", "x");
-    check("minecraft:oak_log", {{"pillar_axis", std::string("y")}}, 4, false, "pillar_axis", "z");
-    check("minecraft:oak_stairs", {{"weirdo_direction", 0}}, 1, false, "weirdo_direction", "2"); // east -> south
-    check("minecraft:standing_sign", {{"ground_sign_direction", 0}}, 1, false, "ground_sign_direction", "4");
-    check("minecraft:dispenser", {{"facing_direction", 2}}, 5, false, "facing_direction", "0"); // north, clockwise seen from the east -> down
-    auto const* log = tool::blockWithStates("minecraft:oak_log", {{"pillar_axis", std::string("y")}});
+    check(
+        "minecraft:furnace",
+        {
+            {"minecraft:cardinal_direction", std::string("north")}
+    },
+        1,
+        false,
+        "minecraft:cardinal_direction",
+        "east"
+    );
+    check(
+        "minecraft:furnace",
+        {
+            {"minecraft:cardinal_direction", std::string("north")}
+    },
+        1,
+        true,
+        "minecraft:cardinal_direction",
+        "west"
+    );
+    check(
+        "minecraft:oak_log",
+        {
+            {"pillar_axis", std::string("y")}
+    },
+        2,
+        false,
+        "pillar_axis",
+        "x"
+    );
+    check(
+        "minecraft:oak_log",
+        {
+            {"pillar_axis", std::string("y")}
+    },
+        4,
+        false,
+        "pillar_axis",
+        "z"
+    );
+    check(
+        "minecraft:oak_stairs",
+        {
+            {"weirdo_direction", 0}
+    },
+        1,
+        false,
+        "weirdo_direction",
+        "2"
+    ); // east -> south
+    check(
+        "minecraft:standing_sign",
+        {
+            {"ground_sign_direction", 0}
+    },
+        1,
+        false,
+        "ground_sign_direction",
+        "4"
+    );
+    check(
+        "minecraft:dispenser",
+        {
+            {"facing_direction", 2}
+    },
+        5,
+        false,
+        "facing_direction",
+        "0"
+    ); // north, clockwise seen from the east -> down
+    auto const* log = tool::blockWithStates(
+        "minecraft:oak_log",
+        {
+            {"pillar_axis", std::string("y")}
+    }
+    );
     ctx.check(log && tool::wrench::rotated(*log, 1, false) == nullptr, "a log clicked on its end does not turn");
     auto const* bed = tool::blockWithStates("minecraft:bed", {});
     ctx.check(!bed || tool::wrench::rotated(*bed, 1, false) == nullptr, "beds are not rotated");
@@ -298,10 +432,18 @@ CM_REGISTER_SELFTEST("tool.wrench_use", [](Context& ctx) -> ll::coro::CoroTask<>
     auto& region = p.getDimensionBlockSource();
     auto  before = stateString(region.getBlock(bp(pos)), "minecraft:cardinal_direction");
     hold(ctx, p, tool::makeItem(tool::ids::Wrench));
-    p.teleport(Vec3{static_cast<float>(pos.x) + 0.5f, static_cast<float>(pos.y) + 1.0f, static_cast<float>(pos.z) - 1.5f}, p.getDimensionId());
+    p.teleport(
+        Vec3{static_cast<float>(pos.x) + 0.5f, static_cast<float>(pos.y) + 1.0f, static_cast<float>(pos.z) - 1.5f},
+        p.getDimensionId()
+    );
     co_await ctx.ticks(2);
     // through the real interaction path (PlayerInteractBlockEvent, deferred to the next tick)
-    sp.simulateUseItemInSlotOnBlock(p.getSelectedItemSlot(), bp(pos), ScriptModuleMinecraft::ScriptFacing::Up, Vec3{0.5f, 1.0f, 0.5f});
+    sp.simulateUseItemInSlotOnBlock(
+        p.getSelectedItemSlot(),
+        bp(pos),
+        ScriptModuleMinecraft::ScriptFacing::Up,
+        Vec3{0.5f, 1.0f, 0.5f}
+    );
     co_await ctx.ticks(3);
     auto after = stateString(region.getBlock(bp(pos)), "minecraft:cardinal_direction");
     ctx.check(game::blockIdAt(region, bp(pos)) == "minecraft:furnace", "still a furnace");
@@ -376,9 +518,9 @@ CM_REGISTER_SELFTEST("tool.confetti_and_ink", [](Context& ctx) -> ll::coro::Coro
 CM_REGISTER_SELFTEST("tool.slice_map", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto base = ctx.testPos(1655);
     ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
-    auto& p     = ctx.player();
-    auto  gold  = gp(base, 0, 1, 0);
-    auto  roof  = gp(base, 0, 6, 2);
+    auto& p    = ctx.player();
+    auto  gold = gp(base, 0, 1, 0);
+    auto  roof = gp(base, 0, 6, 2);
     ctx.require(ctx.setBlock(gold, "minecraft:gold_block"), "gold placed");
     ctx.require(ctx.setBlock(roof, "minecraft:obsidian"), "roof placed");
     int  y   = base.y + 4; // below the roof, above the gold
@@ -387,8 +529,8 @@ CM_REGISTER_SELFTEST("tool.slice_map", [](Context& ctx) -> ll::coro::CoroTask<> 
     ctx.check(tool::slicemap::sliceHeight(map) == y, "the map knows its height");
     auto id = tool::slicemap::mapIdOf(map);
     ctx.require(id != 0, "the map has an id");
-    int  x0 = static_cast<int>(std::floor((base.x + 64.0) / 128)) * 128 - 64;
-    int  z0 = static_cast<int>(std::floor((base.z + 64.0) / 128)) * 128 - 64;
+    int  x0       = static_cast<int>(std::floor((base.x + 64.0) / 128)) * 128 - 64;
+    int  z0       = static_cast<int>(std::floor((base.z + 64.0) / 128)) * 128 - 64;
     auto goldPx   = tool::slicemap::pixel(id, gold.x - x0, gold.z - z0);
     auto groundPx = tool::slicemap::pixel(id, gold.x - x0 + 1, gold.z - z0);
     auto roofPx   = tool::slicemap::pixel(id, roof.x - x0, roof.z - z0);

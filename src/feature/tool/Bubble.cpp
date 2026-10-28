@@ -29,8 +29,8 @@ namespace cm::feature::tool::bubble {
 namespace {
 
 constexpr char const* kDbKey      = "cm:tool:bubbles";
-constexpr int         kPopDelay   = 5;  ///< ticks between being stepped on and popping
-constexpr int         kStasisMult = 4;  ///< lifetime multiplier with Stasis
+constexpr int         kPopDelay   = 5; ///< ticks between being stepped on and popping
+constexpr int         kStasisMult = 4; ///< lifetime multiplier with Stasis
 
 using Key = std::tuple<int, int, int, int>; // dim, x, y, z
 
@@ -75,8 +75,8 @@ bool featherFalling(Actor& actor) {
 bool isTracked(int dim, BlockPos const& pos) { return bubbles().contains(keyOf(dim, pos)); }
 
 bool placeBubble(int dim, BlockPos const& pos, int lifetime) {
-    auto* region = regionOf(dim);
-    auto const* block = game::blockWith(ids::BubbleBlock);
+    auto*       region = regionOf(dim);
+    auto const* block  = game::blockWith(ids::BubbleBlock);
     if (!region || !block || !game::replaceable(*region, pos)) return false;
     if (!game::setBlock(*region, pos, *block)) return false;
     bubbles()[keyOf(dim, pos)] = Bubble{now() + static_cast<std::uint64_t>(std::max(1, lifetime)), 0};
@@ -107,9 +107,9 @@ void blowTick(Player& player, int usedTicks) {
         return;
     }
     if (usedTicks % 2 != 0) return;
-    int  dim  = static_cast<int>(player.getDimensionId());
-    Vec3 dir  = lookVector(player);
-    Vec3 from = eyePos(player) - Vec3{0, 0.2f, 0};
+    int   dim  = static_cast<int>(player.getDimensionId());
+    Vec3  dir  = lookVector(player);
+    Vec3  from = eyePos(player) - Vec3{0, 0.2f, 0};
     float dist = 0.7f + static_cast<float>((usedTicks / 2) % 4) * 0.45f;
     particle(dim, from + dir * dist, "complementaries:bubble");
     if (usedTicks % 10 == 0) playSound(dim, from, "bubble.pop", 0.3f, 1.4f + static_cast<float>(usedTicks % 3) * 0.1f);
@@ -140,9 +140,9 @@ bool useOnBlock(Player& player, BlockPos const& clicked, int face) {
         player.sendMessage(trFor(player, "message.supplementaries.bubble_blower.empty", "Needs soap"));
         return false;
     }
-    auto off = faceOffset(face);
+    auto     off = faceOffset(face);
     BlockPos target{clicked.x + off.x, clicked.y + off.y, clicked.z + off.z};
-    int lifetime = config().bubbleBlower.bubbleLifetime;
+    int      lifetime = config().bubbleBlower.bubbleLifetime;
     if (stasisLevel(blower) > 0) lifetime *= kStasisMult;
     if (!placeBubble(static_cast<int>(player.getDimensionId()), target, lifetime)) return false;
     useCharges(player, cost);
@@ -152,13 +152,13 @@ bool useOnBlock(Player& player, BlockPos const& clicked, int face) {
 void tick() {
     auto& map = bubbles();
     if (map.empty()) return;
-    auto t = now();
+    auto                                  t = now();
     std::vector<std::pair<int, BlockPos>> toPop;
-    std::vector<Key> gone;
+    std::vector<Key>                      gone;
     for (auto& [key, b] : map) {
         auto [dim, x, y, z] = key;
         BlockPos pos{x, y, z};
-        auto* region = regionOf(dim);
+        auto*    region = regionOf(dim);
         if (!region || !region->hasChunksAt(pos, 0, false)) continue; // unloaded: keep waiting
         if (game::blockIdAt(*region, pos) != ids::BubbleBlock) {
             gone.push_back(key); // broken by hand / replaced
@@ -171,7 +171,7 @@ void tick() {
         }
         // entities standing on (or inside) the bubble
         AABB top{
-            Vec3{static_cast<float>(x) - 0.05f, static_cast<float>(y) + 0.5f, static_cast<float>(z) - 0.05f},
+            Vec3{static_cast<float>(x) - 0.05f, static_cast<float>(y) + 0.5f,  static_cast<float>(z) - 0.05f},
             Vec3{static_cast<float>(x) + 1.05f, static_cast<float>(y) + 1.25f, static_cast<float>(z) + 1.05f}
         };
         for (Actor* a : region->fetchEntities(nullptr, top, true, false)) {

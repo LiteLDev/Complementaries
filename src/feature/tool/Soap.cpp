@@ -22,8 +22,22 @@ namespace cm::feature::tool::soap {
 namespace {
 
 constexpr std::array<std::string_view, 16> kColors = {
-    "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray",
-    "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
+    "white",
+    "orange",
+    "magenta",
+    "light_blue",
+    "yellow",
+    "lime",
+    "pink",
+    "gray",
+    "light_gray",
+    "cyan",
+    "purple",
+    "blue",
+    "brown",
+    "green",
+    "red",
+    "black",
 };
 
 /// The colour prefix of `path` ("red_wool" -> "red"), empty when none.
@@ -38,11 +52,11 @@ std::string_view colorPrefix(std::string_view path) {
 /// The washed id of a block / item id, empty when it is already clean or not washable.
 std::string washedId(std::string_view id) {
     if (!id.starts_with("minecraft:")) return {};
-    auto path  = id.substr(10);
+    auto path = id.substr(10);
     if (path == "sticky_piston") return "minecraft:piston";
     auto color = colorPrefix(path);
     if (color.empty()) return {};
-    auto rest = path.substr(color.size() + 1);
+    auto rest  = path.substr(color.size() + 1);
     bool white = color == "white";
     if (rest == "wool") return white ? "" : "minecraft:white_wool";
     if (rest == "carpet") return white ? "" : "minecraft:white_carpet";
@@ -64,8 +78,20 @@ bool lookingAtWater(Player& player) {
     auto& region = player.getDimensionBlockSource();
     Vec3  from   = eyePos(player);
     Vec3  to     = from + lookVector(player) * 4.0f;
-    auto  hit    = region.clip(from, to, true, ShapeType::Outline, 5, false, false, nullptr, [](BlockSource const&, Block const&, bool) { return true; }, true);
-    return hit.mIsHitLiquid || (hit.mType == HitResultType::Tile && game::blockIdAt(region, hit.mBlock).find("water") != std::string::npos);
+    auto  hit    = region.clip(
+        from,
+        to,
+        true,
+        ShapeType::Outline,
+        5,
+        false,
+        false,
+        nullptr,
+        [](BlockSource const&, Block const&, bool) { return true; },
+        true
+    );
+    return hit.mIsHitLiquid
+        || (hit.mType == HitResultType::Tile && game::blockIdAt(region, hit.mBlock).find("water") != std::string::npos);
 }
 
 } // namespace
@@ -145,7 +171,7 @@ bool useOnEntity(Player& player, Actor& target) {
 
 bool useInAir(Player& player) {
     if (!config().soap.enabled) return false;
-    int dim = static_cast<int>(player.getDimensionId());
+    int       dim   = static_cast<int>(player.getDimensionId());
     ItemStack other = player.getOffhandSlot();
     if (!other.isNull() && washItem(other)) {
         setOffhand(player, other);
@@ -155,7 +181,8 @@ bool useInAir(Player& player) {
         return true;
     }
     if (player.isInWater() || lookingAtWater(player)) {
-        for (int i = 1; i <= 3; ++i) particle(dim, eyePos(player) + lookVector(player) * (0.8f * static_cast<float>(i)), "complementaries:suds");
+        for (int i = 1; i <= 3; ++i)
+            particle(dim, eyePos(player) + lookVector(player) * (0.8f * static_cast<float>(i)), "complementaries:suds");
         playSound(dim, player.getPosition(), "random.swim", 0.6f, 1.8f);
         return true;
     }

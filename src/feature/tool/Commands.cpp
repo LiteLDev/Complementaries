@@ -57,7 +57,9 @@ CM_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
             if (!player) return output.error("Only players can use this command.");
             ItemStack item = player->getSelectedItem();
             if (!isItem(item, ids::Slingshot) && !isItem(item, ids::BubbleBlower)) {
-                return output.error(cm::trFor(*player, "cm.tool.enchant.no_item", "Hold a slingshot or a bubble blower"));
+                return output.error(
+                    cm::trFor(*player, "cm.tool.enchant.no_item", "Hold a slingshot or a bubble blower")
+                );
             }
             int level = std::clamp(params.level, 1, 5);
             if (params.kind == "stasis") {
