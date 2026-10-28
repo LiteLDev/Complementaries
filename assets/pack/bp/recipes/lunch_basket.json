@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:lunch_basket"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " T ",
+      "P P",
+      "PPP"
+    ],
+    "key": {
+      "T": {
+        "item": "minecraft:stick"
+      },
+      "P": {
+        "tag": "minecraft:planks"
+      }
+    },
+    "result": {
+      "item": "complementaries:lunch_basket"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:stick"
+      }
+    ]
+  }
+}
