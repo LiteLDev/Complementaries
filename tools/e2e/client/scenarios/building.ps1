@@ -34,6 +34,18 @@ Use-On 'complementaries:ash 4' 'complementaries:ash ["complementaries:layers"=2]
 # daub into a timber brace
 Use-On 'complementaries:daub 4' 'complementaries:timber_brace' '~ ~0.5 ~2.5' 'building: filled complementaries:timber_brace with daub' 'use-daub'
 Invoke-Chat '/setblock ~ ~ ~2 air'
+# a stair placed by the player faces the way the player looks (south here)
+Invoke-Chat '/replaceitem entity @s slot.hotbar 0 complementaries:stone_tile_stairs 4'
+Invoke-Chat '/tp @s ~ ~ ~ facing ~ ~-0.5 ~2.5'
+Start-Sleep -Milliseconds 600
+$mark = Get-LogMark
+Click 0.5 0.5 -Relative -Right
+$line = Wait-LogLine 'building: placed complementaries:stone_tile_stairs facing' 15 -Since $mark
+Write-Step "stairs: $line"
+if ($line -notmatch 'facing 0 ') { throw "the stairs should face south (0): $line" }
+Start-Sleep -Milliseconds 500
+Save-Screenshot 'use-stairs' | Out-Null
+Invoke-Chat '/fill ~-1 ~ ~1 ~1 ~1 ~3 air'
 
 # ---- showcase ----------------------------------------------------------------------------------
 # back row: every full block
