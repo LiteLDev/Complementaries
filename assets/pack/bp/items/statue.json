@@ -1,0 +1,14 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:statue",
+      "menu_category": { "category": "items" }
+    },
+    "components": {
+      "minecraft:icon": "complementaries_statue",
+      "minecraft:display_name": { "value": "item.complementaries:statue.name" },
+      "minecraft:block_placer": { "block": "complementaries:statue", "replace_block_item": true }
+    }
+  }
+}

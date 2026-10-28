@@ -1,0 +1,266 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "complementaries:item_display",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false,
+      "properties": {
+        "complementaries:mode": {
+          "type": "int",
+          "range": [
+            0,
+            10
+          ],
+          "default": 0,
+          "client_sync": true
+        },
+        "complementaries:pose": {
+          "type": "int",
+          "range": [
+            0,
+            4
+          ],
+          "default": 0,
+          "client_sync": true
+        },
+        "complementaries:facing": {
+          "type": "int",
+          "range": [
+            0,
+            15
+          ],
+          "default": 0,
+          "client_sync": true
+        },
+        "complementaries:waving": {
+          "type": "bool",
+          "default": false,
+          "client_sync": true
+        }
+      }
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "complementaries_display",
+          "inanimate"
+        ]
+      },
+      "minecraft:collision_box": {
+        "width": 0.01,
+        "height": 0.01
+      },
+      "minecraft:physics": {
+        "has_gravity": false,
+        "has_collision": false
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": false
+      },
+      "minecraft:health": {
+        "value": 1,
+        "max": 1
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "all",
+            "deals_damage": "no"
+          }
+        ]
+      },
+      "minecraft:knockback_resistance": {
+        "value": 1.0
+      },
+      "minecraft:fire_immune": true,
+      "minecraft:breathable": {
+        "total_supply": 15,
+        "suffocate_time": 0,
+        "breathes_water": true,
+        "breathes_air": true,
+        "breathes_solids": true
+      },
+      "minecraft:persistent": {},
+      "minecraft:nameable": {
+        "always_show": false,
+        "allow_name_tag_renaming": false
+      },
+      "minecraft:conditional_bandwidth_optimization": {}
+    },
+    "events": {
+      "complementaries:mode_0": {
+        "set_property": {
+          "complementaries:mode": 0
+        }
+      },
+      "complementaries:mode_1": {
+        "set_property": {
+          "complementaries:mode": 1
+        }
+      },
+      "complementaries:mode_2": {
+        "set_property": {
+          "complementaries:mode": 2
+        }
+      },
+      "complementaries:mode_3": {
+        "set_property": {
+          "complementaries:mode": 3
+        }
+      },
+      "complementaries:mode_4": {
+        "set_property": {
+          "complementaries:mode": 4
+        }
+      },
+      "complementaries:mode_5": {
+        "set_property": {
+          "complementaries:mode": 5
+        }
+      },
+      "complementaries:mode_6": {
+        "set_property": {
+          "complementaries:mode": 6
+        }
+      },
+      "complementaries:mode_7": {
+        "set_property": {
+          "complementaries:mode": 7
+        }
+      },
+      "complementaries:mode_8": {
+        "set_property": {
+          "complementaries:mode": 8
+        }
+      },
+      "complementaries:mode_9": {
+        "set_property": {
+          "complementaries:mode": 9
+        }
+      },
+      "complementaries:mode_10": {
+        "set_property": {
+          "complementaries:mode": 10
+        }
+      },
+      "complementaries:pose_0": {
+        "set_property": {
+          "complementaries:pose": 0
+        }
+      },
+      "complementaries:pose_1": {
+        "set_property": {
+          "complementaries:pose": 1
+        }
+      },
+      "complementaries:pose_2": {
+        "set_property": {
+          "complementaries:pose": 2
+        }
+      },
+      "complementaries:pose_3": {
+        "set_property": {
+          "complementaries:pose": 3
+        }
+      },
+      "complementaries:pose_4": {
+        "set_property": {
+          "complementaries:pose": 4
+        }
+      },
+      "complementaries:facing_0": {
+        "set_property": {
+          "complementaries:facing": 0
+        }
+      },
+      "complementaries:facing_1": {
+        "set_property": {
+          "complementaries:facing": 1
+        }
+      },
+      "complementaries:facing_2": {
+        "set_property": {
+          "complementaries:facing": 2
+        }
+      },
+      "complementaries:facing_3": {
+        "set_property": {
+          "complementaries:facing": 3
+        }
+      },
+      "complementaries:facing_4": {
+        "set_property": {
+          "complementaries:facing": 4
+        }
+      },
+      "complementaries:facing_5": {
+        "set_property": {
+          "complementaries:facing": 5
+        }
+      },
+      "complementaries:facing_6": {
+        "set_property": {
+          "complementaries:facing": 6
+        }
+      },
+      "complementaries:facing_7": {
+        "set_property": {
+          "complementaries:facing": 7
+        }
+      },
+      "complementaries:facing_8": {
+        "set_property": {
+          "complementaries:facing": 8
+        }
+      },
+      "complementaries:facing_9": {
+        "set_property": {
+          "complementaries:facing": 9
+        }
+      },
+      "complementaries:facing_10": {
+        "set_property": {
+          "complementaries:facing": 10
+        }
+      },
+      "complementaries:facing_11": {
+        "set_property": {
+          "complementaries:facing": 11
+        }
+      },
+      "complementaries:facing_12": {
+        "set_property": {
+          "complementaries:facing": 12
+        }
+      },
+      "complementaries:facing_13": {
+        "set_property": {
+          "complementaries:facing": 13
+        }
+      },
+      "complementaries:facing_14": {
+        "set_property": {
+          "complementaries:facing": 14
+        }
+      },
+      "complementaries:facing_15": {
+        "set_property": {
+          "complementaries:facing": 15
+        }
+      },
+      "complementaries:waving_0": {
+        "set_property": {
+          "complementaries:waving": false
+        }
+      },
+      "complementaries:waving_1": {
+        "set_property": {
+          "complementaries:waving": true
+        }
+      }
+    }
+  }
+}

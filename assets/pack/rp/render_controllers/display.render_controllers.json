@@ -1,0 +1,10 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+    "controller.render.complementaries.item_display": {
+      "geometry": "v.mode == 10 ? Geometry.statue : (v.mode == 7 ? Geometry.crystal : Geometry.default)",
+      "materials": [{ "*": "Material.default" }],
+      "textures": ["v.mode == 10 ? Texture.statue : (v.mode == 7 ? Texture.crystal : Texture.default)"]
+    }
+  }
+}

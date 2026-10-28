@@ -1,0 +1,67 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "complementaries:item_display",
+      "materials": { "default": "entity_alphatest" },
+      "textures": {
+        "default": "textures/entity/complementaries/item_display",
+        "statue": "textures/entity/complementaries/statue",
+        "crystal": "textures/entity/endercrystal/endercrystal"
+      },
+      "geometry": {
+        "default": "geometry.complementaries.item_display",
+        "statue": "geometry.complementaries.statue_figure",
+        "crystal": "geometry.complementaries.display_crystal"
+      },
+      "particle_effects": { "flame": "minecraft:candle_flame_particle" },
+      "scripts": {
+        "pre_animation": [
+          "v.mode = q.property('complementaries:mode');",
+          "v.pose = q.property('complementaries:pose');",
+          "v.facing_yaw = q.property('complementaries:facing') * 22.5;",
+          "v.mirror = (q.property('complementaries:facing') == 4 || q.property('complementaries:facing') == 8) ? -1 : 1;"
+        ],
+        "animate": [
+          "base",
+          { "pedestal_spin": "v.mode == 1 || v.mode == 3" },
+          { "pedestal_still": "v.mode == 2 || v.mode == 4" },
+          { "pedestal_sword": "v.mode == 5" },
+          { "pedestal_trident": "v.mode == 6" },
+          { "crystal": "v.mode == 7" },
+          { "shelf": "v.mode == 8" },
+          { "shelf_block": "v.mode == 9" },
+          { "statue": "v.mode == 10" },
+          { "statue_standing": "v.mode == 10 && v.pose == 0" },
+          { "statue_holding": "v.mode == 10 && v.pose == 1" },
+          { "statue_candle": "v.mode == 10 && v.pose == 2" },
+          { "statue_sword": "v.mode == 10 && v.pose == 3" },
+          { "statue_tool": "v.mode == 10 && v.pose == 4" },
+          { "statue_waving": "v.mode == 10 && q.property('complementaries:waving')" },
+          { "candle_flame": "v.mode == 10 && v.pose == 2" }
+        ]
+      },
+      "animations": {
+        "base": "animation.complementaries.display.base",
+        "pedestal_spin": "animation.complementaries.display.pedestal_spin",
+        "pedestal_still": "animation.complementaries.display.pedestal_still",
+        "pedestal_sword": "animation.complementaries.display.pedestal_sword",
+        "pedestal_trident": "animation.complementaries.display.pedestal_trident",
+        "crystal": "animation.complementaries.display.crystal",
+        "shelf": "animation.complementaries.display.shelf",
+        "shelf_block": "animation.complementaries.display.shelf_block",
+        "statue": "animation.complementaries.display.statue",
+        "statue_standing": "animation.complementaries.display.statue_standing",
+        "statue_holding": "animation.complementaries.display.statue_holding",
+        "statue_candle": "animation.complementaries.display.statue_candle",
+        "statue_sword": "animation.complementaries.display.statue_sword",
+        "statue_tool": "animation.complementaries.display.statue_tool",
+        "statue_waving": "animation.complementaries.display.statue_waving",
+        "candle_flame": "animation.complementaries.display.candle_flame"
+      },
+      "render_controllers": ["controller.render.complementaries.item_display"],
+      "enable_attachables": true,
+      "hide_armor": true
+    }
+  }
+}

@@ -1,0 +1,8 @@
+tile.complementaries:pedestal.name=基座
+tile.complementaries:item_shelf.name=物品架
+tile.complementaries:statue.name=雕像
+item.complementaries:statue.name=雕像
+item.complementaries:hat_stand.name=帽架
+entity.complementaries:hat_stand.name=帽架
+entity.complementaries:item_display.name=物品展示
+action.interact.complementaries.hat_stand=装备

@@ -1,0 +1,9 @@
+{
+  "block.supplementaries.pedestal": "基座",
+  "block.supplementaries.item_shelf": "物品架",
+  "block.supplementaries.statue": "雕像",
+  "item.supplementaries.hat_stand": "帽架",
+  "entity.supplementaries.hat_stand": "帽架",
+  "cm.display.placed": "已将 {0} 放到位于 {2} 的{1}上",
+  "cm.display.taken": "已从位于 {2} 的{1}上取下 {0}"
+}

@@ -1,0 +1,7 @@
+{
+  "complementaries_pedestal_side": { "textures": "textures/blocks/pedestal_side" },
+  "complementaries_pedestal_top": { "textures": "textures/blocks/pedestal_top" },
+  "complementaries_pedestal_bottom": { "textures": "textures/blocks/pedestal_bottom" },
+  "complementaries_item_shelf": { "textures": "textures/blocks/item_shelf" },
+  "complementaries_statue_base": { "textures": "textures/blocks/statue_base" }
+}

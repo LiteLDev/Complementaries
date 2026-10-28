@@ -1,0 +1,8 @@
+tile.complementaries:pedestal.name=Pedestal
+tile.complementaries:item_shelf.name=Item Shelf
+tile.complementaries:statue.name=Statue
+item.complementaries:statue.name=Statue
+item.complementaries:hat_stand.name=Hat Stand
+entity.complementaries:hat_stand.name=Hat Stand
+entity.complementaries:item_display.name=Item Display
+action.interact.complementaries.hat_stand=Equip
