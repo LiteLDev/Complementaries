@@ -23,7 +23,10 @@ LL_TYPE_INSTANCE_HOOK(
     LootTableContext& context
 ) {
     origin(container, random, context);
-    if (this->mDir->find("shipwreck_treasure") == std::string::npos) return;
+    // Bedrock: loot_tables/chests/shipwrecktreasure.json
+    auto const& dir = *this->mDir;
+    if (dir.find("shipwrecktreasure") == std::string::npos && dir.find("shipwreck_treasure") == std::string::npos)
+        return;
     if (random.nextFloat() >= config().jarBoatShipwreckChance) return;
     container.addItemToFirstEmptySlot(makeItem(kJarBoat));
 }

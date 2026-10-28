@@ -23,29 +23,31 @@ namespace {
 using Sound = SharedTypes::Legacy::LevelSoundEvent;
 
 enum Fluid : int {
-    Empty         = 0,
-    Water         = 1,
-    Honey         = 2,
-    Milk          = 3,
-    DragonBreath  = 4,
-    Experience    = 5,
-    FirstPotion   = 6, ///< 6..15: potion colour buckets
+    Empty        = 0,
+    Water        = 1,
+    Honey        = 2,
+    Milk         = 3,
+    DragonBreath = 4,
+    Experience   = 5,
+    FirstPotion  = 6, ///< 6..15: potion colour buckets
 };
 
 // Colour buckets of the potion states 6..15 (red, dark red, orange, yellow, green, light blue,
 // blue, pink, grey, black).
-constexpr std::array<std::array<int, 3>, 10> kBuckets{{
-    {248, 36, 35},
-    {107, 18, 18},
-    {228, 154, 58},
-    {242, 210, 58},
-    {78, 147, 49},
-    {124, 175, 198},
-    {46, 82, 153},
-    {205, 92, 171},
-    {127, 131, 146},
-    {53, 42, 39},
-}};
+constexpr std::array<std::array<int, 3>, 10> kBuckets{
+    {
+     {248, 36, 35},
+     {107, 18, 18},
+     {228, 154, 58},
+     {242, 210, 58},
+     {78, 147, 49},
+     {124, 175, 198},
+     {46, 82, 153},
+     {205, 92, 171},
+     {127, 131, 146},
+     {53, 42, 39},
+     }
+};
 
 constexpr char const* kNames[] = {"empty", "water", "honey", "milk", "dragon_breath", "experience"};
 
@@ -65,8 +67,9 @@ int potionBucket(int aux) {
     int   best = 0;
     float dist = std::numeric_limits<float>::max();
     for (int i = 0; i < static_cast<int>(kBuckets.size()); ++i) {
-        float dr = c.r * 255.0f - kBuckets[i][0], dg = c.g * 255.0f - kBuckets[i][1], db = c.b * 255.0f - kBuckets[i][2];
-        float d = dr * dr + dg * dg + db * db;
+        float dr = c.r * 255.0f - kBuckets[i][0], dg = c.g * 255.0f - kBuckets[i][1],
+              db = c.b * 255.0f - kBuckets[i][2];
+        float d  = dr * dr + dg * dg + db * db;
         if (d < dist) {
             dist = d;
             best = i;
@@ -121,6 +124,7 @@ int fluidOf(ItemStack const& item) {
 
 bool onUse(UseContext const& ctx, bool apply) {
     if (!is(ctx.block, kGoblet)) return false;
+    if (ctx.player.isSneaking() && !isEmpty(ctx.held)) return false; // sneak + item: the item's own use
     int  fluid = state(ctx.block, "cm:fluid");
     auto held  = itemId(ctx.held);
 
@@ -129,10 +133,21 @@ bool onUse(UseContext const& ctx, bool apply) {
         int incoming = fluidOf(ctx.held);
         if (incoming == Empty) return false;
         if (!apply) return true;
-        auto const* next = with(ctx.block, {{"cm:fluid", incoming}});
+        auto const* next = with(
+            ctx.block,
+            {
+                {"cm:fluid", incoming}
+        }
+        );
         if (!next) return false;
         if (isPotionItem(held)) {
-            game::db::save(dbKey(ctx.region, ctx.pos), {{"item", held}, {"aux", ctx.held.getAuxValue()}});
+            game::db::save(
+                dbKey(ctx.region, ctx.pos),
+                {
+                    {"item", held                  },
+                    {"aux",  ctx.held.getAuxValue()}
+            }
+            );
         }
         place(ctx.region, ctx.pos, *next);
         exchangeHeld(ctx.player, makeItem("minecraft:glass_bottle"));
@@ -146,7 +161,12 @@ bool onUse(UseContext const& ctx, bool apply) {
         auto bottle = bottleOf(ctx.region, ctx.pos, fluid);
         if (!bottle) return false;
         if (!apply) return true;
-        auto const* next = with(ctx.block, {{"cm:fluid", 0}});
+        auto const* next = with(
+            ctx.block,
+            {
+                {"cm:fluid", 0}
+        }
+        );
         if (!next) return false;
         place(ctx.region, ctx.pos, *next);
         game::db::erase(dbKey(ctx.region, ctx.pos));
@@ -176,7 +196,12 @@ bool onUse(UseContext const& ctx, bool apply) {
             }
         }
     }
-    auto const* next = with(ctx.block, {{"cm:fluid", 0}});
+    auto const* next = with(
+        ctx.block,
+        {
+            {"cm:fluid", 0}
+    }
+    );
     if (next) place(ctx.region, ctx.pos, *next);
     game::db::erase(dbKey(ctx.region, ctx.pos));
     playSound(player, static_cast<int>(Sound::Drink), ctx.pos);

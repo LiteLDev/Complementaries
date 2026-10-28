@@ -14,6 +14,7 @@
 #include "mc/world/item/ItemStack.h"
 #include "mc/world/item/enchanting/EnchantUtils.h"
 #include "mc/world/level/BlockSource.h"
+#include "mc/world/level/block/BlockSupportType.h"
 
 #include "feature/tableware/Tableware.h"
 #include "game/Blocks.h"
@@ -78,7 +79,12 @@ void saveBooks(int dim, BlockPos const& pos, std::vector<std::string> const& ite
     if (items.empty()) {
         game::db::erase(dbKey(dim, pos));
     } else {
-        game::db::save(dbKey(dim, pos), {{"items", items}});
+        game::db::save(
+            dbKey(dim, pos),
+            {
+                {"items", items}
+        }
+        );
     }
 }
 
@@ -107,13 +113,21 @@ bool onPlaceUse(UseContext const& ctx, bool apply) {
     if (isPile(ctx.block) || ctx.face != FacingID::Up || !ctx.player.isSneaking()) return false;
     auto kind = kindOf(itemId(ctx.held));
     if (!enabled(kind)) return false;
-    BlockPos above{ctx.pos.x, ctx.pos.y + 1, ctx.pos.z};
+    // Like a block item: a replaceable block (grass, snow layer) is replaced, otherwise the pile
+    // goes on top; either way it needs a sturdy top below it.
+    BlockPos above = game::replaceable(ctx.region, ctx.pos) ? ctx.pos : BlockPos{ctx.pos.x, ctx.pos.y + 1, ctx.pos.z};
     if (!game::replaceable(ctx.region, above)) return false;
+    BlockPos support{above.x, above.y - 1, above.z};
+    if (!ctx.region.getBlock(support).canProvideSupport(static_cast<uchar>(FacingID::Up), BlockSupportType::Center))
+        return false;
     bool lying = lyingKind(kind);
     if (!apply) return true;
     auto const* pile = make(
         lying ? kBookPileLying : kBookPile,
-        {{"minecraft:cardinal_direction", directionTowards(ctx.player)}, {"cm:book0", visualOf(kind, lying)}}
+        {
+            {"minecraft:cardinal_direction", directionTowards(ctx.player)},
+            {"cm:book0", visualOf(kind, lying)}
+    }
     );
     if (!pile || !place(ctx.region, above, *pile)) return false;
     saveBooks(dimOf(ctx.region), above, {itemToSnbt(singleOf(ctx.held))});
@@ -132,7 +146,12 @@ bool onUse(UseContext const& ctx, bool apply) {
         auto kind = kindOf(itemId(ctx.held));
         if (!enabled(kind) || !fits(kind, lying) || count >= 4) return false;
         if (!apply) return true;
-        auto const* next = with(ctx.block, {{slotState(count), visualOf(kind, lying)}});
+        auto const* next = with(
+            ctx.block,
+            {
+                {slotState(count), visualOf(kind, lying)}
+        }
+        );
         if (!next) return false;
         auto books = loadBooks(dim, ctx.pos);
         books.resize(count);
@@ -157,7 +176,12 @@ bool onUse(UseContext const& ctx, bool apply) {
         game::clearBlock(ctx.region, ctx.pos);
         suppressed().erase(dbKey(dim, ctx.pos));
     } else {
-        auto const* next = with(ctx.block, {{slotState(slot), 0}});
+        auto const* next = with(
+            ctx.block,
+            {
+                {slotState(slot), 0}
+        }
+        );
         if (!next) return false;
         saveBooks(dim, ctx.pos, books);
         place(ctx.region, ctx.pos, *next);
@@ -170,9 +194,9 @@ bool onUse(UseContext const& ctx, bool apply) {
 
 void onRemoved(int dim, BlockPos const& pos, Block const& prev) {
     if (suppressed().contains(dbKey(dim, pos))) return;
-    bool  lying = is(prev, kBookPileLying);
-    int   count = countOf(prev);
-    auto  books = loadBooks(dim, pos);
+    bool lying = is(prev, kBookPileLying);
+    int  count = countOf(prev);
+    auto books = loadBooks(dim, pos);
     saveBooks(dim, pos, {});
     std::vector<ItemStack> drops;
     for (int i = 0; i < count; ++i) {

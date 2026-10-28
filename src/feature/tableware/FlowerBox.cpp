@@ -63,6 +63,7 @@ std::string_view plantItem(int value) {
 
 bool onUse(UseContext const& ctx, bool apply) {
     if (!is(ctx.block, kFlowerBox)) return false;
+    if (ctx.player.isSneaking() && !isEmpty(ctx.held)) return false; // sneak + item: the item's own use
     int  slot    = slotAt(ctx.block, ctx.hit);
     int  current = state(ctx.block, slotState(slot));
     auto held    = itemId(ctx.held);
@@ -70,7 +71,12 @@ bool onUse(UseContext const& ctx, bool apply) {
         int plant = plantOf(held);
         if (plant == 0) return false;
         if (!apply) return true;
-        auto const* next = with(ctx.block, {{slotState(slot), plant}});
+        auto const* next = with(
+            ctx.block,
+            {
+                {slotState(slot), plant}
+        }
+        );
         if (!next) return false;
         place(ctx.region, ctx.pos, *next);
         consumeHeld(ctx.player);
@@ -80,7 +86,12 @@ bool onUse(UseContext const& ctx, bool apply) {
     }
     if (!isEmpty(ctx.held)) return false;
     if (!apply) return true;
-    auto const* next = with(ctx.block, {{slotState(slot), 0}});
+    auto const* next = with(
+        ctx.block,
+        {
+            {slotState(slot), 0}
+    }
+    );
     if (!next) return false;
     place(ctx.region, ctx.pos, *next);
     giveOrDrop(ctx.player, makeItem(plantItem(current)));
@@ -90,11 +101,16 @@ bool onUse(UseContext const& ctx, bool apply) {
 }
 
 void onPlaced(Player& player, BlockPos const& pos, FacingID face) {
-    auto& region = player.getDimensionBlockSource();
-    auto const& block = region.getBlock(pos);
+    auto&       region = player.getDimensionBlockSource();
+    auto const& block  = region.getBlock(pos);
     if (!is(block, kFlowerBox)) return;
-    auto wall = directionOfFace(face);
-    Block const* next = wall.empty() ? with(block, {{"cm:wall", 0}})
+    auto         wall = directionOfFace(face);
+    Block const* next = wall.empty() ? with(
+                                           block,
+                                           {
+                                               {"cm:wall", 0}
+    }
+                                       )
                                      : with(block, {{"cm:wall", 1}, {"minecraft:cardinal_direction", wall}});
     if (next && next != &block) place(region, pos, *next);
 }

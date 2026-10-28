@@ -167,10 +167,10 @@ foreach ($k in $toppings.Keys) {
 }
 
 # Jar boat: glass jar, cork lid, little boat with a sail.
-$c = New-Canvas
+$c = New-Canvas 16 16 'f'
 Fill-Rect $c 0 0 15 0 'e'; Fill-Rect $c 0 15 15 15 'e'; Fill-Rect $c 0 0 0 15 'e'; Fill-Rect $c 15 0 15 15 'e'
 Set-Px $c 2 2 'h'; Set-Px $c 3 3 'h'; Set-Px $c 2 3 'h'; Set-Px $c 4 4 'h'
-Save-Tex 'jar_glass' $c @{ e = '#a0d8eef2'; h = '#d0ffffff' }
+Save-Tex 'jar_glass' $c @{ e = '#a0d8eef2'; h = '#d0ffffff'; f = '#30cfe8f0' }
 $c = New-Canvas
 Noise-Rect $c 0 0 15 15 @('b', 'd', 'l') 1370 @(7, 3, 2)
 Save-Tex 'jar_lid' $c @{ b = '#a87b4f'; d = '#8a6038'; l = '#c09366' }

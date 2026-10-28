@@ -22,7 +22,9 @@ using namespace cm::feature::tableware;
 
 BlockSource& regionOf(Context& ctx) { return ctx.player().getDimensionBlockSource(); }
 
-Block const& blockAt(Context& ctx, cm::core::GlobalPos const& p) { return regionOf(ctx).getBlock(cm::game::blockPos(p)); }
+Block const& blockAt(Context& ctx, cm::core::GlobalPos const& p) {
+    return regionOf(ctx).getBlock(cm::game::blockPos(p));
+}
 
 int countItem(Player& player, std::string_view id, int aux = -1) {
     auto& inv = player.getInventory();
@@ -55,8 +57,22 @@ CM_REGISTER_SELFTEST("tableware.registry", [](Context& ctx) {
     }
     ctx.check(!isEmpty(makeItem(kCandy)), "candy item exists");
     ctx.check(!isEmpty(makeItem(kPancake)), "pancake item exists");
-    ctx.check(make(kUrn, {{"cm:treasure", 1}}) != nullptr, "treasure urn state exists");
-    auto const* fb = make(kFlowerBox, {{"minecraft:cardinal_direction", std::string("east")}, {"cm:wall", 1}});
+    ctx.check(
+        make(
+            kUrn,
+            {
+                {"cm:treasure", 1}
+    }
+        ) != nullptr,
+        "treasure urn state exists"
+    );
+    auto const* fb = make(
+        kFlowerBox,
+        {
+            {"minecraft:cardinal_direction", std::string("east")},
+            {"cm:wall",                      1                  }
+    }
+    );
     ctx.check(fb && direction(*fb) == "east" && state(*fb, "cm:wall") == 1, "flower box direction/wall states");
 });
 
@@ -64,7 +80,7 @@ CM_REGISTER_SELFTEST("tableware.goblet", [](Context& ctx) -> ll::coro::CoroTask<
     auto pos = ctx.testPos(1300);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     ctx.require(ctx.setBlock(pos, std::string(kGoblet)), "goblet placed");
-    auto& player = ctx.player();
+    auto& player   = ctx.player();
     bool  survival = !creative(player);
 
     hold(player, makeItem("minecraft:potion", 1, 21)); // healing
@@ -73,7 +89,8 @@ CM_REGISTER_SELFTEST("tableware.goblet", [](Context& ctx) -> ll::coro::CoroTask<
     ctx.check(fluid >= 6, "potion colour bucket state (got " + std::to_string(fluid) + ")");
     auto data = cm::game::db::load(posKey("goblet", pos.dim, cm::game::blockPos(pos)));
     ctx.check(data && data->value("aux", -1) == 21, "potion kept in the world DB");
-    if (survival) ctx.check(itemId(player.getSelectedItem()) == "minecraft:glass_bottle", "the potion became a glass bottle");
+    if (survival)
+        ctx.check(itemId(player.getSelectedItem()) == "minecraft:glass_bottle", "the potion became a glass bottle");
 
     hold(player, makeItem("minecraft:glass_bottle"));
     ctx.require(use(ctx, pos), "a glass bottle empties the goblet");
@@ -94,8 +111,13 @@ CM_REGISTER_SELFTEST("tableware.flower_box", [](Context& ctx) -> ll::coro::CoroT
     auto pos = ctx.testPos(1310);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
     ctx.require(ctx.setBlock(pos, "minecraft:stone"), "support");
-    auto box = above(pos);
-    auto const* b = make(kFlowerBox, {{"minecraft:cardinal_direction", std::string("north")}});
+    auto        box = above(pos);
+    auto const* b   = make(
+        kFlowerBox,
+        {
+            {"minecraft:cardinal_direction", std::string("north")}
+    }
+    );
     ctx.require(b && place(regionOf(ctx), cm::game::blockPos(box), *b), "flower box placed");
     ctx.cleanupBlock(box);
     auto& player = ctx.player();
@@ -144,8 +166,8 @@ CM_REGISTER_SELFTEST("tableware.book_pile", [](Context& ctx) -> ll::coro::CoroTa
     ctx.check(!use(ctx, pile, FacingID::North), "a written book does not fit a standing pile");
 
     // enchanting power: a table two blocks west of the pile with air in between
-    auto table = pile;
-    table.x -= 2;
+    auto table  = pile;
+    table.x    -= 2;
     ctx.require(ctx.setBlock(table, "minecraft:enchanting_table"), "enchanting table");
     float power = book_pile::enchantPower(regionOf(ctx), cm::game::blockPos(table));
     float want  = cm::feature::tableware::config().bookPower + cm::feature::tableware::config().enchantedBookPower;
@@ -206,7 +228,21 @@ CM_REGISTER_SELFTEST("tableware.planter", [](Context& ctx) -> ll::coro::CoroTask
     for (auto id : {"minecraft:wheat", "minecraft:oak_sapling", "minecraft:poppy"}) {
         auto const* plant = make(id);
         ctx.require(plant != nullptr, std::string(id) + " exists");
-        ctx.check(plant->getBlockType().mayPlace(region, cm::game::blockPos(top)), std::string(id) + " may be placed on a planter");
+        ctx.check(
+            plant->getBlockType().mayPlace(region, cm::game::blockPos(top)),
+            std::string(id) + " may be placed on a planter"
+        );
+    }
+    {
+        // which position mayPlaceOn receives: probe with vanilla farmland
+        auto farm = ctx.testPos(1341);
+        ctx.require(ctx.setBlock(farm, "minecraft:farmland"), "farmland");
+        auto const& wheat = make("minecraft:wheat")->getBlockType();
+        ctx.check(wheat.mayPlaceOn(region, cm::game::blockPos(farm)), "mayPlaceOn receives the support block");
+        ctx.check(
+            !wheat.mayPlaceOn(region, cm::game::blockPos(above(farm))),
+            "mayPlaceOn is not given the plant position"
+        );
     }
     ctx.require(ctx.setBlock(top, "minecraft:wheat"), "wheat planted");
     co_await ctx.ticks(5);
@@ -217,12 +253,21 @@ CM_REGISTER_SELFTEST("tableware.planter", [](Context& ctx) -> ll::coro::CoroTask
 CM_REGISTER_SELFTEST("tableware.urn", [](Context& ctx) -> ll::coro::CoroTask<> {
     auto pos = ctx.testPos(1350);
     ctx.require(co_await ctx.ensureLoaded(pos), "test area loaded");
-    ctx.require(ctx.setBlock(pos, std::string(kUrn), {{"cm:treasure", 1}}), "treasure urn placed");
+    ctx.require(
+        ctx.setBlock(
+            pos,
+            std::string(kUrn),
+            {
+                {"cm:treasure", 1}
+    }
+        ),
+        "treasure urn placed"
+    );
     ctx.check(state(blockAt(ctx, pos), "cm:treasure") == 1, "treasure state");
-    auto& cfg  = cm::config::mut<TablewareConfig>();
-    auto  keep = cfg.urnEntitySpawnChance;
+    auto& cfg                = cm::config::mut<TablewareConfig>();
+    auto  keep               = cfg.urnEntitySpawnChance;
     cfg.urnEntitySpawnChance = 1.0f;
-    int before = urn::releases();
+    int before               = urn::releases();
     cm::game::clearBlock(regionOf(ctx), cm::game::blockPos(pos));
     cfg.urnEntitySpawnChance = keep;
     ctx.check(urn::releases() == before + 1, "a broken treasure urn releases a mob");
@@ -237,7 +282,12 @@ CM_REGISTER_SELFTEST("tableware.event_path", [](Context& ctx) -> ll::coro::CoroT
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
     sp.simulateSetItem(makeItem("minecraft:honey_bottle"), true, 0);
     co_await ctx.ticks(1);
-    sp.simulateUseItemInSlotOnBlock(0, cm::game::blockPos(pos), ScriptModuleMinecraft::ScriptFacing::Up, Vec3{0.5f, 0.9f, 0.5f});
+    sp.simulateUseItemInSlotOnBlock(
+        0,
+        cm::game::blockPos(pos),
+        ScriptModuleMinecraft::ScriptFacing::Up,
+        Vec3{0.5f, 0.9f, 0.5f}
+    );
     co_await ctx.ticks(3);
     ctx.check(state(blockAt(ctx, pos), "cm:fluid") == 2, "goblet filled through the interaction event");
 });

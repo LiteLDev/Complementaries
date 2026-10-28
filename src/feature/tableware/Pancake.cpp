@@ -21,6 +21,7 @@ constexpr float kSaturation = 0.6f;
 
 bool onUse(UseContext const& ctx, bool apply) {
     if (!is(ctx.block, kPancake)) return false;
+    if (ctx.player.isSneaking() && !isEmpty(ctx.held)) return false; // sneak + item: the item's own use
     int  layers  = state(ctx.block, "cm:pancakes") + 1;
     int  topping = state(ctx.block, "cm:topping");
     auto held    = itemId(ctx.held);
@@ -28,7 +29,12 @@ bool onUse(UseContext const& ctx, bool apply) {
     if (held == kPancake) {
         if (layers >= kMaxLayers) return false; // the item places a new pancake on top
         if (!apply) return true;
-        auto const* next = with(ctx.block, {{"cm:pancakes", layers}});
+        auto const* next = with(
+            ctx.block,
+            {
+                {"cm:pancakes", layers}
+        }
+        );
         if (!next) return false;
         place(ctx.region, ctx.pos, *next);
         consumeHeld(ctx.player);
@@ -39,7 +45,12 @@ bool onUse(UseContext const& ctx, bool apply) {
     if (held == "minecraft:honey_bottle") {
         if (topping != 0) return false;
         if (!apply) return true;
-        auto const* next = with(ctx.block, {{"cm:topping", 1}});
+        auto const* next = with(
+            ctx.block,
+            {
+                {"cm:topping", 1}
+        }
+        );
         if (!next) return false;
         place(ctx.region, ctx.pos, *next);
         exchangeHeld(ctx.player, makeItem("minecraft:glass_bottle"));
@@ -52,7 +63,14 @@ bool onUse(UseContext const& ctx, bool apply) {
     ctx.player.eat(kNutrition + (topping != 0 ? 1 : 0), kSaturation);
     if (layers <= 1) {
         game::clearBlock(ctx.region, ctx.pos);
-    } else if (auto const* next = with(ctx.block, {{"cm:pancakes", layers - 2}})) {
+    } else if (
+        auto const* next = with(
+            ctx.block,
+            {
+                {"cm:pancakes", layers - 2}
+    }
+        )
+    ) {
         place(ctx.region, ctx.pos, *next);
     }
     playSound(ctx.player, static_cast<int>(Sound::Eat), ctx.pos);

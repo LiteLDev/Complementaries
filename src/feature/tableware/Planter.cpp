@@ -19,30 +19,69 @@ bool planterAt(BlockSource const& region, BlockPos const& pos) {
     return is(region.getBlock(pos), kPlanter);
 }
 
-/// `pos` is the support block, or the (still empty) plant position above a planter.
-bool supportsPlacement(BlockSource const& region, BlockPos const& pos) {
-    if (planterAt(region, pos)) return true;
-    return region.getBlock(pos).isAir() && planterAt(region, BlockPos{pos.x, pos.y - 1, pos.z});
-}
+/// `mayPlaceOn` receives the support block (checked by the planter selftest with vanilla farmland).
+bool supportsPlacement(BlockSource const& region, BlockPos const& pos) { return planterAt(region, pos); }
 
 /// `pos` is the plant.
 bool standsOnPlanter(BlockSource const& region, BlockPos const& pos) {
     return planterAt(region, BlockPos{pos.x, pos.y - 1, pos.z});
 }
 
-LL_TYPE_INSTANCE_HOOK(CropMayPlaceOnHook, ll::memory::HookPriority::Normal, CropBlock, &CropBlock::$mayPlaceOn, bool, BlockSource& region, BlockPos const& pos) {
+LL_TYPE_INSTANCE_HOOK(
+    CropMayPlaceOnHook,
+    ll::memory::HookPriority::Normal,
+    CropBlock,
+    &CropBlock::$mayPlaceOn,
+    bool,
+    BlockSource&    region,
+    BlockPos const& pos
+) {
     return supportsPlacement(region, pos) || origin(region, pos);
 }
-LL_TYPE_INSTANCE_HOOK(CropCanSurviveHook, ll::memory::HookPriority::Normal, CropBlock, &CropBlock::$canSurvive, bool, BlockSource& region, BlockPos const& pos) {
+LL_TYPE_INSTANCE_HOOK(
+    CropCanSurviveHook,
+    ll::memory::HookPriority::Normal,
+    CropBlock,
+    &CropBlock::$canSurvive,
+    bool,
+    BlockSource&    region,
+    BlockPos const& pos
+) {
     return standsOnPlanter(region, pos) || origin(region, pos);
 }
-LL_TYPE_INSTANCE_HOOK(FoliageMayPlaceOnHook, ll::memory::HookPriority::Normal, FoliageBlock, &FoliageBlock::$mayPlaceOn, bool, BlockSource& region, BlockPos const& pos) {
+// FoliageBlock's two virtuals are folded with identical bodies of other blocks (MCFOLD): the
+// detour only ever turns `false` into `true` for a block resting on a planter, and ignores `this`.
+LL_TYPE_INSTANCE_HOOK(
+    FoliageMayPlaceOnHook,
+    ll::memory::HookPriority::Normal,
+    FoliageBlock,
+    &FoliageBlock::$mayPlaceOn,
+    bool,
+    BlockSource&    region,
+    BlockPos const& pos
+) {
     return supportsPlacement(region, pos) || origin(region, pos);
 }
-LL_TYPE_INSTANCE_HOOK(FoliageCanSurviveHook, ll::memory::HookPriority::Normal, FoliageBlock, &FoliageBlock::$canSurvive, bool, BlockSource& region, BlockPos const& pos) {
+LL_TYPE_INSTANCE_HOOK(
+    FoliageCanSurviveHook,
+    ll::memory::HookPriority::Normal,
+    FoliageBlock,
+    &FoliageBlock::$canSurvive,
+    bool,
+    BlockSource&    region,
+    BlockPos const& pos
+) {
     return standsOnPlanter(region, pos) || origin(region, pos);
 }
-LL_TYPE_INSTANCE_HOOK(FlowerMayPlaceOnHook, ll::memory::HookPriority::Normal, FlowerBlock, &FlowerBlock::$mayPlaceOn, bool, BlockSource& region, BlockPos const& pos) {
+LL_TYPE_INSTANCE_HOOK(
+    FlowerMayPlaceOnHook,
+    ll::memory::HookPriority::Normal,
+    FlowerBlock,
+    &FlowerBlock::$mayPlaceOn,
+    bool,
+    BlockSource&    region,
+    BlockPos const& pos
+) {
     return supportsPlacement(region, pos) || origin(region, pos);
 }
 LL_STATIC_HOOK(

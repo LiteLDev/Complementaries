@@ -39,15 +39,15 @@ struct TablewareConfig {
 [[nodiscard]] TablewareConfig const& config();
 
 // ---- ids ------------------------------------------------------------------------------------------
-inline constexpr std::string_view kGoblet         = "complementaries:goblet";
-inline constexpr std::string_view kUrn            = "complementaries:urn";
-inline constexpr std::string_view kPlanter        = "complementaries:planter";
-inline constexpr std::string_view kFlowerBox      = "complementaries:flower_box";
-inline constexpr std::string_view kBookPile       = "complementaries:book_pile";
-inline constexpr std::string_view kBookPileLying  = "complementaries:book_pile_horizontal";
-inline constexpr std::string_view kPancake        = "complementaries:pancake";
-inline constexpr std::string_view kJarBoat        = "complementaries:jar_boat";
-inline constexpr std::string_view kCandy          = "complementaries:candy";
+inline constexpr std::string_view kGoblet        = "complementaries:goblet";
+inline constexpr std::string_view kUrn           = "complementaries:urn";
+inline constexpr std::string_view kPlanter       = "complementaries:planter";
+inline constexpr std::string_view kFlowerBox     = "complementaries:flower_box";
+inline constexpr std::string_view kBookPile      = "complementaries:book_pile";
+inline constexpr std::string_view kBookPileLying = "complementaries:book_pile_horizontal";
+inline constexpr std::string_view kPancake       = "complementaries:pancake";
+inline constexpr std::string_view kJarBoat       = "complementaries:jar_boat";
+inline constexpr std::string_view kCandy         = "complementaries:candy";
 
 // ---- block helpers ----------------------------------------------------------------------------------
 using StateValue = Block::BlockStateValueType;
@@ -62,27 +62,25 @@ using StateList  = std::vector<std::pair<std::string, StateValue>>;
 [[nodiscard]] Block const* with(Block const& block, StateList const& changes);
 /// The block `id` with `states` (others default).
 [[nodiscard]] Block const* make(std::string_view id, StateList const& states = {});
-bool place(BlockSource& region, BlockPos const& pos, Block const& block);
-/// Unit offset of a cardinal direction name.
-[[nodiscard]] std::pair<int, int> offsetOf(std::string_view dir);
+bool                       place(BlockSource& region, BlockPos const& pos, Block const& block);
+
 /// The direction name facing `face` (side faces only, "" for up/down).
 [[nodiscard]] std::string directionOfFace(FacingID face);
-/// Cardinal direction from the player to... the opposite of where the player looks (a placed
-/// block's front faces the player).
+/// The cardinal direction pointing back at the player (a placed block's front faces the player).
 [[nodiscard]] std::string directionTowards(Player const& player);
 
 // ---- item helpers -----------------------------------------------------------------------------------
-[[nodiscard]] ItemStack makeItem(std::string_view id, int count = 1, int aux = 0);
-[[nodiscard]] bool      isEmpty(ItemStack const& item);
+[[nodiscard]] ItemStack   makeItem(std::string_view id, int count = 1, int aux = 0);
+[[nodiscard]] bool        isEmpty(ItemStack const& item);
 [[nodiscard]] std::string itemId(ItemStack const& item); ///< "" for an empty stack
-[[nodiscard]] bool      creative(Player const& player);
+[[nodiscard]] bool        creative(Player const& player);
 /// Removes `n` of the held item (not in creative).
 void consumeHeld(Player& player, int n = 1);
-/// Uses up one held item and hands out `result` (bottle exchange; creative keeps the held item and
-/// still receives `result` only when it doesn't have one).
-void exchangeHeld(Player& player, ItemStack const& result);
-void giveOrDrop(Player& player, ItemStack item);
-[[nodiscard]] std::string itemToSnbt(ItemStack const& item);
+/// Uses up one held item and hands out `result` (bottle exchange). Creative keeps the held item and
+/// receives `result` only when it has none yet.
+void                                   exchangeHeld(Player& player, ItemStack const& result);
+void                                   giveOrDrop(Player& player, ItemStack item);
+[[nodiscard]] std::string              itemToSnbt(ItemStack const& item);
 [[nodiscard]] std::optional<ItemStack> itemFromSnbt(std::string const& snbt);
 
 // ---- world helpers ----------------------------------------------------------------------------------
@@ -91,9 +89,9 @@ void giveOrDrop(Player& player, ItemStack item);
 /// Runs `fn` on the next server tick.
 void defer(std::function<void()> fn);
 /// Spawns items / a mob at a block on the next tick (dimension looked up again then).
-void dropLater(int dim, BlockPos const& pos, std::vector<ItemStack> items);
-void spawnMobLater(int dim, BlockPos const& pos, std::string const& id);
-void playSound(Player& player, int levelSoundEvent, BlockPos const& pos, int data = -1);
+void                dropLater(int dim, BlockPos const& pos, std::vector<ItemStack> items);
+void                spawnMobLater(int dim, BlockPos const& pos, std::string const& id);
+void                playSound(Player& player, int levelSoundEvent, BlockPos const& pos, int data = -1);
 [[nodiscard]] float randomFloat();
 [[nodiscard]] int   randomInt(int bound);
 
@@ -127,9 +125,9 @@ namespace flower_box {
 bool onUse(UseContext const& ctx, bool apply);
 void onRemoved(int dim, BlockPos const& pos, Block const& prev);
 /// 1..15 for supported plants, 0 otherwise.
-[[nodiscard]] int plantOf(std::string_view itemId);
+[[nodiscard]] int              plantOf(std::string_view itemId);
 [[nodiscard]] std::string_view plantItem(int value);
-void onPlaced(Player& player, BlockPos const& pos, FacingID face);
+void                           onPlaced(Player& player, BlockPos const& pos, FacingID face);
 } // namespace flower_box
 
 namespace book_pile {
@@ -138,8 +136,8 @@ bool onPlaceUse(UseContext const& ctx, bool apply);
 void onRemoved(int dim, BlockPos const& pos, Block const& prev);
 /// Enchanting power of the book piles around an enchanting table.
 [[nodiscard]] float enchantPower(BlockSource& region, BlockPos const& table);
-void installHooks();
-void uninstallHooks();
+void                installHooks();
+void                uninstallHooks();
 } // namespace book_pile
 
 namespace pancake {
@@ -150,15 +148,15 @@ namespace urn {
 void onRemoved(int dim, BlockPos const& pos, Block const& prev);
 /// Mobs released by treasure urns so far (tests).
 [[nodiscard]] int releases();
-void installHooks();
-void uninstallHooks();
+void              installHooks();
+void              uninstallHooks();
 } // namespace urn
 
 namespace planter {
-/// A plant at `plantPos` (or with its support at `pos`) stands on a planter.
+/// The block at `pos` is a planter that supports a plant above it.
 [[nodiscard]] bool supports(BlockSource const& region, BlockPos const& pos);
-void installHooks();
-void uninstallHooks();
+void               installHooks();
+void               uninstallHooks();
 } // namespace planter
 
 namespace jar_boat {

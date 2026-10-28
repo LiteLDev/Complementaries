@@ -17,6 +17,7 @@
 #include "mc/deps/shared_types/legacy/LevelSoundEvent.h"
 #include "mc/world/actor/ActorDefinitionIdentifier.h"
 #include "mc/world/actor/ActorSoundIdentifier.h"
+#include "mc/world/actor/player/Inventory.h"
 #include "mc/world/actor/player/Player.h"
 #include "mc/world/item/ItemStack.h"
 #include "mc/world/item/SaveContext.h"
@@ -28,6 +29,7 @@
 #include "mc/world/level/dimension/Dimension.h"
 
 #include "game/Blocks.h"
+#include "game/WorldDb.h"
 #include "mod/Config.h"
 #include "mod/Log.h"
 #include "mod/Module.h"
@@ -42,13 +44,11 @@ TablewareConfig const& config() { return cm::config::get<TablewareConfig>(); }
 
 bool is(Block const& block, std::string_view id) { return block.getTypeName() == id; }
 
-int state(Block const& block, std::string_view name, int def) {
-    return cm::game::intState(block, name).value_or(def);
-}
+int state(Block const& block, std::string_view name, int def) { return cm::game::intState(block, name).value_or(def); }
 
 namespace {
 StateList statesOf(Block const& block) {
-    StateList out;
+    StateList   out;
     auto const& tag = *block.mSerializationId;
     if (!tag.contains("states")) return out;
     auto const& states = tag.at("states");
@@ -103,14 +103,10 @@ Block const* make(std::string_view id, StateList const& states) {
     return with(*base, states);
 }
 
-bool place(BlockSource& region, BlockPos const& pos, Block const& block) { return cm::game::setBlock(region, pos, block); }
-
-std::pair<int, int> offsetOf(std::string_view dir) {
-    if (dir == "north") return {0, -1};
-    if (dir == "south") return {0, 1};
-    if (dir == "west") return {-1, 0};
-    return {1, 0};
+bool place(BlockSource& region, BlockPos const& pos, Block const& block) {
+    return cm::game::setBlock(region, pos, block);
 }
+
 
 std::string directionOfFace(FacingID face) {
     switch (face) {
@@ -160,9 +156,21 @@ void consumeHeld(Player& player, int n) {
     player.sendInventory(false);
 }
 
+namespace {
+bool hasItem(Player& player, ItemStack const& like) {
+    auto& inv = player.getInventory();
+    for (int i = 0; i < inv.getContainerSize(); ++i) {
+        auto const& it = inv.getItem(i);
+        if (!isEmpty(it) && it.getTypeName() == like.getTypeName() && it.getAuxValue() == like.getAuxValue())
+            return true;
+    }
+    return false;
+}
+} // namespace
+
 void exchangeHeld(Player& player, ItemStack const& result) {
     if (creative(player)) {
-        giveOrDrop(player, result);
+        if (!hasItem(player, result)) giveOrDrop(player, result);
         return;
     }
     ItemStack held = player.getSelectedItem();
@@ -279,9 +287,11 @@ Vec3 hitInBlock(Vec3 const& click, BlockPos const& pos) {
     return Vec3{click.x - pos.x, click.y - pos.y, click.z - pos.z};
 }
 
-bool runHandlers(Player& player, BlockPos const& pos, FacingID face, Vec3 const& hit, bool apply, int only) {
+/// Index of the handler that takes the click (-1: none); `apply` performs it. `only` restricts the
+/// search to one handler (a deferred click re-checks the handler chosen at click time).
+int runHandlers(Player& player, BlockPos const& pos, FacingID face, Vec3 const& hit, bool apply, int only) {
     auto& region = player.getDimensionBlockSource();
-    if (!region.hasChunksAt(pos, 0, false)) return false;
+    if (!region.hasChunksAt(pos, 0, false)) return -1;
     auto const& block = region.getBlock(pos);
     ItemStack   held  = player.getSelectedItem();
     UseContext  ctx{player, region, pos, block, held, face, hit};
@@ -289,20 +299,8 @@ bool runHandlers(Player& player, BlockPos const& pos, FacingID face, Vec3 const&
         if (only >= 0 && i != only) continue;
         if (kHandlers[i](ctx, false)) {
             if (apply) kHandlers[i](ctx, true);
-            return true;
+            return i;
         }
-    }
-    return false;
-}
-
-int whichHandler(Player& player, BlockPos const& pos, FacingID face, Vec3 const& hit) {
-    auto& region = player.getDimensionBlockSource();
-    if (!region.hasChunksAt(pos, 0, false)) return -1;
-    auto const& block = region.getBlock(pos);
-    ItemStack   held  = player.getSelectedItem();
-    UseContext  ctx{player, region, pos, block, held, face, hit};
-    for (int i = 0; i < static_cast<int>(std::size(kHandlers)); ++i) {
-        if (kHandlers[i](ctx, false)) return i;
     }
     return -1;
 }
@@ -310,8 +308,8 @@ int whichHandler(Player& player, BlockPos const& pos, FacingID face, Vec3 const&
 
 bool handleUse(Player& player, BlockPos const& pos, FacingID face, Vec3 const& click, bool immediate) {
     Vec3 hit = hitInBlock(click, pos);
-    if (immediate) return runHandlers(player, pos, face, hit, true, -1);
-    int handler = whichHandler(player, pos, face, hit);
+    if (immediate) return runHandlers(player, pos, face, hit, true, -1) >= 0;
+    int handler = runHandlers(player, pos, face, hit, false, -1);
     if (handler < 0) return false;
     auto id  = player.getOrCreateUniqueID();
     int  dim = static_cast<int>(player.getDimensionId());
@@ -334,21 +332,21 @@ public:
         mListeners.push_back(bus.emplaceListener<ll::event::PlayerInteractBlockEvent>(
             [this](ll::event::PlayerInteractBlockEvent& ev) { onInteract(ev); }
         ));
-        mListeners.push_back(bus.emplaceListener<ll::event::PlayerPlacingBlockEvent>(
-            [this](ll::event::PlayerPlacingBlockEvent& ev) {
+        mListeners.push_back(
+            bus.emplaceListener<ll::event::PlayerPlacingBlockEvent>([this](ll::event::PlayerPlacingBlockEvent& ev) {
                 if (ev.self().isClientSide()) return;
                 mPlacingFace[ev.self().getOrCreateUniqueID().rawID] = static_cast<FacingID>(ev.face());
-            }
-        ));
-        mListeners.push_back(bus.emplaceListener<ll::event::PlayerPlacedBlockEvent>(
-            [this](ll::event::PlayerPlacedBlockEvent& ev) {
+            })
+        );
+        mListeners.push_back(
+            bus.emplaceListener<ll::event::PlayerPlacedBlockEvent>([this](ll::event::PlayerPlacedBlockEvent& ev) {
                 auto& player = ev.self();
                 if (player.isClientSide() || !is(ev.placedBlock(), kFlowerBox)) return;
                 auto it   = mPlacingFace.find(player.getOrCreateUniqueID().rawID);
                 auto face = it == mPlacingFace.end() ? FacingID::Up : it->second;
                 flower_box::onPlaced(player, ev.pos(), face);
-            }
-        ));
+            })
+        );
         mListeners.push_back(bus.emplaceListener<ll::event::BlockChangedEvent>([](ll::event::BlockChangedEvent& ev) {
             onBlockChanged(ev);
         }));
@@ -365,6 +363,11 @@ public:
                 }
             }
         }));
+        if (!mDbHooked) {
+            // Pending drops / spawns belong to the world that is closing (the client opens many).
+            game::db::onWorldClosed([] { queue().clear(); });
+            mDbHooked = true;
+        }
         planter::installHooks();
         book_pile::installHooks();
         urn::installHooks();
@@ -381,6 +384,7 @@ public:
         jar_boat::uninstallHooks();
         queue().clear();
         mPlacingFace.clear();
+        mLastUse.clear();
     }
 
 private:
@@ -390,13 +394,13 @@ private:
         auto key = player.getOrCreateUniqueID().rawID;
         auto pos = ev.blockPos();
         // The same click can be reported more than once in a tick: act once, cancel every time.
-        if (auto it = mLastUse.find(key); it != mLastUse.end() && it->second.first == mTick && it->second.second == pos) {
-            if (mLastHandled) ev.cancel();
+        if (auto it = mLastUse.find(key); it != mLastUse.end() && it->second.tick == mTick && it->second.pos == pos) {
+            if (it->second.handled) ev.cancel();
             return;
         }
-        mLastUse[key] = {mTick, pos};
-        mLastHandled  = handleUse(player, pos, ev.face(), ev.clickPos(), false);
-        if (mLastHandled) ev.cancel();
+        bool handled  = handleUse(player, pos, ev.face(), ev.clickPos(), false);
+        mLastUse[key] = {mTick, pos, handled};
+        if (handled) ev.cancel();
     }
 
     static void onBlockChanged(ll::event::BlockChangedEvent& ev) {
@@ -430,11 +434,16 @@ private:
         }
     }
 
-    std::vector<ll::event::ListenerPtr>                         mListeners;
-    std::unordered_map<int64, FacingID>                         mPlacingFace;
-    std::unordered_map<int64, std::pair<uint64, BlockPos>>      mLastUse;
-    uint64                                                      mTick = 0;
-    bool                                                        mLastHandled = false;
+    std::vector<ll::event::ListenerPtr> mListeners;
+    std::unordered_map<int64, FacingID> mPlacingFace;
+    struct LastUse {
+        uint64   tick = 0;
+        BlockPos pos;
+        bool     handled = false;
+    };
+    std::unordered_map<int64, LastUse> mLastUse;
+    bool                               mDbHooked = false;
+    uint64                             mTick     = 0;
 };
 
 CM_REGISTER_MODULE(TablewareModule);
