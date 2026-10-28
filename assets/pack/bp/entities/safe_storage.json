@@ -14,7 +14,7 @@
         ]
       },
       "minecraft:inventory": {
-        "container_type": "container",
+        "container_type": "minecart_chest",
         "inventory_size": 27,
         "can_be_siphoned_from": false,
         "private": true
