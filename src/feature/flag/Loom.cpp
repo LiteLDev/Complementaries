@@ -28,7 +28,8 @@ std::optional<ItemStack> heldFlag(Player& player) {
 /// Writes `item` back to the main hand if the hand still holds the same kind of flag.
 bool storeHeld(Player& player, ItemStack const& before, ItemStack const& after) {
     auto const& now = player.getSelectedItem();
-    if (now.isNull() || now.getTypeName() != before.getTypeName() || readLayers(now) != readLayers(before)) return false;
+    if (now.isNull() || now.getTypeName() != before.getTypeName() || readLayers(now) != readLayers(before))
+        return false;
     if (now.mCount > 1) {
         // like the loom: one flag of the stack gets the patterns
         ItemStack rest(now);
@@ -57,7 +58,7 @@ bool hasItem(Player& player, std::string_view id) {
 }
 
 int dyeCount(Player& player, int color) {
-    int  n   = 0;
+    int   n   = 0;
     auto& inv = player.getInventory();
     for (int i = 0; i < inv.getContainerSize(); ++i) {
         auto const& it = inv.getItem(i);
@@ -115,7 +116,7 @@ void openLoom(Player& player) {
     for (auto const& l : layers) content += layerName(l.pattern, l.color, &player) + "\n";
     if (content.empty()) content = trFor(player, "cm.flag.loom.empty", "This flag has no patterns yet.");
 
-    auto actions = std::make_shared<std::vector<std::function<void(Player&)>>>();
+    auto                 actions = std::make_shared<std::vector<std::function<void(Player&)>>>();
     ll::form::SimpleForm form(trFor(player, "cm.flag.loom.title", "Flag Loom"), content);
 
     if (layers.empty()) { // like the recipe: only a blank flag takes a banner's patterns
@@ -144,6 +145,7 @@ void openLoom(Player& player) {
         form.appendButton(label);
         actions->push_back([code = std::string(code)](Player& p) { openColors(p, code); });
     }
+    log().info("flag: opened the flag loom for {}", player.getRealName());
     form.sendTo(player, [actions](Player& p, int selected, ll::form::FormCancelReason) {
         if (selected < 0 || selected >= static_cast<int>(actions->size())) return;
         (*actions)[selected](p);
@@ -164,10 +166,15 @@ void openColors(Player& player, std::string pattern) {
         player.sendMessage(trFor(player, "cm.flag.loom.need_pattern", "You need the {} banner pattern", name));
         return;
     }
-    auto colors = std::make_shared<std::vector<int>>();
+    auto                 colors = std::make_shared<std::vector<int>>();
     ll::form::SimpleForm form(
         trFor(player, "cm.flag.loom.title", "Flag Loom"),
-        trFor(player, "cm.flag.loom.pick_color", "Pick a dye colour for {}", trFor(player, "cm.flag.pattern." + pattern, patternEnglish(pattern)))
+        trFor(
+            player,
+            "cm.flag.loom.pick_color",
+            "Pick a dye colour for {}",
+            trFor(player, "cm.flag.pattern." + pattern, patternEnglish(pattern))
+        )
     );
     for (int c = 0; c < kColors; ++c) {
         int n = dyeCount(player, c);
@@ -198,9 +205,9 @@ void openColors(Player& player, std::string pattern) {
 void openCopy(Player& player) {
     auto held = heldFlag(player);
     if (!held) return;
-    int   color = bannerOrFlagColor(*held);
-    auto  slots = std::make_shared<std::vector<int>>();
-    auto& inv   = player.getInventory();
+    int                  color = bannerOrFlagColor(*held);
+    auto                 slots = std::make_shared<std::vector<int>>();
+    auto&                inv   = player.getInventory();
     ll::form::SimpleForm form(
         trFor(player, "cm.flag.loom.title", "Flag Loom"),
         trFor(player, "cm.flag.loom.copy_hint", "Pick a banner or flag of the same colour. It is kept.")
@@ -218,7 +225,9 @@ void openCopy(Player& player) {
         if (slots->size() >= 20) break;
     }
     if (slots->empty()) {
-        player.sendMessage(trFor(player, "cm.flag.loom.no_banner", "No banner with the same colour and patterns found"));
+        player.sendMessage(
+            trFor(player, "cm.flag.loom.no_banner", "No banner with the same colour and patterns found")
+        );
         return;
     }
     form.sendTo(player, [slots, before = *held](Player& p, int selected, ll::form::FormCancelReason) {

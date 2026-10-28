@@ -29,22 +29,33 @@ Invoke-Chat "/tp @s $($view[0] + 9.5) $($view[1] + 2) $($view[2] + 5.5) facing $
 Start-Sleep -Seconds 2
 Save-Screenshot 'scene-side' | Out-Null
 
-# Empty hand on an awning tilts it.
+# Empty hand on an awning tilts it. The aim of `tp ... facing` depends on the eye height used
+# by the game, so a few aim heights are tried until the click lands on the awning.
 Invoke-Chat '/clear @s'
-Invoke-Chat "/tp @s $($awning[0] + 0.5) $($view[1]) $($awning[2] - 2.5) facing $($awning[0] + 0.5) $($awning[1] + 0.8) $($awning[2] + 0.5)"
-Start-Sleep -Seconds 1
-$mark = Get-LogMark
-Click 0.5 0.5 -Relative -Right
-Wait-LogLine 'flag: toggled awning slant' 15 -Since $mark | Out-Null
+$tilted = $false
+foreach ($dy in 0.75, -0.1, -0.85) {
+    Invoke-Chat "/tp @s $($awning[0] + 0.5) $($view[1]) $($awning[2] - 2.5) facing $($awning[0] + 0.5) $($awning[1] + $dy) $($awning[2] + 0.5)"
+    Start-Sleep -Seconds 1
+    $mark = Get-LogMark
+    Click 0.5 0.5 -Relative -Right
+    try { Wait-LogLine 'flag: toggled awning slant' 4 -Since $mark | Out-Null; $tilted = $true; break } catch { }
+}
+if (-not $tilted) { throw 'an empty-hand click did not tilt the awning' }
 Start-Sleep -Milliseconds 500
 Save-Screenshot 'awning-tilted' | Out-Null
 
 # A flag used on a loom opens the Flag loom form.
 Invoke-Chat '/give @s complementaries:flag_white 1'
 Invoke-Chat '/give @s red_dye 4'
-Invoke-Chat "/tp @s $($loom[0] + 0.5) $($loom[1]) $($loom[2] - 2.5) facing $($loom[0] + 0.5) $($loom[1] + 0.5) $($loom[2] + 0.5)"
-Start-Sleep -Seconds 1
-Click 0.5 0.5 -Relative -Right
+$opened = $false
+foreach ($dy in 0.5, -0.4, -1.2) {
+    Invoke-Chat "/tp @s $($loom[0] + 0.5) $($loom[1]) $($loom[2] - 2.5) facing $($loom[0] + 0.5) $($loom[1] + $dy) $($loom[2] + 0.5)"
+    Start-Sleep -Seconds 1
+    $mark = Get-LogMark
+    Click 0.5 0.5 -Relative -Right
+    try { Wait-LogLine 'flag: opened the flag loom' 4 -Since $mark | Out-Null; $opened = $true; break } catch { }
+}
+if (-not $opened) { throw 'using a flag on a loom did not open the Flag loom' }
 Start-Sleep -Seconds 2
 Save-Screenshot 'loom' | Out-Null
 Close-Screen

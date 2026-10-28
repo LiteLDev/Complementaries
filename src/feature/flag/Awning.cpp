@@ -44,7 +44,7 @@ bool awningCanSurvive(BlockSource& region, BlockPos const& pos, AwningState cons
 
 std::optional<AwningState>
 awningPlacement(BlockSource& region, BlockPos const& pos, int face, double clickY, std::array<int, 6> const& looking) {
-    auto const& cfg = config::get<FlagConfig>();
+    auto const&      cfg = config::get<FlagConfig>();
     std::vector<int> dirs(looking.begin(), looking.end());
     bool             slanted = false;
     if (auto clickedOn = awningAt(region, offset(pos, oppositeDir(face)))) {
@@ -57,8 +57,8 @@ awningPlacement(BlockSource& region, BlockPos const& pos, int face, double click
     }
     for (int direction : dirs) {
         if (!horizontal(direction)) continue;
-        int  opposite = oppositeDir(direction);
-        bool bottom   = face != Down && (face == Up || !(clickY > 0.5));
+        int                   opposite = oppositeDir(direction);
+        bool                  bottom   = face != Down && (face == Up || !(clickY > 0.5));
         std::vector<BlockPos> behind;
         if (cfg.awningSlant) {
             behind.push_back(offset(pos, direction));
@@ -82,7 +82,16 @@ bool toggleAwningSlant(BlockSource& region, BlockPos const& pos) {
     auto const& b = region.getBlock(pos);
     auto        s = awningState(b);
     if (!s) return false;
-    if (!place(region, pos, game::blockId(b), {{"complementaries:facing", s->facing2d}, {"complementaries:bottom", s->bottom ? 1 : 0}, {"complementaries:slanted", s->slanted ? 0 : 1}}))
+    if (!place(
+            region,
+            pos,
+            game::blockId(b),
+            {
+                {"complementaries:facing",  s->facing2d       },
+                {"complementaries:bottom",  s->bottom ? 1 : 0 },
+                {"complementaries:slanted", s->slanted ? 0 : 1}
+    }
+        ))
         return false;
     playBlockSound(region, pos, "use.cloth", 1.f, 0.95f);
     return true;

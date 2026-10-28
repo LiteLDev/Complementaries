@@ -36,55 +36,71 @@ struct PatternInfo {
     std::string_view english;
     std::string_view item;
 };
-constexpr std::array<PatternInfo, 43> kPatternInfo{{
-    {"bs", "Base", ""},
-    {"ts", "Chief", ""},
-    {"ls", "Pale Dexter", ""},
-    {"rs", "Pale Sinister", ""},
-    {"cs", "Pale", ""},
-    {"ms", "Fess", ""},
-    {"drs", "Bend", ""},
-    {"dls", "Bend Sinister", ""},
-    {"ss", "Paly", ""},
-    {"cr", "Saltire", ""},
-    {"sc", "Cross", ""},
-    {"bt", "Chevron", ""},
-    {"tt", "Inverted Chevron", ""},
-    {"bts", "Base Indented", ""},
-    {"tts", "Chief Indented", ""},
-    {"ld", "Per Bend Sinister", ""},
-    {"rd", "Per Bend Sinister Inverted", ""},
-    {"lud", "Per Bend Inverted", ""},
-    {"rud", "Per Bend", ""},
-    {"mc", "Roundel", ""},
-    {"mr", "Lozenge", ""},
-    {"vh", "Per Pale", ""},
-    {"hh", "Per Fess", ""},
-    {"vhr", "Per Pale Inverted", ""},
-    {"hhb", "Per Fess Inverted", ""},
-    {"bo", "Bordure", ""},
-    {"cbo", "Bordure Indented", "minecraft:bordure_indented_banner_pattern"},
-    {"gra", "Gradient", ""},
-    {"gru", "Base Gradient", ""},
-    {"bri", "Field Masoned", "minecraft:field_masoned_banner_pattern"},
-    {"glb", "Globe", "minecraft:globe_banner_pattern"},
-    {"cre", "Creeper Charge", "minecraft:creeper_banner_pattern"},
-    {"sku", "Skull Charge", "minecraft:skull_banner_pattern"},
-    {"flo", "Flower Charge", "minecraft:flower_banner_pattern"},
-    {"moj", "Thing", "minecraft:mojang_banner_pattern"},
-    {"pig", "Snout", "minecraft:piglin_banner_pattern"},
-    {"bl", "Base Dexter Canton", ""},
-    {"br", "Base Sinister Canton", ""},
-    {"tl", "Chief Dexter Canton", ""},
-    {"tr", "Chief Sinister Canton", ""},
-    {"flw", "Flow", "minecraft:flow_banner_pattern"},
-    {"gus", "Guster", "minecraft:guster_banner_pattern"},
-    {"dragon", "Dragon Charge", "complementaries:dragon_banner_pattern"},
-}};
+constexpr std::array<PatternInfo, 43> kPatternInfo{
+    {
+     {"bs", "Base", ""},
+     {"ts", "Chief", ""},
+     {"ls", "Pale Dexter", ""},
+     {"rs", "Pale Sinister", ""},
+     {"cs", "Pale", ""},
+     {"ms", "Fess", ""},
+     {"drs", "Bend", ""},
+     {"dls", "Bend Sinister", ""},
+     {"ss", "Paly", ""},
+     {"cr", "Saltire", ""},
+     {"sc", "Cross", ""},
+     {"bt", "Chevron", ""},
+     {"tt", "Inverted Chevron", ""},
+     {"bts", "Base Indented", ""},
+     {"tts", "Chief Indented", ""},
+     {"ld", "Per Bend Sinister", ""},
+     {"rd", "Per Bend Sinister Inverted", ""},
+     {"lud", "Per Bend Inverted", ""},
+     {"rud", "Per Bend", ""},
+     {"mc", "Roundel", ""},
+     {"mr", "Lozenge", ""},
+     {"vh", "Per Pale", ""},
+     {"hh", "Per Fess", ""},
+     {"vhr", "Per Pale Inverted", ""},
+     {"hhb", "Per Fess Inverted", ""},
+     {"bo", "Bordure", ""},
+     {"cbo", "Bordure Indented", "minecraft:bordure_indented_banner_pattern"},
+     {"gra", "Gradient", ""},
+     {"gru", "Base Gradient", ""},
+     {"bri", "Field Masoned", "minecraft:field_masoned_banner_pattern"},
+     {"glb", "Globe", "minecraft:globe_banner_pattern"},
+     {"cre", "Creeper Charge", "minecraft:creeper_banner_pattern"},
+     {"sku", "Skull Charge", "minecraft:skull_banner_pattern"},
+     {"flo", "Flower Charge", "minecraft:flower_banner_pattern"},
+     {"moj", "Thing", "minecraft:mojang_banner_pattern"},
+     {"pig", "Snout", "minecraft:piglin_banner_pattern"},
+     {"bl", "Base Dexter Canton", ""},
+     {"br", "Base Sinister Canton", ""},
+     {"tl", "Chief Dexter Canton", ""},
+     {"tr", "Chief Sinister Canton", ""},
+     {"flw", "Flow", "minecraft:flow_banner_pattern"},
+     {"gus", "Guster", "minecraft:guster_banner_pattern"},
+     {"dragon", "Dragon Charge", "complementaries:dragon_banner_pattern"},
+     }
+};
 
 constexpr std::array<std::string_view, kColors> kColorEnglish{
-    "White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray",
-    "Light Gray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black",
+    "White",
+    "Orange",
+    "Magenta",
+    "Light Blue",
+    "Yellow",
+    "Lime",
+    "Pink",
+    "Gray",
+    "Light Gray",
+    "Cyan",
+    "Purple",
+    "Blue",
+    "Brown",
+    "Green",
+    "Red",
+    "Black",
 };
 
 std::string translate(Player const* player, std::string_view key, std::string_view fallback) {
@@ -139,7 +155,7 @@ std::string layerName(std::string_view code, int javaColor, Player const* player
 // ---- item layers ------------------------------------------------------------------------------------
 
 Layers readLayers(ItemStackBase const& item) {
-    Layers out;
+    Layers      out;
     auto const& data = item.mUserData;
     if (!data || !data->contains("Patterns", Tag::List)) return out;
     for (auto const& e : (*data)["Patterns"].get<ListTag>()) {
@@ -184,7 +200,11 @@ void writeLayers(ItemStack& item, Layers const& layers, Player const* player) {
 
 nlohmann::json layersToJson(Layers const& layers) {
     auto j = nlohmann::json::array();
-    for (auto const& l : layers) j.push_back({{"pattern", l.pattern}, {"color", l.color}});
+    for (auto const& l : layers)
+        j.push_back({
+            {"pattern", l.pattern},
+            {"color",   l.color  }
+        });
     return j;
 }
 
@@ -312,13 +332,15 @@ int clockwise(int dir) {
 int counterClockwise(int dir) { return oppositeDir(clockwise(dir)); }
 
 std::array<int, 6> nearestLookingDirections(Actor const& actor) {
-    auto const& rot   = actor.getRotation();
-    double      pitch = rot.x * std::numbers::pi / 180.0;
-    double      yaw   = rot.y * std::numbers::pi / 180.0;
-    double      vx    = -std::sin(yaw) * std::cos(pitch);
-    double      vy    = -std::sin(pitch);
-    double      vz    = std::cos(yaw) * std::cos(pitch);
-    std::array<std::pair<double, int>, 6> d{{{-vy, Down}, {vy, Up}, {-vz, North}, {vz, South}, {-vx, West}, {vx, East}}};
+    auto const&                           rot   = actor.getRotation();
+    double                                pitch = rot.x * std::numbers::pi / 180.0;
+    double                                yaw   = rot.y * std::numbers::pi / 180.0;
+    double                                vx    = -std::sin(yaw) * std::cos(pitch);
+    double                                vy    = -std::sin(pitch);
+    double                                vz    = std::cos(yaw) * std::cos(pitch);
+    std::array<std::pair<double, int>, 6> d{
+        {{-vy, Down}, {vy, Up}, {-vz, North}, {vz, South}, {-vx, West}, {vx, East}}
+    };
     std::stable_sort(d.begin(), d.end(), [](auto const& a, auto const& b) { return a.first > b.first; });
     std::array<int, 6> out{};
     for (int i = 0; i < 6; ++i) out[i] = d[i].second;
@@ -346,7 +368,12 @@ std::optional<FlagData> loadFlag(core::GlobalPos const& pos) {
 void saveFlag(core::GlobalPos const& pos, FlagData const& data) {
     game::db::save(
         flagKey(pos),
-        {{"color", data.color}, {"facing", data.facing}, {"layers", layersToJson(data.layers)}, {"name", data.name}}
+        {
+            {"color",  data.color               },
+            {"facing", data.facing              },
+            {"layers", layersToJson(data.layers)},
+            {"name",   data.name                }
+    }
     );
 }
 
@@ -366,7 +393,12 @@ bool sturdyFace(BlockSource& region, BlockPos const& pos, int face) {
     return !b.isAir() && b.canProvideSupport(static_cast<uchar>(face), BlockSupportType::Center);
 }
 
-bool place(BlockSource& region, BlockPos const& pos, std::string_view id, std::vector<std::pair<std::string_view, int>> const& states) {
+bool place(
+    BlockSource&                                         region,
+    BlockPos const&                                      pos,
+    std::string_view                                     id,
+    std::vector<std::pair<std::string_view, int>> const& states
+) {
     auto const* block = game::blockWith(id, states);
     return block && game::setBlock(region, pos, *block);
 }

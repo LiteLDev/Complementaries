@@ -42,7 +42,10 @@ bool sameBlock(Actor const& a, BlockPos const& pos) {
 } // namespace
 
 Actor* findCloth(BlockSource& region, BlockPos const& pos) {
-    AABB box{Vec3{pos.x, pos.y, pos.z}, Vec3{pos.x + 1, pos.y + 1, pos.z + 1}};
+    AABB box{
+        Vec3{pos.x,     pos.y,     pos.z    },
+        Vec3{pos.x + 1, pos.y + 1, pos.z + 1}
+    };
     for (auto* a : region.getEntities(box, 1.0f)) {
         if (a && a->getTypeName() == kClothId && sameBlock(*a, pos) && a->isAlive()) return a;
     }
@@ -70,7 +73,10 @@ Actor* syncCloth(BlockSource& region, BlockPos const& pos, FlagData const& data)
 }
 
 void removeCloth(BlockSource& region, BlockPos const& pos) {
-    AABB box{Vec3{pos.x, pos.y, pos.z}, Vec3{pos.x + 1, pos.y + 1, pos.z + 1}};
+    AABB box{
+        Vec3{pos.x,     pos.y,     pos.z    },
+        Vec3{pos.x + 1, pos.y + 1, pos.z + 1}
+    };
     for (auto* a : region.getEntities(box, 1.0f)) {
         if (a && a->getTypeName() == kClothId && sameBlock(*a, pos)) a->remove();
     }
@@ -82,9 +88,9 @@ bool moveFlagAlongPole(BlockSource& region, BlockPos const& pos, bool up) {
     auto const& flagBlock  = region.getBlock(pos);
     auto const& stickBlock = region.getBlock(next);
     if (!isFlag(game::blockId(flagBlock))) return false;
-    auto from = game::globalPos(region, pos);
-    auto to   = game::globalPos(region, next);
-    auto data = loadFlag(from).value_or(FlagData{flagColor(game::blockId(flagBlock))});
+    auto from           = game::globalPos(region, pos);
+    auto to             = game::globalPos(region, next);
+    auto data           = loadFlag(from).value_or(FlagData{flagColor(game::blockId(flagBlock))});
     detail::gMovingFlag = true;
     game::setBlock(region, next, flagBlock);
     game::setBlock(region, pos, stickBlock);

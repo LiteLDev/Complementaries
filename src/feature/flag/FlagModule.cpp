@@ -95,7 +95,10 @@ bool mayBuild(Player& player) {
 
 /// A player or mob stands in the block (Java's `isUnobstructed`).
 bool occupied(BlockSource& region, BlockPos const& pos) {
-    AABB box{Vec3{pos.x, pos.y, pos.z}, Vec3{pos.x + 1, pos.y + 1, pos.z + 1}};
+    AABB box{
+        Vec3{pos.x,     pos.y,     pos.z    },
+        Vec3{pos.x + 1, pos.y + 1, pos.z + 1}
+    };
     for (auto* a : region.getEntities(box, 0.f)) {
         if (!a || !(a->isType(ActorType::Player) || a->hasCategory(ActorCategory::Mob))) continue;
         if (a->getTypeName() == kClothId) continue;
@@ -144,9 +147,9 @@ public:
         mListeners.push_back(bus.emplaceListener<ll::event::PlayerInteractBlockEvent>(
             [this](ll::event::PlayerInteractBlockEvent& ev) { onInteract(ev); }
         ));
-        mListeners.push_back(bus.emplaceListener<ll::event::BlockChangedEvent>([this](ll::event::BlockChangedEvent& ev) {
-            onBlockChanged(ev);
-        }));
+        mListeners.push_back(bus.emplaceListener<ll::event::BlockChangedEvent>(
+            [this](ll::event::BlockChangedEvent& ev) { onBlockChanged(ev); }
+        ));
         mListeners.push_back(bus.emplaceListener<ll::event::ServerLevelTickEvent>([this](auto&) { onTick(); }));
         mListeners.push_back(bus.emplaceListener<ll::event::ActorHurtEvent>([this](ll::event::ActorHurtEvent& ev) {
             onHurt(ev);
@@ -162,7 +165,7 @@ public:
     }
 
     /// Runs `fn` at the start of the next server tick (after a cancelled interaction rolled back).
-    void later(std::function<void()> fn) { mTasks.push_back(std::move(fn)); }
+    void                 later(std::function<void()> fn) { mTasks.push_back(std::move(fn)); }
     [[nodiscard]] uint64 tick() const { return mTick; }
 
 private:
@@ -179,20 +182,23 @@ private:
     void onInteract(ll::event::PlayerInteractBlockEvent& ev) {
         auto& player = ev.self();
         if (player.isClientSide()) return;
-        auto const& cfg    = config::get<FlagConfig>();
-        auto&       region = player.getDimensionBlockSource();
-        auto const& item   = ev.item();
-        BlockPos    pos    = ev.blockPos();
-        int         face   = static_cast<int>(ev.face());
-        std::string itemId = item.isNull() ? std::string{} : item.getTypeName();
-        std::string blockId = ev.block() ? game::blockId(*ev.block()) : game::blockIdAt(region, pos);
-        int         dim    = static_cast<int>(region.getDimensionId());
-        auto        uuid   = player.getUuid();
+        auto const& cfg      = config::get<FlagConfig>();
+        auto&       region   = player.getDimensionBlockSource();
+        auto const& item     = ev.item();
+        BlockPos    pos      = ev.blockPos();
+        int         face     = static_cast<int>(ev.face());
+        std::string itemId   = item.isNull() ? std::string{} : item.getTypeName();
+        std::string blockId  = ev.block() ? game::blockId(*ev.block()) : game::blockIdAt(region, pos);
+        int         dim      = static_cast<int>(region.getDimensionId());
+        auto        uuid     = player.getUuid();
         bool        sneaking = player.isSneaking();
 
-        // one action per click (the event can fire more than once for the same use)
+        // one action per click: the client repeats the use for the same block over the next ticks
         auto key = std::make_tuple(pos.x, pos.y, pos.z, face, mTick);
-        if (mLastClick.contains(uuid) && mLastClick[uuid] == key) {
+        auto last = mLastClick.find(uuid);
+        if (last != mLastClick.end() && std::get<0>(last->second) == pos.x && std::get<1>(last->second) == pos.y
+            && std::get<2>(last->second) == pos.z && std::get<3>(last->second) == face
+            && mTick - std::get<4>(last->second) <= 4) {
             if (isAwning(itemId) || isBuntingItem(itemId) || (item.isNull() && (isFlag(blockId) || isAwning(blockId)))
                 || (isFlag(itemId) && blockId == "minecraft:loom" && !sneaking))
                 ev.cancel();
@@ -214,10 +220,10 @@ private:
             }
             BlockPos target = game::replaceable(region, pos) ? pos : offset(pos, face);
             FlagData d;
-            d.color  = flagColor(itemId);
-            d.facing = game::opposite(game::playerFacing(player));
-            d.layers = readLayers(item);
-            d.name   = item.getCustomName();
+            d.color                                = flagColor(itemId);
+            d.facing                               = game::opposite(game::playerFacing(player));
+            d.layers                               = readLayers(item);
+            d.name                                 = item.getCustomName();
             mPending[game::globalPos(dim, target)] = {d, mTick};
             log().debug("flag: pending flag at {} {} {} (tick {})", target.x, target.y, target.z, mTick);
             return;
@@ -254,7 +260,16 @@ private:
                 if (isAwning(itemId)) {
                     auto s = awningPlacement(*r, target, face, rel, looking);
                     if (!s) return;
-                    if (!place(*r, target, itemId, {{"complementaries:facing", s->facing2d}, {"complementaries:bottom", s->bottom ? 1 : 0}, {"complementaries:slanted", s->slanted ? 1 : 0}}))
+                    if (!place(
+                            *r,
+                            target,
+                            itemId,
+                            {
+                                {"complementaries:facing",  s->facing2d       },
+                                {"complementaries:bottom",  s->bottom ? 1 : 0 },
+                                {"complementaries:slanted", s->slanted ? 1 : 0}
+                    }
+                        ))
                         return;
                     playBlockSound(*r, target, "use.cloth", 1.f, 0.8f);
                     log().info(
@@ -268,7 +283,15 @@ private:
                     auto b = buntingPlacement(*r, target, buntingColor(itemId), looking);
                     if (!b) return;
                     bool wall = isBuntingWall(b->id);
-                    if (!place(*r, target, b->id, {{wall ? "complementaries:facing" : "complementaries:axis", b->state}})) return;
+                    if (!place(
+                            *r,
+                            target,
+                            b->id,
+                            {
+                                {wall ? "complementaries:facing" : "complementaries:axis", b->state}
+                    }
+                        ))
+                        return;
                     playBlockSound(*r, target, "use.cloth", 1.f, 0.8f);
                     log().info("flag: placed {}", b->id);
                 }
@@ -291,8 +314,8 @@ private:
         if (!detail::gMovingFlag && prevId != newId) {
             if (isFlag(newId) && config::get<FlagConfig>().flagEnabled) {
                 FlagData d;
-                d.color          = flagColor(newId);
-                bool fromPlayer  = false;
+                d.color         = flagColor(newId);
+                bool fromPlayer = false;
                 if (auto it = mPending.find(gp); it != mPending.end() && mTick - it->second.tick <= 2) {
                     d          = it->second.data;
                     d.color    = flagColor(newId);
@@ -347,7 +370,8 @@ private:
             auto        id = game::blockId(b);
             bool        ok = true;
             if (auto s = awningState(b)) ok = awningCanSurvive(*r, pos, *s);
-            else if (isBuntingWall(id)) ok = buntingWallCanSurvive(*r, pos, game::intState(b, "complementaries:facing").value_or(2));
+            else if (isBuntingWall(id))
+                ok = buntingWallCanSurvive(*r, pos, game::intState(b, "complementaries:facing").value_or(2));
             else if (isBuntingCeiling(id)) ok = buntingCeilingCanSurvive(*r, pos);
             if (!ok) {
                 breakWithDrops(*r, pos);
@@ -363,9 +387,12 @@ private:
             if (rf.data.layers.empty() && rf.data.name.empty()) return true;
             auto* r = regionOf(rf.pos.dim);
             if (!r) return true;
-            BlockPos    pos = game::blockPos(rf.pos);
-            AABB        box{Vec3{pos.x - 1, pos.y - 1, pos.z - 1}, Vec3{pos.x + 2, pos.y + 2, pos.z + 2}};
-            std::string id  = "complementaries:flag_" + std::string(kColorNames[rf.data.color]);
+            BlockPos pos = game::blockPos(rf.pos);
+            AABB     box{
+                Vec3{pos.x - 1, pos.y - 1, pos.z - 1},
+                Vec3{pos.x + 2, pos.y + 2, pos.z + 2}
+            };
+            std::string id = "complementaries:flag_" + std::string(kColorNames[rf.data.color]);
             for (auto* a : r->getEntities(box, 1.0f, ActorType::ItemEntity)) {
                 if (!a || !a->isType(ActorType::ItemEntity)) continue;
                 auto& item = static_cast<ItemActor*>(a)->item();
@@ -389,7 +416,11 @@ private:
             auto* r = regionOf(static_cast<int>(a->getDimensionId()));
             if (!r) continue;
             auto const& p = a->getPosition();
-            BlockPos    pos{static_cast<int>(std::floor(p.x)), static_cast<int>(std::floor(p.y + 0.01f)), static_cast<int>(std::floor(p.z))};
+            BlockPos    pos{
+                static_cast<int>(std::floor(p.x)),
+                static_cast<int>(std::floor(p.y + 0.01f)),
+                static_cast<int>(std::floor(p.z))
+            };
             if (!r->hasChunksAt(pos, 0, false)) continue;
             if (!isFlag(game::blockIdAt(*r, pos))) a->remove();
         }
@@ -423,9 +454,9 @@ private:
             if (!a) continue;
             bool isPlayer = a->isType(ActorType::Player);
             if (!isPlayer && !a->hasCategory(ActorCategory::Mob)) continue;
-            auto const& delta = a->getPosDelta();
-            int64       id    = a->getOrCreateUniqueID().rawID;
-            auto        prev  = mFalling.find(id);
+            auto const& delta      = a->getPosDelta();
+            int64       id         = a->getOrCreateUniqueID().rawID;
+            auto        prev       = mFalling.find(id);
             bool        wasFalling = prev != mFalling.end();
             if (delta.y < -0.32f) falling[id] = {delta.x, delta.y, delta.z};
             if (!wasFalling && !(isPlayer && a->isSneaking() && cfg.awningShiftThrough)) continue;
@@ -439,7 +470,11 @@ private:
             auto* region = regions[dim];
             if (!region) continue;
             auto     feet = a->getFeetPos();
-            BlockPos below{static_cast<int>(std::floor(feet.x)), static_cast<int>(std::floor(feet.y - 0.01f)), static_cast<int>(std::floor(feet.z))};
+            BlockPos below{
+                static_cast<int>(std::floor(feet.x)),
+                static_cast<int>(std::floor(feet.y - 0.01f)),
+                static_cast<int>(std::floor(feet.z))
+            };
             if (!region->hasChunksAt(below, 0, false)) continue;
             auto s = awningState(region->getBlock(below));
             if (!s) continue;
@@ -488,8 +523,13 @@ private:
         auto* region = regionOf(static_cast<int>(a.getDimensionId()));
         if (!region) return;
         auto     feet = a.getFeetPos();
-        BlockPos below{static_cast<int>(std::floor(feet.x)), static_cast<int>(std::floor(feet.y - 0.01f)), static_cast<int>(std::floor(feet.z))};
-        if (region->hasChunksAt(below, 0, false) && awningState(region->getBlock(below)) && !a.isSneaking()) ev.cancel();
+        BlockPos below{
+            static_cast<int>(std::floor(feet.x)),
+            static_cast<int>(std::floor(feet.y - 0.01f)),
+            static_cast<int>(std::floor(feet.z))
+        };
+        if (region->hasChunksAt(below, 0, false) && awningState(region->getBlock(below)) && !a.isSneaking())
+            ev.cancel();
     }
 
     // ---- tick --------------------------------------------------------------------------------------------
@@ -508,15 +548,15 @@ private:
         if (mTick % 200 == 0) mLastClick.clear();
     }
 
-    std::vector<ll::event::ListenerPtr>          mListeners;
-    std::vector<std::function<void()>>           mTasks;
-    std::map<GP, PendingFlag, GPLess>            mPending;
-    std::vector<RemovedFlag>                     mRemoved;
-    std::set<GP, GPLess>                         mSurvival;
-    std::unordered_map<int64, std::array<double, 3>> mFalling; ///< last velocity of fast fallers
-    std::unordered_map<int64, uint64>                mBounced; ///< tick of the last bounce
+    std::vector<ll::event::ListenerPtr>                         mListeners;
+    std::vector<std::function<void()>>                          mTasks;
+    std::map<GP, PendingFlag, GPLess>                           mPending;
+    std::vector<RemovedFlag>                                    mRemoved;
+    std::set<GP, GPLess>                                        mSurvival;
+    std::unordered_map<int64, std::array<double, 3>>            mFalling; ///< last velocity of fast fallers
+    std::unordered_map<int64, uint64>                           mBounced; ///< tick of the last bounce
     std::map<mce::UUID, std::tuple<int, int, int, int, uint64>> mLastClick;
-    uint64                                       mTick = 0;
+    uint64                                                      mTick = 0;
 };
 
 } // namespace cm::feature::flag
