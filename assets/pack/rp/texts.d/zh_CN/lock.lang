@@ -1,0 +1,12 @@
+tile.complementaries:lock_block.name=锁方块
+tile.complementaries:safe.name=保险箱
+tile.complementaries:iron_gate.name=铁栏杆门
+tile.complementaries:gold_gate.name=金栏杆门
+tile.complementaries:gold_door.name=金门
+tile.complementaries:gold_trapdoor.name=金活板门
+tile.complementaries:netherite_door.name=下界合金门
+tile.complementaries:netherite_trapdoor.name=下界合金活板门
+item.complementaries:key.name=钥匙
+item.complementaries:gold_door.name=金门
+item.complementaries:netherite_door.name=下界合金门
+entity.complementaries:safe_storage.name=保险箱

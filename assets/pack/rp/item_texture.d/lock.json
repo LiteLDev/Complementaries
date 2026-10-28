@@ -1,0 +1,17 @@
+{
+  "complementaries_key": {
+    "textures": "textures/items/key"
+  },
+  "complementaries_gold_door": {
+    "textures": "textures/items/gold_door"
+  },
+  "complementaries_netherite_door": {
+    "textures": "textures/items/netherite_door"
+  },
+  "complementaries_iron_gate": {
+    "textures": "textures/items/iron_gate"
+  },
+  "complementaries_gold_gate": {
+    "textures": "textures/items/gold_gate"
+  }
+}

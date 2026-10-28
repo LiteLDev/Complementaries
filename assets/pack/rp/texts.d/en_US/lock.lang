@@ -1,0 +1,12 @@
+tile.complementaries:lock_block.name=Lock Block
+tile.complementaries:safe.name=Safe
+tile.complementaries:iron_gate.name=Iron Gate
+tile.complementaries:gold_gate.name=Gold Gate
+tile.complementaries:gold_door.name=Gold Door
+tile.complementaries:gold_trapdoor.name=Gold Trapdoor
+tile.complementaries:netherite_door.name=Netherite Door
+tile.complementaries:netherite_trapdoor.name=Netherite Trapdoor
+item.complementaries:key.name=Key
+item.complementaries:gold_door.name=Gold Door
+item.complementaries:netherite_door.name=Netherite Door
+entity.complementaries:safe_storage.name=Safe

@@ -1,0 +1,20 @@
+{
+  "message.supplementaries.key.lockable": "Key Lockable",
+  "message.supplementaries.lock_block.locked": "This block is locked",
+  "message.supplementaries.door.locked": "This door is locked",
+  "message.supplementaries.trapdoor.locked": "This trapdoor is locked",
+  "message.supplementaries.safe.locked": "This safe is locked",
+  "message.supplementaries.safe.assigned_key": "Assigned to '{}' key",
+  "message.supplementaries.safe.assigned_key_generic": "Assigned to key",
+  "message.supplementaries.safe.bound": "Locked",
+  "message.supplementaries.safe.unbound": "Unbound",
+  "message.supplementaries.safe.cleared": "Cleared ownership",
+  "message.supplementaries.safe.incorrect_key": "You do not have the correct key",
+  "message.supplementaries.safe.owner": "This safe is owned by {}",
+  "gui.supplementaries.safe": "Safe",
+  "gui.supplementaries.safe.name": "{0}'s {1}",
+  "gui.supplementaries.safe.password": "{1} key: {0}",
+  "cm.lock.safe.item_count": "{} x{}",
+  "cm.lock.safe.more": "and {} more...",
+  "cm.lock.safe.unknown_contents": "???????"
+}

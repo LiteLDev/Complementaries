@@ -1,0 +1,26 @@
+{
+  "complementaries:lock_block": {
+    "sound": "metal"
+  },
+  "complementaries:safe": {
+    "sound": "netherite"
+  },
+  "complementaries:iron_gate": {
+    "sound": "metal"
+  },
+  "complementaries:gold_gate": {
+    "sound": "metal"
+  },
+  "complementaries:gold_door": {
+    "sound": "metal"
+  },
+  "complementaries:gold_trapdoor": {
+    "sound": "metal"
+  },
+  "complementaries:netherite_door": {
+    "sound": "netherite"
+  },
+  "complementaries:netherite_trapdoor": {
+    "sound": "netherite"
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "format_version": "1.26.50",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:gold_trapdoor",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.name.trapdoor"
+      },
+      "states": {
+        "complementaries:facing": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "complementaries:open": [
+          false,
+          true
+        ],
+        "complementaries:top": [
+          false,
+          true
+        ],
+        "complementaries:powered": [
+          false,
+          true
+        ]
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 3
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:tags": [
+        "minecraft:is_pickaxe_item_destructible",
+        "minecraft:iron_tier_destructible"
+      ],
+      "minecraft:geometry": "geometry.complementaries.trapdoor",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "complementaries_gold_trapdoor",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          3,
+          16
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          3,
+          16
+        ]
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:redstone_conductivity": {
+        "redstone_conductor": false
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "on_liquid_touches": "no_reaction",
+            "can_contain_liquid": true,
+            "liquid_type": "water"
+          }
+        ]
+      },
+      "minecraft:loot": "loot_tables/blocks/gold_trapdoor.json",
+      "minecraft:map_color": "#faee4d",
+      "minecraft:redstone_consumer": {
+        "min_power": 1
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:facing') == 0 && q.block_state('complementaries:open')",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.trapdoor_open",
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          },
+          "minecraft:collision_box": {
+            "origin": [
+              -8,
+              0,
+              5
+            ],
+            "size": [
+              16,
+              16,
+              3
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              5
+            ],
+            "size": [
+              16,
+              16,
+              3
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 1 && q.block_state('complementaries:open')",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.trapdoor_open",
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          },
+          "minecraft:collision_box": {
+            "origin": [
+              -8,
+              0,
+              5
+            ],
+            "size": [
+              16,
+              16,
+              3
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              5
+            ],
+            "size": [
+              16,
+              16,
+              3
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 2 && q.block_state('complementaries:open')",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.trapdoor_open",
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "minecraft:collision_box": {
+            "origin": [
+              -8,
+              0,
+              5
+            ],
+            "size": [
+              16,
+              16,
+              3
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              5
+            ],
+            "size": [
+              16,
+              16,
+              3
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 3 && q.block_state('complementaries:open')",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.trapdoor_open",
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          },
+          "minecraft:collision_box": {
+            "origin": [
+              -8,
+              0,
+              5
+            ],
+            "size": [
+              16,
+              16,
+              3
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              5
+            ],
+            "size": [
+              16,
+              16,
+              3
+            ]
+          }
+        }
+      },
+      {
+        "condition": "!q.block_state('complementaries:open') && q.block_state('complementaries:top')",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -8,
+              13,
+              -8
+            ],
+            "size": [
+              16,
+              3,
+              16
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              13,
+              -8
+            ],
+            "size": [
+              16,
+              3,
+              16
+            ]
+          },
+          "minecraft:geometry": "geometry.complementaries.trapdoor_top"
+        }
+      }
+    ]
+  }
+}

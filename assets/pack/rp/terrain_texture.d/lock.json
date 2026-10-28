@@ -1,0 +1,41 @@
+{
+  "complementaries_lock_block": {
+    "textures": "textures/blocks/lock_block"
+  },
+  "complementaries_safe_side": {
+    "textures": "textures/blocks/safe_side"
+  },
+  "complementaries_safe_top": {
+    "textures": "textures/blocks/safe_top"
+  },
+  "complementaries_safe_front": {
+    "textures": "textures/blocks/safe_front"
+  },
+  "complementaries_safe_front_open": {
+    "textures": "textures/blocks/safe_front_open"
+  },
+  "complementaries_iron_gate": {
+    "textures": "textures/blocks/iron_gate"
+  },
+  "complementaries_gold_gate": {
+    "textures": "textures/blocks/gold_gate"
+  },
+  "complementaries_gold_door_lower": {
+    "textures": "textures/blocks/gold_door_lower"
+  },
+  "complementaries_gold_door_upper": {
+    "textures": "textures/blocks/gold_door_upper"
+  },
+  "complementaries_netherite_door_lower": {
+    "textures": "textures/blocks/netherite_door_lower"
+  },
+  "complementaries_netherite_door_upper": {
+    "textures": "textures/blocks/netherite_door_upper"
+  },
+  "complementaries_gold_trapdoor": {
+    "textures": "textures/blocks/gold_trapdoor"
+  },
+  "complementaries_netherite_trapdoor": {
+    "textures": "textures/blocks/netherite_trapdoor"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:key"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:gold_nugget"
+      }
+    ],
+    "pattern": [
+      "G",
+      "n",
+      "n"
+    ],
+    "key": {
+      "n": {
+        "item": "minecraft:gold_nugget"
+      },
+      "G": {
+        "item": "minecraft:gold_ingot"
+      }
+    },
+    "result": {
+      "count": 1,
+      "item": "complementaries:key"
+    }
+  }
+}

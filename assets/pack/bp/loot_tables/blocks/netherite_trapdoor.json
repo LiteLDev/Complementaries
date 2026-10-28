@@ -1,0 +1,29 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "complementaries:netherite_trapdoor",
+          "weight": 1
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "item_tags_all": [
+            "minecraft:is_pickaxe"
+          ]
+        },
+        {
+          "condition": "match_tool",
+          "item_tags_any": [
+            "minecraft:diamond_tier",
+            "minecraft:netherite_tier"
+          ]
+        }
+      ]
+    }
+  ]
+}

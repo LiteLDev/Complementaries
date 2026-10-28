@@ -1,0 +1,34 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "complementaries:lock_block",
+          "weight": 1
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "item_tags_all": [
+            "minecraft:is_pickaxe"
+          ]
+        },
+        {
+          "condition": "match_tool",
+          "item_tags_any": [
+            "minecraft:wooden_tier",
+            "minecraft:stone_tier",
+            "minecraft:copper_tier",
+            "minecraft:iron_tier",
+            "minecraft:golden_tier",
+            "minecraft:diamond_tier",
+            "minecraft:netherite_tier"
+          ]
+        }
+      ]
+    }
+  ]
+}
