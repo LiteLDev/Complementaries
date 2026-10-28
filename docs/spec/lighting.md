@@ -41,8 +41,8 @@ torch).
 | candle holders | `minecraft:block_face` (`up` floor, `down` ceiling, sides = wall), `minecraft:cardinal_direction` (rotation on the floor / ceiling), `complementaries:candles` (1..4), `complementaries:lit` (bool, default false) |
 | `wall_lantern` | `minecraft:block_face` (sides), `complementaries:lantern` (0..9, see below), `complementaries:swing` (0..8, animation frame) |
 
-Every sconce and candle holder is waterloggable (`minecraft:liquid_detection`, water can be
-contained). Lamps have no states.
+Every sconce, candle holder and wall lantern is waterloggable (`minecraft:liquid_detection`, water
+can be contained; a lantern hung into water keeps the water). Lamps have no states.
 
 `complementaries:lantern`: 0 `lantern`, 1 `soul_lantern`, 2 `copper_lantern`, 3
 `exposed_copper_lantern`, 4 `weathered_copper_lantern`, 5 `oxidized_copper_lantern`, 6..9 the
@@ -103,8 +103,8 @@ Placed state: sconces are placed lit, candle holders unlit (like candles).
 
 ### Sconce lever
 
-Using the sconce lever with an empty hand (or any item that does not light it) toggles
-`powered`: a redstone signal of 15 on every side and strongly through the wall it hangs on, like a
+Using the sconce lever with an empty hand, or with any item that does not light it (sneaking with
+an item places that item instead), toggles `powered`: a redstone signal of 15 on every side and strongly through the wall it hangs on, like a
 lever, with the lever click sound (pitch 0.6 on, 0.5 off). The flame is independent of the power
 (it can be lit/unlit as any sconce, with flint and steel, projectiles and water).
 

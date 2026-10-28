@@ -11,6 +11,8 @@
 #include <functional>
 #include <map>
 #include <memory>
+#include <set>
+#include <thread>
 #include <tuple>
 #include <unordered_map>
 #include <vector>
@@ -69,6 +71,9 @@ public:
     /// Runs `fn` on the next server tick.
     void defer(std::function<void()> fn) { mPending.push_back(std::move(fn)); }
 
+    /// True on the thread that runs the server tick.
+    [[nodiscard]] bool onServerThread() const { return std::this_thread::get_id() == mServerThread; }
+
     /// Kind of a block type of this unit (Kind::None for anything else). Cheap.
     [[nodiscard]] BlockInfo infoOf(BlockType const& type);
 
@@ -82,7 +87,7 @@ private:
     void tick();
     void tickSwings();
     void tickCollisions();
-    void tickParticles();
+    void tickNearby(); ///< particles + wall lantern discovery around players
     void rebuildTypes();
     void reset();
 
@@ -91,6 +96,9 @@ private:
     std::map<core::GlobalPos, Swing>                      mSwings;
     std::unordered_map<BlockType const*, BlockInfo>       mTypes;
     std::unordered_map<std::int64_t, std::tuple<std::uint64_t, int, int, int>> mLastUse; ///< player -> tick, pos
+    std::set<core::GlobalPos>                             mLanterns; ///< wall lanterns near players
+    std::thread::id                                       mServerThread{};
+    bool                                                  mTypesBuilt = false;
     std::uint64_t                                         mTick      = 0;
     std::uint64_t                                         mParticles = 0;
     bool                                                  mInstalled = false;

@@ -97,6 +97,15 @@
           }
         ]
       },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true,
+            "on_liquid_touches": "no_reaction"
+          }
+        ]
+      },
       "minecraft:loot": "loot_tables/blocks/wall_lantern_0.json",
       "minecraft:map_color": "#5a5a5a"
     },

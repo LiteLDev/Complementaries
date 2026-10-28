@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <random>
+#include <thread>
 
 #include "ll/api/event/EventBus.h"
 #include "ll/api/event/player/PlayerInteractBlockEvent.h"
@@ -182,6 +183,15 @@ void useItem(std::int64_t id, int slot, std::string const& itemId, bool damage) 
     player->refreshInventory();
 }
 
+/// `complementaries:swing` frame for an angle in degrees (see kSwingFrames).
+int swingFrame(float angle) {
+    int best = 0;
+    for (int i = 1; i < static_cast<int>(std::size(kSwingFrames)); ++i) {
+        if (std::abs(kSwingFrames[i] - angle) < std::abs(kSwingFrames[best] - angle)) best = i;
+    }
+    return best;
+}
+
 std::string posText(BlockPos const& p) {
     return std::to_string(p.x) + " " + std::to_string(p.y) + " " + std::to_string(p.z);
 }
@@ -200,7 +210,8 @@ LL_TYPE_INSTANCE_HOOK(
     ::Actor&           owner,
     ::HitResult const& hitResult
 ) {
-    if (!owner.getLevel().isClientSide()) Lighting::get().onProjectileHit(owner, hitResult);
+    auto& self = Lighting::get();
+    if (!owner.getLevel().isClientSide() && self.onServerThread()) self.onProjectileHit(owner, hitResult);
     origin(owner, hitResult);
 }
 
@@ -212,13 +223,14 @@ Lighting& Lighting::get() {
 }
 
 BlockInfo Lighting::infoOf(BlockType const& type) {
-    if (mTypes.empty()) rebuildTypes();
+    if (!mTypesBuilt) rebuildTypes();
     auto it = mTypes.find(&type);
     return it == mTypes.end() ? BlockInfo{} : it->second;
 }
 
 void Lighting::rebuildTypes() {
     mTypes.clear();
+    mTypesBuilt = true;
     for (auto const& id : allBlockIds()) {
         if (auto type = BlockType::tryGetFromRegistry(HashedString(id))) mTypes[type.as_ptr()] = classify(id);
     }
@@ -228,6 +240,8 @@ void Lighting::reset() {
     mPending.clear();
     mSwings.clear();
     mTypes.clear();
+    mTypesBuilt = false;
+    mLanterns.clear();
     mLastUse.clear();
     mParticles = 0;
 }
@@ -288,11 +302,17 @@ bool Lighting::placeWallLantern(BlockSource& region, BlockPos const& support, in
     if (!canHangOn(region, support, facing)) return false;
     auto at = offset(support, facing);
     if (!game::replaceable(region, at)) return false;
+    auto const& before = region.getBlock(at).getTypeName();
+    bool        water  = before == "minecraft:water" || waterlogged(region, at);
     auto const* block = makeBlock(
         "complementaries:wall_lantern",
         {{kFace, std::string(faceName(facing))}, {kLantern, lantern}, {kSwing, 0}}
     );
     if (!block || !game::setBlock(region, at, *block)) return false;
+    if (water) {
+        if (auto const* w = makeBlock("minecraft:water")) region.setExtraBlock(at, *w, 3);
+    }
+    Lighting::get().mLanterns.insert(game::globalPos(region, at));
     playSound(region, at, "block.lantern.place");
     log().info("lighting: wall lantern ({}) placed at {}", kLanterns[lantern], posText(at));
     return true;
@@ -354,6 +374,7 @@ void Lighting::onProjectileHit(int dim, BlockPos const& hitBlock, bool hitTile, 
 
 void Lighting::tick() {
     ++mTick;
+    mServerThread = std::this_thread::get_id();
     if (!mPending.empty()) {
         auto work = std::move(mPending);
         mPending.clear();
@@ -361,7 +382,7 @@ void Lighting::tick() {
     }
     tickSwings();
     if (cfg().wallLanternSwing && (mTick & 1) == 0) tickCollisions();
-    if (cfg().particles) tickParticles();
+    tickNearby();
 }
 
 void Lighting::tickSwings() {
@@ -382,8 +403,7 @@ void Lighting::tickSwings() {
         s.vel += -0.06f * s.angle - 0.05f * s.vel;
         s.angle = std::clamp(s.angle + s.vel, -22.f, 22.f);
         bool done = std::abs(s.angle) < 1.5f && std::abs(s.vel) < 0.3f;
-        int  step = done ? 0 : std::clamp(static_cast<int>(std::lround(s.angle / 5.f)), -4, 4);
-        int  frame = step >= 0 ? step : 4 - step;
+        int  frame = done ? 0 : swingFrame(s.angle);
         if (frame != intState(block, kSwing)) {
             if (auto const* next = withStates(block, {{kSwing, frame}})) game::setBlock(*region, pos, *next);
         }
@@ -393,40 +413,58 @@ void Lighting::tickSwings() {
 
 void Lighting::tickCollisions() {
     auto level = ll::service::getLevel();
-    if (!level) return;
-    for (auto* actor : level->getRuntimeActorList()) {
-        if (!actor) continue;
-        auto type = actor->getEntityTypeId();
-        if (type == ActorType::ItemEntity || type == ActorType::Experience) continue;
-        auto const& d = actor->getPosDelta();
-        float       speed = std::sqrt(d.x * d.x + d.z * d.z);
-        if (speed < 0.02f) continue;
-        auto const& box = actor->getAABB();
-        auto&       region = actor->getDimensionBlockSource();
-        int         dim    = static_cast<int>(actor->getDimensionId());
-        for (int x = static_cast<int>(std::floor(box.min.x)); x <= static_cast<int>(std::floor(box.max.x - 1e-3f)); ++x)
-            for (int y = static_cast<int>(std::floor(box.min.y)); y <= static_cast<int>(std::floor(box.max.y - 1e-3f)); ++y)
-                for (int z = static_cast<int>(std::floor(box.min.z)); z <= static_cast<int>(std::floor(box.max.z - 1e-3f)); ++z) {
-                    BlockPos p{x, y, z};
-                    if (!region.hasChunksAt(p, 0, false)) continue;
-                    auto const& b = region.getBlock(p);
-                    if (infoOf(b.getBlockType()).kind != Kind::WallLantern) continue;
-                    auto  face  = stringState(b, kFace);
-                    bool  alongX = face == "north" || face == "south";
-                    float along  = alongX ? d.x : d.z;
-                    if (face == "south" || face == "west") along = -along;
-                    float impulse = std::clamp(speed * 15.f, 1.f, 4.f) * (along >= 0 ? 1.f : -1.f);
-                    push(dim, p, impulse);
-                }
+    if (!level || mLanterns.empty()) return;
+    for (auto it = mLanterns.begin(); it != mLanterns.end();) {
+        auto const& gp     = *it;
+        auto*       region = regionOf(gp.dim);
+        BlockPos    pos{gp.x, gp.y, gp.z};
+        if (!region || !region->hasChunksAt(pos, 0, false)) {
+            it = mLanterns.erase(it); // found again by the sampler when a player comes back
+            continue;
+        }
+        auto const& b = region->getBlock(pos);
+        if (infoOf(b.getBlockType()).kind != Kind::WallLantern) {
+            it = mLanterns.erase(it);
+            continue;
+        }
+        AABB box{
+            Vec3{static_cast<float>(pos.x), static_cast<float>(pos.y), static_cast<float>(pos.z)},
+            Vec3{pos.x + 1.f, pos.y + 1.f, pos.z + 1.f}
+        };
+        auto face   = stringState(b, kFace);
+        bool alongX = face == "north" || face == "south";
+        auto touch = [&](Actor& actor) {
+            auto type = actor.getEntityTypeId();
+            if (type == ActorType::ItemEntity || type == ActorType::Experience) return;
+            auto const& d     = actor.getPosDelta();
+            float       speed = std::sqrt(d.x * d.x + d.z * d.z);
+            if (speed < 0.02f) return;
+            auto const& ab = actor.getAABB();
+            if (ab.max.x <= box.min.x || ab.min.x >= box.max.x || ab.max.y <= box.min.y || ab.min.y >= box.max.y
+                || ab.max.z <= box.min.z || ab.min.z >= box.max.z)
+                return;
+            float along = alongX ? d.x : d.z;
+            if (face == "south" || face == "west") along = -along;
+            push(gp.dim, pos, std::clamp(speed * 15.f, 1.f, 4.f) * (along >= 0 ? 1.f : -1.f));
+        };
+        for (auto* actor : region->getEntities(box)) {
+            if (actor && !actor->isPlayer()) touch(*actor);
+        }
+        // players are not kept in the chunks' entity lists
+        level->forEachPlayer([&](Player& player) {
+            if (static_cast<int>(player.getDimensionId()) == gp.dim) touch(player);
+            return true;
+        });
+        ++it;
     }
 }
 
-void Lighting::tickParticles() {
+void Lighting::tickNearby() {
     auto level = ll::service::getLevel();
     if (!level) return;
     static std::mt19937 rng{std::random_device{}()};
-    int                 samples = std::clamp(cfg().particleSamplesPerTick, 0, 4000);
-    if (samples == 0) return;
+    bool                particles = cfg().particles;
+    int                 samples   = std::clamp(cfg().particleSamplesPerTick, 64, 4000);
     level->forEachPlayer([&](Player& player) {
         auto&    region = player.getDimensionBlockSource();
         int      dim    = static_cast<int>(player.getDimensionId());
@@ -438,7 +476,16 @@ void Lighting::tickParticles() {
             if (!region.hasChunksAt(p, 0, false)) continue;
             auto const& b    = region.getBlock(p);
             auto        info = infoOf(b.getBlockType());
-            if (!isLightable(info.kind) || !boolState(b, kLit)) continue;
+            if (info.kind == Kind::WallLantern) {
+                auto gp = core::GlobalPos{dim, p.x, p.y, p.z};
+                mLanterns.insert(gp);
+                // a frame saved mid-swing (chunk unloaded, world closed) settles back
+                if (!mSwings.contains(gp) && intState(b, kSwing) != 0) {
+                    if (auto const* rest = withStates(b, {{kSwing, 0}})) game::setBlock(region, p, *rest);
+                }
+                continue;
+            }
+            if (!particles || !isLightable(info.kind) || !boolState(b, kLit)) continue;
             for (auto const& v : flamePositions(b, info, p)) {
                 bool candle = info.kind == Kind::CandleHolder;
                 if (candle && (rng() % 3) != 0) continue; // candles: the flame is in the model, smoke only now and then
@@ -525,14 +572,17 @@ void Lighting::install() {
                     });
                     return;
                 }
+                // The lever toggles with any item, except while sneaking with one (vanilla placement).
+                if (info.kind == Kind::SconceLever && (itemId.empty() || !player.isSneaking())) {
+                    ev.cancel();
+                    if (debounce()) return;
+                    defer([dim, pos] {
+                        if (auto* r = regionOf(dim)) toggleLever(*r, pos);
+                    });
+                    return;
+                }
                 if (itemId.empty()) {
-                    if (info.kind == Kind::SconceLever) {
-                        ev.cancel();
-                        if (debounce()) return;
-                        defer([dim, pos] {
-                            if (auto* r = regionOf(dim)) toggleLever(*r, pos);
-                        });
-                    } else if (lit) {
+                    if (lit) {
                         ev.cancel();
                         if (debounce()) return;
                         defer([dim, pos] {
@@ -575,6 +625,7 @@ void Lighting::install() {
 
     // Water flowing in (liquid layer) puts the flame out.
     mListeners.push_back(bus.emplaceListener<ll::event::BlockChangedEvent>([this](ll::event::BlockChangedEvent& ev) {
+        if (!onServerThread()) return;
         auto& region = ev.blockSource();
         bool  check  = false;
         if (ev.layer() == 1) {
@@ -585,6 +636,10 @@ void Lighting::install() {
             }
         } else if (ev.layer() == 0) {
             check = isLightable(infoOf(ev.newBlock().getBlockType()).kind) && boolState(ev.newBlock(), kLit);
+        }
+        if (ev.layer() == 0 && infoOf(ev.newBlock().getBlockType()).kind == Kind::WallLantern
+            && !region.getLevel().isClientSide()) {
+            mLanterns.insert(game::globalPos(region, ev.pos()));
         }
         if (!check || region.getLevel().isClientSide()) return;
         int      dim = static_cast<int>(region.getDimensionId());
