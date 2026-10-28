@@ -1,0 +1,23 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:single_block_feature": {
+    "description": {
+      "identifier": "complementaries:urn_cave"
+    },
+    "places_block": {
+      "name": "complementaries:urn",
+      "states": { "cm:treasure": 1 }
+    },
+    "enforce_placement_rules": false,
+    "enforce_survivability_rules": false,
+    "may_replace": ["minecraft:air", "minecraft:cave_air"],
+    "may_attach_to": {
+      "auto_rotate": false,
+      "min_sides_must_attach": 1,
+      "bottom": [
+        "minecraft:stone", "minecraft:deepslate", "minecraft:tuff", "minecraft:andesite",
+        "minecraft:diorite", "minecraft:granite", "minecraft:gravel", "minecraft:dirt", "minecraft:cobbled_deepslate"
+      ]
+    }
+  }
+}

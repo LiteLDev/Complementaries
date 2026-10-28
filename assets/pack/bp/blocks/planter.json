@@ -1,0 +1,38 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:planter",
+      "menu_category": {
+        "category": "nature",
+        "is_hidden_in_commands": false
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:planter.name",
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_tableware_planter_side",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "cm_tableware_planter_top",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "cm_tableware_planter_bottom",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.25
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 4.2
+      },
+      "minecraft:map_color": "#9c5b3b",
+      "minecraft:loot": "loot_tables/blocks/planter.json"
+    }
+  }
+}

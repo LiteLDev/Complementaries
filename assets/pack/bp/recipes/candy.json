@@ -1,0 +1,15 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:candy"
+    },
+    "tags": ["crafting_table"],
+    "ingredients": [{ "item": "minecraft:sugar" }, { "item": "minecraft:sugar" }],
+    "unlock": [{ "item": "minecraft:sugar" }],
+    "result": {
+      "item": "complementaries:candy",
+      "count": 2
+    }
+  }
+}

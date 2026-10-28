@@ -1,0 +1,15 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "complementaries:flower_box",
+          "weight": 1,
+          "functions": [{ "function": "set_count", "count": 1 }]
+        }
+      ]
+    }
+  ]
+}

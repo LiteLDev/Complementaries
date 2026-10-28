@@ -1,0 +1,370 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:flower_box",
+      "menu_category": {
+        "category": "items",
+        "is_hidden_in_commands": false
+      },
+      "states": {
+        "cm:wall": {
+          "values": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cm:flower0": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        },
+        "cm:flower1": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        },
+        "cm:flower2": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        }
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:flower_box.name",
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.flower_box",
+        "bone_visibility": {
+          "slot0_1": "q.block_state('cm:flower0') == 1",
+          "slot0_2": "q.block_state('cm:flower0') == 2",
+          "slot0_3": "q.block_state('cm:flower0') == 3",
+          "slot0_4": "q.block_state('cm:flower0') == 4",
+          "slot0_5": "q.block_state('cm:flower0') == 5",
+          "slot0_6": "q.block_state('cm:flower0') == 6",
+          "slot0_7": "q.block_state('cm:flower0') == 7",
+          "slot0_8": "q.block_state('cm:flower0') == 8",
+          "slot0_9": "q.block_state('cm:flower0') == 9",
+          "slot0_10": "q.block_state('cm:flower0') == 10",
+          "slot0_11": "q.block_state('cm:flower0') == 11",
+          "slot0_12": "q.block_state('cm:flower0') == 12",
+          "slot0_13": "q.block_state('cm:flower0') == 13",
+          "slot0_14": "q.block_state('cm:flower0') == 14",
+          "slot0_15": "q.block_state('cm:flower0') == 15",
+          "slot1_1": "q.block_state('cm:flower1') == 1",
+          "slot1_2": "q.block_state('cm:flower1') == 2",
+          "slot1_3": "q.block_state('cm:flower1') == 3",
+          "slot1_4": "q.block_state('cm:flower1') == 4",
+          "slot1_5": "q.block_state('cm:flower1') == 5",
+          "slot1_6": "q.block_state('cm:flower1') == 6",
+          "slot1_7": "q.block_state('cm:flower1') == 7",
+          "slot1_8": "q.block_state('cm:flower1') == 8",
+          "slot1_9": "q.block_state('cm:flower1') == 9",
+          "slot1_10": "q.block_state('cm:flower1') == 10",
+          "slot1_11": "q.block_state('cm:flower1') == 11",
+          "slot1_12": "q.block_state('cm:flower1') == 12",
+          "slot1_13": "q.block_state('cm:flower1') == 13",
+          "slot1_14": "q.block_state('cm:flower1') == 14",
+          "slot1_15": "q.block_state('cm:flower1') == 15",
+          "slot2_1": "q.block_state('cm:flower2') == 1",
+          "slot2_2": "q.block_state('cm:flower2') == 2",
+          "slot2_3": "q.block_state('cm:flower2') == 3",
+          "slot2_4": "q.block_state('cm:flower2') == 4",
+          "slot2_5": "q.block_state('cm:flower2') == 5",
+          "slot2_6": "q.block_state('cm:flower2') == 6",
+          "slot2_7": "q.block_state('cm:flower2') == 7",
+          "slot2_8": "q.block_state('cm:flower2') == 8",
+          "slot2_9": "q.block_state('cm:flower2') == 9",
+          "slot2_10": "q.block_state('cm:flower2') == 10",
+          "slot2_11": "q.block_state('cm:flower2') == 11",
+          "slot2_12": "q.block_state('cm:flower2') == 12",
+          "slot2_13": "q.block_state('cm:flower2') == 13",
+          "slot2_14": "q.block_state('cm:flower2') == 14",
+          "slot2_15": "q.block_state('cm:flower2') == 15"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_tableware_flower_box_side",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "box": {
+          "texture": "cm_tableware_flower_box_side",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "soil": {
+          "texture": "cm_tableware_flower_box_top",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_1": {
+          "texture": "cm_tableware_flower_dandelion",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_2": {
+          "texture": "cm_tableware_flower_poppy",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_3": {
+          "texture": "cm_tableware_flower_blue_orchid",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_4": {
+          "texture": "cm_tableware_flower_allium",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_5": {
+          "texture": "cm_tableware_flower_azure_bluet",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_6": {
+          "texture": "cm_tableware_flower_red_tulip",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_7": {
+          "texture": "cm_tableware_flower_orange_tulip",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_8": {
+          "texture": "cm_tableware_flower_white_tulip",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_9": {
+          "texture": "cm_tableware_flower_pink_tulip",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_10": {
+          "texture": "cm_tableware_flower_oxeye_daisy",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_11": {
+          "texture": "cm_tableware_flower_cornflower",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_12": {
+          "texture": "cm_tableware_flower_lily_of_the_valley",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_13": {
+          "texture": "cm_tableware_flower_wither_rose",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_14": {
+          "texture": "cm_tableware_flower_oak_sapling",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "flower_15": {
+          "texture": "cm_tableware_flower_birch_sapling",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          6,
+          16
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          6,
+          16
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3.0
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#8b6438",
+      "minecraft:loot": "loot_tables/blocks/flower_box.json",
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": [
+              "up",
+              "side"
+            ]
+          }
+        ]
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('cm:wall') == 0",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('cm:wall') == 1",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "translation": [
+              0,
+              0,
+              0.3125
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('cm:wall') == 0",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('cm:wall') == 1",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ],
+            "translation": [
+              0.3125,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('cm:wall') == 0",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('cm:wall') == 1",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ],
+            "translation": [
+              0,
+              0,
+              -0.3125
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('cm:wall') == 0",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('cm:wall') == 1",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ],
+            "translation": [
+              -0.3125,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

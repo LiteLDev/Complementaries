@@ -1,0 +1,16 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:goblet"
+    },
+    "tags": ["crafting_table"],
+    "pattern": ["I I", " I ", " I "],
+    "key": { "I": { "item": "minecraft:iron_ingot" } },
+    "unlock": [{ "item": "minecraft:iron_ingot" }],
+    "result": {
+      "item": "complementaries:goblet",
+      "count": 1
+    }
+  }
+}

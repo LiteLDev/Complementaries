@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:pancake",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "item.complementaries:pancake.name"
+      },
+      "minecraft:icon": {
+        "textures": {
+          "default": "cm_tableware_pancake"
+        }
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:food": {
+        "nutrition": 3,
+        "saturation_modifier": 0.6
+      },
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      },
+      "minecraft:block_placer": {
+        "block": "complementaries:pancake",
+        "replace_block_item": true
+      }
+    }
+  }
+}

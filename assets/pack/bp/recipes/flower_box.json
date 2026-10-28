@@ -1,0 +1,16 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:flower_box"
+    },
+    "tags": ["crafting_table"],
+    "pattern": ["P P", "PPP"],
+    "key": { "P": { "tag": "minecraft:planks" } },
+    "unlock": [{ "item": "minecraft:dirt" }, { "item": "minecraft:poppy" }, { "item": "minecraft:dandelion" }],
+    "result": {
+      "item": "complementaries:flower_box",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,468 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:goblet",
+      "menu_category": {
+        "category": "items",
+        "is_hidden_in_commands": false
+      },
+      "states": {
+        "cm:fluid": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:goblet.name",
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.goblet",
+        "bone_visibility": {
+          "fluid": "q.block_state('cm:fluid') > 0"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_tableware_goblet",
+          "render_method": "blend",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "goblet": {
+          "texture": "cm_tableware_goblet",
+          "render_method": "blend",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "fluid": {
+          "texture": "cm_tableware_fluid_water",
+          "render_method": "blend",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -3,
+          0,
+          -3
+        ],
+        "size": [
+          6,
+          9,
+          6
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -3,
+          0,
+          -3
+        ],
+        "size": [
+          6,
+          9,
+          6
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.75
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3.0
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#a7a7a7",
+      "minecraft:loot": "loot_tables/blocks/goblet.json",
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": [
+              "up"
+            ]
+          }
+        ]
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cm:fluid') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_water",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_honey",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_milk",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_dragon_breath",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_experience",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_potion_red",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_potion_darkred",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_potion_orange",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_potion_yellow",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_potion_green",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_potion_lightblue",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_potion_blue",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_potion_pink",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_potion_gray",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:fluid') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "goblet": {
+              "texture": "cm_tableware_goblet",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "fluid": {
+              "texture": "cm_tableware_fluid_potion_black",
+              "render_method": "blend",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      }
+    ]
+  }
+}

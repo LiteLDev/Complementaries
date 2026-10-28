@@ -1,0 +1,4987 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.complementaries.flower_box",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2.5,
+        "visible_bounds_offset": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "box",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -8,
+                0,
+                -3
+              ],
+              "size": [
+                16,
+                5,
+                1
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    11
+                  ],
+                  "uv_size": [
+                    16,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    11
+                  ],
+                  "uv_size": [
+                    16,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "east": {
+                  "uv": [
+                    5,
+                    11
+                  ],
+                  "uv_size": [
+                    1,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "west": {
+                  "uv": [
+                    5,
+                    11
+                  ],
+                  "uv_size": [
+                    1,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    5
+                  ],
+                  "uv_size": [
+                    16,
+                    1
+                  ],
+                  "material_instance": "box"
+                }
+              }
+            },
+            {
+              "origin": [
+                -8,
+                0,
+                2
+              ],
+              "size": [
+                16,
+                5,
+                1
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    11
+                  ],
+                  "uv_size": [
+                    16,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    11
+                  ],
+                  "uv_size": [
+                    16,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "east": {
+                  "uv": [
+                    10,
+                    11
+                  ],
+                  "uv_size": [
+                    1,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "west": {
+                  "uv": [
+                    10,
+                    11
+                  ],
+                  "uv_size": [
+                    1,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    10
+                  ],
+                  "uv_size": [
+                    16,
+                    1
+                  ],
+                  "material_instance": "box"
+                }
+              }
+            },
+            {
+              "origin": [
+                -8,
+                0,
+                -2
+              ],
+              "size": [
+                1,
+                5,
+                4
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    11
+                  ],
+                  "uv_size": [
+                    1,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    11
+                  ],
+                  "uv_size": [
+                    1,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "east": {
+                  "uv": [
+                    6,
+                    11
+                  ],
+                  "uv_size": [
+                    4,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "west": {
+                  "uv": [
+                    6,
+                    11
+                  ],
+                  "uv_size": [
+                    4,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "down": {
+                  "uv": [
+                    0,
+                    6
+                  ],
+                  "uv_size": [
+                    1,
+                    4
+                  ],
+                  "material_instance": "box"
+                }
+              }
+            },
+            {
+              "origin": [
+                7,
+                0,
+                -2
+              ],
+              "size": [
+                1,
+                5,
+                4
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    15,
+                    11
+                  ],
+                  "uv_size": [
+                    1,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "south": {
+                  "uv": [
+                    15,
+                    11
+                  ],
+                  "uv_size": [
+                    1,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "east": {
+                  "uv": [
+                    6,
+                    11
+                  ],
+                  "uv_size": [
+                    4,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "west": {
+                  "uv": [
+                    6,
+                    11
+                  ],
+                  "uv_size": [
+                    4,
+                    5
+                  ],
+                  "material_instance": "box"
+                },
+                "down": {
+                  "uv": [
+                    15,
+                    6
+                  ],
+                  "uv_size": [
+                    1,
+                    4
+                  ],
+                  "material_instance": "box"
+                }
+              }
+            },
+            {
+              "origin": [
+                -7,
+                0,
+                -2
+              ],
+              "size": [
+                14,
+                4,
+                4
+              ],
+              "uv": {
+                "up": {
+                  "uv": [
+                    1,
+                    6
+                  ],
+                  "uv_size": [
+                    14,
+                    4
+                  ],
+                  "material_instance": "soil"
+                },
+                "down": {
+                  "uv": [
+                    1,
+                    6
+                  ],
+                  "uv_size": [
+                    14,
+                    4
+                  ],
+                  "material_instance": "box"
+                }
+              }
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_1",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_2",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_3",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_4",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_5",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_6",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_7",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_8",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_9",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_10",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_11",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_12",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_13",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_14",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot0_15",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                1.3330000000000002,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_1",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_2",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_3",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_4",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_5",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_6",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_7",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_8",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_9",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_10",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_11",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_12",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_13",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_14",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot1_15",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -4.0,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                0.0,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_1",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_1"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_2",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_2"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_3",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_3"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_4",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_4"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_5",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_5"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_6",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_6"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_7",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_7"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_8",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_8"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_9",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_9"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_10",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_10"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_11",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_11"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_12",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_12"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_13",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_13"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_14",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_14"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        },
+        {
+          "name": "slot2_15",
+          "pivot": [
+            0,
+            0,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                }
+              },
+              "rotation": [
+                0,
+                45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            },
+            {
+              "origin": [
+                -9.333,
+                4.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                0
+              ],
+              "uv": {
+                "north": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                },
+                "south": {
+                  "uv": [
+                    0,
+                    0
+                  ],
+                  "uv_size": [
+                    16,
+                    16
+                  ],
+                  "material_instance": "flower_15"
+                }
+              },
+              "rotation": [
+                0,
+                -45,
+                0
+              ],
+              "pivot": [
+                -5.333,
+                4.0,
+                0.0
+              ]
+            }
+          ],
+          "parent": "root"
+        }
+      ]
+    }
+  ]
+}

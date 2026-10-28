@@ -1,0 +1,8 @@
+{
+  "cm_tableware_pancake": {
+    "textures": "textures/items/tableware/pancake"
+  },
+  "cm_tableware_candy": {
+    "textures": "textures/items/tableware/candy"
+  }
+}

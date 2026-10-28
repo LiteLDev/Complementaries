@@ -1,0 +1,96 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:urn",
+      "menu_category": {
+        "category": "items",
+        "is_hidden_in_commands": false
+      },
+      "states": {
+        "cm:treasure": {
+          "values": {
+            "min": 0,
+            "max": 1
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:urn.name",
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.urn"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_tableware_urn_side",
+          "render_method": "opaque",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "side": {
+          "texture": "cm_tableware_urn_side",
+          "render_method": "opaque",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "top": {
+          "texture": "cm_tableware_urn_top",
+          "render_method": "opaque",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -5,
+          0,
+          -5
+        ],
+        "size": [
+          10,
+          15,
+          10
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -5,
+          0,
+          -5
+        ],
+        "size": [
+          10,
+          15,
+          10
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.5
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#b0663f",
+      "minecraft:loot": "loot_tables/blocks/urn.json",
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": [
+              "up"
+            ]
+          }
+        ]
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cm:treasure') == 1",
+        "components": {
+          "minecraft:loot": "loot_tables/blocks/urn_treasure.json"
+        }
+      }
+    ]
+  }
+}
