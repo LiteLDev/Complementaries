@@ -1,0 +1,13 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.complementaries.rope_arrow.move": {
+      "loop": true,
+      "bones": {
+        "body": {
+          "rotation": ["q.target_x_rotation - variable.shake_power", "-q.target_y_rotation", 0.0]
+        }
+      }
+    }
+  }
+}

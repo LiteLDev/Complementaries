@@ -1,0 +1,14 @@
+{
+  "complementaries_rope": {
+    "textures": "textures/items/complementaries/rope"
+  },
+  "complementaries_rope_arrow": {
+    "textures": "textures/items/complementaries/rope_arrow"
+  },
+  "complementaries_flax": {
+    "textures": "textures/items/complementaries/flax"
+  },
+  "complementaries_flax_seeds": {
+    "textures": "textures/items/complementaries/flax_seeds"
+  }
+}

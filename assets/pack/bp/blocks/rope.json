@@ -1,0 +1,73 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:rope",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:up": [false, true],
+        "complementaries:down": [false, true],
+        "complementaries:north": [false, true],
+        "complementaries:south": [false, true],
+        "complementaries:west": [false, true],
+        "complementaries:east": [false, true],
+        "complementaries:knot": [false, true],
+        "complementaries:distance": [0, 1, 2, 3, 4, 5, 6, 7]
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:rope.name",
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.rope",
+        "bone_visibility": {
+          "up": "q.block_state('complementaries:up')",
+          "down": "q.block_state('complementaries:down')",
+          "north": "q.block_state('complementaries:north')",
+          "south": "q.block_state('complementaries:south')",
+          "west": "q.block_state('complementaries:west')",
+          "east": "q.block_state('complementaries:east')",
+          "knot": "q.block_state('complementaries:knot')"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "complementaries_rope",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [-3, 0, -3],
+        "size": [6, 16, 6]
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.25
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.8
+      },
+      "minecraft:flammable": {
+        "catch_chance_modifier": 30,
+        "destroy_chance_modifier": 60
+      },
+      "minecraft:map_color": "#b38d55",
+      "minecraft:loot": "loot_tables/blocks/rope.json"
+    },
+    "permutations": [
+      {
+        "condition": "!q.block_state('complementaries:up') && !q.block_state('complementaries:down')",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [-8, 5, -8],
+            "size": [16, 6, 16]
+          }
+        }
+      }
+    ]
+  }
+}

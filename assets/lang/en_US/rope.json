@@ -1,0 +1,13 @@
+{
+  "gui.supplementaries.pulley_block": "Pulley",
+  "cm.rope.pulley.empty": "Empty",
+  "cm.rope.pulley.content": "Wound: {} x{}",
+  "cm.rope.pulley.put": "Put in held {}",
+  "cm.rope.pulley.take": "Take out",
+  "cm.rope.pulley.turn_cw": "Turn clockwise",
+  "cm.rope.pulley.turn_ccw": "Turn counter-clockwise",
+  "cm.rope.pulley.wrong_item": "Only ropes or chains can be wound on a pulley",
+  "cm.rope.pulley.full": "The pulley is full",
+  "cm.rope.item.rope": "Rope",
+  "cm.rope.item.chain": "Chain"
+}

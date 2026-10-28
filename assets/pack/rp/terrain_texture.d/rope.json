@@ -1,0 +1,62 @@
+{
+  "complementaries_rope": {
+    "textures": "textures/blocks/complementaries/rope"
+  },
+  "complementaries_pulley_front": {
+    "textures": "textures/blocks/complementaries/pulley_block_front"
+  },
+  "complementaries_pulley_side": {
+    "textures": "textures/blocks/complementaries/pulley_block_side"
+  },
+  "complementaries_pulley_side_rope": {
+    "textures": "textures/blocks/complementaries/pulley_block_side_rope"
+  },
+  "complementaries_pulley_side_chain": {
+    "textures": "textures/blocks/complementaries/pulley_block_side_chain"
+  },
+  "complementaries_wild_flax": {
+    "textures": "textures/blocks/complementaries/wild_flax"
+  },
+  "complementaries_flax_block_side": {
+    "textures": "textures/blocks/complementaries/flax_block_side"
+  },
+  "complementaries_flax_block_top": {
+    "textures": "textures/blocks/complementaries/flax_block_top"
+  },
+  "complementaries_flax_crop_stage_0": {
+    "textures": "textures/blocks/complementaries/flax_crop_stage_0"
+  },
+  "complementaries_flax_crop_stage_1": {
+    "textures": "textures/blocks/complementaries/flax_crop_stage_1"
+  },
+  "complementaries_flax_crop_stage_2": {
+    "textures": "textures/blocks/complementaries/flax_crop_stage_2"
+  },
+  "complementaries_flax_crop_stage_3": {
+    "textures": "textures/blocks/complementaries/flax_crop_stage_3"
+  },
+  "complementaries_flax_crop_stage_4": {
+    "textures": "textures/blocks/complementaries/flax_crop_stage_4"
+  },
+  "complementaries_flax_crop_stage_5": {
+    "textures": "textures/blocks/complementaries/flax_crop_stage_5"
+  },
+  "complementaries_flax_crop_stage_6": {
+    "textures": "textures/blocks/complementaries/flax_crop_stage_6"
+  },
+  "complementaries_flax_crop_stage_7": {
+    "textures": "textures/blocks/complementaries/flax_crop_stage_7"
+  },
+  "complementaries_flax_crop_top_stage_4": {
+    "textures": "textures/blocks/complementaries/flax_crop_top_stage_4"
+  },
+  "complementaries_flax_crop_top_stage_5": {
+    "textures": "textures/blocks/complementaries/flax_crop_top_stage_5"
+  },
+  "complementaries_flax_crop_top_stage_6": {
+    "textures": "textures/blocks/complementaries/flax_crop_top_stage_6"
+  },
+  "complementaries_flax_crop_top_stage_7": {
+    "textures": "textures/blocks/complementaries/flax_crop_top_stage_7"
+  }
+}

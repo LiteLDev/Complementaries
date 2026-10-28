@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:rope_arrow_1"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:arrow"
+      },
+      {
+        "item": "complementaries:rope"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:arrow"
+      }
+    ],
+    "result": {
+      "item": "complementaries:rope_arrow",
+      "count": 1,
+      "data": 1
+    }
+  }
+}

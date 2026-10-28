@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:rope"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "F",
+      "F",
+      "F"
+    ],
+    "key": {
+      "F": {
+        "item": "complementaries:flax"
+      }
+    },
+    "unlock": [
+      {
+        "item": "complementaries:flax"
+      }
+    ],
+    "result": {
+      "item": "complementaries:rope",
+      "count": 3
+    }
+  }
+}
