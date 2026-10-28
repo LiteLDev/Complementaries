@@ -16,6 +16,7 @@
 #include "mc/world/level/BlockSource.h"
 #include "mc/world/level/Level.h"
 #include "mc/world/level/Spawner.h"
+#include "mc/world/level/Tick.h"
 #include "mc/world/level/block/Block.h"
 
 #include "feature/cannon/Cannon.h"
@@ -37,13 +38,24 @@ std::mt19937& rng() {
     return r;
 }
 
+/// Ticks a red merchant lives at most (its despawn timer is 20-30 minutes, then it leaves once no
+/// player is near).
+constexpr uint64_t kMaxLifetime = 30 * 60 * 20 + 6000;
+
+uint64_t serverTick(Level const& level) { return level.getCurrentServerTick().tickID; }
+
+/// The last spawned merchant is still around: loaded, or spawned recently enough that it may just
+/// be in an unloaded chunk.
 bool merchantAlive() {
     auto level = ll::service::getLevel();
     if (!level || !game::db::available()) return false;
     auto j = game::db::load(kMerchantKey);
     if (!j) return false;
     auto id = j->value("id", static_cast<int64_t>(0));
-    return id && level->fetchEntity(ActorUniqueID{id}, false) != nullptr;
+    if (id && level->fetchEntity(ActorUniqueID{id}, false) != nullptr) return true;
+    auto     at  = j->value("tick", static_cast<uint64_t>(0));
+    uint64_t now = serverTick(*level);
+    return at <= now && now - at < kMaxLifetime;
 }
 
 } // namespace
@@ -70,7 +82,7 @@ Actor* spawnRedMerchantNear(Player& player) {
         Vec3 pos{x + 0.5f, static_cast<float>(y), z + 0.5f};
         auto* mob = level->getSpawner().spawnMob(region, ActorDefinitionIdentifier(std::string(kRedMerchant)), nullptr, pos, false, true, false);
         if (!mob) continue;
-        if (game::db::available()) game::db::save(kMerchantKey, {{"id", mob->getOrCreateUniqueID().rawID}});
+        if (game::db::available()) game::db::save(kMerchantKey, {{"id", mob->getOrCreateUniqueID().rawID}, {"tick", serverTick(*level)}});
         log().info("Red merchant spawned at {} {} {}", x, y, z);
         return mob;
     }

@@ -97,6 +97,8 @@ public:
     [[nodiscard]] uint64_t now() const { return mTick; }
     [[nodiscard]] std::map<core::GlobalPos, CannonData> const& all() const { return mCannons; }
 
+    /// Reads one cannon's record from the world DB again (drops its runtime state).
+    bool reload(core::GlobalPos const& pos);
     void loadWorld();
     void saveWorld();
     void closeWorld();

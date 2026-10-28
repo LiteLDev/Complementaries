@@ -261,7 +261,7 @@ CM_REGISTER_SELFTEST("cannon.persistence", [](Context& ctx) -> ll::coro::CoroTas
     c.setAim(pos, 33.0f, 21.0f, 3);
     c.saveWorld();
     ctx.check(cm::game::db::load("cm:cannon:c:" + pos.key()).has_value(), "the cannon is stored in the world DB");
-    c.loadWorld(); // drop the memory state and read the DB again
+    ctx.require(c.reload(pos), "the record reads back from the DB");
     auto* d = c.at(pos);
     ctx.require(d != nullptr, "record after reload");
     ctx.check(d->fuel == 7 && d->power == 3, "fuel and power survive");

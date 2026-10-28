@@ -136,8 +136,11 @@ inline std::vector<V3> sphereDirections(int n) {
     return out;
 }
 
-/// Destroy-time budget of a cannonball at `speed` (blocks/tick): `hardnessAt2` at speed 2, linear.
-inline double breakBudget(double hardnessAt2, double speed) { return hardnessAt2 * (speed / 2.0); }
+
+/// Kinetic "energy" of a cannonball (Supplementaries: proportional to speed squared).
+inline double energy(double powerScaling, V3 velocity) { return powerScaling * velocity.dot(velocity); }
+/// Speed that carries `e` energy.
+inline double speedFor(double powerScaling, double e) { return powerScaling > 0 && e > 0 ? std::sqrt(e / powerScaling) : 0.0; }
 
 /// Ray (origin, unit dir) vs axis-aligned box: entry distance, or a negative value on a miss.
 inline double rayBox(V3 o, V3 d, V3 mn, V3 mx) {

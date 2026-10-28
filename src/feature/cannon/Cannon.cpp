@@ -41,6 +41,7 @@
 #include "mc/world/redstone/circuit/CircuitSceneGraph.h"
 #include "mc/world/redstone/circuit/CircuitSystem.h"
 #include "mc/world/redstone/circuit/components/BaseCircuitComponent.h"
+#include "mc/world/redstone/circuit/components/CircuitComponentType.h"
 
 #include "feature/cannon/CannonConfig.h"
 #include "game/Blocks.h"
@@ -109,6 +110,18 @@ std::string itemLabel(ItemStack const& s) {
     if (s.isNull()) return {};
     auto name = s.getName();
     return name.empty() ? s.getTypeName() : name;
+}
+
+CannonData fromJson(nlohmann::json const& j) {
+    CannonData d;
+    d.fuel       = std::clamp(j.value("fuel", 0), 0, kMaxFuel);
+    d.projectile = itemFromSnbt(j.value("projectile", std::string()));
+    d.yaw        = j.value("yaw", 0.0f);
+    d.pitch      = j.value("pitch", 30.0f);
+    d.power      = std::clamp(j.value("power", 1), 1, maxPower());
+    d.powered    = j.value("powered", false);
+    d.barrel     = j.value("barrel", static_cast<int64_t>(0));
+    return d;
 }
 
 std::vector<ll::event::ListenerPtr> gListeners;
@@ -358,11 +371,16 @@ bool Cannons::redstonePowered(GlobalPos const& pos) const {
     BlockPos bp = game::blockPos(pos);
     // the block's own consumer component (minecraft:redstone_consumer)
     if (auto it = all.find(bp); it != all.end() && it->second) return it->second->getStrength() > 0;
-    // fallback: a powered component next to the cannon
+    // fallback (consumer not registered yet): a power source or a powered block next to the cannon
     static constexpr int kN[6][3] = {{0, -1, 0}, {0, 1, 0}, {0, 0, -1}, {0, 0, 1}, {-1, 0, 0}, {1, 0, 0}};
     for (auto const& n : kN) {
-        if (auto it = all.find(BlockPos{bp.x + n[0], bp.y + n[1], bp.z + n[2]}); it != all.end() && it->second) {
-            if (it->second->getStrength() > 0) return true;
+        auto it = all.find(BlockPos{bp.x + n[0], bp.y + n[1], bp.z + n[2]});
+        if (it == all.end() || !it->second || it->second->getStrength() <= 0) continue;
+        auto group = static_cast<uint64_t>(static_cast<CircuitComponentType>(it->second->mCircuitComponentType))
+                   & static_cast<uint64_t>(CircuitComponentType::GroupMask);
+        if (group == static_cast<uint64_t>(CircuitComponentType::ProducerComponent)
+            || group == static_cast<uint64_t>(CircuitComponentType::PoweredBlockComponent)) {
+            return true;
         }
     }
     return false;
@@ -374,7 +392,8 @@ void Cannons::interact(Player& player, GlobalPos const& pos) {
     if (!at(pos)) return;
     ItemStack held = player.getSelectedItem();
     if (!held.isNull()) {
-        int taken = insert(pos, held);
+        std::string what  = held.getTypeName();
+        int         taken = insert(pos, held);
         if (taken > 0) {
             held.remove(taken);
             if (held.mCount <= 0) held = ItemStack();
@@ -382,7 +401,7 @@ void Cannons::interact(Player& player, GlobalPos const& pos) {
             player.sendInventory(false);
             playSound(pos.dim, center(pos), "random.click", 0.6f, 1.2f);
             actionBar(player, trFor(player, "cm.cannon.loaded", "Cannon loaded"));
-            log().info("Cannon loaded at {} with {} x{}", pos.key(), held.isNull() ? std::string("item") : held.getTypeName(), taken);
+            log().info("Cannon loaded at {} with {} x{}", pos.key(), what, taken);
             return;
         }
     }
@@ -544,6 +563,13 @@ void Cannons::tick() {
     tickManoeuvres();
 }
 
+bool Cannons::reload(GlobalPos const& pos) {
+    auto j = db::available() ? db::load(dbKey(pos)) : std::nullopt;
+    if (!j) return false;
+    mCannons[pos] = fromJson(*j);
+    return true;
+}
+
 void Cannons::loadWorld() {
     mCannons.clear();
     mManoeuvres.clear();
@@ -557,15 +583,7 @@ void Cannons::loadWorld() {
         auto pos = parseKey(k);
         auto j   = db::load(kDbPrefix + k);
         if (!pos || !j) continue;
-        CannonData d;
-        d.fuel       = std::clamp(j->value("fuel", 0), 0, kMaxFuel);
-        d.projectile = itemFromSnbt(j->value("projectile", std::string()));
-        d.yaw        = j->value("yaw", 0.0f);
-        d.pitch      = j->value("pitch", 30.0f);
-        d.power      = std::clamp(j->value("power", 1), 1, maxPower());
-        d.powered    = j->value("powered", false);
-        d.barrel     = j->value("barrel", static_cast<int64_t>(0));
-        mCannons[*pos] = std::move(d);
+        mCannons[*pos] = fromJson(*j);
     }
     if (!mCannons.empty()) log().info("Loaded {} cannon(s)", mCannons.size());
 }
@@ -615,6 +633,7 @@ void Cannons::install() {
         std::string uuid = uuidOf(player);
         std::string key  = uuid + "@" + pos.key();
         if (auto it = gLastInteract.find(key); it != gLastInteract.end() && mTick - it->second < 4) return;
+        if (gLastInteract.size() > 256) std::erase_if(gLastInteract, [this](auto const& e) { return mTick - e.second > 20; });
         gLastInteract[key] = mTick;
         defer([this, uuid, pos] {
             if (auto* p = playerByUuid(uuid)) interact(*p, pos);

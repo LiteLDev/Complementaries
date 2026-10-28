@@ -81,5 +81,7 @@ TEST(CannonMath, RayBox) {
     EXPECT_NEAR(rayBox({0, 0, 0}, {1, 0, 0}, {2, -1, -1}, {3, 1, 1}), 2.0, 1e-9);
     EXPECT_LT(rayBox({0, 0, 0}, {-1, 0, 0}, {2, -1, -1}, {3, 1, 1}), 0.0);
     EXPECT_LT(rayBox({0, 5, 0}, {1, 0, 0}, {2, -1, -1}, {3, 1, 1}), 0.0);
-    EXPECT_NEAR(breakBudget(4.0, 3.0), 6.0, 1e-9);
+    EXPECT_NEAR(energy(2.0, {3, 0, 4}), 50.0, 1e-9);
+    EXPECT_NEAR(speedFor(2.0, 50.0), 5.0, 1e-9);
+    EXPECT_EQ(speedFor(2.0, -1.0), 0.0);
 }

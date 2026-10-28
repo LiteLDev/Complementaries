@@ -114,6 +114,42 @@ void recordHit(Actor& projectile, HitResult const& res) {
     gHits.push_back(std::move(h));
 }
 
+/// Shoots one of this unit's projectiles. A projectile does not register a block hit during its
+/// first tick, so a solid block inside that first step (a wall in front of the muzzle, the block
+/// behind the one a cannonball just broke, a wall next to a bounce) is hit here right away.
+/// `hits`: entities a cannonball already damaged.
+Actor* fireOurs(BlockSource& region, std::string_view id, Vec3 const& pos, Vec3 const& velocity, int64_t owner, std::set<int64_t> hits = {}) {
+    static int64_t syntheticIds = 0;
+    math::V3 const a = toV3(pos), b = toV3(pos + velocity);
+    double const   len = (b - a).length();
+    for (int i = 1, n = std::max(1, static_cast<int>(std::ceil(len / 0.1))); i <= n; ++i) {
+        math::V3 p  = a + (b - a) * (static_cast<double>(i) / n);
+        BlockPos bp = blockAt(p);
+        if (bp.y < region.getMinHeight() || bp.y >= region.getMaxHeight()) break;
+        auto const& blk = region.getBlock(bp);
+        if (blk.isAir() || !blk.mCachedComponentData->mIsSolid) continue;
+        PendingHit h;
+        h.type     = id;
+        h.dim      = static_cast<int>(region.getDimensionId());
+        h.pos      = toVec(a + (b - a) * (static_cast<double>(i - 1) / n));
+        h.vel      = velocity;
+        h.self     = --syntheticIds; // never a real actor id
+        h.owner    = owner;
+        h.block    = true;
+        h.blockPos = bp;
+        math::V3 d  = (b - a).normalized();
+        double   ax = std::abs(d.x), ay = std::abs(d.y), az = std::abs(d.z);
+        h.face      = ay >= ax && ay >= az ? (d.y > 0 ? 0 : 1) : (az >= ax ? (d.z > 0 ? 2 : 3) : (d.x > 0 ? 4 : 5));
+        if (isBomb(id)) h.delay = std::max(0, cfg().bombFuse);
+        if (!hits.empty()) gBallHits[h.self] = std::move(hits);
+        gHits.push_back(std::move(h));
+        return nullptr;
+    }
+    Actor* actor = shootProjectile(region, id, pos, velocity, owner);
+    if (actor && !hits.empty()) gBallHits[actor->getOrCreateUniqueID().rawID] = std::move(hits);
+    return actor;
+}
+
 void hurt(Actor& target, float damage, int64_t ownerId) {
     Actor* owner = byId(ownerId);
     if (owner && owner != &target) target.hurtByCause(damage, SharedTypes::Legacy::ActorDamageCause::Projectile, *owner);
@@ -131,9 +167,7 @@ void continueBall(BlockSource& region, PendingHit const& h, Vec3 const& from, ma
         ballBreaks(h.dim, from);
         return;
     }
-    if (auto* next = shootProjectile(region, kCannonball, from, toVec(vel), h.owner)) {
-        gBallHits[next->getOrCreateUniqueID().rawID] = std::move(hits);
-    }
+    fireOurs(region, kCannonball, from, toVec(vel), h.owner, std::move(hits));
 }
 
 void handleCannonball(PendingHit const& h) {
@@ -148,7 +182,7 @@ void handleCannonball(PendingHit const& h) {
     double const k      = std::max(0.001, static_cast<double>(cfg().cannonballPowerScaling));
     math::V3     vel    = toV3(h.vel);
     math::V3     dir    = vel.normalized();
-    double       energy = k * vel.dot(vel);
+    double       energy = math::energy(k, vel);
     if (h.entity) {
         Actor* target = byId(h.entity);
         if (target && !hits.contains(h.entity)) {
@@ -157,7 +191,7 @@ void handleCannonball(PendingHit const& h) {
             log().info("Cannonball hit {} for {:.1f}", target->getTypeName(), energy);
             energy *= 0.5;
         }
-        continueBall(*region, h, h.pos + toVec(dir * 0.5), dir * std::sqrt(energy / k), std::move(hits));
+        continueBall(*region, h, h.pos + toVec(dir * 0.5), dir * math::speedFor(k, energy), std::move(hits));
         return;
     }
     if (!h.block) return;
@@ -199,7 +233,7 @@ void handleCannonball(PendingHit const& h) {
         if (broken > 0) {
             playSound(h.dim, h.pos, "complementaries.cannonball.break", 1.0f, 1.0f);
             log().info("Cannonball broke {} block(s)", broken);
-            continueBall(*region, h, h.pos, dir * std::sqrt(std::max(0.0, energy) / k), std::move(hits));
+            continueBall(*region, h, h.pos, dir * math::speedFor(k, energy), std::move(hits));
             return;
         }
     }
@@ -227,7 +261,7 @@ bool bounce(PendingHit const& h) {
     }
     v = v * 0.8;
     if (v.length() < 0.1) return false;
-    shootProjectile(*region, h.type, h.pos + toVec(v.normalized() * 0.2), toVec(v), h.owner);
+    fireOurs(*region, h.type, h.pos + toVec(v.normalized() * 0.2), toVec(v), h.owner);
     playSound(h.dim, h.pos, "mob.slime.small", 0.8f, 1.0f);
     return true;
 }
@@ -274,6 +308,19 @@ void setFireAround(BlockSource& region, Vec3 const& pos, float radius, int secon
     }
 }
 
+/// No block stronger than `maxResistance` lies between `from` and the centre of `target`.
+bool clearPath(BlockSource& region, math::V3 from, BlockPos const& target, float maxResistance) {
+    math::V3 const to{target.x + 0.5, target.y + 0.5, target.z + 0.5};
+    double const   len = (to - from).length();
+    for (int i = 1, n = std::max(1, static_cast<int>(std::ceil(len / 0.25))); i < n; ++i) {
+        BlockPos bp = blockAt(from + (to - from) * (static_cast<double>(i) / n));
+        if (bp == target) break;
+        auto const& b = region.getBlock(bp);
+        if (!b.isAir() && b.getBlockType().getExplosionResistance() > maxResistance) return false;
+    }
+    return true;
+}
+
 /// Explosion following a `break_blocks` mode: "all" breaks like TNT, "none" breaks nothing and
 /// "weak" breaks only blocks with a blast resistance up to `maxResistance` inside the radius.
 void explodeWith(BlockSource& region, Vec3 const& pos, float radius, std::string const& mode, float maxResistance) {
@@ -297,6 +344,7 @@ void explodeWith(BlockSource& region, Vec3 const& pos, float radius, std::string
                 auto const& block = region.getBlock(bp);
                 if (block.isAir() || block.getBlockType().getDestroySpeed() < 0.0f) continue;
                 if (block.getBlockType().getExplosionResistance() > maxResistance) continue;
+                if (!clearPath(region, c, bp, maxResistance)) continue;
                 level->destroyBlock(region, bp, true, BlockChangeContext{});
             }
         }
@@ -318,7 +366,7 @@ void explodeBomb(int dim, std::string_view type, Vec3 const& pos, int64_t owner)
         for (int i = 0; i < c.blueBombSplitCount; ++i) {
             double   ang = a(rng());
             math::V3 v{std::cos(ang) * sp(rng()), up(rng()), std::sin(ang) * sp(rng())};
-            shootProjectile(*region, kBombBlueBaby, pos + Vec3{0, 0.4f, 0} + toVec(v.normalized() * 0.4), toVec(v), owner);
+            fireOurs(*region, kBombBlueBaby, pos + Vec3{0, 0.4f, 0} + toVec(v.normalized() * 0.4), toVec(v), owner);
         }
     } else if (type == kBombBlueBaby) {
         level->explode(*region, nullptr, pos, c.blueBombBabyExplosionRadius, false, false, FLT_MAX, false);
@@ -358,33 +406,7 @@ Actor* launch(BlockSource& region, ItemStack const& item, Vec3 const& pos, Vec3 
         if (tnt && cfg().explodeTnt) gTnt.push_back({tnt->getOrCreateUniqueID().rawID, static_cast<int>(tnt->getDimensionId()), 0});
         return tnt;
     }
-    if (isOurs(id)) {
-        // a projectile does not register a block hit during its first tick: resolve a hit that
-        // close (a wall right in front of the muzzle) here
-        math::V3 const a = toV3(pos), b = toV3(pos + velocity);
-        double const   len = (b - a).length();
-        for (int i = 1, n = std::max(1, static_cast<int>(std::ceil(len / 0.1))); i <= n; ++i) {
-            math::V3 p  = a + (b - a) * (static_cast<double>(i) / n);
-            BlockPos bp = blockAt(p);
-            if (bp.y < region.getMinHeight() || bp.y >= region.getMaxHeight()) break;
-            auto const& blk = region.getBlock(bp);
-            if (blk.isAir() || !blk.mCachedComponentData->mIsSolid) continue;
-            PendingHit h;
-            h.type     = id;
-            h.dim      = static_cast<int>(region.getDimensionId());
-            h.pos      = toVec(a + (b - a) * (static_cast<double>(i - 1) / n));
-            h.vel      = velocity;
-            h.owner    = owner;
-            h.block    = true;
-            h.blockPos = bp;
-            math::V3 d = (b - a).normalized();
-            double   ax = std::abs(d.x), ay = std::abs(d.y), az = std::abs(d.z);
-            h.face      = ay >= ax && ay >= az ? (d.y > 0 ? 0 : 1) : (az >= ax ? (d.z > 0 ? 2 : 3) : (d.x > 0 ? 4 : 5));
-            if (isBomb(id)) h.delay = std::max(0, cfg().bombFuse);
-            gHits.push_back(std::move(h));
-            return nullptr;
-        }
-    }
+    if (isOurs(id)) return fireOurs(region, id, pos, velocity, owner);
     if (auto it = projectiles.find(id); it != projectiles.end()) {
         std::string extra;
         if (id == "minecraft:splash_potion" || id == "minecraft:lingering_potion") extra = "PotionId:" + std::to_string(item.getAuxValue()) + "s";
@@ -454,11 +476,11 @@ void tickProjectiles() {
         bool       stopped    = it->lastHorizontal > 0.1f && horizontal < it->lastHorizontal * 0.3f; // hit a wall
         bool       landed     = it->age > 2 && (tnt->isOnGround() || stopped);
         it->lastHorizontal    = horizontal;
-        if (landed || it->age > 200) {
+        if (landed) {
             Vec3 pos = tnt->getPosition();
             int  dim = it->dim;
             tnt->remove();
-            if (auto* region = regionOf(dim); region && landed) {
+            if (auto* region = regionOf(dim)) {
                 if (auto level = ll::service::getLevel()) level->explode(*region, nullptr, pos, 4.0f, false, true, FLT_MAX, false);
                 log().info("Cannon TNT exploded on impact");
             }

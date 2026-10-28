@@ -8,7 +8,7 @@ no code or assets come from Supplementaries. English strings that exist in Suppl
 
 | Supplementaries id | Complementaries id | Kind |
 |---|---|---|
-| `supplementaries:cannon` | `complementaries:cannon` | block + item ("Can shoot anything") |
+| `supplementaries:cannon` | `complementaries:cannon` | block + item |
 | `supplementaries:cannonball` | `complementaries:cannonball` | placeable block + item, and the flying projectile entity |
 | `supplementaries:bomb` | `complementaries:bomb` | throwable item + projectile entity |
 | `supplementaries:bomb_blue` | `complementaries:bomb_blue` | throwable item + projectile entity |
@@ -57,8 +57,8 @@ every client draws the right sprite without a custom renderer.
 
 ### Firing
 
-1. Needs `fuel >= power`, a projectile and no cooldown; otherwise the player sees
-   "The cannon is not loaded".
+1. Needs `fuel >= power` and a projectile, otherwise the player sees "The cannon is not loaded".
+   While the fuse burns or the cannon cools down, lighting it again does nothing.
 2. Lighting: fuse sound and smoke; after `fuseTime` ticks (default 40) the shot: `power`
    gunpowder and one projectile are used, a deep explosion sound plays (`complementaries.cannon.fire`),
    smoke and an explosion puff come out of the muzzle, the barrel recoils. Cooldown `cooldown`
@@ -199,4 +199,5 @@ Block, item and entity names live in `texts.d/<locale>/cannon.lang` (`tile.compl
 | Custom death messages (`death.attack.supplementaries.cannonball`) | Bedrock death messages are fixed per damage cause; cannonball kills use the projectile message. |
 | "Heave Ho" music disc (`cannon.music_disc_heave_ho`) | Needs an original recording; no audio is shipped. |
 | `cannon_blacklist` / `cannon_tnts` tags | Bedrock has no item/block tags a mod can extend at runtime; the TNT rule applies to `minecraft:tnt`. |
+| The cannon's "Can shoot anything" tooltip (`message.supplementaries.cannon`) | Data-driven Bedrock items have no tooltip lines; the key is kept for a future client tooltip. |
 | Pistons moving cannons | The DB record stays at the old position; a moved cannon is treated as broken (contents dropped). |
