@@ -26,22 +26,22 @@ Press-Key 1
 # ---- placeable sticks: one standing, then a second one across it ---------------------------------------
 $mark = Get-LogMark
 Hold 'stick' 8
-Look 0.5 -60 0.5 0.5 -61 3.5
+Look 0.5 -60 0.5 0.5 -60 2.5
 Use-Item
 Wait-LogLine 'tweak: .* placed complementaries:stick at 0 -60 2' 15 -Since $mark | Out-Null
 Hold 'blaze_rod' 4
-Look 1.5 -60 0.5 1.5 -61 3.5
+Look 1.5 -60 0.5 1.5 -60 2.5
 Use-Item
 Wait-LogLine 'tweak: .* placed complementaries:blaze_rod at 1 -60 2' 15 -Since $mark | Out-Null
 
 # ---- gunpowder trail, lit with flint and steel ----------------------------------------------------------
 $mark = Get-LogMark
 Hold 'gunpowder' 8
-Look 4.5 -60 0.5 4.5 -61 3.5
+Look 4.5 -60 0.5 4.5 -60 2.5
 Use-Item
-Look 4.5 -60 0.5 5.5 -61 3.5
+Look 4.5 -60 0.5 5.5 -60 2.5
 Use-Item
-Look 4.5 -60 0.5 6.5 -61 3.5
+Look 4.5 -60 0.5 6.5 -60 2.5
 Use-Item
 Wait-LogLine 'tweak: .* placed gunpowder at 6 -60 2' 15 -Since $mark | Out-Null
 Look 5.5 -59 -1.5 5.5 -60 2.5

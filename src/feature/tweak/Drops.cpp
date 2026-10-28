@@ -30,6 +30,7 @@ std::vector<ItemStack> dropsOf(Block const& block) {
         }
         if (n > 0) out.push_back(makeItem(item, n));
     } else if (id == kGunpowderBlock) {
+        if (game::intState(block, "complementaries:burning").value_or(0) > 0) return out; // burnt up
         out.push_back(makeItem("minecraft:gunpowder"));
     } else if (id == kHangingPotBlock) {
         out.push_back(makeItem("minecraft:flower_pot"));
@@ -51,7 +52,7 @@ void onBlockChanged(BlockSource& region, BlockPos const& pos, Block const& previ
     auto const& nowId = blockName(now);
     if (nowId == "minecraft:moving_block" || nowId == "minecraft:fire" || nowId == "minecraft:soul_fire") return;
     auto gp = game::globalPos(region, pos);
-    if (suppressed().erase(gp)) return;
+    if (suppressed().contains(gp)) return; // kept until the end of the tick
     auto drops = dropsOf(previous);
     if (drops.empty()) return;
     defer([gp, drops = std::move(drops)] {

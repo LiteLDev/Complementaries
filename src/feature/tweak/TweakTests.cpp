@@ -118,6 +118,10 @@ CM_REGISTER_SELFTEST("tweak.blocks_registered", [](Context& ctx) {
     auto const* pot = cm::game::blockWith(kHangingPotBlock, {{"complementaries:plant", 1}});
     ctx.require(pot != nullptr, "hanging pot with a plant");
     ctx.check(dropsOf(*pot).size() == 2, "a planted hanging pot drops the pot and the plant");
+    auto const* lit = cm::game::blockWith(kGunpowderBlock, {{"complementaries:burning", 3}});
+    ctx.require(lit != nullptr, "burning trail");
+    ctx.check(dropsOf(*lit).empty(), "a burning trail drops nothing");
+    ctx.check(dropsOf(*cm::game::blockWith(kGunpowderBlock)).size() == 1, "an unlit trail drops gunpowder");
 });
 
 CM_REGISTER_SELFTEST("tweak.sticks", [](Context& ctx) -> ll::coro::CoroTask<> {
