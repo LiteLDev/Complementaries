@@ -160,7 +160,10 @@ Mod strings (`assets/lang/<locale>/rope.json`):
 | `cm.rope.pulley.turn_ccw` | Turn counter-clockwise |
 | `cm.rope.pulley.wrong_item` | Only ropes or chains can be wound on a pulley |
 | `cm.rope.pulley.full` | The pulley is full |
-| `message.supplementaries.rope_arrow` | Charges: {}/{} |
+| `cm.rope.item.rope` | Rope |
+| `cm.rope.item.chain` | Chain |
+
+Rope arrow charges are shown by the item's durability bar.
 
 ## 7. Not ported
 
