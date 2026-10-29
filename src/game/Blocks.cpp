@@ -56,26 +56,31 @@ std::optional<int> intState(Block const& block, std::string_view state) {
     return block.getState<int>(*s);
 }
 
-Block const* blockWith(std::string_view id, std::vector<std::pair<std::string_view, int>> const& states) {
-    auto type = BlockType::tryGetFromRegistry(HashedString(std::string(id)));
-    if (!type) return nullptr;
-    Block const* block = type->mDefaultState;
-    if (!block) return nullptr;
+Block const* withStates(Block const& block, std::vector<std::pair<std::string_view, int>> const& states) {
+    Block const* current = &block;
     for (auto const& [name, value] : states) {
-        auto const* state = type->getBlockState(HashedString(std::string(name)));
+        auto const* state = current->getBlockType().getBlockState(HashedString(std::string(name)));
         if (!state) continue;
         // Find the index whose serialized value is `value`; string states take `value` as the index.
         Block const* next  = nullptr;
         int          count = static_cast<int>(std::min<uint64>(state->mVariationCount, 64));
         for (int idx = 0; idx < count && !next; ++idx) {
-            auto b = block->setState<int>(*state, idx);
+            auto b = current->setState<int>(*state, idx);
             if (!b) continue;
             auto v = serializedState(*b, name);
             if (v ? *v == value : idx == value) next = b.as_ptr();
         }
-        if (next) block = next;
+        if (next) current = next;
     }
-    return block;
+    return current;
+}
+
+Block const* blockWith(std::string_view id, std::vector<std::pair<std::string_view, int>> const& states) {
+    auto type = BlockType::tryGetFromRegistry(HashedString(std::string(id)));
+    if (!type) return nullptr;
+    Block const* block = type->mDefaultState;
+    if (!block) return nullptr;
+    return withStates(*block, states);
 }
 
 bool setBlock(BlockSource& region, BlockPos const& pos, Block const& block) {

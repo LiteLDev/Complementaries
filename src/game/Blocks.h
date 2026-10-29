@@ -28,6 +28,10 @@ namespace cm::game {
 /// 0/1; a string state gives its index). nullopt if the block has no such state.
 [[nodiscard]] std::optional<int> intState(Block const& block, std::string_view state);
 
+/// `block` with `states` applied by value, as `intState` reads them (unknown states and values are
+/// ignored).
+[[nodiscard]] Block const* withStates(Block const& block, std::vector<std::pair<std::string_view, int>> const& states);
+
 /// The default state of `id` with `states` applied by value, as `intState` reads them (unknown
 /// states and values are ignored). nullptr if the block id is not registered (behavior pack missing).
 [[nodiscard]] Block const* blockWith(std::string_view id, std::vector<std::pair<std::string_view, int>> const& states = {});
