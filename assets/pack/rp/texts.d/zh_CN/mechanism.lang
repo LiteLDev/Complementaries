@@ -1,0 +1,7 @@
+tile.complementaries:piston_launcher.name=弹簧发射器
+tile.complementaries:piston_launcher_head.name=弹簧发射器头
+tile.complementaries:piston_launcher_arm.name=弹簧发射器臂
+tile.complementaries:bellows.name=风箱
+tile.complementaries:turn_table.name=转盘
+tile.complementaries:cog_block.name=齿轮方块
+tile.complementaries:crank.name=曲柄

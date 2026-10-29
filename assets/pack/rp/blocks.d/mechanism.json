@@ -1,0 +1,23 @@
+{
+  "complementaries:piston_launcher": {
+    "sound": "stone"
+  },
+  "complementaries:piston_launcher_head": {
+    "sound": "stone"
+  },
+  "complementaries:piston_launcher_arm": {
+    "sound": "stone"
+  },
+  "complementaries:bellows": {
+    "sound": "wood"
+  },
+  "complementaries:turn_table": {
+    "sound": "stone"
+  },
+  "complementaries:cog_block": {
+    "sound": "copper"
+  },
+  "complementaries:crank": {
+    "sound": "wood"
+  }
+}

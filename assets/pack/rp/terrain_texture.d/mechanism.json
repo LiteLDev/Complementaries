@@ -1,0 +1,50 @@
+{
+  "cm_bellows_board": {
+    "textures": "textures/blocks/bellows_board"
+  },
+  "cm_bellows_front": {
+    "textures": "textures/blocks/bellows_front"
+  },
+  "cm_bellows_leather": {
+    "textures": "textures/blocks/bellows_leather"
+  },
+  "cm_cog_block_twisting": {
+    "textures": "textures/blocks/cog_block_twisting"
+  },
+  "cm_cog_block": {
+    "textures": "textures/blocks/cog_block"
+  },
+  "cm_crank": {
+    "textures": "textures/blocks/crank"
+  },
+  "cm_piston_launcher_bottom": {
+    "textures": "textures/blocks/piston_launcher_bottom"
+  },
+  "cm_piston_launcher_side": {
+    "textures": "textures/blocks/piston_launcher_side"
+  },
+  "cm_piston_launcher_spring": {
+    "textures": "textures/blocks/piston_launcher_spring"
+  },
+  "cm_piston_launcher_top": {
+    "textures": "textures/blocks/piston_launcher_top"
+  },
+  "cm_turn_table_bottom": {
+    "textures": "textures/blocks/turn_table_bottom"
+  },
+  "cm_turn_table_side": {
+    "textures": "textures/blocks/turn_table_side"
+  },
+  "cm_turn_table_top_inverted_on": {
+    "textures": "textures/blocks/turn_table_top_inverted_on"
+  },
+  "cm_turn_table_top_inverted": {
+    "textures": "textures/blocks/turn_table_top_inverted"
+  },
+  "cm_turn_table_top_on": {
+    "textures": "textures/blocks/turn_table_top_on"
+  },
+  "cm_turn_table_top": {
+    "textures": "textures/blocks/turn_table_top"
+  }
+}

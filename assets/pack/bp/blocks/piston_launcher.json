@@ -1,0 +1,164 @@
+{
+  "format_version": "1.26.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:piston_launcher",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:extended": [
+          false,
+          true
+        ]
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:facing_direction"
+          ]
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.complementaries.piston_launcher",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_piston_launcher_side",
+          "render_method": "opaque"
+        },
+        "up": {
+          "texture": "cm_piston_launcher_top",
+          "render_method": "opaque"
+        },
+        "down": {
+          "texture": "cm_piston_launcher_bottom",
+          "render_method": "opaque"
+        },
+        "spring": {
+          "texture": "cm_piston_launcher_spring",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 2.5
+      },
+      "minecraft:redstone_consumer": {
+        "min_power": 1,
+        "propagates_power": false
+      },
+      "minecraft:loot": "loot_tables/blocks/piston_launcher.json",
+      "minecraft:map_color": "#8c8c8c"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'down'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'up'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              180,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              90,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              270,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              270
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:facing_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              90
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:extended')",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.piston_launcher_extended",
+          "minecraft:collision_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              12,
+              16
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              12,
+              16
+            ]
+          },
+          "minecraft:movable": {
+            "movement_type": "immovable"
+          }
+        }
+      }
+    ]
+  }
+}
