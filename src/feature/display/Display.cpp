@@ -170,13 +170,7 @@ BlockSource* regionOf(int dim) {
 bool loaded(BlockSource& region, BlockPos const& pos) { return region.hasChunksAt(pos, 0, false); }
 
 Block const* withStates(Block const& block, std::vector<std::pair<std::string_view, int>> const& states) {
-    Block const* b = &block;
-    for (auto const& [name, value] : states) {
-        if (auto const* state = b->getBlockType().getBlockState(HashedString(std::string(name)))) {
-            if (auto nb = b->setState(*state, value)) b = nb.as_ptr();
-        }
-    }
-    return b;
+    return game::withStates(block, states);
 }
 
 // ---- redstone -------------------------------------------------------------------------------------
