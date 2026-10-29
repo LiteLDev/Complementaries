@@ -250,7 +250,7 @@ int ashLayers(Block const& block) {
     return stateOf(block, "complementaries:layers").value_or(7) + 1;
 }
 
-Block const* ashBlock(int layers) { return game::blockWith(kAsh, {{"complementaries:layers", std::clamp(layers, 1, 8) - 1}}); }
+Block const* ashBlock(int layers) { return game::blockWith(kAsh, {{"complementaries:layers", std::clamp(layers, 1, 8)}}); }
 
 int ashLayersFor(double chance, double roll) {
     if (chance <= 0) return 0;

@@ -197,7 +197,7 @@ CM_REGISTER_SELFTEST("building.ash", [](Context& ctx) -> ll::coro::CoroTask<> {
     clearArea(ctx, base, 2, 5);
     auto& region = regionOf(ctx);
     // layering with the item
-    ctx.require(ctx.setBlock(base, std::string(kAsh), {{"complementaries:layers", 0}}), "place one ash layer");
+    ctx.require(ctx.setBlock(base, std::string(kAsh), {{"complementaries:layers", 1}}), "place one ash layer");
     ctx.check(ashLayers(region.getBlock(at(base))) == 1, "one layer");
     co_await useOn(ctx, item(kAsh, 2), at(base), Facing::Up, Vec3{0.5f, 0.1f, 0.5f});
     ctx.check(ashLayers(region.getBlock(at(base))) == 2, "ash on ash adds a layer");
