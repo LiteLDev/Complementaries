@@ -1,0 +1,76 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "complementaries:storage_view",
+      "is_spawnable": false,
+      "is_summonable": true
+    },
+    "component_groups": {
+      "complementaries:despawn": {
+        "minecraft:instant_despawn": {}
+      }
+    },
+    "components": {
+      "minecraft:inventory": {
+        "container_type": "container",
+        "inventory_size": 27,
+        "private": true
+      },
+      "minecraft:collision_box": {
+        "width": 0.01,
+        "height": 0.01
+      },
+      "minecraft:physics": {
+        "has_gravity": false,
+        "has_collision": false
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": false
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "all",
+            "deals_damage": "no"
+          }
+        ]
+      },
+      "minecraft:health": {
+        "value": 1,
+        "max": 1
+      },
+      "minecraft:fire_immune": true,
+      "minecraft:knockback_resistance": {
+        "value": 1.0
+      },
+      "minecraft:nameable": {
+        "always_show": false,
+        "allow_name_tag_renaming": false
+      },
+      "minecraft:type_family": {
+        "family": [
+          "complementaries_storage_view",
+          "inanimate"
+        ]
+      },
+      "minecraft:timer": {
+        "looping": false,
+        "time": 1800,
+        "time_down_event": {
+          "event": "complementaries:despawn"
+        }
+      }
+    },
+    "events": {
+      "complementaries:despawn": {
+        "add": {
+          "component_groups": [
+            "complementaries:despawn"
+          ]
+        }
+      }
+    }
+  }
+}

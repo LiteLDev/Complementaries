@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:present_orange_dye"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:present"
+      },
+      {
+        "item": "minecraft:orange_dye"
+      }
+    ],
+    "result": {
+      "item": "complementaries:present_orange"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:orange_dye"
+      }
+    ]
+  }
+}

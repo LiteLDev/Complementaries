@@ -1,0 +1,56 @@
+{
+  "complementaries_sack": {
+    "textures": "textures/blocks/sack"
+  },
+  "complementaries_present": {
+    "textures": "textures/blocks/present"
+  },
+  "complementaries_present_white": {
+    "textures": "textures/blocks/present_white"
+  },
+  "complementaries_present_orange": {
+    "textures": "textures/blocks/present_orange"
+  },
+  "complementaries_present_magenta": {
+    "textures": "textures/blocks/present_magenta"
+  },
+  "complementaries_present_light_blue": {
+    "textures": "textures/blocks/present_light_blue"
+  },
+  "complementaries_present_yellow": {
+    "textures": "textures/blocks/present_yellow"
+  },
+  "complementaries_present_lime": {
+    "textures": "textures/blocks/present_lime"
+  },
+  "complementaries_present_pink": {
+    "textures": "textures/blocks/present_pink"
+  },
+  "complementaries_present_gray": {
+    "textures": "textures/blocks/present_gray"
+  },
+  "complementaries_present_light_gray": {
+    "textures": "textures/blocks/present_light_gray"
+  },
+  "complementaries_present_cyan": {
+    "textures": "textures/blocks/present_cyan"
+  },
+  "complementaries_present_purple": {
+    "textures": "textures/blocks/present_purple"
+  },
+  "complementaries_present_blue": {
+    "textures": "textures/blocks/present_blue"
+  },
+  "complementaries_present_brown": {
+    "textures": "textures/blocks/present_brown"
+  },
+  "complementaries_present_green": {
+    "textures": "textures/blocks/present_green"
+  },
+  "complementaries_present_red": {
+    "textures": "textures/blocks/present_red"
+  },
+  "complementaries_present_black": {
+    "textures": "textures/blocks/present_black"
+  }
+}

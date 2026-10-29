@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:trapped_present_black_dye"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:trapped_present"
+      },
+      {
+        "item": "minecraft:black_dye"
+      }
+    ],
+    "result": {
+      "item": "complementaries:trapped_present_black"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:black_dye"
+      }
+    ]
+  }
+}

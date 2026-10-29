@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:present_white_dye"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:present"
+      },
+      {
+        "item": "minecraft:white_dye"
+      }
+    ],
+    "result": {
+      "item": "complementaries:present_white"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:white_dye"
+      }
+    ]
+  }
+}

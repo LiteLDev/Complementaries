@@ -1,0 +1,107 @@
+{
+  "complementaries:sack": {
+    "sound": "cloth"
+  },
+  "complementaries:present": {
+    "sound": "cloth"
+  },
+  "complementaries:present_white": {
+    "sound": "cloth"
+  },
+  "complementaries:present_orange": {
+    "sound": "cloth"
+  },
+  "complementaries:present_magenta": {
+    "sound": "cloth"
+  },
+  "complementaries:present_light_blue": {
+    "sound": "cloth"
+  },
+  "complementaries:present_yellow": {
+    "sound": "cloth"
+  },
+  "complementaries:present_lime": {
+    "sound": "cloth"
+  },
+  "complementaries:present_pink": {
+    "sound": "cloth"
+  },
+  "complementaries:present_gray": {
+    "sound": "cloth"
+  },
+  "complementaries:present_light_gray": {
+    "sound": "cloth"
+  },
+  "complementaries:present_cyan": {
+    "sound": "cloth"
+  },
+  "complementaries:present_purple": {
+    "sound": "cloth"
+  },
+  "complementaries:present_blue": {
+    "sound": "cloth"
+  },
+  "complementaries:present_brown": {
+    "sound": "cloth"
+  },
+  "complementaries:present_green": {
+    "sound": "cloth"
+  },
+  "complementaries:present_red": {
+    "sound": "cloth"
+  },
+  "complementaries:present_black": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_white": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_orange": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_magenta": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_light_blue": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_yellow": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_lime": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_pink": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_gray": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_light_gray": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_cyan": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_purple": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_blue": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_brown": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_green": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_red": {
+    "sound": "cloth"
+  },
+  "complementaries:trapped_present_black": {
+    "sound": "cloth"
+  }
+}

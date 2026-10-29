@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:trapped_present_green_dye"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:trapped_present"
+      },
+      {
+        "item": "minecraft:green_dye"
+      }
+    ],
+    "result": {
+      "item": "complementaries:trapped_present_green"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:green_dye"
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:quiver"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " SL",
+      "L L",
+      "LL "
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:string"
+      },
+      "L": {
+        "item": "minecraft:leather"
+      }
+    },
+    "result": {
+      "item": "complementaries:quiver"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:leather"
+      }
+    ]
+  }
+}

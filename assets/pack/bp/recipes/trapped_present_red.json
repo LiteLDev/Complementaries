@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:trapped_present_red"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:present_red"
+      },
+      {
+        "item": "minecraft:tripwire_hook"
+      }
+    ],
+    "result": {
+      "item": "complementaries:trapped_present_red"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:tripwire_hook"
+      }
+    ]
+  }
+}

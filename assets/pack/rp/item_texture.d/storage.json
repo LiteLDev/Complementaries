@@ -1,0 +1,8 @@
+{
+  "complementaries_quiver": {
+    "textures": "textures/items/quiver"
+  },
+  "complementaries_lunch_basket": {
+    "textures": "textures/items/lunch_basket"
+  }
+}
