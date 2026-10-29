@@ -1,0 +1,22 @@
+{
+  "format_version": "1.26.50",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:gold_gate",
+      "menu_category": {
+        "group": "minecraft:itemGroup.name.fenceGate",
+        "category": "construction"
+      }
+    },
+    "components": {
+      "minecraft:icon": "complementaries_gold_gate",
+      "minecraft:display_name": {
+        "value": "tile.complementaries:gold_gate.name"
+      },
+      "minecraft:block_placer": {
+        "block": "complementaries:gold_gate",
+        "replace_block_item": true
+      }
+    }
+  }
+}

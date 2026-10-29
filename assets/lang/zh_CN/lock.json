@@ -1,0 +1,20 @@
+{
+  "message.supplementaries.key.lockable": "钥匙可锁",
+  "message.supplementaries.lock_block.locked": "方块已上锁",
+  "message.supplementaries.door.locked": "门已上锁",
+  "message.supplementaries.trapdoor.locked": "活板门已上锁",
+  "message.supplementaries.safe.locked": "保险箱已上锁",
+  "message.supplementaries.safe.assigned_key": "已配对“{}”钥匙",
+  "message.supplementaries.safe.assigned_key_generic": "已配对钥匙",
+  "message.supplementaries.safe.bound": "已上锁",
+  "message.supplementaries.safe.unbound": "未绑定",
+  "message.supplementaries.safe.cleared": "已清除所有权",
+  "message.supplementaries.safe.incorrect_key": "未持有正确的钥匙",
+  "message.supplementaries.safe.owner": "该保险箱为{}所有",
+  "gui.supplementaries.safe": "保险箱",
+  "gui.supplementaries.safe.name": "{0}的{1}",
+  "gui.supplementaries.safe.password": "{1}的钥匙：{0}",
+  "cm.lock.safe.item_count": "{} x{}",
+  "cm.lock.safe.more": "还有{}项……",
+  "cm.lock.safe.unknown_contents": "???????"
+}

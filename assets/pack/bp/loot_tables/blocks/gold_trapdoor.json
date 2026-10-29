@@ -1,0 +1,30 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "complementaries:gold_trapdoor",
+          "weight": 1
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "item_tags_all": [
+            "minecraft:is_pickaxe"
+          ]
+        },
+        {
+          "condition": "match_tool",
+          "item_tags_any": [
+            "minecraft:iron_tier",
+            "minecraft:diamond_tier",
+            "minecraft:netherite_tier"
+          ]
+        }
+      ]
+    }
+  ]
+}

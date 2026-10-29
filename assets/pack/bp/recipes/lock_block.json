@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:lock_block"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:redstone"
+      }
+    ],
+    "pattern": [
+      "IPI",
+      "PRP",
+      "IPI"
+    ],
+    "key": {
+      "R": {
+        "item": "minecraft:redstone"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "P": {
+        "tag": "minecraft:planks"
+      }
+    },
+    "result": {
+      "count": 1,
+      "item": "complementaries:lock_block"
+    }
+  }
+}

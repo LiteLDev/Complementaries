@@ -1,0 +1,86 @@
+{
+  "complementaries.lock.iron_door.open": {
+    "category": "block",
+    "sounds": [
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_door/open1"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_door/open2"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_door/open3"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_door/open4"
+      }
+    ]
+  },
+  "complementaries.lock.iron_door.close": {
+    "category": "block",
+    "sounds": [
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_door/close1"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_door/close2"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_door/close3"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_door/close4"
+      }
+    ]
+  },
+  "complementaries.lock.iron_trapdoor.open": {
+    "category": "block",
+    "sounds": [
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_trapdoor/open1"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_trapdoor/open2"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_trapdoor/open3"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_trapdoor/open4"
+      }
+    ]
+  },
+  "complementaries.lock.iron_trapdoor.close": {
+    "category": "block",
+    "sounds": [
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_trapdoor/close1"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_trapdoor/close2"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_trapdoor/close3"
+      },
+      {
+        "load_on_low_memory": true,
+        "name": "sounds/block/iron_trapdoor/close4"
+      }
+    ]
+  }
+}

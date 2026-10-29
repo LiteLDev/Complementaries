@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:netherite_door"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:netherite_scrap"
+      }
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:gold_door"
+      },
+      {
+        "item": "minecraft:netherite_scrap"
+      }
+    ],
+    "result": {
+      "count": 1,
+      "item": "complementaries:netherite_door"
+    }
+  }
+}

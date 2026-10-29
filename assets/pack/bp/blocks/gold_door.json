@@ -1,0 +1,260 @@
+{
+  "format_version": "1.26.50",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:gold_door",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.name.door"
+      },
+      "states": {
+        "complementaries:facing": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "complementaries:open": [
+          false,
+          true
+        ],
+        "complementaries:hinge": [
+          false,
+          true
+        ],
+        "complementaries:upper": [
+          false,
+          true
+        ],
+        "complementaries:powered": [
+          false,
+          true
+        ]
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 3
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:tags": [
+        "minecraft:is_pickaxe_item_destructible",
+        "minecraft:iron_tier_destructible"
+      ],
+      "minecraft:geometry": "geometry.complementaries.door_left",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "complementaries_gold_door_lower",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          16,
+          3
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          0,
+          -8
+        ],
+        "size": [
+          16,
+          16,
+          3
+        ]
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:movable": {
+        "movement_type": "popped"
+      },
+      "minecraft:redstone_conductivity": {
+        "redstone_conductor": false
+      },
+      "minecraft:loot": "loot_tables/blocks/gold_door_upper.json",
+      "minecraft:map_color": "#faee4d",
+      "minecraft:redstone_consumer": {
+        "min_power": 1
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:facing') == 0 && !q.block_state('complementaries:open')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 0 && q.block_state('complementaries:open') && q.block_state('complementaries:hinge')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 0 && q.block_state('complementaries:open') && !q.block_state('complementaries:hinge')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 1 && !q.block_state('complementaries:open')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 1 && q.block_state('complementaries:open') && q.block_state('complementaries:hinge')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 1 && q.block_state('complementaries:open') && !q.block_state('complementaries:hinge')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 2 && !q.block_state('complementaries:open')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 2 && q.block_state('complementaries:open') && q.block_state('complementaries:hinge')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 2 && q.block_state('complementaries:open') && !q.block_state('complementaries:hinge')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 3 && !q.block_state('complementaries:open')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 3 && q.block_state('complementaries:open') && q.block_state('complementaries:hinge')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 3 && q.block_state('complementaries:open') && !q.block_state('complementaries:hinge')",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:hinge')",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.door_right"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:upper')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_gold_door_upper",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "!q.block_state('complementaries:upper')",
+        "components": {
+          "minecraft:loot": "loot_tables/blocks/gold_door.json"
+        }
+      }
+    ]
+  }
+}
