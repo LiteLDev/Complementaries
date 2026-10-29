@@ -1,0 +1,38 @@
+{
+  "complementaries_sign_post_oak": {
+    "textures": "textures/items/sign_post_oak"
+  },
+  "complementaries_sign_post_spruce": {
+    "textures": "textures/items/sign_post_spruce"
+  },
+  "complementaries_sign_post_birch": {
+    "textures": "textures/items/sign_post_birch"
+  },
+  "complementaries_sign_post_jungle": {
+    "textures": "textures/items/sign_post_jungle"
+  },
+  "complementaries_sign_post_acacia": {
+    "textures": "textures/items/sign_post_acacia"
+  },
+  "complementaries_sign_post_dark_oak": {
+    "textures": "textures/items/sign_post_dark_oak"
+  },
+  "complementaries_sign_post_mangrove": {
+    "textures": "textures/items/sign_post_mangrove"
+  },
+  "complementaries_sign_post_cherry": {
+    "textures": "textures/items/sign_post_cherry"
+  },
+  "complementaries_sign_post_bamboo": {
+    "textures": "textures/items/sign_post_bamboo"
+  },
+  "complementaries_sign_post_crimson": {
+    "textures": "textures/items/sign_post_crimson"
+  },
+  "complementaries_sign_post_warped": {
+    "textures": "textures/items/sign_post_warped"
+  },
+  "complementaries_sign_post_pale_oak": {
+    "textures": "textures/items/sign_post_pale_oak"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.complementaries.sign_post.pose": {
+      "loop": true,
+      "bones": {
+        "up": {
+          "rotation": [
+            0,
+            "90 - math.mod(math.floor(q.variant / 64), 512)",
+            0
+          ]
+        },
+        "down": {
+          "rotation": [
+            0,
+            "90 - math.mod(math.floor(q.mark_variant / 64), 512)",
+            0
+          ]
+        }
+      }
+    }
+  }
+}

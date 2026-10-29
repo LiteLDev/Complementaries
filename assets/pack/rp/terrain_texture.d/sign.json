@@ -1,0 +1,7 @@
+{
+  "complementaries_notice_board_front": { "textures": "textures/blocks/notice_board_front" },
+  "complementaries_notice_board_front_book": { "textures": "textures/blocks/notice_board_front_book" },
+  "complementaries_notice_board_side": { "textures": "textures/blocks/notice_board_side" },
+  "complementaries_notice_board_top": { "textures": "textures/blocks/notice_board_top" },
+  "complementaries_doormat": { "textures": "textures/blocks/doormat" }
+}

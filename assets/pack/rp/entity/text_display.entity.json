@@ -1,0 +1,20 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "complementaries:text_display",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/sign_post/oak"
+      },
+      "geometry": {
+        "default": "geometry.complementaries.text_display"
+      },
+      "render_controllers": [
+        "controller.render.complementaries.text_display"
+      ]
+    }
+  }
+}

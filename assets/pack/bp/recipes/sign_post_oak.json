@@ -1,0 +1,14 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:sign_post_oak" },
+    "tags": ["crafting_table"],
+    "pattern": ["WW", "WW", " S"],
+    "key": {
+      "W": { "item": "minecraft:oak_planks" },
+      "S": { "item": "minecraft:stick" }
+    },
+    "unlock": [{ "item": "minecraft:oak_planks" }],
+    "result": { "item": "complementaries:sign_post_oak", "count": 2 }
+  }
+}

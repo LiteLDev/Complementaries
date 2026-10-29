@@ -1,0 +1,14 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:sign_post_mangrove" },
+    "tags": ["crafting_table"],
+    "pattern": ["WW", "WW", " S"],
+    "key": {
+      "W": { "item": "minecraft:mangrove_planks" },
+      "S": { "item": "minecraft:stick" }
+    },
+    "unlock": [{ "item": "minecraft:mangrove_planks" }],
+    "result": { "item": "complementaries:sign_post_mangrove", "count": 2 }
+  }
+}

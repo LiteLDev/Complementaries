@@ -1,0 +1,16 @@
+item.complementaries:sign_post_oak.name=橡木路标
+item.complementaries:sign_post_spruce.name=云杉木路标
+item.complementaries:sign_post_birch.name=白桦木路标
+item.complementaries:sign_post_jungle.name=丛林木路标
+item.complementaries:sign_post_acacia.name=金合欢木路标
+item.complementaries:sign_post_dark_oak.name=深色橡木路标
+item.complementaries:sign_post_mangrove.name=红树木路标
+item.complementaries:sign_post_cherry.name=樱花木路标
+item.complementaries:sign_post_bamboo.name=竹路标
+item.complementaries:sign_post_crimson.name=绯红木路标
+item.complementaries:sign_post_warped.name=诡异木路标
+item.complementaries:sign_post_pale_oak.name=苍白橡木路标
+tile.complementaries:notice_board.name=告示板
+tile.complementaries:doormat.name=门垫
+entity.complementaries:sign_post.name=路标
+entity.complementaries:text_display.name=文本

@@ -1,0 +1,40 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "complementaries:sign_post",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "oak": "textures/entity/sign_post/oak",
+        "spruce": "textures/entity/sign_post/spruce",
+        "birch": "textures/entity/sign_post/birch",
+        "jungle": "textures/entity/sign_post/jungle",
+        "acacia": "textures/entity/sign_post/acacia",
+        "dark_oak": "textures/entity/sign_post/dark_oak",
+        "mangrove": "textures/entity/sign_post/mangrove",
+        "cherry": "textures/entity/sign_post/cherry",
+        "bamboo": "textures/entity/sign_post/bamboo",
+        "crimson": "textures/entity/sign_post/crimson",
+        "warped": "textures/entity/sign_post/warped",
+        "pale_oak": "textures/entity/sign_post/pale_oak"
+      },
+      "geometry": {
+        "default": "geometry.complementaries.sign_post"
+      },
+      "animations": {
+        "pose": "animation.complementaries.sign_post.pose"
+      },
+      "scripts": {
+        "animate": [
+          "pose"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.complementaries.sign_post_up",
+        "controller.render.complementaries.sign_post_down"
+      ]
+    }
+  }
+}

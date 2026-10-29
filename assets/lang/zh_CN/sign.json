@@ -1,0 +1,15 @@
+{
+  "cm.sign.edit": "编辑告示牌信息",
+  "cm.sign.edit.up": "上方路标",
+  "cm.sign.edit.down": "下方路标",
+  "cm.sign.doormat.edit": "编辑门垫信息",
+  "cm.sign.line": "第{}行",
+  "cm.sign.waxed": "这块告示牌已涂蜡",
+  "cm.sign.way_sign.village": "村庄",
+  "cm.sign.way_sign.pillager_outpost": "掠夺者前哨站",
+  "cm.sign.way_sign.trail_ruins": "古迹废墟",
+  "cm.sign.way_sign.trial_chambers": "试炼密室",
+  "cm.sign.way_sign.distance": "{} {}米",
+  "cm.sign.way_sign.none": "附近没有村庄",
+  "cm.sign.way_sign.placed": "已在 {} 放置路标"
+}
