@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:sconce_soul"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "NTN",
+      " N "
+    ],
+    "key": {
+      "N": {
+        "item": "minecraft:iron_nugget"
+      },
+      "T": {
+        "item": "minecraft:soul_torch"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:soul_torch"
+      }
+    ],
+    "result": {
+      "item": "complementaries:sconce_soul",
+      "count": 2
+    }
+  }
+}

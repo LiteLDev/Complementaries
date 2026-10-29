@@ -1,0 +1,842 @@
+{
+  "format_version": "1.21.120",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:candle_holder",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:candles": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "complementaries:lit": [
+          false,
+          true
+        ]
+      },
+      "traits": {
+        "minecraft:placement_position": {
+          "enabled_states": [
+            "minecraft:block_face"
+          ]
+        },
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.candle_holder_floor",
+        "bone_visibility": {
+          "holder": true,
+          "candles_1": "q.block_state('complementaries:candles') == 1",
+          "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+          "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+          "candles_2": "q.block_state('complementaries:candles') == 2",
+          "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+          "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+          "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+          "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+          "candles_3": "q.block_state('complementaries:candles') == 3",
+          "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+          "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+          "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+          "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+          "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+          "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+          "candles_4": "q.block_state('complementaries:candles') == 4",
+          "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+          "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+          "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+          "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+          "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+          "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+          "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+          "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "complementaries_candle_holder",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false
+        },
+        "flame": {
+          "texture": "complementaries_candle_holder",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": false
+        },
+        "candle": {
+          "texture": "complementaries_candle",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          11,
+          8
+        ]
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:light_emission": 3,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.3
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 1
+      },
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": [
+              "all"
+            ]
+          }
+        ]
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true,
+            "on_liquid_touches": "no_reaction"
+          }
+        ]
+      },
+      "minecraft:loot": "loot_tables/blocks/candle_holder_1.json",
+      "minecraft:map_color": "#5a5a5a"
+    },
+    "permutations": [
+      {
+        "condition": "!q.block_state('complementaries:lit')",
+        "components": {
+          "minecraft:light_emission": 0
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lit') && q.block_state('complementaries:candles') == 2",
+        "components": {
+          "minecraft:light_emission": 6
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lit') && q.block_state('complementaries:candles') == 3",
+        "components": {
+          "minecraft:light_emission": 9
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lit') && q.block_state('complementaries:candles') == 4",
+        "components": {
+          "minecraft:light_emission": 12
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lit')",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_candle_holder",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "flame": {
+              "texture": "complementaries_candle_holder",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            },
+            "candle": {
+              "texture": "complementaries_candle_lit",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'north'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_wall",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              1,
+              -4
+            ],
+            "size": [
+              8,
+              10,
+              12
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'up' && q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_floor",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              0,
+              -4
+            ],
+            "size": [
+              8,
+              11,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'down' && q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_ceiling",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              7,
+              -4
+            ],
+            "size": [
+              8,
+              9,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'west'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_wall",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              1,
+              -4
+            ],
+            "size": [
+              8,
+              10,
+              12
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'up' && q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_floor",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              0,
+              -4
+            ],
+            "size": [
+              8,
+              11,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'down' && q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_ceiling",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              7,
+              -4
+            ],
+            "size": [
+              8,
+              9,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'south'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_wall",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              1,
+              -4
+            ],
+            "size": [
+              8,
+              10,
+              12
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'up' && q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_floor",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              0,
+              -4
+            ],
+            "size": [
+              8,
+              11,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'down' && q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_ceiling",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              7,
+              -4
+            ],
+            "size": [
+              8,
+              9,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'east'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_wall",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              1,
+              -4
+            ],
+            "size": [
+              8,
+              10,
+              12
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'up' && q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_floor",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              0,
+              -4
+            ],
+            "size": [
+              8,
+              11,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'down' && q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.candle_holder_ceiling",
+            "bone_visibility": {
+              "holder": true,
+              "candles_1": "q.block_state('complementaries:candles') == 1",
+              "flame_1_0_a": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "flame_1_0_b": "q.block_state('complementaries:candles') == 1 && q.block_state('complementaries:lit')",
+              "candles_2": "q.block_state('complementaries:candles') == 2",
+              "flame_2_0_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_0_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_a": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "flame_2_1_b": "q.block_state('complementaries:candles') == 2 && q.block_state('complementaries:lit')",
+              "candles_3": "q.block_state('complementaries:candles') == 3",
+              "flame_3_0_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_0_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_1_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_a": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "flame_3_2_b": "q.block_state('complementaries:candles') == 3 && q.block_state('complementaries:lit')",
+              "candles_4": "q.block_state('complementaries:candles') == 4",
+              "flame_4_0_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_0_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_1_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_2_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_a": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')",
+              "flame_4_3_b": "q.block_state('complementaries:candles') == 4 && q.block_state('complementaries:lit')"
+            }
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              7,
+              -4
+            ],
+            "size": [
+              8,
+              9,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:candles') == 2",
+        "components": {
+          "minecraft:loot": "loot_tables/blocks/candle_holder_2.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:candles') == 3",
+        "components": {
+          "minecraft:loot": "loot_tables/blocks/candle_holder_3.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:candles') == 4",
+        "components": {
+          "minecraft:loot": "loot_tables/blocks/candle_holder_4.json"
+        }
+      }
+    ]
+  }
+}

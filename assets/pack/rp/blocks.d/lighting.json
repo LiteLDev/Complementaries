@@ -1,0 +1,86 @@
+{
+  "complementaries:sconce": {
+    "sound": "lantern"
+  },
+  "complementaries:sconce_soul": {
+    "sound": "lantern"
+  },
+  "complementaries:sconce_ender": {
+    "sound": "lantern"
+  },
+  "complementaries:sconce_glow": {
+    "sound": "lantern"
+  },
+  "complementaries:sconce_green": {
+    "sound": "lantern"
+  },
+  "complementaries:sconce_lever": {
+    "sound": "lantern"
+  },
+  "complementaries:candle_holder": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_white": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_orange": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_magenta": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_light_blue": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_yellow": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_lime": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_pink": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_gray": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_light_gray": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_cyan": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_purple": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_blue": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_brown": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_green": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_red": {
+    "sound": "candle"
+  },
+  "complementaries:candle_holder_black": {
+    "sound": "candle"
+  },
+  "complementaries:stone_lamp": {
+    "sound": "stone"
+  },
+  "complementaries:blackstone_lamp": {
+    "sound": "stone"
+  },
+  "complementaries:deepslate_lamp": {
+    "sound": "stone"
+  },
+  "complementaries:end_stone_lamp": {
+    "sound": "stone"
+  },
+  "complementaries:wall_lantern": {
+    "sound": "lantern"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.120",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:candle_holder_red",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "complementaries_candle_holder_red",
+      "minecraft:display_name": {
+        "value": "tile.complementaries:candle_holder_red.name"
+      },
+      "minecraft:block_placer": {
+        "block": "complementaries:candle_holder_red",
+        "replace_block_item": true
+      }
+    }
+  }
+}

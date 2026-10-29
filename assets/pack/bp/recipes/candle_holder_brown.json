@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:candle_holder_brown"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "C",
+      "N"
+    ],
+    "key": {
+      "C": {
+        "item": "minecraft:brown_candle"
+      },
+      "N": {
+        "item": "minecraft:iron_nugget"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:brown_candle"
+      }
+    ],
+    "result": {
+      "item": "complementaries:candle_holder_brown",
+      "count": 1
+    }
+  }
+}

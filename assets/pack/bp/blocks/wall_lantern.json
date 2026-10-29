@@ -1,0 +1,363 @@
+{
+  "format_version": "1.21.120",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:wall_lantern",
+      "menu_category": {
+        "category": "none"
+      },
+      "states": {
+        "complementaries:lantern": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "complementaries:swing": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "traits": {
+        "minecraft:placement_position": {
+          "enabled_states": [
+            "minecraft:block_face"
+          ]
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.wall_lantern",
+        "bone_visibility": {
+          "bracket": true,
+          "swing_0": "q.block_state('complementaries:swing') == 0",
+          "swing_1": "q.block_state('complementaries:swing') == 1",
+          "swing_2": "q.block_state('complementaries:swing') == 2",
+          "swing_3": "q.block_state('complementaries:swing') == 3",
+          "swing_4": "q.block_state('complementaries:swing') == 4",
+          "swing_5": "q.block_state('complementaries:swing') == 5",
+          "swing_6": "q.block_state('complementaries:swing') == 6",
+          "swing_7": "q.block_state('complementaries:swing') == 7",
+          "swing_8": "q.block_state('complementaries:swing') == 8"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "complementaries_wall_lantern",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false
+        },
+        "lantern": {
+          "texture": "lantern",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -3.5,
+          3,
+          -3.5
+        ],
+        "size": [
+          7,
+          13,
+          11.5
+        ]
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:light_emission": 15,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.0
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 3.5
+      },
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": [
+              "side"
+            ]
+          }
+        ]
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true,
+            "on_liquid_touches": "no_reaction"
+          }
+        ]
+      },
+      "minecraft:loot": "loot_tables/blocks/wall_lantern_0.json",
+      "minecraft:map_color": "#5a5a5a"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:lantern') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_wall_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "lantern": {
+              "texture": "lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          },
+          "minecraft:light_emission": 15,
+          "minecraft:loot": "loot_tables/blocks/wall_lantern_0.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lantern') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_wall_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "lantern": {
+              "texture": "soul_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          },
+          "minecraft:light_emission": 10,
+          "minecraft:loot": "loot_tables/blocks/wall_lantern_1.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lantern') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_wall_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "lantern": {
+              "texture": "copper_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          },
+          "minecraft:light_emission": 15,
+          "minecraft:loot": "loot_tables/blocks/wall_lantern_2.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lantern') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_wall_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "lantern": {
+              "texture": "exposed_copper_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          },
+          "minecraft:light_emission": 15,
+          "minecraft:loot": "loot_tables/blocks/wall_lantern_3.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lantern') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_wall_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "lantern": {
+              "texture": "weathered_copper_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          },
+          "minecraft:light_emission": 15,
+          "minecraft:loot": "loot_tables/blocks/wall_lantern_4.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lantern') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_wall_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "lantern": {
+              "texture": "oxidized_copper_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          },
+          "minecraft:light_emission": 15,
+          "minecraft:loot": "loot_tables/blocks/wall_lantern_5.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lantern') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_wall_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "lantern": {
+              "texture": "copper_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          },
+          "minecraft:light_emission": 15,
+          "minecraft:loot": "loot_tables/blocks/wall_lantern_6.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lantern') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_wall_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "lantern": {
+              "texture": "exposed_copper_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          },
+          "minecraft:light_emission": 15,
+          "minecraft:loot": "loot_tables/blocks/wall_lantern_7.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lantern') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_wall_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "lantern": {
+              "texture": "weathered_copper_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          },
+          "minecraft:light_emission": 15,
+          "minecraft:loot": "loot_tables/blocks/wall_lantern_8.json"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:lantern') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "complementaries_wall_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false
+            },
+            "lantern": {
+              "texture": "oxidized_copper_lantern",
+              "render_method": "alpha_test",
+              "ambient_occlusion": false,
+              "face_dimming": false
+            }
+          },
+          "minecraft:light_emission": 15,
+          "minecraft:loot": "loot_tables/blocks/wall_lantern_9.json"
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

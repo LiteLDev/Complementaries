@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.120",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:sconce_green",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "complementaries_sconce_green",
+      "minecraft:display_name": {
+        "value": "tile.complementaries:sconce_green.name"
+      },
+      "minecraft:block_placer": {
+        "block": "complementaries:sconce_green",
+        "replace_block_item": true
+      }
+    }
+  }
+}

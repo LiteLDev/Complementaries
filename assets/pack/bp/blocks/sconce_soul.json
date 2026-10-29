@@ -1,0 +1,215 @@
+{
+  "format_version": "1.21.120",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:sconce_soul",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:lit": [
+          true,
+          false
+        ]
+      },
+      "traits": {
+        "minecraft:placement_position": {
+          "enabled_states": [
+            "minecraft:block_face"
+          ]
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.sconce",
+        "bone_visibility": {
+          "floor": "q.block_state('minecraft:block_face') == 'up'",
+          "flame_floor_a": "q.block_state('minecraft:block_face') == 'up' && q.block_state('complementaries:lit')",
+          "flame_floor_b": "q.block_state('minecraft:block_face') == 'up' && q.block_state('complementaries:lit')",
+          "wick_floor": "q.block_state('minecraft:block_face') == 'up' && !q.block_state('complementaries:lit')",
+          "wall": "!(q.block_state('minecraft:block_face') == 'up')",
+          "flame_wall_a": "!(q.block_state('minecraft:block_face') == 'up') && q.block_state('complementaries:lit')",
+          "flame_wall_b": "!(q.block_state('minecraft:block_face') == 'up') && q.block_state('complementaries:lit')",
+          "wick_wall": "!(q.block_state('minecraft:block_face') == 'up') && !q.block_state('complementaries:lit')"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "complementaries_sconce_soul",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false
+        },
+        "flame": {
+          "texture": "complementaries_sconce_soul",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": false
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -2.5,
+          2,
+          -1
+        ],
+        "size": [
+          5,
+          10,
+          9
+        ]
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:light_emission": 10,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.3
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 1
+      },
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": [
+              "up",
+              "side"
+            ]
+          }
+        ]
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true,
+            "on_liquid_touches": "no_reaction"
+          }
+        ]
+      },
+      "minecraft:loot": "loot_tables/blocks/sconce_soul.json",
+      "minecraft:map_color": "#5a5a5a"
+    },
+    "permutations": [
+      {
+        "condition": "!q.block_state('complementaries:lit')",
+        "components": {
+          "minecraft:light_emission": 0
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'up'",
+        "components": {
+          "minecraft:selection_box": {
+            "origin": [
+              -2.5,
+              0,
+              -2.5
+            ],
+            "size": [
+              5,
+              11,
+              5
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -2.5,
+              2,
+              -1
+            ],
+            "size": [
+              5,
+              10,
+              9
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -2.5,
+              2,
+              -1
+            ],
+            "size": [
+              5,
+              10,
+              9
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -2.5,
+              2,
+              -1
+            ],
+            "size": [
+              5,
+              10,
+              9
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -2.5,
+              2,
+              -1
+            ],
+            "size": [
+              5,
+              10,
+              9
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

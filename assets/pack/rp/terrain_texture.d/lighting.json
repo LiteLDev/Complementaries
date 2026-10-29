@@ -1,0 +1,140 @@
+{
+  "complementaries_sconce": {
+    "textures": "textures/blocks/sconce"
+  },
+  "complementaries_sconce_soul": {
+    "textures": "textures/blocks/sconce_soul"
+  },
+  "complementaries_sconce_ender": {
+    "textures": "textures/blocks/sconce_ender"
+  },
+  "complementaries_sconce_glow": {
+    "textures": "textures/blocks/sconce_glow"
+  },
+  "complementaries_sconce_green": {
+    "textures": "textures/blocks/sconce_green"
+  },
+  "complementaries_sconce_lever": {
+    "textures": "textures/blocks/sconce_lever"
+  },
+  "complementaries_candle_holder": {
+    "textures": "textures/blocks/candle_holder"
+  },
+  "complementaries_candle": {
+    "textures": "textures/blocks/candles/candle"
+  },
+  "complementaries_candle_lit": {
+    "textures": "textures/blocks/candles/candle_lit"
+  },
+  "complementaries_white_candle": {
+    "textures": "textures/blocks/candles/white_candle"
+  },
+  "complementaries_white_candle_lit": {
+    "textures": "textures/blocks/candles/white_candle_lit"
+  },
+  "complementaries_orange_candle": {
+    "textures": "textures/blocks/candles/orange_candle"
+  },
+  "complementaries_orange_candle_lit": {
+    "textures": "textures/blocks/candles/orange_candle_lit"
+  },
+  "complementaries_magenta_candle": {
+    "textures": "textures/blocks/candles/magenta_candle"
+  },
+  "complementaries_magenta_candle_lit": {
+    "textures": "textures/blocks/candles/magenta_candle_lit"
+  },
+  "complementaries_light_blue_candle": {
+    "textures": "textures/blocks/candles/light_blue_candle"
+  },
+  "complementaries_light_blue_candle_lit": {
+    "textures": "textures/blocks/candles/light_blue_candle_lit"
+  },
+  "complementaries_yellow_candle": {
+    "textures": "textures/blocks/candles/yellow_candle"
+  },
+  "complementaries_yellow_candle_lit": {
+    "textures": "textures/blocks/candles/yellow_candle_lit"
+  },
+  "complementaries_lime_candle": {
+    "textures": "textures/blocks/candles/lime_candle"
+  },
+  "complementaries_lime_candle_lit": {
+    "textures": "textures/blocks/candles/lime_candle_lit"
+  },
+  "complementaries_pink_candle": {
+    "textures": "textures/blocks/candles/pink_candle"
+  },
+  "complementaries_pink_candle_lit": {
+    "textures": "textures/blocks/candles/pink_candle_lit"
+  },
+  "complementaries_gray_candle": {
+    "textures": "textures/blocks/candles/gray_candle"
+  },
+  "complementaries_gray_candle_lit": {
+    "textures": "textures/blocks/candles/gray_candle_lit"
+  },
+  "complementaries_light_gray_candle": {
+    "textures": "textures/blocks/candles/light_gray_candle"
+  },
+  "complementaries_light_gray_candle_lit": {
+    "textures": "textures/blocks/candles/light_gray_candle_lit"
+  },
+  "complementaries_cyan_candle": {
+    "textures": "textures/blocks/candles/cyan_candle"
+  },
+  "complementaries_cyan_candle_lit": {
+    "textures": "textures/blocks/candles/cyan_candle_lit"
+  },
+  "complementaries_purple_candle": {
+    "textures": "textures/blocks/candles/purple_candle"
+  },
+  "complementaries_purple_candle_lit": {
+    "textures": "textures/blocks/candles/purple_candle_lit"
+  },
+  "complementaries_blue_candle": {
+    "textures": "textures/blocks/candles/blue_candle"
+  },
+  "complementaries_blue_candle_lit": {
+    "textures": "textures/blocks/candles/blue_candle_lit"
+  },
+  "complementaries_brown_candle": {
+    "textures": "textures/blocks/candles/brown_candle"
+  },
+  "complementaries_brown_candle_lit": {
+    "textures": "textures/blocks/candles/brown_candle_lit"
+  },
+  "complementaries_green_candle": {
+    "textures": "textures/blocks/candles/green_candle"
+  },
+  "complementaries_green_candle_lit": {
+    "textures": "textures/blocks/candles/green_candle_lit"
+  },
+  "complementaries_red_candle": {
+    "textures": "textures/blocks/candles/red_candle"
+  },
+  "complementaries_red_candle_lit": {
+    "textures": "textures/blocks/candles/red_candle_lit"
+  },
+  "complementaries_black_candle": {
+    "textures": "textures/blocks/candles/black_candle"
+  },
+  "complementaries_black_candle_lit": {
+    "textures": "textures/blocks/candles/black_candle_lit"
+  },
+  "complementaries_stone_lamp": {
+    "textures": "textures/blocks/stone_lamp"
+  },
+  "complementaries_blackstone_lamp": {
+    "textures": "textures/blocks/blackstone_lamp"
+  },
+  "complementaries_deepslate_lamp": {
+    "textures": "textures/blocks/deepslate_lamp"
+  },
+  "complementaries_end_stone_lamp": {
+    "textures": "textures/blocks/end_stone_lamp"
+  },
+  "complementaries_wall_lantern": {
+    "textures": "textures/blocks/wall_lantern"
+  }
+}

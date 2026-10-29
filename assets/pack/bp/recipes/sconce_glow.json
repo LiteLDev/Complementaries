@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:sconce_glow"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "NGN",
+      " N "
+    ],
+    "key": {
+      "N": {
+        "item": "minecraft:iron_nugget"
+      },
+      "G": {
+        "item": "minecraft:glowstone_dust"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:glowstone_dust"
+      }
+    ],
+    "result": {
+      "item": "complementaries:sconce_glow",
+      "count": 2
+    }
+  }
+}

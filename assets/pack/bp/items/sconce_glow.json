@@ -1,0 +1,21 @@
+{
+  "format_version": "1.21.120",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:sconce_glow",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "complementaries_sconce_glow",
+      "minecraft:display_name": {
+        "value": "tile.complementaries:sconce_glow.name"
+      },
+      "minecraft:block_placer": {
+        "block": "complementaries:sconce_glow",
+        "replace_block_item": true
+      }
+    }
+  }
+}
