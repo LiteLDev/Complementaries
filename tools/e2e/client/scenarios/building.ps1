@@ -4,11 +4,11 @@
 # mechanics run on the server).
 # Screenshots: out/building/{interactions,showcase-front,showcase-side,showcase-top}.png
 
-function Use-On([string]$Item, [string]$Block, [string]$Look, [string]$Pattern, [string]$Name) {
+function Use-On([string]$Item, [string]$Block, [double[]]$Look, [string]$Pattern, [string]$Name) {
     # target block two blocks south of the (centred) player, at foot level
     Invoke-Chat "/setblock ~ ~ ~2 $Block"
     Invoke-Chat "/replaceitem entity @s slot.hotbar 0 $Item"
-    Invoke-Chat "/tp @s ~ ~ ~ facing $Look"
+    Face-Offset $Look[0] $Look[1] $Look[2]
     Start-Sleep -Milliseconds 600
     $mark = Get-LogMark
     Click 0.5 0.5 -Relative -Right
@@ -26,17 +26,17 @@ Invoke-Chat '/fill ~-9 ~ ~-2 ~9 ~4 ~9 air'
 Start-Sleep -Milliseconds 800
 
 # hoe on gravel (north face) -> raked gravel
-Use-On 'minecraft:iron_hoe' 'minecraft:gravel' '~ ~0.75 ~2.5' 'building: raked gravel at' 'use-hoe'
+Use-On 'minecraft:iron_hoe' 'minecraft:gravel' @(0, 0.75, 2.5) 'building: raked gravel at' 'use-hoe'
 # slab on the top face of a bottom slab -> double slab
-Use-On 'complementaries:stone_tile_slab 4' 'complementaries:stone_tile_slab' '~ ~0.25 ~2.5' 'building: double slab' 'use-slab'
+Use-On 'complementaries:stone_tile_slab 4' 'complementaries:stone_tile_slab' @(0, 0.25, 2.5) 'building: double slab' 'use-slab'
 # ash on ash -> one more layer
-Use-On 'complementaries:ash 4' 'complementaries:ash ["complementaries:layers"=2]' '~ ~0.1 ~2.5' 'building: ash layer added' 'use-ash'
+Use-On 'complementaries:ash 4' 'complementaries:ash ["complementaries:layers"=2]' @(0, 0.1, 2.5) 'building: ash layer added' 'use-ash'
 # daub into a timber brace
-Use-On 'complementaries:daub 4' 'complementaries:timber_brace' '~ ~0.5 ~2.5' 'building: filled complementaries:timber_brace with daub' 'use-daub'
+Use-On 'complementaries:daub 4' 'complementaries:timber_brace' @(0, 0.5, 2.5) 'building: filled complementaries:timber_brace with daub' 'use-daub'
 Invoke-Chat '/setblock ~ ~ ~2 air'
 # a stair placed by the player faces the way the player looks (south here)
 Invoke-Chat '/replaceitem entity @s slot.hotbar 0 complementaries:stone_tile_stairs 4'
-Invoke-Chat '/tp @s ~ ~ ~ facing ~ ~-0.5 ~2.5'
+Face-Offset 0 -0.5 2.5
 Start-Sleep -Milliseconds 600
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
@@ -80,13 +80,13 @@ Invoke-Chat '/setblock ~3 ~ ~3 complementaries:raked_gravel'
 Invoke-Chat '/setblock ~3 ~ ~2 complementaries:raked_gravel'
 Start-Sleep -Seconds 2
 
-Invoke-Chat '/tp @s ~ ~3 ~-3 facing ~ ~ ~5'
+Invoke-Chat "/tp @s ~ ~3 ~-3 $(Get-Look 0 -4.62 8)"
 Start-Sleep -Seconds 2
 Save-Screenshot 'showcase-front' | Out-Null
-Invoke-Chat '/tp @s ~-11 ~1 ~8 facing ~ ~-3 ~8'
+Invoke-Chat "/tp @s ~-11 ~1 ~8 $(Get-Look 11 -5.62 0)"
 Start-Sleep -Seconds 2
 Save-Screenshot 'showcase-side' | Out-Null
-Invoke-Chat '/tp @s ~11 ~6 ~-1 facing ~11 ~-4 ~'
+Invoke-Chat "/tp @s ~11 ~6 ~-1 $(Get-Look 0 -11.62 1)"
 Start-Sleep -Seconds 2
 Save-Screenshot 'showcase-top' | Out-Null
 

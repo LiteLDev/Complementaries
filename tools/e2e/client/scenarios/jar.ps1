@@ -12,13 +12,13 @@ $mark = Get-LogMark
 Invoke-Chat '/supplementaries jardemo'
 Wait-LogLine 'jar: demo built' 20 -Since $mark | Out-Null
 Start-Sleep -Seconds 3
-Invoke-Chat '/tp @s ~ ~1 ~-1 facing ~ ~-1 ~4'
+Invoke-Chat "/tp @s ~ ~1 ~-1 $(Get-Look 0 -3.62 5)"
 Start-Sleep -Seconds 2
 Save-Screenshot 'demo-row' | Out-Null
-Invoke-Chat '/tp @s ~5 ~-0.5 ~2 facing ~ ~-1.2 ~3'
+Invoke-Chat "/tp @s ~5 ~-0.5 ~2 $(Get-Look -5 -2.32 1)"
 Start-Sleep -Seconds 2
 Save-Screenshot 'demo-mobs' | Out-Null
-Invoke-Chat '/tp @s ~-13 ~0.5 ~ facing ~ ~-1 ~3'
+Invoke-Chat "/tp @s ~-13 ~0.5 ~ $(Get-Look 13 -3.12 3)"
 Start-Sleep -Seconds 3
 Save-Screenshot 'demo-faucets' | Out-Null
 
@@ -26,13 +26,13 @@ Save-Screenshot 'demo-faucets' | Out-Null
 Invoke-Chat '/tp @s ~ ~ ~-8'
 Invoke-Chat '/setblock ~ ~ ~2 complementaries:jar'
 Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 water_bucket'
-Invoke-Chat '/tp @s ~ ~ ~ facing ~ ~0.4 ~2.5'
+Face-Offset 0 0.4 2.5
 Start-Sleep -Milliseconds 600
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
 Wait-LogLine 'jar: .* poured water into the jar' 15 -Since $mark | Out-Null
 Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 glass_bottle'
-Invoke-Chat '/tp @s ~ ~ ~ facing ~ ~0.4 ~2.5'
+Face-Offset 0 0.4 2.5
 Start-Sleep -Milliseconds 600
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
@@ -44,7 +44,7 @@ Save-Screenshot 'water-jar' | Out-Null
 Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 complementaries:jar'
 Invoke-Chat '/tp @s ~3 ~ ~'
 Invoke-Chat '/summon minecraft:frog ~ ~ ~2'
-Invoke-Chat '/tp @s ~ ~ ~ facing ~ ~0.2 ~2'
+Face-Offset 0 0.2 2
 Start-Sleep -Milliseconds 500
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative

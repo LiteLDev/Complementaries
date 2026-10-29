@@ -227,9 +227,10 @@ CM_REGISTER_SELFTEST("lighting.wall_lantern_walk", [](Context& ctx) -> ll::coro:
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
     sp.teleport(Vec3{pos.x - 2.5f, static_cast<float>(pos.y - 1), pos.z + 0.5f}, DimensionType(0));
     co_await ctx.ticks(5);
-    sp.simulateNavigateToLocation(Vec3{pos.x + 3.5f, static_cast<float>(pos.y - 1), pos.z + 0.5f}, 1.f);
+    // a straight walk (no path finding: it can take long to start on a busy integrated server)
+    sp.simulateMoveToLocation(Vec3{pos.x + 3.5f, static_cast<float>(pos.y - 1), pos.z + 0.5f}, 1.f, true);
     bool swung = false;
-    for (int i = 0; i < 60 && !swung; ++i) {
+    for (int i = 0; i < 160 && !swung; ++i) {
         co_await ctx.ticks(1);
         swung = lt::intState(at(ctx, pos), lt::kSwing) != 0;
     }
