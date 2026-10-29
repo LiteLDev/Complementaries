@@ -1,0 +1,26 @@
+{
+  "cm_slingshot": {
+    "textures": "textures/items/slingshot"
+  },
+  "cm_bubble_blower": {
+    "textures": "textures/items/bubble_blower"
+  },
+  "cm_soap": {
+    "textures": "textures/items/soap"
+  },
+  "cm_wrench": {
+    "textures": "textures/items/wrench"
+  },
+  "cm_flute": {
+    "textures": "textures/items/flute"
+  },
+  "cm_confetti_popper": {
+    "textures": "textures/items/confetti_popper"
+  },
+  "cm_antique_ink": {
+    "textures": "textures/items/antique_ink"
+  },
+  "cm_empty_slice_map": {
+    "textures": "textures/items/empty_slice_map"
+  }
+}

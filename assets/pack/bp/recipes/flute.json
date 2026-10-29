@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:flute"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:bamboo"
+      }
+    ],
+    "pattern": [
+      "  B",
+      " B ",
+      "B  "
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:bamboo"
+      }
+    },
+    "result": {
+      "item": "complementaries:flute",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "message.supplementaries.flute.bound": "Bound to: {}",
+  "message.supplementaries.flute.unbound": "Flute unbound",
+  "message.supplementaries.flute.not_your_pet": "This is not your pet",
+  "message.supplementaries.slice_map": "Height: {}",
+  "message.supplementaries.antique": "Antique",
+  "message.supplementaries.bubble_blower.empty": "Needs soap",
+  "enchantment.supplementaries.stasis": "Stasis",
+  "cm.tool.enchant.done": "Applied {} {}",
+  "cm.tool.enchant.cleared": "Removed Loyalty and Stasis",
+  "cm.tool.enchant.no_item": "Hold a slingshot or a bubble blower"
+}

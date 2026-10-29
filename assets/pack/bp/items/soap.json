@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:soap",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "cm_soap",
+      "minecraft:display_name": {
+        "value": "item.complementaries:soap.name"
+      },
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

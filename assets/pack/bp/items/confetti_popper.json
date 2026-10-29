@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:confetti_popper",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "cm_confetti_popper",
+      "minecraft:display_name": {
+        "value": "item.complementaries:confetti_popper.name"
+      },
+      "minecraft:max_stack_size": 16
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:slingshot"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:string"
+      }
+    ],
+    "pattern": [
+      "SLS",
+      " S ",
+      " S "
+    ],
+    "key": {
+      "L": {
+        "item": "minecraft:string"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "complementaries:slingshot",
+      "count": 1
+    }
+  }
+}
