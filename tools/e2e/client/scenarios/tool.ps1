@@ -64,7 +64,7 @@ Invoke-Chat '/tp @s ~ ~ ~ 0 60'
 Press-Key '5'
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
-Wait-LogLine 'slice map \d+ created' 10 -Since $mark | Out-Null
+Wait-LogLine 'slice map -?\d+ created' 10 -Since $mark | Out-Null
 Start-Sleep -Milliseconds 2500
 Save-Screenshot 'slice-map' | Out-Null
 

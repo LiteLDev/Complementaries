@@ -146,6 +146,11 @@ LL_TYPE_INSTANCE_HOOK(
 ) {
     origin(item, player, durationLeft);
     if (!player || player->isClientSide() || !isItem(item, ids::Slingshot)) return;
+    // one release can reach this twice in the same moment (the player's own stop and the client's packet)
+    static std::unordered_map<std::int64_t, std::uint64_t> lastRelease;
+    auto& last = lastRelease[player->getOrCreateUniqueID().rawID];
+    if (last != 0 && currentTick() <= last + 2) return;
+    last     = currentTick();
     int used = getMaxUseDuration(&item) - durationLeft;
     slingshot::release(*player, item, used);
 }

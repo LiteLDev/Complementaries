@@ -622,7 +622,9 @@ function Enter-TestWorld([int]$LoadSeconds = 10, [int]$Attempts = 3) {
         Start-Sleep -Seconds $LoadSeconds
         try {
             Wait-LogLine 'Player Spawned' 75 -Since $mark | Out-Null
-            Start-Sleep -Seconds 3
+            # "Player Spawned" is the server side: the client keeps its loading screen a few seconds
+            # longer (more on a busy machine), and input sent to it is lost
+            Start-Sleep -Seconds 12
             Focus-Game
             Write-Step "in world"
             return
