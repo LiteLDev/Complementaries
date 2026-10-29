@@ -1,0 +1,9 @@
+{
+  "block.supplementaries.pedestal": "Pedestal",
+  "block.supplementaries.item_shelf": "Item Shelf",
+  "block.supplementaries.statue": "Statue",
+  "item.supplementaries.hat_stand": "Hat Stand",
+  "entity.supplementaries.hat_stand": "Hat Stand",
+  "cm.display.placed": "Placed {} on the {} at {}",
+  "cm.display.taken": "Took {} from the {} at {}"
+}

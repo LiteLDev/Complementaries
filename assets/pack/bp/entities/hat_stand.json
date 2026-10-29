@@ -1,0 +1,219 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "complementaries:hat_stand",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "is_experimental": false,
+      "properties": {
+        "complementaries:hit": {
+          "type": "int",
+          "range": [
+            0,
+            1
+          ],
+          "default": 0,
+          "client_sync": true
+        },
+        "complementaries:swing": {
+          "type": "int",
+          "range": [
+            0,
+            1
+          ],
+          "default": 0,
+          "client_sync": true
+        },
+        "complementaries:skibidi": {
+          "type": "int",
+          "range": [
+            0,
+            2
+          ],
+          "default": 0,
+          "client_sync": true
+        },
+        "complementaries:yaw": {
+          "type": "int",
+          "range": [
+            0,
+            15
+          ],
+          "default": 0,
+          "client_sync": true
+        }
+      }
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "complementaries_hat_stand",
+          "inanimate"
+        ]
+      },
+      "minecraft:collision_box": {
+        "width": 0.625,
+        "height": 0.75
+      },
+      "minecraft:physics": {
+        "has_gravity": true,
+        "has_collision": true
+      },
+      "minecraft:pushable": {
+        "is_pushable": false,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:health": {
+        "value": 20,
+        "max": 20
+      },
+      "minecraft:knockback_resistance": {
+        "value": 1.0
+      },
+      "minecraft:breathable": {
+        "total_supply": 15,
+        "suffocate_time": 0,
+        "breathes_water": true,
+        "breathes_air": true
+      },
+      "minecraft:persistent": {},
+      "minecraft:nameable": {},
+      "minecraft:interact": {
+        "interactions": [
+          {
+            "on_interact": {
+              "filters": {
+                "test": "is_family",
+                "subject": "self",
+                "value": "complementaries_hat_stand"
+              },
+              "event": "complementaries:interacted",
+              "target": "self"
+            },
+            "swing": true,
+            "interact_text": "action.interact.complementaries.hat_stand"
+          }
+        ]
+      }
+    },
+    "events": {
+      "complementaries:hit_0": {
+        "set_property": {
+          "complementaries:hit": 0
+        }
+      },
+      "complementaries:hit_1": {
+        "set_property": {
+          "complementaries:hit": 1
+        }
+      },
+      "complementaries:swing_0": {
+        "set_property": {
+          "complementaries:swing": 0
+        }
+      },
+      "complementaries:swing_1": {
+        "set_property": {
+          "complementaries:swing": 1
+        }
+      },
+      "complementaries:skibidi_0": {
+        "set_property": {
+          "complementaries:skibidi": 0
+        }
+      },
+      "complementaries:skibidi_1": {
+        "set_property": {
+          "complementaries:skibidi": 1
+        }
+      },
+      "complementaries:skibidi_2": {
+        "set_property": {
+          "complementaries:skibidi": 2
+        }
+      },
+      "complementaries:yaw_0": {
+        "set_property": {
+          "complementaries:yaw": 0
+        }
+      },
+      "complementaries:yaw_1": {
+        "set_property": {
+          "complementaries:yaw": 1
+        }
+      },
+      "complementaries:yaw_2": {
+        "set_property": {
+          "complementaries:yaw": 2
+        }
+      },
+      "complementaries:yaw_3": {
+        "set_property": {
+          "complementaries:yaw": 3
+        }
+      },
+      "complementaries:yaw_4": {
+        "set_property": {
+          "complementaries:yaw": 4
+        }
+      },
+      "complementaries:yaw_5": {
+        "set_property": {
+          "complementaries:yaw": 5
+        }
+      },
+      "complementaries:yaw_6": {
+        "set_property": {
+          "complementaries:yaw": 6
+        }
+      },
+      "complementaries:yaw_7": {
+        "set_property": {
+          "complementaries:yaw": 7
+        }
+      },
+      "complementaries:yaw_8": {
+        "set_property": {
+          "complementaries:yaw": 8
+        }
+      },
+      "complementaries:yaw_9": {
+        "set_property": {
+          "complementaries:yaw": 9
+        }
+      },
+      "complementaries:yaw_10": {
+        "set_property": {
+          "complementaries:yaw": 10
+        }
+      },
+      "complementaries:yaw_11": {
+        "set_property": {
+          "complementaries:yaw": 11
+        }
+      },
+      "complementaries:yaw_12": {
+        "set_property": {
+          "complementaries:yaw": 12
+        }
+      },
+      "complementaries:yaw_13": {
+        "set_property": {
+          "complementaries:yaw": 13
+        }
+      },
+      "complementaries:yaw_14": {
+        "set_property": {
+          "complementaries:yaw": 14
+        }
+      },
+      "complementaries:yaw_15": {
+        "set_property": {
+          "complementaries:yaw": 15
+        }
+      },
+      "complementaries:interacted": {}
+    }
+  }
+}

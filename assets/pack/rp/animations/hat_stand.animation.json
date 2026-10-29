@@ -1,0 +1,35 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.complementaries.hat_stand.base": {
+      "loop": true,
+      "bones": {
+        "root": { "rotation": [0, "q.body_y_rotation - v.yaw", 0] },
+        "lifted": { "position": [0, -20, 0] }
+      }
+    },
+    "animation.complementaries.hat_stand.wobble": {
+      "animation_length": 0.25,
+      "bones": {
+        "lifted": { "rotation": [0, "math.sin(q.anim_time * 20 / 1.5 * 180) * 3", 0] }
+      }
+    },
+    "animation.complementaries.hat_stand.swing": {
+      "animation_length": 3.0,
+      "bones": {
+        "neck_joint": { "rotation": [0, 0, "math.sin(q.anim_time * 400) * 35 * math.pow(0.25, q.anim_time)"] }
+      }
+    },
+    "animation.complementaries.hat_stand.skibidi": {
+      "loop": true,
+      "animation_length": 1.0,
+      "bones": {
+        "neck": { "scale": [1, "v.skibidi == 2 ? 4 : 1 + 2 * math.abs(math.sin(q.anim_time * 360))", 1] },
+        "head": {
+          "position": [0, "v.skibidi == 2 ? 9 : 6 * math.abs(math.sin(q.anim_time * 360))", 0],
+          "rotation": ["math.sin(q.anim_time * 720) * 10", "math.sin(q.anim_time * 360) * 25", "math.sin(q.anim_time * 360 + 90) * 15"]
+        }
+      }
+    }
+  }
+}

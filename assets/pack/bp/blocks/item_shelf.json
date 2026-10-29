@@ -1,0 +1,41 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:item_shelf",
+      "menu_category": { "category": "items" },
+      "traits": {
+        "minecraft:placement_position": { "enabled_states": ["minecraft:block_face"] }
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:item_shelf.name",
+      "minecraft:geometry": "geometry.complementaries.item_shelf",
+      "minecraft:material_instances": {
+        "*": { "texture": "complementaries_item_shelf", "render_method": "alpha_test" }
+      },
+      "minecraft:collision_box": { "origin": [-8, 1, 5], "size": [16, 3, 3] },
+      "minecraft:selection_box": { "origin": [-8, 0, 5], "size": [16, 4, 3] },
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 0.75 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 3 },
+      "minecraft:flammable": { "catch_chance_modifier": 5, "destroy_chance_modifier": 20 },
+      "minecraft:map_color": "#8f7748",
+      "minecraft:light_dampening": 0,
+      "minecraft:loot": "loot_tables/blocks/item_shelf.json"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'east'",
+        "components": { "minecraft:transformation": { "rotation": [0, -90, 0] } }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'south'",
+        "components": { "minecraft:transformation": { "rotation": [0, 180, 0] } }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'west'",
+        "components": { "minecraft:transformation": { "rotation": [0, 90, 0] } }
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.complementaries.hat_stand.hit": {
+      "initial_state": "init",
+      "states": {
+        "init": {
+          "transitions": [
+            { "idle_0": "q.property('complementaries:hit') == 0" },
+            { "idle_1": "q.property('complementaries:hit') == 1" }
+          ]
+        },
+        "idle_0": { "transitions": [{ "play_1": "q.property('complementaries:hit') == 1" }] },
+        "idle_1": { "transitions": [{ "play_0": "q.property('complementaries:hit') == 0" }] },
+        "play_0": {
+          "animations": ["wobble"],
+          "transitions": [
+            { "play_1": "q.property('complementaries:hit') == 1" },
+            { "idle_0": "q.all_animations_finished" }
+          ]
+        },
+        "play_1": {
+          "animations": ["wobble"],
+          "transitions": [
+            { "play_0": "q.property('complementaries:hit') == 0" },
+            { "idle_1": "q.all_animations_finished" }
+          ]
+        }
+      }
+    },
+    "controller.animation.complementaries.hat_stand.swing": {
+      "initial_state": "init",
+      "states": {
+        "init": {
+          "transitions": [
+            { "idle_0": "q.property('complementaries:swing') == 0" },
+            { "idle_1": "q.property('complementaries:swing') == 1" }
+          ]
+        },
+        "idle_0": { "transitions": [{ "play_1": "q.property('complementaries:swing') == 1" }] },
+        "idle_1": { "transitions": [{ "play_0": "q.property('complementaries:swing') == 0" }] },
+        "play_0": {
+          "animations": ["swing"],
+          "transitions": [
+            { "play_1": "q.property('complementaries:swing') == 1" },
+            { "idle_0": "q.all_animations_finished" }
+          ]
+        },
+        "play_1": {
+          "animations": ["swing"],
+          "transitions": [
+            { "play_0": "q.property('complementaries:swing') == 0" },
+            { "idle_1": "q.all_animations_finished" }
+          ]
+        }
+      }
+    }
+  }
+}

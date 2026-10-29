@@ -1,0 +1,14 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:hat_stand" },
+    "tags": ["crafting_table"],
+    "pattern": ["P", "S"],
+    "key": {
+      "P": { "tag": "minecraft:planks" },
+      "S": { "item": "minecraft:smooth_stone_slab" }
+    },
+    "unlock": [{ "item": "minecraft:smooth_stone_slab" }],
+    "result": { "item": "complementaries:hat_stand", "count": 1 }
+  }
+}

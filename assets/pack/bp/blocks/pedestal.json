@@ -1,0 +1,41 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:pedestal",
+      "menu_category": { "category": "items" },
+      "states": {
+        "complementaries:up": [false, true],
+        "complementaries:down": [false, true],
+        "complementaries:item_status": [1, 0, 2]
+      },
+      "traits": {
+        "minecraft:placement_direction": { "enabled_states": ["minecraft:cardinal_direction"] }
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:pedestal.name",
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.pedestal",
+        "bone_visibility": {
+          "base": "!q.block_state('complementaries:down')",
+          "top": "!q.block_state('complementaries:up')",
+          "pillar_down": "q.block_state('complementaries:down')",
+          "pillar_up": "q.block_state('complementaries:up')"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": { "texture": "complementaries_pedestal_side", "render_method": "alpha_test" },
+        "top": { "texture": "complementaries_pedestal_top", "render_method": "alpha_test" },
+        "bottom": { "texture": "complementaries_pedestal_bottom", "render_method": "alpha_test" }
+      },
+      "minecraft:collision_box": { "origin": [-7, 0, -7], "size": [14, 16, 14] },
+      "minecraft:selection_box": { "origin": [-7, 0, -7], "size": [14, 16, 14] },
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 2.0 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 6 },
+      "minecraft:map_color": "#7d7d7d",
+      "minecraft:light_dampening": 0,
+      "minecraft:loot": "loot_tables/blocks/pedestal.json"
+    }
+  }
+}

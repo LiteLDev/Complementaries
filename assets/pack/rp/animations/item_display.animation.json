@@ -1,0 +1,116 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.complementaries.display.base": {
+      "loop": true,
+      "bones": {
+        "root": { "rotation": [0, "q.body_y_rotation - v.facing_yaw", 0] }
+      }
+    },
+    "animation.complementaries.display.pedestal_spin": {
+      "loop": true,
+      "bones": {
+        "item": { "position": [0, 23, 0], "rotation": [0, "q.life_time * 100", 0], "scale": 0.75 }
+      }
+    },
+    "animation.complementaries.display.pedestal_still": {
+      "loop": true,
+      "bones": {
+        "item": { "position": [0, 23, 0], "scale": 0.75 }
+      }
+    },
+    "animation.complementaries.display.pedestal_sword": {
+      "loop": true,
+      "bones": {
+        "item": { "position": [0, 20, 0], "rotation": [0, 0, 135], "scale": 0.75 }
+      }
+    },
+    "animation.complementaries.display.pedestal_trident": {
+      "loop": true,
+      "bones": {
+        "item": { "position": [0, 20, 0], "rotation": [0, 0, -45], "scale": 0.75 }
+      }
+    },
+    "animation.complementaries.display.crystal": {
+      "loop": true,
+      "bones": {
+        "crystal": { "position": [0, "math.sin(q.life_time * 360 * 0.4) * 1.5", 0], "scale": 0.75 },
+        "glass": { "rotation": [45, "q.life_time * 180", 35] },
+        "glass_inner": { "rotation": [45, "q.life_time * 180", 35] },
+        "core": { "rotation": [45, "q.life_time * 180", 35] }
+      }
+    },
+    "animation.complementaries.display.shelf": {
+      "loop": true,
+      "bones": {
+        "item": { "position": [0, 8, 6.5], "scale": 0.5 }
+      }
+    },
+    "animation.complementaries.display.shelf_block": {
+      "loop": true,
+      "bones": {
+        "item": { "position": [0, 6, 6.5], "scale": 0.5 }
+      }
+    },
+    "animation.complementaries.display.statue": {
+      "loop": true,
+      "bones": {
+        "root": { "scale": 0.5 }
+      }
+    },
+    "animation.complementaries.display.statue_standing": {
+      "loop": true,
+      "bones": {
+        "leftLeg": { "rotation": ["22.5 * v.mirror", 0, 0] },
+        "rightLeg": { "rotation": ["-22.5 * v.mirror", 0, 0] },
+        "leftArm": { "rotation": ["-22.5 * v.mirror", 0, 0] },
+        "rightArm": { "rotation": ["22.5 * v.mirror", 0, 0] }
+      }
+    },
+    "animation.complementaries.display.statue_holding": {
+      "loop": true,
+      "bones": {
+        "leftArm": { "rotation": [-45, 0, 0] },
+        "rightArm": { "rotation": [-45, 0, 0] },
+        "item": { "position": [0, 16, -10] }
+      }
+    },
+    "animation.complementaries.display.statue_candle": {
+      "loop": true,
+      "bones": {
+        "leftArm": { "rotation": [-22.5, 0, 0] },
+        "rightArm": { "rotation": [-22.5, 0, 0] },
+        "item": { "position": [0, 14, -8] }
+      }
+    },
+    "animation.complementaries.display.statue_sword": {
+      "loop": true,
+      "bones": {
+        "leftArm": { "rotation": [-72, -27, 0] },
+        "rightArm": { "rotation": [-72, 27, 0] },
+        "item": { "position": [0, 22, -10], "rotation": [0, 0, 135] }
+      }
+    },
+    "animation.complementaries.display.statue_tool": {
+      "loop": true,
+      "bones": {
+        "leftArm": { "rotation": [-54, -27, 0] },
+        "rightArm": { "rotation": [-54, 27, 0] },
+        "item": { "position": [0, 20, -10], "rotation": [0, 0, 135] }
+      }
+    },
+    "animation.complementaries.display.statue_waving": {
+      "loop": true,
+      "bones": {
+        "rightArm": { "rotation": [180, 0, "28.65 + 28.65 * math.sin(q.life_time * 480)"] }
+      }
+    },
+    "animation.complementaries.display.candle_flame": {
+      "loop": true,
+      "animation_length": 0.5,
+      "particle_effects": {
+        "0.0": { "effect": "flame", "locator": "flame" }
+      }
+    }
+  }
+}

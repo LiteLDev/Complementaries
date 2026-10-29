@@ -1,0 +1,5 @@
+{
+  "complementaries:pedestal": { "sound": "stone" },
+  "complementaries:item_shelf": { "sound": "wood" },
+  "complementaries:statue": { "sound": "stone" }
+}
