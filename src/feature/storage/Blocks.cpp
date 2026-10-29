@@ -257,11 +257,14 @@ bool openSack(Player& player, core::GlobalPos const& pos) {
     o.title   = blockTitle(player, Kind::Sack);
     o.allowed = sackAllows;
     o.block   = pos;
-    o.onClosed = [pos] {
+    o.onClosed = [pos, uid = rec.uid] {
         BlockSource* r = nullptr;
         if (auto const* b = ourBlock(pos, &r); b && kindOf(*b) == Kind::Sack) {
             setBoolState(*r, game::blockPos(pos), kStateOpen, false);
             playSound(*r, center(pos), "armor.equip_leather");
+            int stacks = 0;
+            for (auto const& s : loadContents(uid, sackSlots())) stacks += isEmpty(s) ? 0 : 1;
+            log().info("storage: the sack at {} was closed ({} stacks inside)", pos.key(), stacks);
         }
     };
     if (!view::open(player, std::move(o))) return false;
@@ -398,7 +401,13 @@ void interactBlock(Player& player, core::GlobalPos const& pos) {
             }
         }
     }
-    auto rec = blockRecordOrNew(pos);
+    bool hadRecord = loadBlockRecord(pos).has_value();
+    auto rec       = blockRecordOrNew(pos);
+    if (!hadRecord && boolState(*b, kStatePacked)) {
+        // a packed present placed without its item (command, structure): a packed public present
+        rec.packed = true;
+        saveBlockRecord(pos, rec);
+    }
     if (!rec.packed) {
         showPresentForm(player, pos, kind);
         return;

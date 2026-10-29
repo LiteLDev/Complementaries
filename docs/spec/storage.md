@@ -61,6 +61,13 @@ helper disappears when the screen closes. The layout is the closest vanilla grid
 row, 6–9 slots dispenser 3×3, 10–27 slots chest 3×9 (slots beyond the configured count stay empty and
 reject items). This screen works the same on vanilla and modded clients.
 
+Opening details (verified on a real 1.26.51 client): the open is sent a few ticks after the helper is
+spawned, because a client ignores a container open for an entity it has not received yet. Entity
+inventories only open as chest or hopper screens, so the 3×3 grid is a 9-slot chest inventory whose
+open packet is rewritten into one for a dispenser that only that client sees (sent under the
+player's feet and put back when the screen closes); dispensers and entity chests share the same
+container, so the client's item moves resolve against the helper on the server.
+
 ## 3. Presents
 
 | | |

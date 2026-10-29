@@ -39,5 +39,8 @@ void close(std::string const& uid);
 void tick();
 /// Drops every view without touching the world (world closed).
 void reset();
+/// Hooks used by the views (module install / uninstall).
+void install();
+void uninstall();
 
 } // namespace cm::feature::storage::view

@@ -177,7 +177,9 @@ Gold Trapdoor, Netherite Door, Netherite Trapdoor (钥匙, 锁方块, 保险箱,
   passwords and safe owners live in the world DB (`cm:lock:lock:<dim>:<x>:<y>:<z>`,
   `cm:lock:safe:<dim>:<x>:<y>:<z>`), safe contents in a hidden `complementaries:safe_storage`
   entity (27-slot inventory, not siphonable by hoppers) inside the block, opened with the
-  vanilla container screen.
+  vanilla container screen. The screen title is the entity's name tag, and the open waits a few
+  ticks when the entity was just spawned or renamed (a client ignores a container open for an
+  entity it has not received yet).
 - Redstone output of the lock block: `minecraft:redstone_producer` (power 15 in the powered
   permutation). Redstone input of gates and gold doors: `minecraft:redstone_consumer`, whose
   strength the mod reads from the dimension's circuit graph every tick.

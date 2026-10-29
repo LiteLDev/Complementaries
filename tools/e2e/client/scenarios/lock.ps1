@@ -1,6 +1,6 @@
 # U3 lock on a real client: the blocks render (doors, trapdoors, gates, safe, lock block), the item
-# icons show, and a right click on a safe opens its storage screen.
-# Screenshots: out/lock/{blocks,safe-screen,safe-open,inventory}.png
+# icons show, and a right click on a safe opens its storage screen, which stores an item put in it.
+# Screenshots: out/lock/{blocks,safe-screen,safe-moved,safe-open,inventory}.png
 $S = 'complementaries'
 Invoke-Chat '/time set noon'
 Invoke-Chat '/fill -2 -60 -6 8 -55 6 air'
@@ -30,13 +30,22 @@ Invoke-Chat '/gamerule sendcommandfeedback false'
 Start-Sleep -Seconds 2
 Save-Screenshot 'blocks' | Out-Null
 
-# right click the safe (centre of the screen): its storage screen opens
+# right click the safe (centre of the screen): its storage screen (3x9 chest grid titled "Safe")
+# opens; the diamonds of hotbar slot 1 are moved into the safe's first slot and stay there
+Invoke-Chat '/clear @s'
+Invoke-Chat '/give @s diamond 5'
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
 Wait-LogLine 'lock: .* opened the safe at' 15 -Since $mark | Out-Null
 Start-Sleep -Milliseconds 1200
 Save-Screenshot 'safe-screen' | Out-Null
+Click 0.3648 0.7292 -Relative   # hotbar slot 1: pick up the diamonds
+Start-Sleep -Milliseconds 400
+Click 0.3648 0.3222 -Relative   # first safe slot: put them down
+Start-Sleep -Milliseconds 800
+Save-Screenshot 'safe-moved' | Out-Null
 Close-Screen
+Wait-LogLine 'lock: .* closed the safe at .* \(1 stacks inside\)' 15 -Since $mark | Out-Null
 Start-Sleep -Milliseconds 500
 Save-Screenshot 'safe-open' | Out-Null
 
