@@ -54,7 +54,7 @@ void registerAll() {
     cmd.alias("complementaries");
 
     auto selftest = [](CommandOrigin const& origin, CommandOutput& output, std::string const& glob) {
-        if (!isAdmin(origin)) return output.error("You need operator permission.");
+        if (!isAdmin(origin)) return output.error(cm::tr("cm.commands.need_op", "You need operator permission."));
         std::int64_t key = 0;
         if (auto* p = playerOf(origin)) key = p->getOrCreateUniqueID().rawID;
         selftest::runAll(glob, [key](std::string const& line) {
@@ -77,7 +77,7 @@ void registerAll() {
     );
 
     cmd.overload().text("reload").execute([](CommandOrigin const& origin, CommandOutput& output) {
-        if (!isAdmin(origin)) return output.error("You need operator permission.");
+        if (!isAdmin(origin)) return output.error(cm::tr("cm.commands.need_op", "You need operator permission."));
         bool ok = config::loadAll();
         loadTranslations(Mod::getInstance().getSelf().getModDir() / "lang");
         if (ok) output.success("Complementaries configuration reloaded.");

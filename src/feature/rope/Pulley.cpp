@@ -26,7 +26,6 @@ namespace {
 constexpr int kMaxStack = 64;
 
 std::map<core::GlobalPos, Content>       gCache;
-std::map<core::GlobalPos, std::uint64_t> gLastTurn; ///< tick of the last turn of each pulley
 
 std::string dbKey(core::GlobalPos const& p) { return "cm:rope:pulley:" + p.key(); }
 
@@ -103,7 +102,6 @@ void setContent(core::GlobalPos const& pos, Content const& c) {
 
 void reset() {
     gCache.clear();
-    gLastTurn.clear();
 }
 
 } // namespace cm::feature::rope::pulley
@@ -151,7 +149,6 @@ bool turnPulley(BlockSource& r, BlockPos const& pos, bool clockwise, Actor* by) 
         c.item   = kind;
         c.count += 1;
         pulley::setContent(g, c);
-        pulley::gLastTurn[g] = now();
         pulley::refreshState(r, pos, c, true);
         if (by) blockSound(r, bottom, piece, false, *by);
         log().info(
@@ -182,7 +179,6 @@ bool turnPulley(BlockSource& r, BlockPos const& pos, bool clockwise, Actor* by) 
     c.count -= 1;
     if (c.count <= 0) c = {};
     pulley::setContent(g, c);
-    pulley::gLastTurn[g] = now();
     pulley::refreshState(r, pos, c, true);
     if (by) blockSound(r, target, *block, true, *by);
     log().info(
@@ -287,36 +283,6 @@ bool onUse(Player& player, BlockPos const& pos) {
         if (auto* p = playerById(uid)) openForm(*p, g);
     });
     return true;
-}
-
-void onCrankUsed(Player& player, BlockPos const& crankPos, Block const& crank) {
-    auto& r = player.getDimensionBlockSource();
-    // The crank sits on a face of the block it turns: facing points away from that block.
-    int facing = -1;
-    for (auto name : {"minecraft:facing_direction", "complementaries:facing"}) {
-        if (auto v = game::intState(crank, name)) {
-            facing = *v;
-            break;
-        }
-    }
-    std::vector<BlockPos> candidates;
-    if (facing >= 0 && facing < 6) candidates.push_back(neighbor(crankPos, oppositeFace(facing)));
-    for (int f = 0; f < 6; ++f) candidates.push_back(neighbor(crankPos, f));
-    bool clockwise = !player.isSneaking();
-    auto uid       = player.getOrCreateUniqueID().rawID;
-    auto dim       = static_cast<int>(r.getDimensionId());
-    auto usedAt    = now();
-    for (auto const& c : candidates) {
-        if (!loaded(r, c) || !isPulley(r.getBlock(c))) continue;
-        later(1, [uid, dim, c, clockwise, usedAt] {
-            auto* rg = serverRegion(dim);
-            if (!rg) return;
-            // the crank unit may turn the pulley itself (turnPulley): then this fallback stays quiet
-            if (auto it = gLastTurn.find(gpos(*rg, c)); it != gLastTurn.end() && it->second >= usedAt) return;
-            turnPulley(*rg, c, clockwise, playerById(uid));
-        });
-        return;
-    }
 }
 
 namespace {

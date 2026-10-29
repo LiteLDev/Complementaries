@@ -52,7 +52,7 @@ CM_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     using namespace cm::feature::tool;
     cmd.overload<ToolEnchantParams>().text("tool").text("enchant").required("kind").optional("level").execute(
         [](CommandOrigin const& origin, CommandOutput& output, ToolEnchantParams const& params) {
-            if (!cm::commands::isAdmin(origin)) return output.error("You need operator permission.");
+            if (!cm::commands::isAdmin(origin)) return output.error(cm::tr("cm.commands.need_op", "You need operator permission."));
             auto* player = cm::commands::playerOf(origin);
             if (!player) return output.error("Only players can use this command.");
             ItemStack item = player->getSelectedItem();

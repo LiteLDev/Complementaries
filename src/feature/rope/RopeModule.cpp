@@ -19,7 +19,9 @@
 #include "mc/world/level/Level.h"
 #include "mc/world/level/block/Block.h"
 
+#include "feature/mechanism/Crankable.h"
 #include "feature/rope/Common.h"
+#include "feature/rope/Rope.h"
 #include "game/WorldDb.h"
 #include "mod/Log.h"
 #include "mod/Module.h"
@@ -98,7 +100,7 @@ void onInteract(ll::event::PlayerInteractBlockEvent& ev) {
     auto const&  item = ev.item();
     auto const   id   = itemId(item);
     bool const   ours =
-        isRope(b) || isPulley(b) || (isFlaxCrop(b) && id == "minecraft:bone_meal") || b.getTypeName() == kCrank;
+        isRope(b) || isPulley(b) || (isFlaxCrop(b) && id == "minecraft:bone_meal");
     if (ours) {
         bool handled = false;
         if (repeatedUse(player, gpos(region, pos), handled)) {
@@ -137,7 +139,6 @@ void onInteract(ll::event::PlayerInteractBlockEvent& ev) {
         });
         return;
     }
-    if (b.getTypeName() == kCrank) pulley::onCrankUsed(player, pos, b);
     if (id == kRope && ropes::refusePlacement(player, pos, face)) ev.cancel();
 }
 
@@ -200,6 +201,10 @@ public:
         mListeners.push_back(bus.emplaceListener<ll::event::ServerLevelTickEvent>(onTick));
         arrow::install();
         flax::install();
+        // a crank on a pulley turns it: clockwise winds the rope up, counter-clockwise (sneaking) lowers it
+        mechanism::registerCrankable(std::string(kPulley), [](BlockSource& r, BlockPos const& p, bool ccw, Player* by) {
+            turnPulley(r, p, !ccw, by);
+        });
         if (game::db::available()) worldReady(); // BDS: the world exists before mods are enabled
     }
 
@@ -209,6 +214,7 @@ public:
         mListeners.clear();
         arrow::uninstall();
         flax::uninstall();
+        mechanism::unregisterCrankable(std::string(kPulley));
         if (gReady) {
             worldSave();
             worldClosed();

@@ -97,12 +97,11 @@ data under `cm:rope:*`, config section `rope`, code in `src/feature/rope/` and `
   freed space (`pulleyMovesBlocks`).
   Counter-clockwise unwinds: one rope/chain from the slot is added at the bottom of the column; a
   block hanging there is first pushed down one block (if the space below is free).
-- Turned by a **crank** attached to it (using the crank: clockwise; sneaking: counter-clockwise) and
-  by a **turn table** facing it (every rotation of the turn table turns the pulley). Other units call
-  `cm::feature::rope::turnPulley(region, pos, clockwise)` (`src/feature/rope/Rope.h`); as a
-  fallback the pulley also reacts to `complementaries:crank` blocks being used next to it, and to a
-  `complementaries:turn_table` next to it changing its facing (the facing is restored and the wheel
-  turns clockwise instead).
+- Turned by a **crank** attached to it (using the crank: clockwise; sneaking: counter-clockwise; the
+  pulley is registered as crankable with the mechanism unit, `src/feature/mechanism/Crankable.h`) and
+  by a **turn table** facing it (every rotation of the turn table turns the pulley: the facing change
+  is undone and the wheel turns clockwise instead). Other units call
+  `cm::feature::rope::turnPulley(region, pos, clockwise)` (`src/feature/rope/Rope.h`).
 - Breaking the pulley drops its content.
 
 ### Flax

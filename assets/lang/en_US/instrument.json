@@ -11,5 +11,6 @@
   "globe.supplementaries.round": "Round",
   "globe.supplementaries.sun": "Sun",
   "cm.instrument.am": " AM",
-  "cm.instrument.pm": " PM"
+  "cm.instrument.pm": " PM",
+  "cm.instrument.globe_coordinates": "X: {0}, Z: {1}"
 }

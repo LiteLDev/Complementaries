@@ -47,7 +47,7 @@ in Java they are block entities, which pistons do not push).
 - **Use (right click, any hand, not sneaking with an item):** spins the globe: yaw += 450°, the resting face turns
   by 90° (`rotation` ← next), sound `block.globe.spin` (volume 0.65, pitch 0.9 + weighted 0..0.2). Spin decays
   every tick: `yaw = yaw * 0.94 - 0.7` until ≤ 0 (≈ 3 s). Repeated clicks accumulate.
-- With `show_coordinates` (default true) the user sees `X: <x>, Z: <z>` (`message.supplementaries.compass`) on
+- With `show_coordinates` (default true) the user sees `X: <x>, Z: <z>` (`cm.instrument.globe_coordinates`) on
   the action bar; in unnatural dimensions (nether, end) the numbers are obfuscated unless
   `works_in_unnatural_dimensions`.
 - **Redstone:** a rising edge of neighbour power spins the globe (same as a click, no coordinates).
@@ -93,7 +93,7 @@ in Java they are block entities, which pistons do not push).
   tick sound needs the cycle.)
 - Use (empty hand or any item that is not a clock block placed on the back): shows the time on the action bar,
   `H:MM` 24 h (default) or `H:MM AM/PM` (`clock_24h` false); obfuscated random time in unnatural dimensions.
-- `clock_right_click` (default true): using a vanilla clock item anywhere shows the same message.
+- Using a vanilla clock item shows the time too; that is the clock tweak of the `tweak` unit (`docs/spec/tweak.md` §2.3).
 
 ### 2.4 Hourglass
 
@@ -156,7 +156,6 @@ None. (No screen in Supplementaries either; the clock/globe/altimeter messages u
 | `globe` / `globeSepia` / `windVane` / `clockBlock` / `hourglass` / `altimeter` | true | feature toggles (disabled blocks stop ticking and interacting) |
 | `globeShowCoordinates` | true | `building.globe.show_coordinates` |
 | `globeRandomWorld` | true | client `blocks.globe.random_world` |
-| `clockRightClick` | true | `tweaks.clock_and_compass.clock_right_click` |
 | `worksInUnnaturalDimensions` | false | `tweaks.clock_and_compass.works_in_unnatural_dimensions` |
 | `clock24h` | true | client `blocks.clock_block.24h_format` |
 | `windVanePowerScaling` | 3.0 | client `blocks.wind_vane.power_scaling` |
@@ -175,7 +174,7 @@ Client options of Supplementaries are server options here, because the server dr
 | Key | English |
 |-----|---------|
 | `message.supplementaries.altimeter` | `Y: {}` |
-| `message.supplementaries.compass` | `X: {}, Z: {}` (referenced, owned by the compass tweak; English fallback) |
+| `cm.instrument.globe_coordinates` | `X: {0}, Z: {1}` |
 | `message.supplementaries.globe` | `Sold by the Wandering Trader` |
 | `message.supplementaries.hourglass` | `Accepts any dust, sand or powder` |
 | `message.supplementaries.wind_vane` | `Reacts to weather` |

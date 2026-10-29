@@ -11,5 +11,6 @@
   "globe.supplementaries.round": "圆球",
   "globe.supplementaries.sun": "太阳",
   "cm.instrument.am": " 上午",
-  "cm.instrument.pm": " 下午"
+  "cm.instrument.pm": " 下午",
+  "cm.instrument.globe_coordinates": "X：{0}，Z：{1}"
 }

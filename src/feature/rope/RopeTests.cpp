@@ -20,6 +20,8 @@
 #include "mc/world/level/block/BlockType.h"
 #include "mc/world/level/dimension/DimensionType.h"
 
+#include "feature/mechanism/Mechanism.h"
+#include "feature/mechanism/RotationRules.h"
 #include "feature/rope/Common.h"
 #include "feature/rope/Rope.h"
 #include "game/Blocks.h"
@@ -502,4 +504,31 @@ CM_REGISTER_SELFTEST("rope.wild_flax_feature", [](Context& ctx) -> ll::coro::Cor
     }
     ctx.info("wild flax plants: " + std::to_string(n));
     ctx.check(n >= 3, "the wild flax patch places several plants");
+});
+
+// A crank on the side of a pulley turns it (cross-unit: mechanism::registerCrankable).
+CM_REGISTER_SELFTEST("rope.crank_turns_pulley", [](Context& ctx) -> ll::coro::CoroTask<> {
+    namespace mech = cm::feature::mechanism;
+    auto base = ctx.testPos(1150);
+    ctx.require(co_await ctx.ensureLoaded(base), "test area loaded");
+    clearColumn(ctx, base, 8);
+    auto top = up(base, 6);
+    ctx.require(ctx.setBlock(top, std::string(rope::kPulley)), "pulley");
+    co_await ctx.ticks(1);
+    auto& r      = regionOf(ctx);
+    auto  pp     = game::blockPos(top);
+    auto  crankP = BlockPos{pp.x + 1, pp.y, pp.z};
+    auto const* crank = mech::blockFrom(mech::ids::kCrank, mech::facingStates(mech::Kind::Crank, mech::rotation::kEast));
+    ctx.require(crank != nullptr, "crank block exists");
+    ctx.cleanupBlock(game::globalPos(r, crankP));
+    ctx.require(mech::place(r, crankP, *crank), "crank on the east side of the pulley");
+    rope::pulley::setContent(top, {std::string(rope::kRope), 2});
+    mech::crank::turn(r, crankP, true, nullptr); // counter-clockwise lowers a rope
+    co_await ctx.ticks(3);
+    ctx.check(idAt(ctx, up(base, 5)) == rope::kRope, "the crank lowered a rope");
+    ctx.check(rope::pulley::contentAt(top).count == 1, "one rope left on the pulley");
+    mech::crank::turn(r, crankP, false, nullptr); // clockwise winds it back
+    co_await ctx.ticks(3);
+    ctx.check(idAt(ctx, up(base, 5)) != rope::kRope, "the crank wound the rope up");
+    ctx.check(rope::pulley::contentAt(top).count == 2, "both ropes back on the pulley");
 });

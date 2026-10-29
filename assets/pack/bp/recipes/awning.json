@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:awning"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "FFF",
+      "S S"
+    ],
+    "key": {
+      "F": {
+        "item": "complementaries:flax"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "complementaries:flax"
+      }
+    ],
+    "result": {
+      "item": "complementaries:awning",
+      "count": 2
+    }
+  }
+}
