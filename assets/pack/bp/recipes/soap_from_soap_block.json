@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:soap_from_soap_block"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:soap_block"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "complementaries:soap_block"
+      }
+    ],
+    "result": {
+      "item": "complementaries:soap",
+      "count": 4
+    }
+  }
+}

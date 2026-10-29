@@ -17,8 +17,7 @@ Java code or assets. Colours below are the 16 dye colours in Java order:
 | `complementaries:dragon_banner_pattern` | item (stack 1) | shapeless paper + dragon head → 1 | – |
 
 Supplementaries makes both the "natural" carpet recipe and the flax one available depending on
-whether flax is enabled; Complementaries ships both (flax is enabled by default in Supplementaries,
-the carpet recipe keeps colored awnings craftable when no flax unit is present).
+whether flax is enabled; Complementaries ships both (flax is enabled by default in Supplementaries).
 
 ### Flag (`FlagBlock`)
 - States: horizontal `facing` (towards the player who placed it), waterlogged (not ported, §8).

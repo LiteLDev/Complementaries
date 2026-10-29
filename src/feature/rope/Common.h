@@ -32,7 +32,6 @@ inline constexpr std::string_view kWildFlax     = "complementaries:wild_flax";
 inline constexpr std::string_view kFlaxBlock    = "complementaries:flax_block";
 inline constexpr std::string_view kFlax         = "complementaries:flax";
 inline constexpr std::string_view kFlaxSeeds    = "complementaries:flax_seeds";
-inline constexpr std::string_view kCrank        = "complementaries:crank";
 inline constexpr std::string_view kTurnTable    = "complementaries:turn_table";
 inline constexpr int              kArrowCharges = 32; ///< rope arrow max durability
 
@@ -149,7 +148,6 @@ bool refusePlacement(Player& player, BlockPos const& clicked, int face);
 namespace pulley {
 void onBlockChanged(BlockSource& region, BlockPos const& pos, Block const& prev, Block const& next);
 bool onUse(Player& player, BlockPos const& pos);
-void onCrankUsed(Player& player, BlockPos const& crankPos, Block const& crank);
 void reset();
 struct Content {
     std::string item;

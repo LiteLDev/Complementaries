@@ -110,7 +110,6 @@ std::int64_t                            gTick   = 0;
 bool                                    gLoaded = false;
 std::unordered_map<std::int64_t, std::pair<std::int64_t, core::GlobalPos>> gLastUse; ///< player -> (tick, pos)
 std::unordered_map<std::int64_t, std::pair<std::int64_t, std::string>>     gPlacingName;
-std::unordered_map<std::int64_t, std::int64_t>                             gLastClock;
 
 std::string dbKey(core::GlobalPos const& pos) { return std::string(kKeyPrefix) + pos.key(); }
 
@@ -184,7 +183,6 @@ void loadWorld() {
     gNext.clear();
     gLastUse.clear();
     gPlacingName.clear();
-    gLastClock.clear();
     globe::resetSeedCache();
     if (!game::db::available()) return;
     std::vector<std::string> keys;
@@ -356,16 +354,6 @@ void consumeSelected(Player& player) {
 }
 
 namespace {
-/// A vanilla clock used on anything: show the time (once per click; the client repeats while held and
-/// may send both a block and an air use for the same click).
-void clockItemUsed(Player& player) {
-    if (!config().clockRightClick) return;
-    auto& last = gLastClock[playerKey(player)];
-    if (gTick - last < 4) return;
-    last = gTick;
-    clock::showTime(player, player.getDimensionBlockSource());
-}
-
 int facingId(std::string const& dir) {
     if (dir == "down") return 0;
     if (dir == "up") return 1;
@@ -384,10 +372,7 @@ void onInteract(ll::event::PlayerInteractBlockEvent& ev) {
     auto         itemId = item.isNull() ? std::string() : item.getTypeName();
     Block const* block  = ev.block() ? ev.block().as_ptr() : &player.getDimensionBlockSource().getBlock(ev.blockPos());
     auto kind = kindOf(*block);
-    if (kind == Kind::None) {
-        if (itemId == "minecraft:clock") clockItemUsed(player);
-        return;
-    }
+    if (kind == Kind::None) return;
     if (!enabled(kind)) return;
     auto& region = player.getDimensionBlockSource();
     auto  pos    = ev.blockPos();
@@ -469,8 +454,6 @@ void onUseItem(ll::event::PlayerUseItemEvent& ev) {
         auto y = static_cast<int>(std::floor(player.getFeetPos().y + 0.001f));
         actionBar(player, trFor(player, "message.supplementaries.altimeter", "Y: {}", y));
         log().info("instrument: altimeter used by {} at y {}", player.getRealName(), y);
-    } else if (id == "minecraft:clock") {
-        clockItemUsed(player);
     }
 }
 

@@ -129,7 +129,7 @@ bool use(Record& rec, Player& player, BlockSource& region, BlockPos const& pos, 
             x = "§k" + x + "§r";
             z = "§k" + z + "§r";
         }
-        actionBar(player, trFor(player, "message.supplementaries.compass", "X: {}, Z: {}", x, z));
+        actionBar(player, trFor(player, "cm.instrument.globe_coordinates", "X: {0}, Z: {1}", x, z));
     }
     log().info("instrument: globe at {} spun by {}", rec.pos.key(), player.getRealName());
     return true;

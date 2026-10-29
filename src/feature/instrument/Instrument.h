@@ -35,7 +35,6 @@ struct Config {
     bool   altimeter                  = true;
     bool   globeShowCoordinates       = true;
     bool   globeRandomWorld           = true;
-    bool   clockRightClick            = true;
     bool   worksInUnnaturalDimensions = false;
     bool   clock24h                   = true;
     double windVanePowerScaling       = 3.0;

@@ -83,8 +83,8 @@ Block states (Bedrock names):
 | `feather_block` | 3x3 feather |
 | `sugar_cube` | 3x3 sugar; back to 9 sugar |
 
-The soap block is made from soap items, which belong to the unit that adds soap; that unit adds the
-`soap_block` recipe (4 soap) and its reverse.
+The soap block is crafted from 4 soap (`complementaries:soap`, from the `tool` unit) in a 2x2 square and
+turns back into 4 soap.
 
 ## 3. Mechanics
 
