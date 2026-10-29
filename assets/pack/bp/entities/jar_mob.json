@@ -1,0 +1,201 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "complementaries:jar_mob",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "properties": {
+        "complementaries:mob": {
+          "type": "int",
+          "range": [
+            0,
+            31
+          ],
+          "default": 0,
+          "client_sync": true
+        }
+      }
+    },
+    "components": {
+      "minecraft:type_family": {
+        "family": [
+          "complementaries_jar_mob",
+          "inanimate"
+        ]
+      },
+      "minecraft:collision_box": {
+        "width": 0.01,
+        "height": 0.01
+      },
+      "minecraft:physics": {
+        "has_gravity": false,
+        "has_collision": false
+      },
+      "minecraft:pushable": {
+        "is_pushable_by_piston": false,
+        "is_pushable": false
+      },
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "deals_damage": "no",
+            "cause": "all"
+          }
+        ]
+      },
+      "minecraft:health": {
+        "max": 1,
+        "value": 1
+      },
+      "minecraft:knockback_resistance": {
+        "value": 1.0
+      },
+      "minecraft:fire_immune": {},
+      "minecraft:breathable": {
+        "total_supply": 15,
+        "suffocate_time": 0,
+        "breathes_air": true,
+        "breathes_water": true,
+        "generates_bubbles": false
+      },
+      "minecraft:persistent": {},
+      "minecraft:nameable": {
+        "always_show": false,
+        "allow_name_tag_renaming": false
+      }
+    },
+    "events": {
+      "complementaries:display_1": {
+        "set_property": {
+          "complementaries:mob": 1
+        }
+      },
+      "complementaries:display_2": {
+        "set_property": {
+          "complementaries:mob": 2
+        }
+      },
+      "complementaries:display_3": {
+        "set_property": {
+          "complementaries:mob": 3
+        }
+      },
+      "complementaries:display_4": {
+        "set_property": {
+          "complementaries:mob": 4
+        }
+      },
+      "complementaries:display_5": {
+        "set_property": {
+          "complementaries:mob": 5
+        }
+      },
+      "complementaries:display_6": {
+        "set_property": {
+          "complementaries:mob": 6
+        }
+      },
+      "complementaries:display_7": {
+        "set_property": {
+          "complementaries:mob": 7
+        }
+      },
+      "complementaries:display_8": {
+        "set_property": {
+          "complementaries:mob": 8
+        }
+      },
+      "complementaries:display_9": {
+        "set_property": {
+          "complementaries:mob": 9
+        }
+      },
+      "complementaries:display_10": {
+        "set_property": {
+          "complementaries:mob": 10
+        }
+      },
+      "complementaries:display_11": {
+        "set_property": {
+          "complementaries:mob": 11
+        }
+      },
+      "complementaries:display_12": {
+        "set_property": {
+          "complementaries:mob": 12
+        }
+      },
+      "complementaries:display_13": {
+        "set_property": {
+          "complementaries:mob": 13
+        }
+      },
+      "complementaries:display_14": {
+        "set_property": {
+          "complementaries:mob": 14
+        }
+      },
+      "complementaries:display_15": {
+        "set_property": {
+          "complementaries:mob": 15
+        }
+      },
+      "complementaries:display_16": {
+        "set_property": {
+          "complementaries:mob": 16
+        }
+      },
+      "complementaries:display_20": {
+        "set_property": {
+          "complementaries:mob": 20
+        }
+      },
+      "complementaries:display_21": {
+        "set_property": {
+          "complementaries:mob": 21
+        }
+      },
+      "complementaries:display_22": {
+        "set_property": {
+          "complementaries:mob": 22
+        }
+      },
+      "complementaries:display_23": {
+        "set_property": {
+          "complementaries:mob": 23
+        }
+      },
+      "complementaries:display_24": {
+        "set_property": {
+          "complementaries:mob": 24
+        }
+      },
+      "complementaries:display_25": {
+        "set_property": {
+          "complementaries:mob": 25
+        }
+      },
+      "complementaries:display_26": {
+        "set_property": {
+          "complementaries:mob": 26
+        }
+      },
+      "complementaries:display_27": {
+        "set_property": {
+          "complementaries:mob": 27
+        }
+      },
+      "complementaries:display_28": {
+        "set_property": {
+          "complementaries:mob": 28
+        }
+      },
+      "complementaries:display_29": {
+        "set_property": {
+          "complementaries:mob": 29
+        }
+      }
+    }
+  }
+}

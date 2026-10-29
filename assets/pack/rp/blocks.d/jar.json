@@ -1,0 +1,4 @@
+{
+  "complementaries:jar": { "sound": "glass" },
+  "complementaries:faucet": { "sound": "metal" }
+}

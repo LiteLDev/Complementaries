@@ -1,0 +1,1383 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:jar",
+      "menu_category": {
+        "group": "minecraft:itemGroup.name.glass",
+        "category": "items"
+      },
+      "states": {
+        "complementaries:kind": {
+          "values": {
+            "min": 0,
+            "max": 3
+          }
+        },
+        "complementaries:fluid": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        },
+        "complementaries:level": {
+          "values": {
+            "min": 0,
+            "max": 12
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.jar",
+        "bone_visibility": {
+          "fluid_1": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 1",
+          "fluid_2": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 2",
+          "fluid_3": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 3",
+          "fluid_4": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 4",
+          "fluid_5": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 5",
+          "fluid_6": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 6",
+          "fluid_7": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 7",
+          "fluid_8": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 8",
+          "fluid_9": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 9",
+          "fluid_10": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 10",
+          "fluid_11": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 11",
+          "fluid_12": "(q.block_state('complementaries:kind') < 3 && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)) && q.block_state('complementaries:level') == 12",
+          "cookie_1": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 1",
+          "cookie_2": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 2",
+          "cookie_3": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 3",
+          "cookie_4": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 4",
+          "cookie_5": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 5",
+          "cookie_6": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 6",
+          "cookie_7": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 7",
+          "cookie_8": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 8",
+          "cookie_9": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 9",
+          "cookie_10": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 10",
+          "cookie_11": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 11",
+          "cookie_12": "(q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') <= 2) && q.block_state('complementaries:level') >= 12"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "render_method": "blend",
+          "texture": "cm_jar_side"
+        },
+        "glass": {
+          "render_method": "blend",
+          "texture": "cm_jar_side"
+        },
+        "glass_top": {
+          "render_method": "blend",
+          "texture": "cm_jar_top"
+        },
+        "cork": {
+          "render_method": "blend",
+          "texture": "cm_jar_cork"
+        },
+        "fluid": {
+          "render_method": "blend",
+          "texture": "cm_jar_fluid_1"
+        },
+        "cookie": {
+          "render_method": "blend",
+          "texture": "cm_jar_cookie"
+        }
+      },
+      "minecraft:collision_box": {
+        "size": [
+          10,
+          16,
+          10
+        ],
+        "origin": [
+          -5,
+          0,
+          -5
+        ]
+      },
+      "minecraft:selection_box": {
+        "size": [
+          10,
+          16,
+          10
+        ],
+        "origin": [
+          -5,
+          0,
+          -5
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 1
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#c8e0f0",
+      "minecraft:loot": "loot_tables/blocks/jar.json",
+      "minecraft:movable": {
+        "movement_type": "popped"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_1"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_2"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          },
+          "minecraft:light_emission": 15
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_3"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_4"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_5"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_6"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_7"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_8"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_9"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          },
+          "minecraft:light_emission": 5
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_10"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          },
+          "minecraft:light_emission": 3
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_11"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_12"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_13"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_14"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_15"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_16"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          },
+          "minecraft:light_emission": 15
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_17"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_18"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_19"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_20"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_21"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_22"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_23"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_24"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_25"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_26"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_27"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_28"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_29"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_30"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_31"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_32"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_33"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_34"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_35"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_36"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_37"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_1"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_cookie"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_1"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_candy"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass": {
+              "render_method": "blend",
+              "texture": "cm_jar_side"
+            },
+            "glass_top": {
+              "render_method": "blend",
+              "texture": "cm_jar_top"
+            },
+            "cork": {
+              "render_method": "blend",
+              "texture": "cm_jar_cork"
+            },
+            "fluid": {
+              "render_method": "blend",
+              "texture": "cm_jar_fluid_1"
+            },
+            "cookie": {
+              "render_method": "blend",
+              "texture": "cm_jar_item"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') == 14",
+        "components": {
+          "minecraft:light_emission": 5
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 3 && q.block_state('complementaries:fluid') == 15",
+        "components": {
+          "minecraft:light_emission": 3
+        }
+      }
+    ]
+  }
+}

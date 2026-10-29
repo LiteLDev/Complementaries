@@ -1,0 +1,14 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:faucet" },
+    "tags": ["crafting_table"],
+    "unlock": [{ "item": "minecraft:iron_ingot" }],
+    "pattern": [" R ", "III", "  I"],
+    "key": {
+      "R": { "item": "minecraft:stick" },
+      "I": { "item": "minecraft:iron_ingot" }
+    },
+    "result": { "item": "complementaries:faucet", "count": 1 }
+  }
+}

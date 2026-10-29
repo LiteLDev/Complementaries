@@ -1,0 +1,101 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+    "controller.render.complementaries.jar_mob": {
+      "arrays": {
+        "geometries": {
+          "Array.geo": [
+            "Geometry.none",
+            "Geometry.bee",
+            "Geometry.slime",
+            "Geometry.magma_cube",
+            "Geometry.allay",
+            "Geometry.frog_temperate",
+            "Geometry.frog_cold",
+            "Geometry.frog_warm",
+            "Geometry.vex",
+            "Geometry.silverfish",
+            "Geometry.endermite",
+            "Geometry.rabbit_brown",
+            "Geometry.rabbit_white",
+            "Geometry.rabbit_black",
+            "Geometry.rabbit_splotched",
+            "Geometry.rabbit_gold",
+            "Geometry.rabbit_salt",
+            "Geometry.none",
+            "Geometry.none",
+            "Geometry.none",
+            "Geometry.cod",
+            "Geometry.salmon",
+            "Geometry.pufferfish",
+            "Geometry.tropical_fish",
+            "Geometry.axolotl_lucy",
+            "Geometry.tadpole",
+            "Geometry.axolotl_cyan",
+            "Geometry.axolotl_gold",
+            "Geometry.axolotl_wild",
+            "Geometry.axolotl_blue",
+            "Geometry.none",
+            "Geometry.none"
+          ]
+        },
+        "textures": {
+          "Array.tex": [
+            "Texture.none",
+            "Texture.bee",
+            "Texture.slime",
+            "Texture.magma_cube",
+            "Texture.allay",
+            "Texture.frog_temperate",
+            "Texture.frog_cold",
+            "Texture.frog_warm",
+            "Texture.vex",
+            "Texture.silverfish",
+            "Texture.endermite",
+            "Texture.rabbit_brown",
+            "Texture.rabbit_white",
+            "Texture.rabbit_black",
+            "Texture.rabbit_splotched",
+            "Texture.rabbit_gold",
+            "Texture.rabbit_salt",
+            "Texture.none",
+            "Texture.none",
+            "Texture.none",
+            "Texture.cod",
+            "Texture.salmon",
+            "Texture.pufferfish",
+            "Texture.tropical_fish",
+            "Texture.axolotl_lucy",
+            "Texture.tadpole",
+            "Texture.axolotl_cyan",
+            "Texture.axolotl_gold",
+            "Texture.axolotl_wild",
+            "Texture.axolotl_blue",
+            "Texture.none",
+            "Texture.none"
+          ]
+        }
+      },
+      "geometry": "Array.geo[q.property('complementaries:mob')]",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Array.tex[q.property('complementaries:mob')]"
+      ]
+    },
+    "controller.render.complementaries.jar_mob.slime_outer": {
+      "geometry": "Geometry.slime_outer",
+      "materials": [
+        {
+          "*": "Material.outer"
+        }
+      ],
+      "textures": [
+        "Texture.slime"
+      ]
+    }
+  }
+}

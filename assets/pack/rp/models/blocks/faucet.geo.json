@@ -1,0 +1,831 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.complementaries.faucet",
+        "texture_width": 16,
+        "texture_height": 16,
+        "visible_bounds_width": 2,
+        "visible_bounds_height": 2.5,
+        "visible_bounds_offset": [
+          0,
+          0.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "pipe",
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.0,
+                10.0,
+                -3.0
+              ],
+              "size": [
+                4.0,
+                4.0,
+                11.0
+              ],
+              "uv": {
+                "north": {
+                  "uv_size": [
+                    4.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "south": {
+                  "uv_size": [
+                    4.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "east": {
+                  "uv_size": [
+                    11.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "west": {
+                  "uv_size": [
+                    11.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "up": {
+                  "uv_size": [
+                    4.0,
+                    11.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "down": {
+                  "uv_size": [
+                    4.0,
+                    11.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "spout",
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.0,
+                5.0,
+                -3.0
+              ],
+              "size": [
+                4.0,
+                5.0,
+                4.0
+              ],
+              "uv": {
+                "north": {
+                  "uv_size": [
+                    4.0,
+                    5.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "south": {
+                  "uv_size": [
+                    4.0,
+                    5.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "east": {
+                  "uv_size": [
+                    4.0,
+                    5.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "west": {
+                  "uv_size": [
+                    4.0,
+                    5.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "up": {
+                  "uv_size": [
+                    4.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "down": {
+                  "uv_size": [
+                    4.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "stem",
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.0,
+                14.0,
+                1.0
+              ],
+              "size": [
+                2.0,
+                1.0,
+                2.0
+              ],
+              "uv": {
+                "north": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "south": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "east": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "west": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "up": {
+                  "uv_size": [
+                    2.0,
+                    2.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "down": {
+                  "uv_size": [
+                    2.0,
+                    2.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "valve",
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.0,
+                15.0,
+                1.0
+              ],
+              "size": [
+                6.0,
+                1.0,
+                2.0
+              ],
+              "uv": {
+                "north": {
+                  "uv_size": [
+                    6.0,
+                    1.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "south": {
+                  "uv_size": [
+                    6.0,
+                    1.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "east": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "west": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "up": {
+                  "uv_size": [
+                    6.0,
+                    2.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "down": {
+                  "uv_size": [
+                    6.0,
+                    2.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "stream",
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.0,
+                0.0,
+                -2.0
+              ],
+              "size": [
+                2.0,
+                5.0,
+                2.0
+              ],
+              "uv": {
+                "north": {
+                  "uv_size": [
+                    2.0,
+                    5.0
+                  ],
+                  "material_instance": "stream",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "south": {
+                  "uv_size": [
+                    2.0,
+                    5.0
+                  ],
+                  "material_instance": "stream",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "east": {
+                  "uv_size": [
+                    2.0,
+                    5.0
+                  ],
+                  "material_instance": "stream",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "west": {
+                  "uv_size": [
+                    2.0,
+                    5.0
+                  ],
+                  "material_instance": "stream",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "up": {
+                  "uv_size": [
+                    2.0,
+                    2.0
+                  ],
+                  "material_instance": "stream",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "down": {
+                  "uv_size": [
+                    2.0,
+                    2.0
+                  ],
+                  "material_instance": "stream",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "pipe_c",
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.0,
+                5.0,
+                -3.0
+              ],
+              "size": [
+                4.0,
+                4.0,
+                11.0
+              ],
+              "uv": {
+                "north": {
+                  "uv_size": [
+                    4.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "south": {
+                  "uv_size": [
+                    4.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "east": {
+                  "uv_size": [
+                    11.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "west": {
+                  "uv_size": [
+                    11.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "up": {
+                  "uv_size": [
+                    4.0,
+                    11.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "down": {
+                  "uv_size": [
+                    4.0,
+                    11.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "spout_c",
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -2.0,
+                0.0,
+                -3.0
+              ],
+              "size": [
+                4.0,
+                5.0,
+                4.0
+              ],
+              "uv": {
+                "north": {
+                  "uv_size": [
+                    4.0,
+                    5.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "south": {
+                  "uv_size": [
+                    4.0,
+                    5.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "east": {
+                  "uv_size": [
+                    4.0,
+                    5.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "west": {
+                  "uv_size": [
+                    4.0,
+                    5.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "up": {
+                  "uv_size": [
+                    4.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "down": {
+                  "uv_size": [
+                    4.0,
+                    4.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "stem_c",
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.0,
+                9.0,
+                1.0
+              ],
+              "size": [
+                2.0,
+                1.0,
+                2.0
+              ],
+              "uv": {
+                "north": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "south": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "east": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "west": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "up": {
+                  "uv_size": [
+                    2.0,
+                    2.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "down": {
+                  "uv_size": [
+                    2.0,
+                    2.0
+                  ],
+                  "material_instance": "iron",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "valve_c",
+          "pivot": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -3.0,
+                10.0,
+                1.0
+              ],
+              "size": [
+                6.0,
+                1.0,
+                2.0
+              ],
+              "uv": {
+                "north": {
+                  "uv_size": [
+                    6.0,
+                    1.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "south": {
+                  "uv_size": [
+                    6.0,
+                    1.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "east": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "west": {
+                  "uv_size": [
+                    2.0,
+                    1.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "up": {
+                  "uv_size": [
+                    6.0,
+                    2.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                },
+                "down": {
+                  "uv_size": [
+                    6.0,
+                    2.0
+                  ],
+                  "material_instance": "valve",
+                  "uv": [
+                    0,
+                    0
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

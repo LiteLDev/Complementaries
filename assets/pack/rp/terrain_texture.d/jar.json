@@ -1,0 +1,137 @@
+{
+  "cm_jar_side": {
+    "textures": "textures/blocks/jar/jar_side"
+  },
+  "cm_jar_top": {
+    "textures": "textures/blocks/jar/jar_top"
+  },
+  "cm_jar_cork": {
+    "textures": "textures/blocks/jar/jar_cork"
+  },
+  "cm_jar_cookie": {
+    "textures": "textures/blocks/jar/cookie"
+  },
+  "cm_jar_candy": {
+    "textures": "textures/blocks/jar/candy"
+  },
+  "cm_jar_item": {
+    "textures": "textures/blocks/jar/item"
+  },
+  "cm_faucet": {
+    "textures": "textures/blocks/jar/faucet"
+  },
+  "cm_faucet_valve": {
+    "textures": "textures/blocks/jar/faucet_valve"
+  },
+  "cm_jar_fluid_1": {
+    "textures": "textures/blocks/jar/fluid_water"
+  },
+  "cm_jar_fluid_2": {
+    "textures": "textures/blocks/jar/fluid_lava"
+  },
+  "cm_jar_fluid_3": {
+    "textures": "textures/blocks/jar/fluid_honey"
+  },
+  "cm_jar_fluid_4": {
+    "textures": "textures/blocks/jar/fluid_milk"
+  },
+  "cm_jar_fluid_5": {
+    "textures": "textures/blocks/jar/fluid_mushroom_stew"
+  },
+  "cm_jar_fluid_6": {
+    "textures": "textures/blocks/jar/fluid_beetroot_soup"
+  },
+  "cm_jar_fluid_7": {
+    "textures": "textures/blocks/jar/fluid_rabbit_stew"
+  },
+  "cm_jar_fluid_8": {
+    "textures": "textures/blocks/jar/fluid_suspicious_stew"
+  },
+  "cm_jar_fluid_9": {
+    "textures": "textures/blocks/jar/fluid_experience"
+  },
+  "cm_jar_fluid_10": {
+    "textures": "textures/blocks/jar/fluid_dragon_breath"
+  },
+  "cm_jar_fluid_11": {
+    "textures": "textures/blocks/jar/fluid_ghast_tear"
+  },
+  "cm_jar_fluid_12": {
+    "textures": "textures/blocks/jar/fluid_magma_cream"
+  },
+  "cm_jar_fluid_13": {
+    "textures": "textures/blocks/jar/fluid_slime"
+  },
+  "cm_jar_fluid_14": {
+    "textures": "textures/blocks/jar/fluid_powder_snow"
+  },
+  "cm_jar_fluid_15": {
+    "textures": "textures/blocks/jar/fluid_ominous"
+  },
+  "cm_jar_fluid_16": {
+    "textures": "textures/blocks/jar/fluid_lumisene"
+  },
+  "cm_jar_fluid_17": {
+    "textures": "textures/blocks/jar/fluid_potion"
+  },
+  "cm_jar_fluid_18": {
+    "textures": "textures/blocks/jar/fluid_potion_night_vision"
+  },
+  "cm_jar_fluid_19": {
+    "textures": "textures/blocks/jar/fluid_potion_invisibility"
+  },
+  "cm_jar_fluid_20": {
+    "textures": "textures/blocks/jar/fluid_potion_leaping"
+  },
+  "cm_jar_fluid_21": {
+    "textures": "textures/blocks/jar/fluid_potion_fire_resistance"
+  },
+  "cm_jar_fluid_22": {
+    "textures": "textures/blocks/jar/fluid_potion_swiftness"
+  },
+  "cm_jar_fluid_23": {
+    "textures": "textures/blocks/jar/fluid_potion_slowness"
+  },
+  "cm_jar_fluid_24": {
+    "textures": "textures/blocks/jar/fluid_potion_water_breathing"
+  },
+  "cm_jar_fluid_25": {
+    "textures": "textures/blocks/jar/fluid_potion_healing"
+  },
+  "cm_jar_fluid_26": {
+    "textures": "textures/blocks/jar/fluid_potion_harming"
+  },
+  "cm_jar_fluid_27": {
+    "textures": "textures/blocks/jar/fluid_potion_poison"
+  },
+  "cm_jar_fluid_28": {
+    "textures": "textures/blocks/jar/fluid_potion_regeneration"
+  },
+  "cm_jar_fluid_29": {
+    "textures": "textures/blocks/jar/fluid_potion_strength"
+  },
+  "cm_jar_fluid_30": {
+    "textures": "textures/blocks/jar/fluid_potion_weakness"
+  },
+  "cm_jar_fluid_31": {
+    "textures": "textures/blocks/jar/fluid_potion_decay"
+  },
+  "cm_jar_fluid_32": {
+    "textures": "textures/blocks/jar/fluid_potion_turtle_master"
+  },
+  "cm_jar_fluid_33": {
+    "textures": "textures/blocks/jar/fluid_potion_slow_falling"
+  },
+  "cm_jar_fluid_34": {
+    "textures": "textures/blocks/jar/fluid_potion_wind_charging"
+  },
+  "cm_jar_fluid_35": {
+    "textures": "textures/blocks/jar/fluid_potion_weaving"
+  },
+  "cm_jar_fluid_36": {
+    "textures": "textures/blocks/jar/fluid_potion_oozing"
+  },
+  "cm_jar_fluid_37": {
+    "textures": "textures/blocks/jar/fluid_potion_infestation"
+  }
+}

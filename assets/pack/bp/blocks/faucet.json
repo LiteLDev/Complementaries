@@ -1,0 +1,1049 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:faucet",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:facing": {
+          "values": {
+            "min": 0,
+            "max": 3
+          }
+        },
+        "complementaries:enabled": {
+          "values": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "complementaries:powered": {
+          "values": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "complementaries:connected": {
+          "values": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "complementaries:kind": {
+          "values": {
+            "min": 0,
+            "max": 3
+          }
+        },
+        "complementaries:fluid": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.faucet",
+        "bone_visibility": {
+          "pipe": "!(q.block_state('complementaries:connected') == 1)",
+          "spout": "!(q.block_state('complementaries:connected') == 1)",
+          "stem": "!(q.block_state('complementaries:connected') == 1)",
+          "valve": "!(q.block_state('complementaries:connected') == 1)",
+          "stream": "!(q.block_state('complementaries:connected') == 1) && q.block_state('complementaries:enabled') != q.block_state('complementaries:powered') && (q.block_state('complementaries:kind') > 0 || q.block_state('complementaries:fluid') > 0)",
+          "pipe_c": "q.block_state('complementaries:connected') == 1",
+          "spout_c": "q.block_state('complementaries:connected') == 1",
+          "stem_c": "q.block_state('complementaries:connected') == 1",
+          "valve_c": "q.block_state('complementaries:connected') == 1"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "render_method": "alpha_test",
+          "texture": "cm_faucet"
+        },
+        "iron": {
+          "render_method": "alpha_test",
+          "texture": "cm_faucet"
+        },
+        "valve": {
+          "render_method": "alpha_test",
+          "texture": "cm_faucet_valve"
+        },
+        "stream": {
+          "render_method": "alpha_test",
+          "texture": "cm_jar_fluid_1"
+        }
+      },
+      "minecraft:collision_box": {
+        "size": [
+          6,
+          10,
+          11
+        ],
+        "origin": [
+          -3,
+          5,
+          -3
+        ]
+      },
+      "minecraft:selection_box": {
+        "size": [
+          6,
+          10,
+          11
+        ],
+        "origin": [
+          -3,
+          5,
+          -3
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 3
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 4.8
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#a7a7a7"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:facing') == 0",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 1",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 2",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 3",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_1"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_2"
+            }
+          },
+          "minecraft:light_emission": 7
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_3"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_4"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_5"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_6"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_7"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_8"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_9"
+            }
+          },
+          "minecraft:light_emission": 2
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_10"
+            }
+          },
+          "minecraft:light_emission": 1
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_11"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_12"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_13"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_14"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 0 && q.block_state('complementaries:fluid') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_15"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_16"
+            }
+          },
+          "minecraft:light_emission": 7
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_17"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_18"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_19"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_20"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_21"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_22"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_23"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_24"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_25"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_26"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_27"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_28"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_29"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_30"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 1 && q.block_state('complementaries:fluid') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_31"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_32"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_33"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_34"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_35"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_36"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:kind') == 2 && q.block_state('complementaries:fluid') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "iron": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet"
+            },
+            "valve": {
+              "render_method": "alpha_test",
+              "texture": "cm_faucet_valve"
+            },
+            "stream": {
+              "render_method": "alpha_test",
+              "texture": "cm_jar_fluid_37"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:connected') == 1",
+        "components": {
+          "minecraft:collision_box": {
+            "size": [
+              6,
+              10,
+              11
+            ],
+            "origin": [
+              -3,
+              0,
+              -3
+            ]
+          },
+          "minecraft:selection_box": {
+            "size": [
+              6,
+              10,
+              11
+            ],
+            "origin": [
+              -3,
+              0,
+              -3
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

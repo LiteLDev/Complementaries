@@ -1,0 +1,14 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:jar" },
+    "tags": ["crafting_table"],
+    "unlock": [{ "item": "minecraft:glass" }],
+    "pattern": ["GSG", "G G", "GGG"],
+    "key": {
+      "G": { "item": "minecraft:glass" },
+      "S": { "tag": "minecraft:wooden_slabs" }
+    },
+    "result": { "item": "complementaries:jar", "count": 1 }
+  }
+}

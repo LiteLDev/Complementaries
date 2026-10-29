@@ -1,0 +1,104 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "complementaries:jar_mob",
+      "materials": {
+        "default": "entity_alphatest",
+        "outer": "entity_alphablend"
+      },
+      "textures": {
+        "none": "textures/blocks/jar/item",
+        "bee": "textures/entity/bee/bee",
+        "slime": "textures/entity/slime/slime",
+        "magma_cube": "textures/entity/slime/magmacube_v2",
+        "allay": "textures/entity/allay/allay",
+        "frog_temperate": "textures/entity/frog/temperate_frog",
+        "frog_cold": "textures/entity/frog/cold_frog",
+        "frog_warm": "textures/entity/frog/warm_frog",
+        "vex": "textures/entity/vex/vex",
+        "silverfish": "textures/entity/silverfish",
+        "endermite": "textures/entity/endermite",
+        "rabbit_brown": "textures/entity/rabbit/rabbit_brown_baby",
+        "rabbit_white": "textures/entity/rabbit/rabbit_white_baby",
+        "rabbit_black": "textures/entity/rabbit/rabbit_black_baby",
+        "rabbit_splotched": "textures/entity/rabbit/rabbit_white_splotched_baby",
+        "rabbit_gold": "textures/entity/rabbit/rabbit_gold_baby",
+        "rabbit_salt": "textures/entity/rabbit/rabbit_salt_baby",
+        "cod": "textures/entity/fish/cod",
+        "salmon": "textures/entity/fish/salmon",
+        "pufferfish": "textures/entity/fish/pufferfish",
+        "tropical_fish": "textures/entity/fish/tropical_a",
+        "axolotl_lucy": "textures/entity/axolotl/axolotl_lucy",
+        "tadpole": "textures/entity/tadpole/tadpole",
+        "axolotl_cyan": "textures/entity/axolotl/axolotl_cyan",
+        "axolotl_gold": "textures/entity/axolotl/axolotl_gold",
+        "axolotl_wild": "textures/entity/axolotl/axolotl_wild",
+        "axolotl_blue": "textures/entity/axolotl/axolotl_blue"
+      },
+      "geometry": {
+        "none": "geometry.complementaries.jar_mob_none",
+        "slime_outer": "geometry.slime.armor",
+        "bee": "geometry.bee",
+        "slime": "geometry.slime",
+        "magma_cube": "geometry.magma_cube_v2",
+        "allay": "geometry.allay",
+        "frog_temperate": "geometry.frog",
+        "frog_cold": "geometry.frog",
+        "frog_warm": "geometry.frog",
+        "vex": "geometry.vex",
+        "silverfish": "geometry.silverfish",
+        "endermite": "geometry.endermite",
+        "rabbit_brown": "geometry.rabbit.baby",
+        "rabbit_white": "geometry.rabbit.baby",
+        "rabbit_black": "geometry.rabbit.baby",
+        "rabbit_splotched": "geometry.rabbit.baby",
+        "rabbit_gold": "geometry.rabbit.baby",
+        "rabbit_salt": "geometry.rabbit.baby",
+        "cod": "geometry.cod",
+        "salmon": "geometry.salmon",
+        "pufferfish": "geometry.pufferfish.small",
+        "tropical_fish": "geometry.tropicalfish_a",
+        "axolotl_lucy": "geometry.axolotl",
+        "tadpole": "geometry.tadpole",
+        "axolotl_cyan": "geometry.axolotl",
+        "axolotl_gold": "geometry.axolotl",
+        "axolotl_wild": "geometry.axolotl",
+        "axolotl_blue": "geometry.axolotl"
+      },
+      "animations": {
+        "swim_bee": "animation.bee.flying",
+        "swim_cod": "animation.cod.swim",
+        "swim_salmon": "animation.salmon.swim",
+        "swim_pufferfish": "animation.pufferfish.swim",
+        "swim_tropical_fish": "animation.tropicalfish.swim"
+      },
+      "scripts": {
+        "scale": "(q.property('complementaries:mob') == 1 ? 0.55 : (q.property('complementaries:mob') == 2 ? 0.7 : (q.property('complementaries:mob') == 3 ? 0.7 : (q.property('complementaries:mob') == 4 ? 0.7 : (q.property('complementaries:mob') == 5 ? 0.6 : (q.property('complementaries:mob') == 6 ? 0.6 : (q.property('complementaries:mob') == 7 ? 0.6 : (q.property('complementaries:mob') == 8 ? 0.3 : (q.property('complementaries:mob') == 9 ? 0.6 : (q.property('complementaries:mob') == 10 ? 0.8 : (q.property('complementaries:mob') == 11 ? 1 : (q.property('complementaries:mob') == 12 ? 1 : (q.property('complementaries:mob') == 13 ? 1 : (q.property('complementaries:mob') == 14 ? 1 : (q.property('complementaries:mob') == 15 ? 1 : (q.property('complementaries:mob') == 16 ? 1 : (q.property('complementaries:mob') == 20 ? 0.6 : (q.property('complementaries:mob') == 21 ? 0.5 : (q.property('complementaries:mob') == 22 ? 0.8 : (q.property('complementaries:mob') == 23 ? 0.7 : (q.property('complementaries:mob') == 24 ? 0.45 : (q.property('complementaries:mob') == 25 ? 1 : (q.property('complementaries:mob') == 26 ? 0.45 : (q.property('complementaries:mob') == 27 ? 0.45 : (q.property('complementaries:mob') == 28 ? 0.45 : (q.property('complementaries:mob') == 29 ? 0.45 : 1.0))))))))))))))))))))))))))",
+        "animate": [
+          {
+            "swim_bee": "q.property('complementaries:mob') == 1"
+          },
+          {
+            "swim_cod": "q.property('complementaries:mob') == 20"
+          },
+          {
+            "swim_salmon": "q.property('complementaries:mob') == 21"
+          },
+          {
+            "swim_pufferfish": "q.property('complementaries:mob') == 22"
+          },
+          {
+            "swim_tropical_fish": "q.property('complementaries:mob') == 23"
+          }
+        ]
+      },
+      "render_controllers": [
+        "controller.render.complementaries.jar_mob",
+        {
+          "controller.render.complementaries.jar_mob.slime_outer": "q.property('complementaries:mob') == 2"
+        }
+      ]
+    }
+  }
+}
