@@ -1,0 +1,27 @@
+{
+  "complementaries.block.awning.bounce": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "sounds/step/cloth1",
+        "pitch": 1.2,
+        "volume": 1.0
+      },
+      {
+        "name": "sounds/step/cloth2",
+        "pitch": 1.1,
+        "volume": 1.0
+      },
+      {
+        "name": "sounds/step/cloth3",
+        "pitch": 1.3,
+        "volume": 1.0
+      },
+      {
+        "name": "sounds/step/cloth4",
+        "pitch": 1.2,
+        "volume": 1.0
+      }
+    ]
+  }
+}

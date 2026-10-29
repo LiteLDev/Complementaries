@@ -1,0 +1,152 @@
+{
+  "complementaries_dragon_banner_pattern": {
+    "textures": "textures/items/dragon_banner_pattern"
+  },
+  "complementaries_flag_white": {
+    "textures": "textures/items/flag_white"
+  },
+  "complementaries_bunting_white": {
+    "textures": "textures/items/bunting_white"
+  },
+  "complementaries_flag_orange": {
+    "textures": "textures/items/flag_orange"
+  },
+  "complementaries_bunting_orange": {
+    "textures": "textures/items/bunting_orange"
+  },
+  "complementaries_flag_magenta": {
+    "textures": "textures/items/flag_magenta"
+  },
+  "complementaries_bunting_magenta": {
+    "textures": "textures/items/bunting_magenta"
+  },
+  "complementaries_flag_light_blue": {
+    "textures": "textures/items/flag_light_blue"
+  },
+  "complementaries_bunting_light_blue": {
+    "textures": "textures/items/bunting_light_blue"
+  },
+  "complementaries_flag_yellow": {
+    "textures": "textures/items/flag_yellow"
+  },
+  "complementaries_bunting_yellow": {
+    "textures": "textures/items/bunting_yellow"
+  },
+  "complementaries_flag_lime": {
+    "textures": "textures/items/flag_lime"
+  },
+  "complementaries_bunting_lime": {
+    "textures": "textures/items/bunting_lime"
+  },
+  "complementaries_flag_pink": {
+    "textures": "textures/items/flag_pink"
+  },
+  "complementaries_bunting_pink": {
+    "textures": "textures/items/bunting_pink"
+  },
+  "complementaries_flag_gray": {
+    "textures": "textures/items/flag_gray"
+  },
+  "complementaries_bunting_gray": {
+    "textures": "textures/items/bunting_gray"
+  },
+  "complementaries_flag_light_gray": {
+    "textures": "textures/items/flag_light_gray"
+  },
+  "complementaries_bunting_light_gray": {
+    "textures": "textures/items/bunting_light_gray"
+  },
+  "complementaries_flag_cyan": {
+    "textures": "textures/items/flag_cyan"
+  },
+  "complementaries_bunting_cyan": {
+    "textures": "textures/items/bunting_cyan"
+  },
+  "complementaries_flag_purple": {
+    "textures": "textures/items/flag_purple"
+  },
+  "complementaries_bunting_purple": {
+    "textures": "textures/items/bunting_purple"
+  },
+  "complementaries_flag_blue": {
+    "textures": "textures/items/flag_blue"
+  },
+  "complementaries_bunting_blue": {
+    "textures": "textures/items/bunting_blue"
+  },
+  "complementaries_flag_brown": {
+    "textures": "textures/items/flag_brown"
+  },
+  "complementaries_bunting_brown": {
+    "textures": "textures/items/bunting_brown"
+  },
+  "complementaries_flag_green": {
+    "textures": "textures/items/flag_green"
+  },
+  "complementaries_bunting_green": {
+    "textures": "textures/items/bunting_green"
+  },
+  "complementaries_flag_red": {
+    "textures": "textures/items/flag_red"
+  },
+  "complementaries_bunting_red": {
+    "textures": "textures/items/bunting_red"
+  },
+  "complementaries_flag_black": {
+    "textures": "textures/items/flag_black"
+  },
+  "complementaries_bunting_black": {
+    "textures": "textures/items/bunting_black"
+  },
+  "complementaries_awning": {
+    "textures": "textures/items/awning"
+  },
+  "complementaries_awning_white": {
+    "textures": "textures/items/awning_white"
+  },
+  "complementaries_awning_orange": {
+    "textures": "textures/items/awning_orange"
+  },
+  "complementaries_awning_magenta": {
+    "textures": "textures/items/awning_magenta"
+  },
+  "complementaries_awning_light_blue": {
+    "textures": "textures/items/awning_light_blue"
+  },
+  "complementaries_awning_yellow": {
+    "textures": "textures/items/awning_yellow"
+  },
+  "complementaries_awning_lime": {
+    "textures": "textures/items/awning_lime"
+  },
+  "complementaries_awning_pink": {
+    "textures": "textures/items/awning_pink"
+  },
+  "complementaries_awning_gray": {
+    "textures": "textures/items/awning_gray"
+  },
+  "complementaries_awning_light_gray": {
+    "textures": "textures/items/awning_light_gray"
+  },
+  "complementaries_awning_cyan": {
+    "textures": "textures/items/awning_cyan"
+  },
+  "complementaries_awning_purple": {
+    "textures": "textures/items/awning_purple"
+  },
+  "complementaries_awning_blue": {
+    "textures": "textures/items/awning_blue"
+  },
+  "complementaries_awning_brown": {
+    "textures": "textures/items/awning_brown"
+  },
+  "complementaries_awning_green": {
+    "textures": "textures/items/awning_green"
+  },
+  "complementaries_awning_red": {
+    "textures": "textures/items/awning_red"
+  },
+  "complementaries_awning_black": {
+    "textures": "textures/items/awning_black"
+  }
+}

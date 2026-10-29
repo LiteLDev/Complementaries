@@ -1,0 +1,33 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:awning_magenta_2"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "awning",
+    "unlock": [
+      {
+        "item": "minecraft:magenta_carpet"
+      }
+    ],
+    "pattern": [
+      "###",
+      "/ /"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:magenta_carpet"
+      },
+      "/": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "complementaries:awning_magenta",
+      "count": 2
+    }
+  }
+}

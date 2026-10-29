@@ -1,0 +1,197 @@
+{
+  "complementaries:flag_white": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_white": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_white": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_orange": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_orange": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_orange": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_magenta": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_magenta": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_magenta": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_light_blue": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_light_blue": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_light_blue": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_yellow": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_yellow": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_yellow": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_lime": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_lime": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_lime": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_pink": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_pink": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_pink": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_gray": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_gray": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_gray": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_light_gray": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_light_gray": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_light_gray": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_cyan": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_cyan": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_cyan": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_purple": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_purple": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_purple": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_blue": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_blue": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_blue": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_brown": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_brown": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_brown": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_green": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_green": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_green": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_red": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_red": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_red": {
+    "sound": "cloth"
+  },
+  "complementaries:flag_black": {
+    "sound": "wood"
+  },
+  "complementaries:bunting_black": {
+    "sound": "cloth"
+  },
+  "complementaries:bunting_wall_black": {
+    "sound": "cloth"
+  },
+  "complementaries:awning": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_white": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_orange": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_magenta": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_light_blue": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_yellow": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_lime": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_pink": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_gray": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_light_gray": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_cyan": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_purple": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_blue": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_brown": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_green": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_red": {
+    "sound": "cloth"
+  },
+  "complementaries:awning_black": {
+    "sound": "cloth"
+  }
+}

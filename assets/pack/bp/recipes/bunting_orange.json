@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:bunting_orange"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "bunting",
+    "unlock": [
+      {
+        "item": "minecraft:orange_dye"
+      }
+    ],
+    "ingredients": [
+      {
+        "tag": "complementaries:buntings"
+      },
+      {
+        "item": "minecraft:orange_dye"
+      }
+    ],
+    "result": {
+      "item": "complementaries:bunting_orange",
+      "count": 1
+    }
+  }
+}

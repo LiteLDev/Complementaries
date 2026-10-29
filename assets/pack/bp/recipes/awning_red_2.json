@@ -1,0 +1,33 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:awning_red_2"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "awning",
+    "unlock": [
+      {
+        "item": "minecraft:red_carpet"
+      }
+    ],
+    "pattern": [
+      "###",
+      "/ /"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:red_carpet"
+      },
+      "/": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "complementaries:awning_red",
+      "count": 2
+    }
+  }
+}

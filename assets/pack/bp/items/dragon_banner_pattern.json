@@ -1,0 +1,25 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:item": {
+    "description": {
+      "identifier": "complementaries:dragon_banner_pattern",
+      "menu_category": {
+        "category": "items",
+        "group": "minecraft:itemGroup.name.banner_pattern"
+      }
+    },
+    "components": {
+      "minecraft:icon": {
+        "textures": {
+          "default": "complementaries_dragon_banner_pattern"
+        }
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "complementaries:banner_patterns"
+        ]
+      }
+    }
+  }
+}

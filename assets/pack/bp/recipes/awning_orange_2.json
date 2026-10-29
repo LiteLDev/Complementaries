@@ -1,0 +1,33 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:awning_orange_2"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "awning",
+    "unlock": [
+      {
+        "item": "minecraft:orange_carpet"
+      }
+    ],
+    "pattern": [
+      "###",
+      "/ /"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:orange_carpet"
+      },
+      "/": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "complementaries:awning_orange",
+      "count": 2
+    }
+  }
+}

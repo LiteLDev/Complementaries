@@ -1,0 +1,29 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:bunting_green"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "group": "bunting",
+    "unlock": [
+      {
+        "item": "minecraft:green_dye"
+      }
+    ],
+    "ingredients": [
+      {
+        "tag": "complementaries:buntings"
+      },
+      {
+        "item": "minecraft:green_dye"
+      }
+    ],
+    "result": {
+      "item": "complementaries:bunting_green",
+      "count": 1
+    }
+  }
+}

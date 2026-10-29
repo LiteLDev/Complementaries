@@ -1,0 +1,187 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:awning_black",
+      "menu_category": {
+        "category": "items",
+        "group": "minecraft:itemGroup.name.wool"
+      },
+      "states": {
+        "complementaries:facing": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "complementaries:bottom": [
+          0,
+          1
+        ],
+        "complementaries:slanted": [
+          0,
+          1
+        ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.complementaries.awning_top",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "complementaries_awning_black",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -8,
+          9,
+          -8
+        ],
+        "size": [
+          16,
+          7,
+          16
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -8,
+          8,
+          -8
+        ],
+        "size": [
+          16,
+          8,
+          16
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.6
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.5
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#1D1D21",
+      "minecraft:loot": "loot_tables/blocks/awning_black.json",
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true,
+            "on_liquid_touches": "no_reaction"
+          }
+        ]
+      },
+      "minecraft:flammable": {
+        "destroy_chance_modifier": 60,
+        "catch_chance_modifier": 30
+      },
+      "tag:complementaries:awnings": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:facing') == 0",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 1",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 2",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:facing') == 3",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:bottom') == 1",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -8,
+              1,
+              -8
+            ],
+            "size": [
+              16,
+              7,
+              16
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              8,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:bottom') == 0 && q.block_state('complementaries:slanted') == 0",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.awning_top"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:bottom') == 0 && q.block_state('complementaries:slanted') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.awning_top_slanted"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:bottom') == 1 && q.block_state('complementaries:slanted') == 0",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.awning_bottom"
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:bottom') == 1 && q.block_state('complementaries:slanted') == 1",
+        "components": {
+          "minecraft:geometry": "geometry.complementaries.awning_bottom_slanted"
+        }
+      }
+    ]
+  }
+}
