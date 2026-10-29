@@ -15,7 +15,7 @@ Source module: `src/feature/instrument/` (namespace `cm::feature::instrument`). 
 | `complementaries:wind_vane` | block | ` I ` / `IBI` / ` R ` (I iron ingot, B iron bars, R redstone) | itself |
 | `complementaries:clock_block` | block | `PPP` / `PCP` / `PPP` (P any planks, C clock) | itself, 2 when two-faced |
 | `complementaries:hourglass` | block | `gGg` / ` g ` / `gGg` (G gold ingot, g glass) | itself + its contents |
-| `complementaries:altimeter` | item | ` c ` / `cRc` / ` c ` (c copper ingot, R redstone) | - |
+| `complementaries:altimeter` | item | ` c ` / `cMc` / ` c ` (c copper ingot, M compass; the cog block uses copper around redstone) | - |
 
 Recipes: `globe_sepia` = globe + `complementaries:antique_ink`; `globe` = sepia globe + `complementaries:soap`
 (both ingredients belong to other units; the recipes resolve once those units are present).
