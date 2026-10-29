@@ -1,0 +1,17 @@
+{
+  "complementaries:stick": {
+    "sound": "wood"
+  },
+  "complementaries:blaze_rod": {
+    "sound": "stone"
+  },
+  "complementaries:breeze_rod": {
+    "sound": "stone"
+  },
+  "complementaries:gunpowder": {
+    "sound": "sand"
+  },
+  "complementaries:hanging_flower_pot": {
+    "sound": "stone"
+  }
+}

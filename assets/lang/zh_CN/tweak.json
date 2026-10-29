@@ -1,0 +1,7 @@
+{
+  "message.supplementaries.clock": "{0}:{1}",
+  "message.supplementaries.compass": "X: {0} Y: {1} Z: {2}",
+  "message.supplementaries.compass.spinning": "指南针在疯狂地旋转！",
+  "message.supplementaries.bottle_xp.not_enough": "经验不足",
+  "message.supplementaries.zombie_horse.progress": "这匹骷髅马渴望更多的腐肉（{0}/{1}）"
+}

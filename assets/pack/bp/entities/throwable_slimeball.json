@@ -1,0 +1,43 @@
+{
+  "format_version": "1.21.40",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "complementaries:throwable_slimeball",
+      "is_spawnable": false,
+      "is_summonable": true,
+      "runtime_identifier": "minecraft:snowball"
+    },
+    "components": {
+      "minecraft:collision_box": {
+        "width": 0.25,
+        "height": 0.25
+      },
+      "minecraft:projectile": {
+        "on_hit": {
+          "impact_damage": {
+            "damage": 0,
+            "knockback": true,
+            "destroy_on_hit": false
+          },
+          "remove_on_hit": {}
+        },
+        "power": 1.5,
+        "gravity": 0.03,
+        "angle_offset": 0.0,
+        "offset": [
+          0,
+          -0.1,
+          0
+        ]
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:variant": {
+        "value": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "message.supplementaries.clock": "{0}:{1}",
+  "message.supplementaries.compass": "X: {0} Y: {1} Z: {2}",
+  "message.supplementaries.compass.spinning": "The compass is spinning wildly!",
+  "message.supplementaries.bottle_xp.not_enough": "Not enough experience",
+  "message.supplementaries.zombie_horse.progress": "This skeleton horse craves more flesh ({0}/{1})"
+}
