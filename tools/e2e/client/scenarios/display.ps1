@@ -59,7 +59,9 @@ Save-Screenshot 'shelf' | Out-Null
 # Hat stand: wear a helmet.
 $mark = Get-LogMark
 Hold 'iron_helmet'
-Aim 4.5 -61.12 3.5
+# straight in front of the stand (a turn alone is not always applied to the camera)
+Invoke-Chat "/tp @s 4.5 -60 1.5 $(Get-Look 0 -0.9 2)"
+Start-Sleep -Milliseconds 700
 Use-Center
 Wait-LogLine 'put minecraft:iron_helmet on a hat stand' 15 -Since $mark | Out-Null
 Start-Sleep -Seconds 1

@@ -344,7 +344,11 @@ public:
                 if (player.isClientSide() || !is(ev.placedBlock(), kFlowerBox)) return;
                 auto it   = mPlacingFace.find(player.getOrCreateUniqueID().rawID);
                 auto face = it == mPlacingFace.end() ? FacingID::Up : it->second;
-                flower_box::onPlaced(player, ev.pos(), face);
+                // the block is only in the world after the event
+                defer([uuid = player.getUuid(), pos = ev.pos(), face] {
+                    auto level = ll::service::getLevel();
+                    if (auto* p = level ? level->getPlayer(uuid) : nullptr) flower_box::onPlaced(*p, pos, face);
+                });
             })
         );
         mListeners.push_back(bus.emplaceListener<ll::event::BlockChangedEvent>([](ll::event::BlockChangedEvent& ev) {

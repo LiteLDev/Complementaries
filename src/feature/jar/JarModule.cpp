@@ -176,14 +176,16 @@ void onPlaced(ll::event::PlayerPlacedBlockEvent& ev) {
         setJar(pos, pending.jar.value_or(Contents{}));
         log().info("jar: {} placed a jar at {}", player.getRealName(), pos.key());
     } else if (isBlock(placed, kFaucetId)) {
-        setStates(
-            region,
-            bp,
-            {
-                {kStateFacing, faceToFacing(pending.face)}
-        }
-        );
-        faucetPlaced(pos);
+        // the block is only in the world after the event: turn it next tick
+        int facing = faceToFacing(pending.face);
+        later([uid, bp, pos, facing] {
+            auto* p = playerById(uid);
+            if (!p) return;
+            auto& r = p->getDimensionBlockSource();
+            if (!isBlock(r.getBlock(bp), kFaucetId)) return;
+            setStates(r, bp, {{kStateFacing, facing}});
+            faucetPlaced(pos);
+        });
         log().info("faucet: {} placed a faucet at {}", player.getRealName(), pos.key());
     }
 }

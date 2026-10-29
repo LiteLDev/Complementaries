@@ -22,17 +22,19 @@ Invoke-Chat "/tp @s ~-13 ~0.5 ~ $(Get-Look 13 -3.12 3)"
 Start-Sleep -Seconds 3
 Save-Screenshot 'demo-faucets' | Out-Null
 
-# ---- right clicks on a placed jar ----
-Invoke-Chat '/tp @s ~ ~ ~-8'
+# ---- right clicks on a placed jar (on clear ground away from the demo and its water) ----
+Invoke-Chat '/fill 50 -60 -3 58 -56 6 air'
+Invoke-Chat '/tp @s 50.5 -60 0.5'
+Start-Sleep -Milliseconds 800
 Invoke-Chat '/setblock ~ ~ ~2 complementaries:jar'
 Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 water_bucket'
-Face-Offset 0 0.4 2.5
+Face-Offset 0 0.4 2
 Start-Sleep -Milliseconds 600
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
 Wait-LogLine 'jar: .* poured water into the jar' 15 -Since $mark | Out-Null
 Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 glass_bottle'
-Face-Offset 0 0.4 2.5
+Face-Offset 0 0.4 2
 Start-Sleep -Milliseconds 600
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right

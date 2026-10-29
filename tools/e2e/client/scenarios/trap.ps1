@@ -46,13 +46,11 @@ Save-Screenshot 'gallery' | Out-Null
 # ---- cage: catch -----------------------------------------------------------------------------
 Invoke-Chat '/give @s complementaries:cage 1'
 Press-Key '1'
-# the chicken waits in a two-high glass ring (one high lets it flutter out); the player stands on
-# the ring and looks down at it
-Invoke-Chat '/fill 5 -60 1 7 -59 3 glass'
-Invoke-Chat '/fill 6 -60 2 6 -59 2 air'
-Invoke-Chat '/summon chicken 6.5 -60 2.5'
-Invoke-Chat '/effect @e[type=chicken] slowness 60 255 true'
-Invoke-Chat "/tp @s 6.5 -58 1.5 $(Get-Look 0 -3.3 1)"
+# the chicken waits in a two-deep pit it cannot jump out of; the player stands at the edge and
+# looks down into it
+Invoke-Chat '/fill 6 -62 2 6 -61 2 air'
+Invoke-Chat '/summon chicken 6.5 -62 2.5'
+Invoke-Chat "/tp @s 6.5 -60 1.7 $(Get-Look 0 -4 1)"
 Start-Sleep -Milliseconds 500
 $mark = Get-LogMark
 Mouse 0  # hit the chicken with the cage
