@@ -1,0 +1,13 @@
+{
+  "gui.supplementaries.pulley_block": "滑轮",
+  "cm.rope.pulley.empty": "空",
+  "cm.rope.pulley.content": "已缠绕：{} x{}",
+  "cm.rope.pulley.put": "放入手中的{}",
+  "cm.rope.pulley.take": "取出",
+  "cm.rope.pulley.turn_cw": "顺时针转动",
+  "cm.rope.pulley.turn_ccw": "逆时针转动",
+  "cm.rope.pulley.wrong_item": "滑轮上只能缠绕绳子或锁链",
+  "cm.rope.pulley.full": "滑轮已满",
+  "cm.rope.item.rope": "绳子",
+  "cm.rope.item.chain": "锁链"
+}

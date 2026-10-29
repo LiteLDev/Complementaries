@@ -1,0 +1,69 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:wild_flax",
+      "menu_category": {
+        "category": "nature",
+        "group": "minecraft:itemGroup.name.flower"
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:wild_flax.name",
+      "minecraft:geometry": "geometry.complementaries.flax_cross",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "complementaries_wild_flax",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": false
+        }
+      },
+      "minecraft:collision_box": false,
+      "minecraft:selection_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          13,
+          12
+        ]
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0
+      },
+      "minecraft:flammable": {
+        "catch_chance_modifier": 60,
+        "destroy_chance_modifier": 100
+      },
+      "minecraft:replaceable": {},
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": [
+              "up"
+            ],
+            "block_filter": [
+              "minecraft:grass_block",
+              "minecraft:dirt",
+              "minecraft:coarse_dirt",
+              "minecraft:podzol",
+              "minecraft:dirt_with_roots",
+              "minecraft:farmland",
+              "minecraft:sand",
+              "minecraft:red_sand",
+              "minecraft:mud",
+              "minecraft:moss_block"
+            ]
+          }
+        ]
+      },
+      "minecraft:map_color": "#5f9a3a",
+      "minecraft:loot": "loot_tables/blocks/wild_flax.json"
+    }
+  }
+}

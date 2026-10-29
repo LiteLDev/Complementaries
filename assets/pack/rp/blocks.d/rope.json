@@ -1,0 +1,17 @@
+{
+  "complementaries:rope": {
+    "sound": "cloth"
+  },
+  "complementaries:pulley_block": {
+    "sound": "wood"
+  },
+  "complementaries:flax_crop": {
+    "sound": "grass"
+  },
+  "complementaries:wild_flax": {
+    "sound": "grass"
+  },
+  "complementaries:flax_block": {
+    "sound": "grass"
+  }
+}

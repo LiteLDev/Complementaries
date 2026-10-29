@@ -1,0 +1,20 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:scatter_feature": {
+    "description": {
+      "identifier": "complementaries:wild_flax_feature"
+    },
+    "places_feature": "complementaries:wild_flax_snap_feature",
+    "iterations": 12,
+    "coordinate_eval_order": "xzy",
+    "x": {
+      "distribution": "gaussian",
+      "extent": [-4, 4]
+    },
+    "z": {
+      "distribution": "gaussian",
+      "extent": [-4, 4]
+    },
+    "y": 0
+  }
+}

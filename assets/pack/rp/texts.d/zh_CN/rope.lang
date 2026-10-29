@@ -1,0 +1,9 @@
+tile.complementaries:rope.name=绳子
+tile.complementaries:pulley_block.name=滑轮
+tile.complementaries:flax_crop.name=亚麻
+tile.complementaries:wild_flax.name=野亚麻
+tile.complementaries:flax_block.name=亚麻块
+item.complementaries:rope_arrow.name=绳索箭
+item.complementaries:flax.name=亚麻
+item.complementaries:flax_seeds.name=亚麻种子
+entity.complementaries:rope_arrow.name=绳索箭

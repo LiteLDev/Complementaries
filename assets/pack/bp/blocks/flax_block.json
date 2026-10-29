@@ -1,0 +1,147 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:flax_block",
+      "menu_category": {
+        "category": "construction"
+      },
+      "traits": {
+        "minecraft:placement_position": {
+          "enabled_states": [
+            "minecraft:block_face"
+          ]
+        }
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:flax_block.name",
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "complementaries_flax_block_side",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.75
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.5
+      },
+      "minecraft:flammable": {
+        "catch_chance_modifier": 60,
+        "destroy_chance_modifier": 20
+      },
+      "minecraft:map_color": "#bba66d",
+      "minecraft:loot": "loot_tables/blocks/flax_block.json"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down'",
+        "components": {
+          "minecraft:material_instances": {
+            "up": {
+              "texture": "complementaries_flax_block_top",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "complementaries_flax_block_top",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'north' || q.block_state('minecraft:block_face') == 'south'",
+        "components": {
+          "minecraft:material_instances": {
+            "up": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "complementaries_flax_block_top",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "complementaries_flax_block_top",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "complementaries_flax_block_top",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'east' || q.block_state('minecraft:block_face') == 'west'",
+        "components": {
+          "minecraft:material_instances": {
+            "up": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "down": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "north": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "south": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            },
+            "east": {
+              "texture": "complementaries_flax_block_top",
+              "render_method": "opaque"
+            },
+            "west": {
+              "texture": "complementaries_flax_block_top",
+              "render_method": "opaque"
+            },
+            "*": {
+              "texture": "complementaries_flax_block_side",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

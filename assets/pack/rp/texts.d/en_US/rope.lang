@@ -1,0 +1,9 @@
+tile.complementaries:rope.name=Rope
+tile.complementaries:pulley_block.name=Pulley Block
+tile.complementaries:flax_crop.name=Flax
+tile.complementaries:wild_flax.name=Wild Flax
+tile.complementaries:flax_block.name=Flax Block
+item.complementaries:rope_arrow.name=Rope Arrow
+item.complementaries:flax.name=Flax
+item.complementaries:flax_seeds.name=Flax Seeds
+entity.complementaries:rope_arrow.name=Rope Arrow
