@@ -201,7 +201,7 @@ LL_TYPE_INSTANCE_HOOK(
     Player*    player
 ) {
     if (player && !inout.isNull() && inout.getTypeName() == kLunchBasket) {
-        if (!player->isClientSide()) {
+        if (!player->getLevel().isClientSide()) {
             basketEat(*player, inout);
             player->sendInventory(false);
         }

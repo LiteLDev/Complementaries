@@ -622,7 +622,9 @@ function Enter-TestWorld([int]$LoadSeconds = 10, [int]$Attempts = 3) {
         Start-Sleep -Seconds $LoadSeconds
         try {
             Wait-LogLine 'Player Spawned' 75 -Since $mark | Out-Null
-            Start-Sleep -Seconds 3
+            # "Player Spawned" is the server side: the client keeps its loading screen a few seconds
+            # longer (more on a busy machine), and input sent to it is lost
+            Start-Sleep -Seconds 12
             Focus-Game
             Write-Step "in world"
             return
@@ -766,4 +768,18 @@ function Invoke-Chat([string]$text) {
     Press-Key T; Start-Sleep -Milliseconds 700
     Type-Text $text
     Press-Key ENTER; Start-Sleep -Milliseconds 800
+}
+
+# Yaw and pitch ("<yaw> <pitch>", as /tp takes them) to look along the offset (dx, dy, dz) from the
+# eyes. `/tp @s ... facing <pos>` does not turn the local player's camera reliably on this client,
+# so scenarios that click on something aim with explicit angles.
+function Get-Look([double]$dx, [double]$dy, [double]$dz) {
+    $yaw = [math]::Atan2(-$dx, $dz) * 180 / [math]::PI
+    $pitch = -[math]::Atan2($dy, [math]::Sqrt($dx * $dx + $dz * $dz)) * 180 / [math]::PI
+    [string]::Format([Globalization.CultureInfo]::InvariantCulture, '{0:0.##} {1:0.##}', $yaw, $pitch)
+}
+
+# Turns the camera, without moving, towards the point (dx, dy, dz) relative to the player's feet.
+function Face-Offset([double]$dx, [double]$dy, [double]$dz, [double]$EyeHeight = 1.62) {
+    Invoke-Chat "/tp @s ~ ~ ~ $(Get-Look $dx ($dy - $EyeHeight) $dz)"
 }

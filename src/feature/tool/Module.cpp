@@ -145,7 +145,13 @@ LL_TYPE_INSTANCE_HOOK(
     int        durationLeft
 ) {
     origin(item, player, durationLeft);
-    if (!player || player->isClientSide() || !isItem(item, ids::Slingshot)) return;
+    // Actor::isClientSide() only checks for a level: the client build's local player has one too
+    if (!player || player->getLevel().isClientSide() || !isItem(item, ids::Slingshot)) return;
+    // one release can reach this twice in the same moment (the player's own stop and the client's packet)
+    static std::unordered_map<std::int64_t, std::uint64_t> lastRelease;
+    auto& last = lastRelease[player->getOrCreateUniqueID().rawID];
+    if (last != 0 && currentTick() <= last + 2) return;
+    last     = currentTick();
     int used = getMaxUseDuration(&item) - durationLeft;
     slingshot::release(*player, item, used);
 }
@@ -187,7 +193,7 @@ LL_TYPE_INSTANCE_HOOK(
     HandSlot    handSlot
 ) {
     Player& player = mPlayer;
-    if (!player.isClientSide() && handSlot == HandSlot::Mainhand) {
+    if (!player.getLevel().isClientSide() && handSlot == HandSlot::Mainhand) {
         auto const& item = player.getSelectedItem();
         auto        id   = itemId(item);
         if (id.starts_with("complementaries:")) {

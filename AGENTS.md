@@ -117,7 +117,11 @@ Deploying by hand: copy `bin/server/Complementaries` to `<BDS>/plugins/`, or `bi
 - Hook virtuals via `&Cls::$fn` with `LL_TYPE_INSTANCE_HOOK`; `hook()` in `install()`, `unhook()` in `uninstall()`.
 - In `ServerNetworkHandler::$handle` hooks `this` is the `NetEventCallback` base subobject: use
   `thisFor<NetEventCallback>()->_getServerPlayer(source, packet.mSenderSubId)`.
-- **No `dynamic_cast` on game types** (no usable RTTI). A Player that is not `isClientSide()` is a `ServerPlayer`.
+- **No `dynamic_cast` on game types** (no usable RTTI). `Actor::isClientSide()` only checks
+  that the actor has a level, so it is false for the client build's local player too: use
+  `actor.getLevel().isClientSide()` to skip the client copy (a Player whose level is not client side is a `ServerPlayer`).
+  LeviLamina's player events fire for both copies on the client build; handlers that act must debounce
+  repeats (Java's 4-tick right-click delay).
 - Types used as command parameters must have external linkage (not in an anonymous namespace).
 - `ItemStack` has no `(name, count, aux)` constructor: use `game::makeItem(id, count, aux)`.
 - BDS enables mods **after** "Server started" (the world already exists at `install()`); the client

@@ -165,7 +165,17 @@ void syncMotion(Actor& actor) {
     auto& pkt      = static_cast<SetActorMotionPacket&>(*packet);
     pkt.mRuntimeId = actor.getRuntimeID();
     pkt.mMotion    = actor.getPosDelta();
-    pkt.sendTo(actor);
+    // to the players who see the actor (sendTo(actor) is only valid for a player: it crashes on items)
+    auto* l = level();
+    if (!l) return;
+    int  dim = static_cast<int>(actor.getDimensionId());
+    Vec3 pos = actor.getPosition();
+    l->forEachPlayer([&](Player& p) {
+        if (static_cast<int>(p.getDimensionId()) == dim && p.getPosition().distanceToSqr(pos) < 96.0f * 96.0f) {
+            pkt.sendTo(p);
+        }
+        return true;
+    });
 }
 
 void setVelocity(Actor& actor, Vec3 const& v) {

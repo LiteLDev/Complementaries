@@ -3,10 +3,10 @@
   "minecraft:recipe_shaped": {
     "description": { "identifier": "complementaries:altimeter" },
     "tags": ["crafting_table"],
-    "pattern": [" C ", "CRC", " C "],
+    "pattern": [" C ", "CMC", " C "],
     "key": {
       "C": { "item": "minecraft:copper_ingot" },
-      "R": { "item": "minecraft:redstone" }
+      "M": { "item": "minecraft:compass" }
     },
     "unlock": [{ "item": "minecraft:copper_ingot" }],
     "result": { "item": "complementaries:altimeter", "count": 1 }

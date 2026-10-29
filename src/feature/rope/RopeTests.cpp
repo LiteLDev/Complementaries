@@ -194,6 +194,7 @@ CM_REGISTER_SELFTEST("rope.player_extend_and_pull", [](Context& ctx) -> ll::coro
     sp.getInventory().setItem(0, ItemStack::EMPTY_ITEM());
     sp.refreshInventory();
     co_await ctx.ticks(1);
+    int before = countItem(sp, rope::kRope); // ropes dropped nearby by other tests may be picked up
     ctx.check(
         rope::ropes::onUse(sp, game::blockPos(up(base, 4)), 5, ItemStack::EMPTY_ITEM()),
         "empty-hand use is handled"
@@ -201,7 +202,7 @@ CM_REGISTER_SELFTEST("rope.player_extend_and_pull", [](Context& ctx) -> ll::coro
     co_await ctx.ticks(4);
     ctx.check(idAt(ctx, up(base, 3)) != rope::kRope, "pulling removes the lowest rope");
     ctx.check(idAt(ctx, up(base, 4)) == rope::kRope, "the clicked rope stays");
-    ctx.check(countItem(sp, rope::kRope) == 1, "the pulled rope goes to the player");
+    ctx.check(countItem(sp, rope::kRope) == before + 1, "the pulled rope goes to the player");
 });
 
 CM_REGISTER_SELFTEST("rope.bell", [](Context& ctx) -> ll::coro::CoroTask<> {

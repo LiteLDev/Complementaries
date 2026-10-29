@@ -240,9 +240,19 @@ $script:ErrorLineRegex = '\b(ERR|FTL)\]?\s?\[(Complementaries|LeviLamina|CrashLo
 # (unless -AllowEmpty) matched no test. It does not throw on test failures.
 function Invoke-SelfTest([string]$Glob = '', [int]$TimeoutSeconds = 600, [switch]$AllowEmpty) {
     $mark = Get-LogMark
-    Send-SelfTestCommand (Format-SelfTestCommand $Glob)
     $label = if ($Glob) { $Glob } else { '*' }
-    try {
+    # The command can be lost (a client still on its loading screen drops the typed text): send it
+    # again when the game shows no sign of it.
+    for ($try = 1; $try -le 3; $try++) {
+        Send-SelfTestCommand (Format-SelfTestCommand $Glob)
+        try {
+            Wait-LogLine "SELFTEST (START|BUSY|DONE)|$script:CommandErrorRegex" 20 -Since $mark | Out-Null
+            break
+        } catch {
+            Write-Step "selftest '$label': no answer to the command (attempt $try)"
+            if (Get-Command Close-Screen -ErrorAction SilentlyContinue) { Close-Screen }
+        }
+    }    try {
         $hit = Wait-LogLine "$script:SelfTestDoneRegex|$script:CommandErrorRegex" $TimeoutSeconds -Since $mark
         if ($hit -notmatch $script:SelfTestDoneRegex) { Write-Step "selftest command rejected: $hit" }
     } catch {

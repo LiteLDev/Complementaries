@@ -339,47 +339,53 @@ void onInteractBlock(ll::event::PlayerInteractBlockEvent& ev) {
 
 void onPlaced(ll::event::PlayerPlacedBlockEvent& ev) {
     auto& player = ev.self();
-    auto& region = player.getDimensionBlockSource();
-    if (!serverSide(region)) return;
-    BlockPos const pos   = ev.pos();
-    auto const&    block = region.getBlock(pos);
-    Kind           kind  = kindOf(block);
+    if (!serverSide(player.getDimensionBlockSource())) return;
+    // the block is only in the world after the event: everything below runs next tick
+    Kind kind = kindOf(ev.placedBlock());
     if (kind == Kind::None) return;
-    switch (kind) {
-    case Kind::Stairs: {
-        // Java stairs face the player's look direction
-        int facing = game::playerFacing(player);
-        int placed = stateOf(block, "minecraft:cardinal_direction").value_or(-1);
-        if (placed != facing) {
-            if (auto const* nb = withState(block, "minecraft:cardinal_direction", facing)) game::setBlock(region, pos, *nb);
+    mce::UUID      id     = player.getUuid();
+    BlockPos const pos    = ev.pos();
+    int            facing = game::playerFacing(player);
+    auto const&    last   = gClicks[player.getUuid().asString()];
+    bool           flip   = braceFlipped(player, last.face, last.click);
+    defer([id, pos, kind, facing, flip] {
+        auto* p = playerByUuid(id);
+        if (!p) return;
+        auto&       region = p->getDimensionBlockSource();
+        auto const& block  = region.getBlock(pos);
+        if (kindOf(block) != kind) return;
+        switch (kind) {
+        case Kind::Stairs: {
+            // Java stairs face the player's look direction
+            int placed = stateOf(block, "minecraft:cardinal_direction").value_or(-1);
+            if (placed != facing) {
+                if (auto const* nb = withState(block, "minecraft:cardinal_direction", facing)) game::setBlock(region, pos, *nb);
+            }
+            updateShape(region, pos);
+            log().info("building: placed {} facing {} (predicted {})", block.getTypeName(), facing, placed);
+            break;
         }
-        updateShape(region, pos);
-        log().info("building: placed {} facing {} (predicted {})", block.getTypeName(), facing, placed);
-        break;
-    }
-    case Kind::Wall:
-        updateShape(region, pos);
-        break;
-    case Kind::RakedGravel: {
-        int shape = computeRakedShape(region, pos, rakedShapeForFacing(game::playerFacing(player)));
-        if (auto const* nb = withState(block, "complementaries:shape", shape)) game::setBlock(region, pos, *nb);
-        break;
-    }
-    case Kind::Timber:
-    case Kind::DaubFramed: {
-        if (!stateOf(block, "complementaries:flipped")) break;
-        auto const& last = gClicks[player.getUuid().asString()];
-        bool        flip = braceFlipped(player, last.face, last.click);
-        if (auto const* nb = withState(block, "complementaries:flipped", flip ? 1 : 0)) game::setBlock(region, pos, *nb);
-        break;
-    }
-    default:
-        break;
-    }
-    if (fallsLikeSand(kind)) scheduleFall(region, pos);
-    ensureWeatherTick(region, pos, region.getBlock(pos));
+        case Kind::Wall:
+            updateShape(region, pos);
+            break;
+        case Kind::RakedGravel: {
+            int shape = computeRakedShape(region, pos, rakedShapeForFacing(facing));
+            if (auto const* nb = withState(block, "complementaries:shape", shape)) game::setBlock(region, pos, *nb);
+            break;
+        }
+        case Kind::Timber:
+        case Kind::DaubFramed: {
+            if (!stateOf(block, "complementaries:flipped")) break;
+            if (auto const* nb = withState(block, "complementaries:flipped", flip ? 1 : 0)) game::setBlock(region, pos, *nb);
+            break;
+        }
+        default:
+            break;
+        }
+        if (fallsLikeSand(kind)) scheduleFall(region, pos);
+        ensureWeatherTick(region, pos, region.getBlock(pos));
+    });
 }
-
 void onMobDie(ll::event::MobDieEvent& ev) {
     if (!cfg().ashFromBurningMobs) return;
     auto& mob = ev.self();

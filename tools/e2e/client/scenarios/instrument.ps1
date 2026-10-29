@@ -3,8 +3,8 @@
 # hourglass, the altimeter in the air).
 # Screenshots: out/instrument/{row,globe-spin,hourglass-sand,clock-time,altimeter}.png
 
-function Face-Block([string]$at) {
-    Invoke-Chat "/tp @s ~ ~ ~ facing $at"
+function Face-Block([double]$dy) {
+    Face-Offset 0 $dy 2.5
     Start-Sleep -Milliseconds 600
 }
 
@@ -23,7 +23,7 @@ Save-Screenshot 'row' | Out-Null
 # Empty hand on a globe: spins (needs the client to send the click for a custom block).
 Invoke-Chat '/setblock ~ ~ ~2 complementaries:globe ["minecraft:cardinal_direction"="north"]'
 Start-Sleep -Milliseconds 500
-Face-Block '~ ~0.5 ~2.5'
+Face-Block 0.5
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
 Wait-LogLine 'instrument: globe at .* spun by' 15 -Since $mark | Out-Null
@@ -34,7 +34,7 @@ Start-Sleep -Seconds 4
 # Empty hand on a clock: shows the time.
 Invoke-Chat '/setblock ~ ~ ~2 complementaries:clock_block ["minecraft:cardinal_direction"="north"]'
 Start-Sleep -Milliseconds 500
-Face-Block '~ ~0.5 ~2.5'
+Face-Block 0.5
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
 Wait-LogLine 'instrument: time shown to' 15 -Since $mark | Out-Null
@@ -45,7 +45,7 @@ Save-Screenshot 'clock-time' | Out-Null
 Invoke-Chat '/setblock ~ ~ ~2 complementaries:hourglass ["minecraft:block_face"="up"]'
 Invoke-Chat '/give @s sand 4'
 Start-Sleep -Milliseconds 500
-Face-Block '~ ~0.5 ~2.5'
+Face-Block 0.5
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative -Right
 Wait-LogLine 'instrument: hourglass at .* filled with minecraft:sand' 15 -Since $mark | Out-Null

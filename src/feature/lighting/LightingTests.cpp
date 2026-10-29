@@ -224,12 +224,19 @@ CM_REGISTER_SELFTEST("lighting.wall_lantern_walk", [](Context& ctx) -> ll::coro:
     ctx.require(lt::Lighting::placeWallLantern(regionOf(ctx), support, 2, 0), "wall lantern placed");
     auto pos = bp(p, 0, 1, -1);
     ctx.cleanupBlock(cm::game::globalPos(0, pos));
+    // a floor under the walk, so the walker's head passes through the lantern whatever the ground level
+    for (int dx = -3; dx <= 4; ++dx) {
+        auto floor = bp(p, dx, -1, -1);
+        ctx.cleanupBlock(cm::game::globalPos(0, floor));
+        ctx.require(place(ctx, floor, "minecraft:stone"), "floor placed");
+    }
     auto& sp = static_cast<SimulatedPlayer&>(ctx.player());
     sp.teleport(Vec3{pos.x - 2.5f, static_cast<float>(pos.y - 1), pos.z + 0.5f}, DimensionType(0));
     co_await ctx.ticks(5);
-    sp.simulateNavigateToLocation(Vec3{pos.x + 3.5f, static_cast<float>(pos.y - 1), pos.z + 0.5f}, 1.f);
+    // a straight walk (no path finding: it can take long to start on a busy integrated server)
+    sp.simulateMoveToLocation(Vec3{pos.x + 3.5f, static_cast<float>(pos.y - 1), pos.z + 0.5f}, 1.f, true);
     bool swung = false;
-    for (int i = 0; i < 60 && !swung; ++i) {
+    for (int i = 0; i < 160 && !swung; ++i) {
         co_await ctx.ticks(1);
         swung = lt::intState(at(ctx, pos), lt::kSwing) != 0;
     }

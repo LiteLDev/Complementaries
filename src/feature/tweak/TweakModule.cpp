@@ -1,6 +1,7 @@
 // U18 tweak: wires the vanilla tweaks to the game (events, hooks, world lifecycle).
 
 #include <exception>
+#include <unordered_map>
 
 #include "ll/api/event/EventBus.h"
 #include "ll/api/event/ListenerBase.h"
@@ -49,6 +50,15 @@ auto guarded(char const* what, F&& fn) -> decltype(fn()) {
     }
     return decltype(fn())();
 }
+
+/// The client reports one click several times (and repeats it while the button is held): like
+/// Java's 4-tick right-click delay, a repeat on the same block within 4 ticks gets the first result.
+struct LastUseOn {
+    long long tick = -100;
+    BlockPos  pos;
+    bool      handled = false;
+};
+std::unordered_map<long long, LastUseOn> gLastUseOn; ///< player -> last block use
 } // namespace
 
 bool dispatchUseOn(Player& player, ItemStack const& item, BlockPos const& pos, int face, Vec3 const& clickPos) {
@@ -126,7 +136,14 @@ public:
         mListeners.push_back(bus.emplaceListener<ll::event::PlayerInteractBlockEvent>([](ll::event::PlayerInteractBlockEvent& ev) {
             auto& player = ev.self();
             if (player.getLevel().isClientSide()) return;
-            if (dispatchUseOn(player, ev.item(), ev.blockPos(), static_cast<int>(ev.face()), ev.clickPos())) ev.cancel();
+            auto& last = gLastUseOn[player.getOrCreateUniqueID().rawID];
+            if (currentTick() - last.tick < 4 && last.pos == ev.blockPos()) {
+                if (last.handled) ev.cancel();
+                return;
+            }
+            bool handled = dispatchUseOn(player, ev.item(), ev.blockPos(), static_cast<int>(ev.face()), ev.clickPos());
+            last         = {currentTick(), ev.blockPos(), handled};
+            if (handled) ev.cancel();
         }));
         mListeners.push_back(bus.emplaceListener<ll::event::PlayerUseItemEvent>([](ll::event::PlayerUseItemEvent& ev) {
             auto& player = ev.self();

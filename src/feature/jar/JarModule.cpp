@@ -81,7 +81,7 @@ Player* playerById(int64 id) {
 bool firstClickThisTick(Player const& player) {
     auto id = player.getOrCreateUniqueID().rawID;
     auto it = gLastUse.find(id);
-    if (it != gLastUse.end() && it->second == gTick) return false;
+    if (it != gLastUse.end() && gTick - it->second < 4) return false; // Java's 4-tick right-click delay
     gLastUse[id] = gTick;
     return true;
 }
@@ -176,14 +176,16 @@ void onPlaced(ll::event::PlayerPlacedBlockEvent& ev) {
         setJar(pos, pending.jar.value_or(Contents{}));
         log().info("jar: {} placed a jar at {}", player.getRealName(), pos.key());
     } else if (isBlock(placed, kFaucetId)) {
-        setStates(
-            region,
-            bp,
-            {
-                {kStateFacing, faceToFacing(pending.face)}
-        }
-        );
-        faucetPlaced(pos);
+        // the block is only in the world after the event: turn it next tick
+        int facing = faceToFacing(pending.face);
+        later([uid, bp, pos, facing] {
+            auto* p = playerById(uid);
+            if (!p) return;
+            auto& r = p->getDimensionBlockSource();
+            if (!isBlock(r.getBlock(bp), kFaucetId)) return;
+            setStates(r, bp, {{kStateFacing, facing}});
+            faucetPlaced(pos);
+        });
         log().info("faucet: {} placed a faucet at {}", player.getRealName(), pos.key());
     }
 }
@@ -335,7 +337,8 @@ LL_TYPE_INSTANCE_HOOK(
     ::HandSlot    handSlot
 ) {
     Player& player = mPlayer;
-    if (!player.isClientSide() && isItem(player.getSelectedItem(), kJarId) && useJarItemOnMob(player, entity))
+    // getLevel(): Actor::isClientSide() is false for the client build's local player too
+    if (!player.getLevel().isClientSide() && isItem(player.getSelectedItem(), kJarId) && useJarItemOnMob(player, entity))
         return true;
     return origin(entity, location, handSlot);
 }
