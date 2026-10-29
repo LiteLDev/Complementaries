@@ -1,0 +1,132 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "complementaries:blackboard_display",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "c1": "textures/entity/blackboard/c1",
+        "c2": "textures/entity/blackboard/c2",
+        "c3": "textures/entity/blackboard/c3",
+        "c4": "textures/entity/blackboard/c4",
+        "c5": "textures/entity/blackboard/c5",
+        "c6": "textures/entity/blackboard/c6",
+        "c7": "textures/entity/blackboard/c7",
+        "c8": "textures/entity/blackboard/c8",
+        "c9": "textures/entity/blackboard/c9",
+        "c10": "textures/entity/blackboard/c10",
+        "c11": "textures/entity/blackboard/c11",
+        "c12": "textures/entity/blackboard/c12",
+        "c13": "textures/entity/blackboard/c13",
+        "c14": "textures/entity/blackboard/c14",
+        "c15": "textures/entity/blackboard/c15"
+      },
+      "geometry": {
+        "f0_h0": "geometry.complementaries.blackboard_display_f0_h0",
+        "f0_h1": "geometry.complementaries.blackboard_display_f0_h1",
+        "f1_h0": "geometry.complementaries.blackboard_display_f1_h0",
+        "f1_h1": "geometry.complementaries.blackboard_display_f1_h1",
+        "f2_h0": "geometry.complementaries.blackboard_display_f2_h0",
+        "f2_h1": "geometry.complementaries.blackboard_display_f2_h1",
+        "f3_h0": "geometry.complementaries.blackboard_display_f3_h0",
+        "f3_h1": "geometry.complementaries.blackboard_display_f3_h1"
+      },
+      "render_controllers": [
+        {
+          "controller.render.complementaries.blackboard_c1": "math.mod(math.floor(q.property('complementaries:colors') / 2), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c2": "math.mod(math.floor(q.property('complementaries:colors') / 4), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c3": "math.mod(math.floor(q.property('complementaries:colors') / 8), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c4": "math.mod(math.floor(q.property('complementaries:colors') / 16), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c5": "math.mod(math.floor(q.property('complementaries:colors') / 32), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c6": "math.mod(math.floor(q.property('complementaries:colors') / 64), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c7": "math.mod(math.floor(q.property('complementaries:colors') / 128), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c8": "math.mod(math.floor(q.property('complementaries:colors') / 256), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c9": "math.mod(math.floor(q.property('complementaries:colors') / 512), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c10": "math.mod(math.floor(q.property('complementaries:colors') / 1024), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c11": "math.mod(math.floor(q.property('complementaries:colors') / 2048), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c12": "math.mod(math.floor(q.property('complementaries:colors') / 4096), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c13": "math.mod(math.floor(q.property('complementaries:colors') / 8192), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c14": "math.mod(math.floor(q.property('complementaries:colors') / 16384), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c15": "math.mod(math.floor(q.property('complementaries:colors') / 32768), 2) == 1 && !q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c1_glow": "math.mod(math.floor(q.property('complementaries:colors') / 2), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c2_glow": "math.mod(math.floor(q.property('complementaries:colors') / 4), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c3_glow": "math.mod(math.floor(q.property('complementaries:colors') / 8), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c4_glow": "math.mod(math.floor(q.property('complementaries:colors') / 16), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c5_glow": "math.mod(math.floor(q.property('complementaries:colors') / 32), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c6_glow": "math.mod(math.floor(q.property('complementaries:colors') / 64), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c7_glow": "math.mod(math.floor(q.property('complementaries:colors') / 128), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c8_glow": "math.mod(math.floor(q.property('complementaries:colors') / 256), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c9_glow": "math.mod(math.floor(q.property('complementaries:colors') / 512), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c10_glow": "math.mod(math.floor(q.property('complementaries:colors') / 1024), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c11_glow": "math.mod(math.floor(q.property('complementaries:colors') / 2048), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c12_glow": "math.mod(math.floor(q.property('complementaries:colors') / 4096), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c13_glow": "math.mod(math.floor(q.property('complementaries:colors') / 8192), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c14_glow": "math.mod(math.floor(q.property('complementaries:colors') / 16384), 2) == 1 && q.property('complementaries:glow')"
+        },
+        {
+          "controller.render.complementaries.blackboard_c15_glow": "math.mod(math.floor(q.property('complementaries:colors') / 32768), 2) == 1 && q.property('complementaries:glow')"
+        }
+      ],
+      "enable_attachables": false,
+      "hide_armor": true
+    }
+  }
+}

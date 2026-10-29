@@ -1,0 +1,53 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:blackboard",
+      "menu_category": { "category": "items" },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": ["minecraft:cardinal_direction"],
+          "y_rotation_offset": 180
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.complementaries.blackboard",
+      "minecraft:material_instances": {
+        "*": { "texture": "complementaries_blackboard_side", "render_method": "opaque" },
+        "north": { "texture": "complementaries_blackboard_front", "render_method": "opaque" }
+      },
+      "minecraft:collision_box": { "origin": [-8, 0, 3], "size": [16, 16, 5] },
+      "minecraft:selection_box": { "origin": [-8, 0, 3], "size": [16, 16, 5] },
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 1.5 },
+      "minecraft:destructible_by_explosion": { "explosion_resistance": 6 },
+      "minecraft:map_color": "#2b302d",
+      "minecraft:light_dampening": 0,
+      "minecraft:movable": { "movement_type": "immovable" },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          { "liquid_type": "water", "can_contain_liquid": true, "on_liquid_touches": "no_reaction" }
+        ]
+      },
+      "minecraft:loot": "loot_tables/blocks/blackboard.json"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": { "minecraft:transformation": { "rotation": [0, 0, 0] } }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": { "minecraft:transformation": { "rotation": [0, 90, 0] } }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": { "minecraft:transformation": { "rotation": [0, 180, 0] } }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": { "minecraft:transformation": { "rotation": [0, -90, 0] } }
+      }
+    ]
+  }
+}

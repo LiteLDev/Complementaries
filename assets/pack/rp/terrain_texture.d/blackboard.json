@@ -1,0 +1,4 @@
+{
+  "complementaries_blackboard_front": { "textures": "textures/blocks/blackboard_front" },
+  "complementaries_blackboard_side": { "textures": "textures/blocks/blackboard_side" }
+}

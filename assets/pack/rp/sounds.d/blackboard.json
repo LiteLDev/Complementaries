@@ -1,0 +1,44 @@
+{
+  "complementaries.block.blackboard.draw": {
+    "category": "player",
+    "sounds": [
+      { "name": "sounds/item/brush/brushing_sand1", "pitch": 1.6, "volume": 0.5 },
+      { "name": "sounds/item/brush/brushing_sand2", "pitch": 1.6, "volume": 0.5 },
+      { "name": "sounds/item/brush/brushing_sand3", "pitch": 1.6, "volume": 0.5 },
+      { "name": "sounds/item/brush/brushing_sand4", "pitch": 1.6, "volume": 0.5 }
+    ]
+  },
+  "complementaries.block.blackboard.draw_complete": {
+    "category": "block",
+    "sounds": [
+      { "name": "sounds/item/brush/brushing_sand_complete1", "pitch": 1.5, "volume": 0.6 },
+      { "name": "sounds/item/brush/brushing_sand_complete2", "pitch": 1.5, "volume": 0.6 },
+      { "name": "sounds/item/brush/brushing_sand_complete3", "pitch": 1.5, "volume": 0.6 }
+    ]
+  },
+  "complementaries.block.blackboard.wax_on": {
+    "category": "block",
+    "sounds": ["sounds/item/honeycomb/wax_on1", "sounds/item/honeycomb/wax_on2", "sounds/item/honeycomb/wax_on3"]
+  },
+  "complementaries.block.blackboard.glow": {
+    "category": "block",
+    "sounds": ["sounds/item/ink_sac/ink_sac1", "sounds/item/ink_sac/ink_sac2", "sounds/item/ink_sac/ink_sac3"]
+  },
+  "complementaries.block.blackboard.fail": {
+    "category": "block",
+    "sounds": [
+      "sounds/block/sign/waxed_interact_fail1",
+      "sounds/block/sign/waxed_interact_fail2",
+      "sounds/block/sign/waxed_interact_fail3"
+    ]
+  },
+  "complementaries.block.blackboard.brush": {
+    "category": "block",
+    "sounds": [
+      "sounds/item/brush/brushing_generic1",
+      "sounds/item/brush/brushing_generic2",
+      "sounds/item/brush/brushing_generic3",
+      "sounds/item/brush/brushing_generic4"
+    ]
+  }
+}
