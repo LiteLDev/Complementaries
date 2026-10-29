@@ -1,3 +1,4 @@
 {
-  "cm.mod.name": "Complementaries"
+  "cm.mod.name": "Complementaries",
+  "cm.commands.need_op": "You need operator permission."
 }

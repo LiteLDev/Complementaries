@@ -208,7 +208,7 @@ void tickWaySigns() {
 
 CM_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload().text("waysign").execute([](CommandOrigin const& origin, CommandOutput& output) {
-        if (!cm::commands::isAdmin(origin)) return output.error("You need operator permission.");
+        if (!cm::commands::isAdmin(origin)) return output.error(cm::tr("cm.commands.need_op", "You need operator permission."));
         auto* player = cm::commands::playerOf(origin);
         if (!player) return output.error("Run this as a player.");
         if (static_cast<int>(player->getDimensionId()) != 0) {

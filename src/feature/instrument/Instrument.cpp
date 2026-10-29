@@ -579,14 +579,14 @@ CM_REGISTER_MODULE(cm::feature::instrument::InstrumentModule);
 CM_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     using namespace cm::feature::instrument;
     cmd.overload().text("globe").text("newseed").execute([](CommandOrigin const& origin, CommandOutput& output) {
-        if (!cm::commands::isAdmin(origin)) return output.error("You need operator permission.");
+        if (!cm::commands::isAdmin(origin)) return output.error(cm::tr("cm.commands.need_op", "You need operator permission."));
         static std::mt19937_64 rng{std::random_device{}()};
         globe::setSeed(rng(), true);
         cm::log().info("instrument: globe seed changed");
         output.success(cm::tr("commands.supplementaries.globe_changed", "Globe seed changed"));
     });
     cmd.overload().text("globe").text("resetseed").execute([](CommandOrigin const& origin, CommandOutput& output) {
-        if (!cm::commands::isAdmin(origin)) return output.error("You need operator permission.");
+        if (!cm::commands::isAdmin(origin)) return output.error(cm::tr("cm.commands.need_op", "You need operator permission."));
         globe::setSeed(0, false);
         cm::log().info("instrument: globe seed reset");
         output.success(cm::tr("commands.supplementaries.globe_reset", "Globe seed reset"));

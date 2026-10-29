@@ -1,3 +1,4 @@
 {
-  "cm.mod.name": "余角"
+  "cm.mod.name": "余角",
+  "cm.commands.need_op": "你需要管理员权限。"
 }

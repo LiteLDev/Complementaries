@@ -129,7 +129,7 @@ std::vector<core::GlobalPos> buildJarDemo(Player& player) {
 
 CM_REGISTER_SUBCOMMAND([](ll::command::CommandHandle& cmd) {
     cmd.overload().text("jardemo").execute([](CommandOrigin const& origin, CommandOutput& output) {
-        if (!cm::commands::isAdmin(origin)) return output.error("You need operator permission.");
+        if (!cm::commands::isAdmin(origin)) return output.error(cm::tr("cm.commands.need_op", "You need operator permission."));
         auto* player = cm::commands::playerOf(origin);
         if (!player) return output.error(cm::tr("cm.jar.demo.player", "Run it as a player."));
         cm::feature::jar::buildJarDemo(*player);
