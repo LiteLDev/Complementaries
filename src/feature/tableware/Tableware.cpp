@@ -397,8 +397,9 @@ private:
         if (player.isClientSide()) return;
         auto key = player.getOrCreateUniqueID().rawID;
         auto pos = ev.blockPos();
-        // The same click can be reported more than once in a tick: act once, cancel every time.
-        if (auto it = mLastUse.find(key); it != mLastUse.end() && it->second.tick == mTick && it->second.pos == pos) {
+        // The same click can be reported more than once (a tick or two apart): act once per Java's
+        // 4-tick right-click delay, cancel every time.
+        if (auto it = mLastUse.find(key); it != mLastUse.end() && mTick - it->second.tick < 4 && it->second.pos == pos) {
             if (it->second.handled) ev.cancel();
             return;
         }

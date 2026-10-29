@@ -54,7 +54,7 @@ LL_TYPE_INSTANCE_HOOK(
     Actor&           owner,
     HitResult const& result
 ) {
-    if (result.mType == HitResultType::Tile && !owner.isClientSide()) {
+    if (result.mType == HitResultType::Tile && !owner.getLevel().isClientSide()) {
         auto& region = owner.getDimensionBlockSource();
         if (region.hasChunksAt(result.mBlock, 0, false) && is(region.getBlock(result.mBlock), kUrn)) {
             breakLater(static_cast<int>(region.getDimensionId()), result.mBlock);

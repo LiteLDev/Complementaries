@@ -45,8 +45,13 @@ Save-Screenshot 'water-jar' | Out-Null
 # ---- catching a mob with a jar item (left click) ----
 Invoke-Chat '/replaceitem entity @s slot.weapon.mainhand 0 complementaries:jar'
 Invoke-Chat '/tp @s ~3 ~ ~'
-Invoke-Chat '/summon minecraft:frog ~ ~ ~2'
-Face-Offset 0 0.2 2
+# the frog sits in a one-block stone cell open towards the player (slowed, and the roof stops its
+# jumps) so it cannot hop out of the crosshair
+Invoke-Chat '/fill 52 -60 2 54 -59 3 stone'
+Invoke-Chat '/setblock 53 -60 2 air'
+Invoke-Chat '/summon minecraft:frog 53.5 -60 2.5'
+Invoke-Chat '/effect @e[type=frog,r=4] slowness 60 10 true'
+Face-Offset 0 0.25 2
 Start-Sleep -Milliseconds 500
 $mark = Get-LogMark
 Click 0.5 0.5 -Relative

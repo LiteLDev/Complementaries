@@ -259,7 +259,7 @@ LL_TYPE_INSTANCE_HOOK(
     ::HandSlot    handSlot
 ) {
     Player& player = this->mPlayer;
-    if (!player.isClientSide()) {
+    if (!player.getLevel().isClientSide()) { // not the client build's local copy of the player
         if (cage::isDisplay(entity)) return false;
         auto const& held = player.getSelectedItem();
         if (itemId(held) == kCageId && !cage::isFull(held) && config().cage.enabled) {

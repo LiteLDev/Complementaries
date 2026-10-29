@@ -81,7 +81,7 @@ Player* playerById(int64 id) {
 bool firstClickThisTick(Player const& player) {
     auto id = player.getOrCreateUniqueID().rawID;
     auto it = gLastUse.find(id);
-    if (it != gLastUse.end() && it->second == gTick) return false;
+    if (it != gLastUse.end() && gTick - it->second < 4) return false; // Java's 4-tick right-click delay
     gLastUse[id] = gTick;
     return true;
 }
@@ -337,7 +337,8 @@ LL_TYPE_INSTANCE_HOOK(
     ::HandSlot    handSlot
 ) {
     Player& player = mPlayer;
-    if (!player.isClientSide() && isItem(player.getSelectedItem(), kJarId) && useJarItemOnMob(player, entity))
+    // getLevel(): Actor::isClientSide() is false for the client build's local player too
+    if (!player.getLevel().isClientSide() && isItem(player.getSelectedItem(), kJarId) && useJarItemOnMob(player, entity))
         return true;
     return origin(entity, location, handSlot);
 }
