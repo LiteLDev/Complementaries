@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:entity": {
+    "description": { "identifier": "complementaries:bomb_blue_baby", "is_spawnable": false, "is_summonable": true },
+    "components": {
+      "minecraft:collision_box": { "width": 0.2, "height": 0.2 },
+      "minecraft:physics": {},
+      "minecraft:pushable": { "is_pushable": false, "is_pushable_by_piston": true },
+      "minecraft:projectile": {
+        "power": 1.25,
+        "gravity": 0.05,
+        "angle_offset": 0.0,
+        "on_hit": { "remove_on_hit": {} }
+      },
+      "minecraft:type_family": { "family": ["complementaries_bomb", "inanimate"] }
+    }
+  }
+}

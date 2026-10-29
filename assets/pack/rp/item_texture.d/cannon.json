@@ -1,0 +1,7 @@
+{
+  "complementaries_cannon": { "textures": "textures/items/cannon" },
+  "complementaries_cannonball": { "textures": "textures/items/cannonball" },
+  "complementaries_bomb": { "textures": "textures/items/bomb" },
+  "complementaries_bomb_blue": { "textures": "textures/items/bomb_blue" },
+  "complementaries_bomb_spiky": { "textures": "textures/items/bomb_spiky" }
+}

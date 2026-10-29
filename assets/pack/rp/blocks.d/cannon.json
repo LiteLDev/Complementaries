@@ -1,0 +1,4 @@
+{
+  "complementaries:cannon": { "sound": "metal" },
+  "complementaries:cannonball": { "sound": "metal" }
+}

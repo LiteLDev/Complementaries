@@ -1,0 +1,26 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.complementaries.cannon_barrel.aim": {
+      "loop": true,
+      "bones": {
+        "yaw": { "rotation": [0, "q.property('complementaries:yaw')", 0] },
+        "barrel": { "rotation": ["-q.property('complementaries:pitch')", 0, 0] }
+      }
+    },
+    "animation.complementaries.cannon_barrel.fire": {
+      "animation_length": 0.5,
+      "bones": {
+        "recoil": {
+          "position": { "0.0": [0, 0, 0], "0.05": [0, 0, 3], "0.5": [0, 0, 0] }
+        }
+      }
+    },
+    "animation.complementaries.cannonball.spin": {
+      "loop": true,
+      "bones": {
+        "ball": { "rotation": ["q.life_time * 360", "q.life_time * 180", 0] }
+      }
+    }
+  }
+}

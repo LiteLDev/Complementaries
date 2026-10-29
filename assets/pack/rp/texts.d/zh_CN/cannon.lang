@@ -1,0 +1,13 @@
+tile.complementaries:cannon.name=加农炮
+tile.complementaries:cannonball.name=炮弹
+item.complementaries:bomb.name=炸弹
+item.complementaries:bomb_blue.name=蓝色炸弹
+item.complementaries:bomb_spiky.name=尖刺炸弹
+entity.complementaries:bomb.name=炸弹
+entity.complementaries:bomb_blue.name=蓝色炸弹
+entity.complementaries:bomb_spiky.name=尖刺炸弹
+entity.complementaries:cannonball.name=炮弹
+entity.complementaries:cannon_barrel.name=加农炮
+entity.complementaries:red_merchant.name=红衣商人
+item.spawn_egg.entity.complementaries:red_merchant.name=红衣商人刷怪蛋
+entity.complementaries:bomb_blue_baby.name=蓝色炸弹

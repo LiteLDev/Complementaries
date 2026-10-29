@@ -1,0 +1,14 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "complementaries:cannonball",
+      "materials": { "default": "entity_alphatest" },
+      "textures": { "default": "textures/entity/cannonball" },
+      "geometry": { "default": "geometry.complementaries.cannonball" },
+      "render_controllers": ["controller.render.default"],
+      "animations": { "spin": "animation.complementaries.cannonball.spin" },
+      "scripts": { "animate": ["spin"] }
+    }
+  }
+}
