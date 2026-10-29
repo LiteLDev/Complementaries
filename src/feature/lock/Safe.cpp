@@ -53,6 +53,11 @@ struct OpenSafe {
 };
 std::map<core::GlobalPos, OpenSafe> gOpeners;
 
+/// Opens waiting for the client to receive the storage entity / its name: (UUID, safe).
+std::set<std::pair<std::string, core::GlobalPos>> gPendingOpens;
+/// Tick at which a player's safe screen was last opened (UUID -> tick).
+std::map<std::string, long long> gOpenedAt;
+
 std::string uuidOf(Player const& p) { return p.getUuid().asString(); }
 
 /// The player's open container screen belongs to the storage entity `storageId`.
@@ -105,8 +110,9 @@ ContainerComponent* containerOf(Actor& a) {
     return c ? c.as_ptr() : nullptr;
 }
 
-/// The storage entity of the safe at `pos`, spawned when missing.
-Actor* ensureStorage(core::GlobalPos const& pos, SafeData& data) {
+/// The storage entity of the safe at `pos`, spawned when missing (then `*spawned` is set).
+Actor* ensureStorage(core::GlobalPos const& pos, SafeData& data, bool* spawned = nullptr) {
+    if (spawned) *spawned = false;
     if (auto* a = storageOf(pos, data)) {
         if (a->getOrCreateUniqueID().rawID != data.storage) {
             data.storage = a->getOrCreateUniqueID().rawID;
@@ -138,6 +144,7 @@ Actor* ensureStorage(core::GlobalPos const& pos, SafeData& data) {
     }
     data.storage = a->getOrCreateUniqueID().rawID;
     saveSafeData(pos, data);
+    if (spawned) *spawned = true;
     return a;
 }
 
@@ -231,22 +238,51 @@ std::string titleFor(SafeData const& data, Player const* player) {
     return base;
 }
 
-void openSafe(Player& player, core::GlobalPos const& pos, SafeData data) {
-    auto* actor = ensureStorage(pos, data);
+/// Ticks to wait before opening the screen of a storage entity the client may not know yet (just
+/// spawned) or whose name tag (the screen title) just changed: the client ignores a container open
+/// for an entity it has not received, and entity data only reaches it with the next replication.
+constexpr int kOpenDelay = 4;
+
+void openSafe(Player& player, core::GlobalPos const& pos, SafeData data, bool delayed = false) {
+    auto uuid = uuidOf(player);
+    if (!delayed && gPendingOpens.contains({uuid, pos})) return; // the same click delivered twice
+    bool  spawned = false;
+    auto* actor   = ensureStorage(pos, data, &spawned);
     if (!actor) return;
-    if (hasStorageOpen(player, data.storage)) return; // the same click delivered twice
+    // A click on the safe while the server still has its screen open means the client has no screen
+    // (it lost the open): open it again. A repeat within a few ticks is the same click delivered twice.
+    if (hasStorageOpen(player, data.storage)) {
+        auto at = gOpenedAt.find(uuid);
+        if (at == gOpenedAt.end() || detail::currentTick() - at->second <= kOpenDelay * 2) return;
+    }
     auto* cc = containerOf(*actor);
     if (!cc) {
         log().error("lock: the storage of the safe at {} has no container", pos.key());
         return;
     }
-    cc->setCustomName(titleFor(data, &player));
+    auto title = titleFor(data, &player);
+    cc->setCustomName(title);
+    bool renamed = actor->getNameTag() != title;
+    if (renamed) actor->setNameTag(title); // the client takes the screen title from the name tag
+    if (!delayed && (spawned || renamed)) {
+        gPendingOpens.insert({uuid, pos});
+        later(kOpenDelay, [uuid, pos] {
+            gPendingOpens.erase({uuid, pos});
+            auto* p      = playerByUuid(uuid);
+            auto* region = regionOf(pos.dim);
+            if (!p || !region || kindOf(region->getBlock(game::blockPos(pos))) != Kind::Safe) return;
+            if (!safeCanOpen(*p, pos, false)) return; // the key changed meanwhile
+            openSafe(*p, pos, safeData(pos), true);
+        });
+        return;
+    }
     if (!cc->openContainer(*actor, player)) {
         log().warn("lock: the safe at {} did not open for {}", pos.key(), player.getRealName());
         return;
     }
-    auto& open = gOpeners[pos];
-    open.players.insert(uuidOf(player));
+    gOpenedAt[uuid] = detail::currentTick();
+    auto& open      = gOpeners[pos];
+    open.players.insert(uuid);
     open.data = data;
     setSafeOpenState(pos, true);
     log().info("lock: {} opened the safe at {}", player.getRealName(), pos.key());
@@ -526,19 +562,22 @@ void tickSafes() {
         auto const& data  = open.data;
         auto*       actor = storageOf(pos, data);
         if (!actor) continue; // not resolvable right now (chunk unloading): keep the openers
-        long long id        = actor->getOrCreateUniqueID().rawID;
-        Player*   anyOpener = nullptr;
-        auto&     uuids     = open.players;
+        long long                id        = actor->getOrCreateUniqueID().rawID;
+        Player*                  anyOpener = nullptr;
+        auto&                    uuids     = open.players;
+        std::vector<std::string> closers;
         for (auto it = uuids.begin(); it != uuids.end();) {
             auto* p = playerByUuid(*it);
             if (p && hasStorageOpen(*p, id)) {
                 anyOpener = p;
                 ++it;
             } else {
-                log().info("lock: {} closed the safe at {}", p ? p->getRealName() : *it, pos.key());
+                closers.push_back(p ? p->getRealName() : *it);
+                gOpenedAt.erase(*it);
                 it = uuids.erase(it);
             }
-        }        // shulker-box rules: no shulker boxes, no safes and not the safe's own key
+        }
+        // shulker-box rules: no shulker boxes, no safes and not the safe's own key
         if (auto* cc = containerOf(*actor)) {
             for (int i = 0; i < cc->mContainer->getContainerSize(); ++i) {
                 auto const& item = cc->mContainer->getItem(i);
@@ -549,6 +588,17 @@ void tickSafes() {
                 else if (auto* region = regionOf(pos.dim)) dropItem(*region, Vec3{pos.x + 0.5f, pos.y + 1.1f, pos.z + 0.5f}, copy);
             }
         }
+        if (!closers.empty()) {
+            int stacks = 0;
+            if (auto* cc = containerOf(*actor)) {
+                for (int i = 0; i < cc->mContainer->getContainerSize(); ++i) {
+                    if (!cc->mContainer->getItem(i).isNull()) ++stacks;
+                }
+            }
+            for (auto const& name : closers) {
+                log().info("lock: {} closed the safe at {} ({} stacks inside)", name, pos.key(), stacks);
+            }
+        }
         if (uuids.empty()) closed.push_back(pos);
     }
     for (auto const& pos : closed) {
@@ -557,6 +607,10 @@ void tickSafes() {
     }
 }
 
-void clearSafes() { gOpeners.clear(); }
+void clearSafes() {
+    gOpeners.clear();
+    gPendingOpens.clear();
+    gOpenedAt.clear();
+}
 
 } // namespace cm::feature::lock

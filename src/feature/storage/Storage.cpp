@@ -220,6 +220,7 @@ public:
             game::db::onWorldClosed(resetWorld);
         }
         BasketUseTimeDepletedHook::hook();
+        view::install();
         auto& bus = ll::event::EventBus::getInstance();
         mListeners.push_back(bus.emplaceListener<ll::event::ServerLevelTickEvent>([](auto&) { onTick(); }));
         mListeners.push_back(bus.emplaceListener<ll::event::BlockChangedEvent>(onBlockChanged));
@@ -325,6 +326,7 @@ public:
         for (auto& l : mListeners) bus.removeListener(l);
         mListeners.clear();
         BasketUseTimeDepletedHook::unhook();
+        view::uninstall();
         resetWorld();
     }
 
