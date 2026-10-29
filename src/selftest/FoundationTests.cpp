@@ -46,6 +46,12 @@ CM_REGISTER_SELFTEST("foundation.blocks", [](Context& ctx) -> ll::coro::CoroTask
     auto& region = ctx.player().getDimensionBlockSource();
     ctx.check(cm::game::blockIdAt(region, cm::game::blockPos(pos)) == "minecraft:gold_block", "block reads back");
     ctx.check(cm::game::blockWith("complementaries:no_such_block") == nullptr, "unknown block ids give nullptr");
+    // states are applied and read back by value
+    auto const* wheat = cm::game::blockWith("minecraft:wheat", {{"growth", 5}});
+    ctx.check(wheat && cm::game::intState(*wheat, "growth") == 5, "integer state round-trips");
+    auto const* lever = cm::game::blockWith("minecraft:lever", {{"open_bit", 1}});
+    ctx.check(lever && cm::game::intState(*lever, "open_bit") == 1, "boolean state round-trips");
+    ctx.check(lever && !cm::game::intState(*lever, "no_such_state"), "unknown states read as nullopt");
 });
 
 CM_REGISTER_SELFTEST("foundation.players", [](Context& ctx) -> ll::coro::CoroTask<> {
