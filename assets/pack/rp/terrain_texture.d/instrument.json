@@ -1,0 +1,323 @@
+{
+  "cm_globe_map_ow_0": {
+    "textures": "textures/blocks/instrument/globe/map_ow_0"
+  },
+  "cm_globe_map_nether_0": {
+    "textures": "textures/blocks/instrument/globe/map_nether_0"
+  },
+  "cm_globe_map_end_0": {
+    "textures": "textures/blocks/instrument/globe/map_end_0"
+  },
+  "cm_globe_map_sepia_0": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_0"
+  },
+  "cm_globe_map_ow_1": {
+    "textures": "textures/blocks/instrument/globe/map_ow_1"
+  },
+  "cm_globe_map_nether_1": {
+    "textures": "textures/blocks/instrument/globe/map_nether_1"
+  },
+  "cm_globe_map_end_1": {
+    "textures": "textures/blocks/instrument/globe/map_end_1"
+  },
+  "cm_globe_map_sepia_1": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_1"
+  },
+  "cm_globe_map_ow_2": {
+    "textures": "textures/blocks/instrument/globe/map_ow_2"
+  },
+  "cm_globe_map_nether_2": {
+    "textures": "textures/blocks/instrument/globe/map_nether_2"
+  },
+  "cm_globe_map_end_2": {
+    "textures": "textures/blocks/instrument/globe/map_end_2"
+  },
+  "cm_globe_map_sepia_2": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_2"
+  },
+  "cm_globe_map_ow_3": {
+    "textures": "textures/blocks/instrument/globe/map_ow_3"
+  },
+  "cm_globe_map_nether_3": {
+    "textures": "textures/blocks/instrument/globe/map_nether_3"
+  },
+  "cm_globe_map_end_3": {
+    "textures": "textures/blocks/instrument/globe/map_end_3"
+  },
+  "cm_globe_map_sepia_3": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_3"
+  },
+  "cm_globe_map_ow_4": {
+    "textures": "textures/blocks/instrument/globe/map_ow_4"
+  },
+  "cm_globe_map_nether_4": {
+    "textures": "textures/blocks/instrument/globe/map_nether_4"
+  },
+  "cm_globe_map_end_4": {
+    "textures": "textures/blocks/instrument/globe/map_end_4"
+  },
+  "cm_globe_map_sepia_4": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_4"
+  },
+  "cm_globe_map_ow_5": {
+    "textures": "textures/blocks/instrument/globe/map_ow_5"
+  },
+  "cm_globe_map_nether_5": {
+    "textures": "textures/blocks/instrument/globe/map_nether_5"
+  },
+  "cm_globe_map_end_5": {
+    "textures": "textures/blocks/instrument/globe/map_end_5"
+  },
+  "cm_globe_map_sepia_5": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_5"
+  },
+  "cm_globe_map_ow_6": {
+    "textures": "textures/blocks/instrument/globe/map_ow_6"
+  },
+  "cm_globe_map_nether_6": {
+    "textures": "textures/blocks/instrument/globe/map_nether_6"
+  },
+  "cm_globe_map_end_6": {
+    "textures": "textures/blocks/instrument/globe/map_end_6"
+  },
+  "cm_globe_map_sepia_6": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_6"
+  },
+  "cm_globe_map_ow_7": {
+    "textures": "textures/blocks/instrument/globe/map_ow_7"
+  },
+  "cm_globe_map_nether_7": {
+    "textures": "textures/blocks/instrument/globe/map_nether_7"
+  },
+  "cm_globe_map_end_7": {
+    "textures": "textures/blocks/instrument/globe/map_end_7"
+  },
+  "cm_globe_map_sepia_7": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_7"
+  },
+  "cm_globe_map_ow_8": {
+    "textures": "textures/blocks/instrument/globe/map_ow_8"
+  },
+  "cm_globe_map_nether_8": {
+    "textures": "textures/blocks/instrument/globe/map_nether_8"
+  },
+  "cm_globe_map_end_8": {
+    "textures": "textures/blocks/instrument/globe/map_end_8"
+  },
+  "cm_globe_map_sepia_8": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_8"
+  },
+  "cm_globe_map_ow_9": {
+    "textures": "textures/blocks/instrument/globe/map_ow_9"
+  },
+  "cm_globe_map_nether_9": {
+    "textures": "textures/blocks/instrument/globe/map_nether_9"
+  },
+  "cm_globe_map_end_9": {
+    "textures": "textures/blocks/instrument/globe/map_end_9"
+  },
+  "cm_globe_map_sepia_9": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_9"
+  },
+  "cm_globe_map_ow_10": {
+    "textures": "textures/blocks/instrument/globe/map_ow_10"
+  },
+  "cm_globe_map_nether_10": {
+    "textures": "textures/blocks/instrument/globe/map_nether_10"
+  },
+  "cm_globe_map_end_10": {
+    "textures": "textures/blocks/instrument/globe/map_end_10"
+  },
+  "cm_globe_map_sepia_10": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_10"
+  },
+  "cm_globe_map_ow_11": {
+    "textures": "textures/blocks/instrument/globe/map_ow_11"
+  },
+  "cm_globe_map_nether_11": {
+    "textures": "textures/blocks/instrument/globe/map_nether_11"
+  },
+  "cm_globe_map_end_11": {
+    "textures": "textures/blocks/instrument/globe/map_end_11"
+  },
+  "cm_globe_map_sepia_11": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_11"
+  },
+  "cm_globe_map_ow_12": {
+    "textures": "textures/blocks/instrument/globe/map_ow_12"
+  },
+  "cm_globe_map_nether_12": {
+    "textures": "textures/blocks/instrument/globe/map_nether_12"
+  },
+  "cm_globe_map_end_12": {
+    "textures": "textures/blocks/instrument/globe/map_end_12"
+  },
+  "cm_globe_map_sepia_12": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_12"
+  },
+  "cm_globe_map_ow_13": {
+    "textures": "textures/blocks/instrument/globe/map_ow_13"
+  },
+  "cm_globe_map_nether_13": {
+    "textures": "textures/blocks/instrument/globe/map_nether_13"
+  },
+  "cm_globe_map_end_13": {
+    "textures": "textures/blocks/instrument/globe/map_end_13"
+  },
+  "cm_globe_map_sepia_13": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_13"
+  },
+  "cm_globe_map_ow_14": {
+    "textures": "textures/blocks/instrument/globe/map_ow_14"
+  },
+  "cm_globe_map_nether_14": {
+    "textures": "textures/blocks/instrument/globe/map_nether_14"
+  },
+  "cm_globe_map_end_14": {
+    "textures": "textures/blocks/instrument/globe/map_end_14"
+  },
+  "cm_globe_map_sepia_14": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_14"
+  },
+  "cm_globe_map_ow_15": {
+    "textures": "textures/blocks/instrument/globe/map_ow_15"
+  },
+  "cm_globe_map_nether_15": {
+    "textures": "textures/blocks/instrument/globe/map_nether_15"
+  },
+  "cm_globe_map_end_15": {
+    "textures": "textures/blocks/instrument/globe/map_end_15"
+  },
+  "cm_globe_map_sepia_15": {
+    "textures": "textures/blocks/instrument/globe/map_sepia_15"
+  },
+  "cm_globe_earth": {
+    "textures": "textures/blocks/instrument/globe/earth"
+  },
+  "cm_globe_earth_sepia": {
+    "textures": "textures/blocks/instrument/globe/earth_sepia"
+  },
+  "cm_globe_moon": {
+    "textures": "textures/blocks/instrument/globe/moon"
+  },
+  "cm_globe_sun": {
+    "textures": "textures/blocks/instrument/globe/sun"
+  },
+  "cm_globe_core": {
+    "textures": "textures/blocks/instrument/globe/core"
+  },
+  "cm_globe_core_sepia": {
+    "textures": "textures/blocks/instrument/globe/core_sepia"
+  },
+  "cm_globe_stand": {
+    "textures": "textures/blocks/instrument/globe/stand"
+  },
+  "cm_clock_face": {
+    "textures": "textures/blocks/instrument/clock_face"
+  },
+  "cm_clock_side": {
+    "textures": "textures/blocks/instrument/clock_side"
+  },
+  "cm_clock_hands": {
+    "textures": "textures/blocks/instrument/clock_hands"
+  },
+  "cm_hourglass_frame": {
+    "textures": "textures/blocks/instrument/hourglass_frame"
+  },
+  "cm_hourglass_glass": {
+    "textures": "textures/blocks/instrument/hourglass_glass"
+  },
+  "cm_hourglass_sugar": {
+    "textures": "textures/blocks/instrument/hourglass_sugar"
+  },
+  "cm_hourglass_ash": {
+    "textures": "textures/blocks/instrument/hourglass_ash"
+  },
+  "cm_hourglass_gunpowder": {
+    "textures": "textures/blocks/instrument/hourglass_gunpowder"
+  },
+  "cm_hourglass_glowstone": {
+    "textures": "textures/blocks/instrument/hourglass_glowstone"
+  },
+  "cm_hourglass_blaze": {
+    "textures": "textures/blocks/instrument/hourglass_blaze"
+  },
+  "cm_hourglass_redstone": {
+    "textures": "textures/blocks/instrument/hourglass_redstone"
+  },
+  "cm_hourglass_dust": {
+    "textures": "textures/blocks/instrument/hourglass_dust"
+  },
+  "cm_hourglass_sand": {
+    "textures": "textures/blocks/sand"
+  },
+  "cm_hourglass_red_sand": {
+    "textures": "textures/blocks/red_sand"
+  },
+  "cm_hourglass_suspicious_sand": {
+    "textures": "textures/blocks/suspicious_sand_0"
+  },
+  "cm_hourglass_soul_sand": {
+    "textures": "textures/blocks/soul_sand"
+  },
+  "cm_hourglass_slime": {
+    "textures": "textures/blocks/slime"
+  },
+  "cm_hourglass_honey": {
+    "textures": "textures/blocks/honey_top"
+  },
+  "cm_hourglass_concrete_white": {
+    "textures": "textures/blocks/concrete_powder_white"
+  },
+  "cm_hourglass_concrete_orange": {
+    "textures": "textures/blocks/concrete_powder_orange"
+  },
+  "cm_hourglass_concrete_magenta": {
+    "textures": "textures/blocks/concrete_powder_magenta"
+  },
+  "cm_hourglass_concrete_light_blue": {
+    "textures": "textures/blocks/concrete_powder_light_blue"
+  },
+  "cm_hourglass_concrete_yellow": {
+    "textures": "textures/blocks/concrete_powder_yellow"
+  },
+  "cm_hourglass_concrete_lime": {
+    "textures": "textures/blocks/concrete_powder_lime"
+  },
+  "cm_hourglass_concrete_pink": {
+    "textures": "textures/blocks/concrete_powder_pink"
+  },
+  "cm_hourglass_concrete_gray": {
+    "textures": "textures/blocks/concrete_powder_gray"
+  },
+  "cm_hourglass_concrete_silver": {
+    "textures": "textures/blocks/concrete_powder_silver"
+  },
+  "cm_hourglass_concrete_cyan": {
+    "textures": "textures/blocks/concrete_powder_cyan"
+  },
+  "cm_hourglass_concrete_purple": {
+    "textures": "textures/blocks/concrete_powder_purple"
+  },
+  "cm_hourglass_concrete_blue": {
+    "textures": "textures/blocks/concrete_powder_blue"
+  },
+  "cm_hourglass_concrete_brown": {
+    "textures": "textures/blocks/concrete_powder_brown"
+  },
+  "cm_hourglass_concrete_green": {
+    "textures": "textures/blocks/concrete_powder_green"
+  },
+  "cm_hourglass_concrete_red": {
+    "textures": "textures/blocks/concrete_powder_red"
+  },
+  "cm_hourglass_concrete_black": {
+    "textures": "textures/blocks/concrete_powder_black"
+  },
+  "cm_wind_vane": {
+    "textures": "textures/blocks/instrument/wind_vane"
+  },
+  "cm_wind_vane_rooster": {
+    "textures": "textures/blocks/instrument/wind_vane_rooster"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:hourglass" },
+    "tags": ["crafting_table"],
+    "pattern": ["XGX", " X ", "XGX"],
+    "key": {
+      "X": { "item": "minecraft:glass" },
+      "G": { "item": "minecraft:gold_ingot" }
+    },
+    "unlock": [{ "item": "minecraft:gold_ingot" }],
+    "result": { "item": "complementaries:hourglass", "count": 1 }
+  }
+}

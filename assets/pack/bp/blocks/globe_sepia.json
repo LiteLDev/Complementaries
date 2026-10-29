@@ -1,0 +1,1190 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:globe_sepia",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:angle": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        },
+        "complementaries:skin": {
+          "values": {
+            "min": 0,
+            "max": 14
+          }
+        },
+        "complementaries:map": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        }
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.globe",
+        "bone_visibility": {
+          "globe_0": "q.block_state('complementaries:angle') == 0 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_1": "q.block_state('complementaries:angle') == 1 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_2": "q.block_state('complementaries:angle') == 2 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_3": "q.block_state('complementaries:angle') == 3 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_4": "q.block_state('complementaries:angle') == 4 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_5": "q.block_state('complementaries:angle') == 5 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_6": "q.block_state('complementaries:angle') == 6 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_7": "q.block_state('complementaries:angle') == 7 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_8": "q.block_state('complementaries:angle') == 8 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_9": "q.block_state('complementaries:angle') == 9 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_10": "q.block_state('complementaries:angle') == 10 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_11": "q.block_state('complementaries:angle') == 11 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_12": "q.block_state('complementaries:angle') == 12 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_13": "q.block_state('complementaries:angle') == 13 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_14": "q.block_state('complementaries:angle') == 14 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "globe_15": "q.block_state('complementaries:angle') == 15 && (q.block_state('complementaries:skin') <= 3 || q.block_state('complementaries:skin') == 12 || q.block_state('complementaries:skin') == 13)",
+          "flat_0": "q.block_state('complementaries:angle') == 0 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_1": "q.block_state('complementaries:angle') == 1 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_2": "q.block_state('complementaries:angle') == 2 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_3": "q.block_state('complementaries:angle') == 3 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_4": "q.block_state('complementaries:angle') == 4 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_5": "q.block_state('complementaries:angle') == 5 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_6": "q.block_state('complementaries:angle') == 6 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_7": "q.block_state('complementaries:angle') == 7 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_8": "q.block_state('complementaries:angle') == 8 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_9": "q.block_state('complementaries:angle') == 9 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_10": "q.block_state('complementaries:angle') == 10 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_11": "q.block_state('complementaries:angle') == 11 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_12": "q.block_state('complementaries:angle') == 12 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_13": "q.block_state('complementaries:angle') == 13 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_14": "q.block_state('complementaries:angle') == 14 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "flat_15": "q.block_state('complementaries:angle') == 15 && (q.block_state('complementaries:skin') >= 4 && q.block_state('complementaries:skin') <= 7)",
+          "round_0": "q.block_state('complementaries:angle') == 0 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_1": "q.block_state('complementaries:angle') == 1 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_2": "q.block_state('complementaries:angle') == 2 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_3": "q.block_state('complementaries:angle') == 3 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_4": "q.block_state('complementaries:angle') == 4 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_5": "q.block_state('complementaries:angle') == 5 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_6": "q.block_state('complementaries:angle') == 6 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_7": "q.block_state('complementaries:angle') == 7 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_8": "q.block_state('complementaries:angle') == 8 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_9": "q.block_state('complementaries:angle') == 9 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_10": "q.block_state('complementaries:angle') == 10 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_11": "q.block_state('complementaries:angle') == 11 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_12": "q.block_state('complementaries:angle') == 12 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_13": "q.block_state('complementaries:angle') == 13 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_14": "q.block_state('complementaries:angle') == 14 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "round_15": "q.block_state('complementaries:angle') == 15 && (q.block_state('complementaries:skin') >= 8 && q.block_state('complementaries:skin') <= 11)",
+          "sheared_0": "q.block_state('complementaries:angle') == 0 && q.block_state('complementaries:skin') == 14",
+          "sheared_1": "q.block_state('complementaries:angle') == 1 && q.block_state('complementaries:skin') == 14",
+          "sheared_2": "q.block_state('complementaries:angle') == 2 && q.block_state('complementaries:skin') == 14",
+          "sheared_3": "q.block_state('complementaries:angle') == 3 && q.block_state('complementaries:skin') == 14",
+          "sheared_4": "q.block_state('complementaries:angle') == 4 && q.block_state('complementaries:skin') == 14",
+          "sheared_5": "q.block_state('complementaries:angle') == 5 && q.block_state('complementaries:skin') == 14",
+          "sheared_6": "q.block_state('complementaries:angle') == 6 && q.block_state('complementaries:skin') == 14",
+          "sheared_7": "q.block_state('complementaries:angle') == 7 && q.block_state('complementaries:skin') == 14",
+          "sheared_8": "q.block_state('complementaries:angle') == 8 && q.block_state('complementaries:skin') == 14",
+          "sheared_9": "q.block_state('complementaries:angle') == 9 && q.block_state('complementaries:skin') == 14",
+          "sheared_10": "q.block_state('complementaries:angle') == 10 && q.block_state('complementaries:skin') == 14",
+          "sheared_11": "q.block_state('complementaries:angle') == 11 && q.block_state('complementaries:skin') == 14",
+          "sheared_12": "q.block_state('complementaries:angle') == 12 && q.block_state('complementaries:skin') == 14",
+          "sheared_13": "q.block_state('complementaries:angle') == 13 && q.block_state('complementaries:skin') == 14",
+          "sheared_14": "q.block_state('complementaries:angle') == 14 && q.block_state('complementaries:skin') == 14",
+          "sheared_15": "q.block_state('complementaries:angle') == 15 && q.block_state('complementaries:skin') == 14"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_globe_stand",
+          "render_method": "alpha_test"
+        },
+        "sphere": {
+          "texture": "cm_globe_map_sepia_0",
+          "render_method": "alpha_test"
+        },
+        "core": {
+          "texture": "cm_globe_core_sepia",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          15,
+          12
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          15,
+          12
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.75
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 2
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#9b8156",
+      "minecraft:loot": "loot_tables/blocks/globe_sepia.json",
+      "minecraft:redstone_consumer": {
+        "min_power": 1
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true
+          }
+        ]
+      },
+      "minecraft:movable": {
+        "movement_type": "immovable"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_0",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_1",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_2",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_3",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_4",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_5",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_6",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_7",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_8",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_9",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_10",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_11",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_12",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_13",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_14",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 0 || q.block_state('complementaries:skin') == 4 || q.block_state('complementaries:skin') == 8) && q.block_state('complementaries:map') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_15",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_0",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_1",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_2",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_3",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_4",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_5",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_6",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_7",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_8",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_9",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_10",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_11",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_12",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_13",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_14",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 1 || q.block_state('complementaries:skin') == 5 || q.block_state('complementaries:skin') == 9) && q.block_state('complementaries:map') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_15",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_0",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_1",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_2",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_3",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 4",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_4",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 5",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_5",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 6",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_6",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 7",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_7",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 8",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_8",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 9",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_9",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 10",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_10",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 11",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_11",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_12",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_13",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 14",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_14",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 2 || q.block_state('complementaries:skin') == 6 || q.block_state('complementaries:skin') == 10) && q.block_state('complementaries:map') == 15",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_map_sepia_15",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "(q.block_state('complementaries:skin') == 3 || q.block_state('complementaries:skin') == 7 || q.block_state('complementaries:skin') == 11 || q.block_state('complementaries:skin') == 14)",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_earth_sepia",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:skin') == 12",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_moon",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:skin') == 13",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_globe_stand",
+              "render_method": "alpha_test"
+            },
+            "sphere": {
+              "texture": "cm_globe_sun",
+              "render_method": "alpha_test"
+            },
+            "core": {
+              "texture": "cm_globe_core_sepia",
+              "render_method": "alpha_test"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

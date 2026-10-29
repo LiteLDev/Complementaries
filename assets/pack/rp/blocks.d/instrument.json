@@ -1,0 +1,7 @@
+{
+  "complementaries:globe": { "sound": "metal" },
+  "complementaries:globe_sepia": { "sound": "metal" },
+  "complementaries:wind_vane": { "sound": "metal" },
+  "complementaries:clock_block": { "sound": "wood" },
+  "complementaries:hourglass": { "sound": "glass" }
+}

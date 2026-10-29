@@ -1,0 +1,14 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "complementaries:clock_block" },
+    "tags": ["crafting_table"],
+    "pattern": ["PPP", "PCP", "PPP"],
+    "key": {
+      "P": { "tag": "minecraft:planks" },
+      "C": { "item": "minecraft:clock" }
+    },
+    "unlock": [{ "item": "minecraft:clock" }],
+    "result": { "item": "complementaries:clock_block", "count": 1 }
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:wind_vane",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:wind": {
+          "values": {
+            "min": 0,
+            "max": 3
+          }
+        },
+        "complementaries:yaw": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        },
+        "complementaries:yaw_fine": {
+          "values": {
+            "min": 0,
+            "max": 3
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.wind_vane",
+        "bone_visibility": {
+          "vane_0": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 0",
+          "vane_1": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 1",
+          "vane_2": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 2",
+          "vane_3": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 3",
+          "vane_4": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 4",
+          "vane_5": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 5",
+          "vane_6": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 6",
+          "vane_7": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 7",
+          "vane_8": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 8",
+          "vane_9": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 9",
+          "vane_10": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 10",
+          "vane_11": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 11",
+          "vane_12": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 12",
+          "vane_13": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 13",
+          "vane_14": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 14",
+          "vane_15": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 15",
+          "vane_16": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 16",
+          "vane_17": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 17",
+          "vane_18": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 18",
+          "vane_19": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 19",
+          "vane_20": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 20",
+          "vane_21": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 21",
+          "vane_22": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 22",
+          "vane_23": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 23",
+          "vane_24": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 24",
+          "vane_25": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 25",
+          "vane_26": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 26",
+          "vane_27": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 27",
+          "vane_28": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 28",
+          "vane_29": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 29",
+          "vane_30": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 30",
+          "vane_31": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 31",
+          "vane_32": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 32",
+          "vane_33": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 33",
+          "vane_34": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 34",
+          "vane_35": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 35",
+          "vane_36": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 36",
+          "vane_37": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 37",
+          "vane_38": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 38",
+          "vane_39": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 39",
+          "vane_40": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 40",
+          "vane_41": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 41",
+          "vane_42": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 42",
+          "vane_43": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 43",
+          "vane_44": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 44",
+          "vane_45": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 45",
+          "vane_46": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 46",
+          "vane_47": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 47",
+          "vane_48": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 48",
+          "vane_49": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 49",
+          "vane_50": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 50",
+          "vane_51": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 51",
+          "vane_52": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 52",
+          "vane_53": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 53",
+          "vane_54": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 54",
+          "vane_55": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 55",
+          "vane_56": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 56",
+          "vane_57": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 57",
+          "vane_58": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 58",
+          "vane_59": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 59",
+          "vane_60": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 60",
+          "vane_61": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 61",
+          "vane_62": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 62",
+          "vane_63": "q.block_state('complementaries:yaw') * 4 + q.block_state('complementaries:yaw_fine') == 63"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_wind_vane",
+          "render_method": "alpha_test"
+        },
+        "rooster": {
+          "texture": "cm_wind_vane_rooster",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          16,
+          12
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          16,
+          12
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#4a4a52",
+      "minecraft:loot": "loot_tables/blocks/wind_vane.json",
+      "minecraft:redstone_producer": {
+        "power": 0,
+        "strongly_powered_face": "down",
+        "connected_faces": [
+          "down",
+          "up",
+          "north",
+          "south",
+          "east",
+          "west"
+        ]
+      },
+      "minecraft:liquid_detection": {
+        "detection_rules": [
+          {
+            "liquid_type": "water",
+            "can_contain_liquid": true
+          }
+        ]
+      },
+      "minecraft:movable": {
+        "movement_type": "immovable"
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('complementaries:wind') == 1",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 1,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "east",
+              "west"
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:wind') == 2",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 2,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "east",
+              "west"
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('complementaries:wind') == 3",
+        "components": {
+          "minecraft:redstone_producer": {
+            "power": 3,
+            "strongly_powered_face": "down",
+            "connected_faces": [
+              "down",
+              "up",
+              "north",
+              "south",
+              "east",
+              "west"
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
