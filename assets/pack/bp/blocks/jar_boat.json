@@ -1,0 +1,156 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:jar_boat",
+      "menu_category": {
+        "category": "items",
+        "is_hidden_in_commands": false
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:jar_boat.name",
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.jar_boat"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_tableware_jar_glass",
+          "render_method": "blend",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "glass": {
+          "texture": "cm_tableware_jar_glass",
+          "render_method": "blend",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "lid": {
+          "texture": "cm_tableware_jar_lid",
+          "render_method": "blend",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "water": {
+          "texture": "cm_tableware_fluid_water",
+          "render_method": "blend",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "hull": {
+          "texture": "cm_tableware_boat_hull",
+          "render_method": "blend",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "sail": {
+          "texture": "cm_tableware_sail",
+          "render_method": "blend",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -5,
+          0,
+          -5
+        ],
+        "size": [
+          10,
+          15,
+          10
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -5,
+          0,
+          -5
+        ],
+        "size": [
+          10,
+          15,
+          10
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 1.0
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#a0d8ee",
+      "minecraft:loot": "loot_tables/blocks/jar_boat.json",
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": [
+              "up"
+            ]
+          }
+        ]
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

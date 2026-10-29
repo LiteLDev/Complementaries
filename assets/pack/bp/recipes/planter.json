@@ -1,0 +1,16 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:planter"
+    },
+    "tags": ["crafting_table"],
+    "pattern": ["T T", "TDT", "TTT"],
+    "key": { "T": { "item": "minecraft:hardened_clay" }, "D": { "item": "minecraft:dirt" } },
+    "unlock": [{ "item": "minecraft:hardened_clay" }],
+    "result": {
+      "item": "complementaries:planter",
+      "count": 1
+    }
+  }
+}

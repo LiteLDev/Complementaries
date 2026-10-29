@@ -1,0 +1,10 @@
+tile.complementaries:goblet.name=Goblet
+tile.complementaries:urn.name=Urn
+tile.complementaries:planter.name=Planter
+tile.complementaries:flower_box.name=Flower Box
+tile.complementaries:book_pile.name=Book Pile
+tile.complementaries:book_pile_horizontal.name=Book Pile
+tile.complementaries:pancake.name=Pancake
+tile.complementaries:jar_boat.name=Jar Boat
+item.complementaries:pancake.name=Pancake
+item.complementaries:candy.name=Candy

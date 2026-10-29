@@ -1,0 +1,423 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:pancake",
+      "menu_category": {
+        "category": "none",
+        "is_hidden_in_commands": false
+      },
+      "states": {
+        "cm:pancakes": {
+          "values": {
+            "min": 0,
+            "max": 7
+          }
+        },
+        "cm:topping": {
+          "values": {
+            "min": 0,
+            "max": 3
+          }
+        }
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:pancake.name",
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.pancake",
+        "bone_visibility": {
+          "layer_1": "q.block_state('cm:pancakes') >= 0",
+          "topping_1": "q.block_state('cm:pancakes') == 0 && q.block_state('cm:topping') > 0",
+          "layer_2": "q.block_state('cm:pancakes') >= 1",
+          "topping_2": "q.block_state('cm:pancakes') == 1 && q.block_state('cm:topping') > 0",
+          "layer_3": "q.block_state('cm:pancakes') >= 2",
+          "topping_3": "q.block_state('cm:pancakes') == 2 && q.block_state('cm:topping') > 0",
+          "layer_4": "q.block_state('cm:pancakes') >= 3",
+          "topping_4": "q.block_state('cm:pancakes') == 3 && q.block_state('cm:topping') > 0",
+          "layer_5": "q.block_state('cm:pancakes') >= 4",
+          "topping_5": "q.block_state('cm:pancakes') == 4 && q.block_state('cm:topping') > 0",
+          "layer_6": "q.block_state('cm:pancakes') >= 5",
+          "topping_6": "q.block_state('cm:pancakes') == 5 && q.block_state('cm:topping') > 0",
+          "layer_7": "q.block_state('cm:pancakes') >= 6",
+          "topping_7": "q.block_state('cm:pancakes') == 6 && q.block_state('cm:topping') > 0",
+          "layer_8": "q.block_state('cm:pancakes') >= 7",
+          "topping_8": "q.block_state('cm:pancakes') == 7 && q.block_state('cm:topping') > 0"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_tableware_pancake_side",
+          "render_method": "opaque",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "side": {
+          "texture": "cm_tableware_pancake_side",
+          "render_method": "opaque",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "top": {
+          "texture": "cm_tableware_pancake_top",
+          "render_method": "opaque",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "topping": {
+          "texture": "cm_tableware_topping_honey",
+          "render_method": "opaque",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          2,
+          12
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          2,
+          12
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.5
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#e0a14d",
+      "minecraft:loot": "loot_tables/blocks/pancake_1.json",
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": [
+              "up"
+            ]
+          }
+        ]
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('cm:pancakes') == 1",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              4,
+              12
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              4,
+              12
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/pancake_2.json"
+        }
+      },
+      {
+        "condition": "q.block_state('cm:pancakes') == 2",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              6,
+              12
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              6,
+              12
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/pancake_3.json"
+        }
+      },
+      {
+        "condition": "q.block_state('cm:pancakes') == 3",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              8,
+              12
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              8,
+              12
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/pancake_4.json"
+        }
+      },
+      {
+        "condition": "q.block_state('cm:pancakes') == 4",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              10,
+              12
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              10,
+              12
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/pancake_5.json"
+        }
+      },
+      {
+        "condition": "q.block_state('cm:pancakes') == 5",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              12,
+              12
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              12,
+              12
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/pancake_6.json"
+        }
+      },
+      {
+        "condition": "q.block_state('cm:pancakes') == 6",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              14,
+              12
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              14,
+              12
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/pancake_7.json"
+        }
+      },
+      {
+        "condition": "q.block_state('cm:pancakes') == 7",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              16,
+              12
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              16,
+              12
+            ]
+          },
+          "minecraft:loot": "loot_tables/blocks/pancake_8.json"
+        }
+      },
+      {
+        "condition": "q.block_state('cm:topping') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_pancake_side",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "side": {
+              "texture": "cm_tableware_pancake_side",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "top": {
+              "texture": "cm_tableware_pancake_top",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "topping": {
+              "texture": "cm_tableware_topping_honey",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:topping') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_pancake_side",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "side": {
+              "texture": "cm_tableware_pancake_side",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "top": {
+              "texture": "cm_tableware_pancake_top",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "topping": {
+              "texture": "cm_tableware_topping_syrup",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:topping') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "cm_tableware_pancake_side",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "side": {
+              "texture": "cm_tableware_pancake_side",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "top": {
+              "texture": "cm_tableware_pancake_top",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            },
+            "topping": {
+              "texture": "cm_tableware_topping_chocolate",
+              "render_method": "opaque",
+              "ambient_occlusion": false,
+              "face_dimming": true
+            }
+          }
+        }
+      }
+    ]
+  }
+}

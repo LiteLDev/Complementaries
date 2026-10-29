@@ -1,0 +1,21 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:feature_rules": {
+    "description": {
+      "identifier": "complementaries:urn_cave",
+      "places_feature": "complementaries:urn_cave_cluster"
+    },
+    "conditions": {
+      "placement_pass": "underground_pass",
+      "minecraft:biome_filter": [
+        { "test": "has_biome_tag", "operator": "==", "value": "overworld" }
+      ]
+    },
+    "distribution": {
+      "iterations": 24,
+      "x": { "distribution": "uniform", "extent": [0, 16] },
+      "y": { "distribution": "uniform", "extent": [-50, 60] },
+      "z": { "distribution": "uniform", "extent": [0, 16] }
+    }
+  }
+}

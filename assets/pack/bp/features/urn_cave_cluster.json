@@ -1,0 +1,13 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:scatter_feature": {
+    "description": {
+      "identifier": "complementaries:urn_cave_cluster"
+    },
+    "places_feature": "complementaries:urn_cave",
+    "iterations": 4,
+    "x": { "distribution": "uniform", "extent": [-2, 2] },
+    "y": { "distribution": "uniform", "extent": [-1, 1] },
+    "z": { "distribution": "uniform", "extent": [-2, 2] }
+  }
+}

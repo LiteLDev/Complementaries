@@ -1,0 +1,10 @@
+{
+  "complementaries:goblet": { "sound": "metal" },
+  "complementaries:urn": { "sound": "decorated_pot" },
+  "complementaries:planter": { "sound": "stone" },
+  "complementaries:flower_box": { "sound": "wood" },
+  "complementaries:book_pile": { "sound": "chiseled_bookshelf" },
+  "complementaries:book_pile_horizontal": { "sound": "chiseled_bookshelf" },
+  "complementaries:pancake": { "sound": "cloth" },
+  "complementaries:jar_boat": { "sound": "glass" }
+}

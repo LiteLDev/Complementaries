@@ -1,0 +1,173 @@
+{
+  "cm_tableware_boat_hull": {
+    "textures": "textures/blocks/tableware/boat_hull"
+  },
+  "cm_tableware_book_1": {
+    "textures": "textures/blocks/tableware/book_1"
+  },
+  "cm_tableware_book_2": {
+    "textures": "textures/blocks/tableware/book_2"
+  },
+  "cm_tableware_book_3": {
+    "textures": "textures/blocks/tableware/book_3"
+  },
+  "cm_tableware_book_4": {
+    "textures": "textures/blocks/tableware/book_4"
+  },
+  "cm_tableware_book_5": {
+    "textures": "textures/blocks/tableware/book_5"
+  },
+  "cm_tableware_book_6": {
+    "textures": "textures/blocks/tableware/book_6"
+  },
+  "cm_tableware_book_7": {
+    "textures": "textures/blocks/tableware/book_7"
+  },
+  "cm_tableware_book_8": {
+    "textures": "textures/blocks/tableware/book_8"
+  },
+  "cm_tableware_book_9": {
+    "textures": "textures/blocks/tableware/book_9"
+  },
+  "cm_tableware_book_pages": {
+    "textures": "textures/blocks/tableware/book_pages"
+  },
+  "cm_tableware_flower_box_side": {
+    "textures": "textures/blocks/tableware/flower_box_side"
+  },
+  "cm_tableware_flower_box_top": {
+    "textures": "textures/blocks/tableware/flower_box_top"
+  },
+  "cm_tableware_fluid_dragon_breath": {
+    "textures": "textures/blocks/tableware/fluid_dragon_breath"
+  },
+  "cm_tableware_fluid_experience": {
+    "textures": "textures/blocks/tableware/fluid_experience"
+  },
+  "cm_tableware_fluid_honey": {
+    "textures": "textures/blocks/tableware/fluid_honey"
+  },
+  "cm_tableware_fluid_milk": {
+    "textures": "textures/blocks/tableware/fluid_milk"
+  },
+  "cm_tableware_fluid_potion_black": {
+    "textures": "textures/blocks/tableware/fluid_potion_black"
+  },
+  "cm_tableware_fluid_potion_blue": {
+    "textures": "textures/blocks/tableware/fluid_potion_blue"
+  },
+  "cm_tableware_fluid_potion_darkred": {
+    "textures": "textures/blocks/tableware/fluid_potion_darkred"
+  },
+  "cm_tableware_fluid_potion_gray": {
+    "textures": "textures/blocks/tableware/fluid_potion_gray"
+  },
+  "cm_tableware_fluid_potion_green": {
+    "textures": "textures/blocks/tableware/fluid_potion_green"
+  },
+  "cm_tableware_fluid_potion_lightblue": {
+    "textures": "textures/blocks/tableware/fluid_potion_lightblue"
+  },
+  "cm_tableware_fluid_potion_orange": {
+    "textures": "textures/blocks/tableware/fluid_potion_orange"
+  },
+  "cm_tableware_fluid_potion_pink": {
+    "textures": "textures/blocks/tableware/fluid_potion_pink"
+  },
+  "cm_tableware_fluid_potion_red": {
+    "textures": "textures/blocks/tableware/fluid_potion_red"
+  },
+  "cm_tableware_fluid_potion_yellow": {
+    "textures": "textures/blocks/tableware/fluid_potion_yellow"
+  },
+  "cm_tableware_fluid_water": {
+    "textures": "textures/blocks/tableware/fluid_water"
+  },
+  "cm_tableware_goblet": {
+    "textures": "textures/blocks/tableware/goblet"
+  },
+  "cm_tableware_jar_glass": {
+    "textures": "textures/blocks/tableware/jar_glass"
+  },
+  "cm_tableware_jar_lid": {
+    "textures": "textures/blocks/tableware/jar_lid"
+  },
+  "cm_tableware_pancake_side": {
+    "textures": "textures/blocks/tableware/pancake_side"
+  },
+  "cm_tableware_pancake_top": {
+    "textures": "textures/blocks/tableware/pancake_top"
+  },
+  "cm_tableware_planter_bottom": {
+    "textures": "textures/blocks/tableware/planter_bottom"
+  },
+  "cm_tableware_planter_side": {
+    "textures": "textures/blocks/tableware/planter_side"
+  },
+  "cm_tableware_planter_top": {
+    "textures": "textures/blocks/tableware/planter_top"
+  },
+  "cm_tableware_sail": {
+    "textures": "textures/blocks/tableware/sail"
+  },
+  "cm_tableware_topping_chocolate": {
+    "textures": "textures/blocks/tableware/topping_chocolate"
+  },
+  "cm_tableware_topping_honey": {
+    "textures": "textures/blocks/tableware/topping_honey"
+  },
+  "cm_tableware_topping_syrup": {
+    "textures": "textures/blocks/tableware/topping_syrup"
+  },
+  "cm_tableware_urn_side": {
+    "textures": "textures/blocks/tableware/urn_side"
+  },
+  "cm_tableware_urn_top": {
+    "textures": "textures/blocks/tableware/urn_top"
+  },
+  "cm_tableware_flower_dandelion": {
+    "textures": "textures/blocks/flower_dandelion"
+  },
+  "cm_tableware_flower_poppy": {
+    "textures": "textures/blocks/flower_rose"
+  },
+  "cm_tableware_flower_blue_orchid": {
+    "textures": "textures/blocks/flower_blue_orchid"
+  },
+  "cm_tableware_flower_allium": {
+    "textures": "textures/blocks/flower_allium"
+  },
+  "cm_tableware_flower_azure_bluet": {
+    "textures": "textures/blocks/flower_houstonia"
+  },
+  "cm_tableware_flower_red_tulip": {
+    "textures": "textures/blocks/flower_tulip_red"
+  },
+  "cm_tableware_flower_orange_tulip": {
+    "textures": "textures/blocks/flower_tulip_orange"
+  },
+  "cm_tableware_flower_white_tulip": {
+    "textures": "textures/blocks/flower_tulip_white"
+  },
+  "cm_tableware_flower_pink_tulip": {
+    "textures": "textures/blocks/flower_tulip_pink"
+  },
+  "cm_tableware_flower_oxeye_daisy": {
+    "textures": "textures/blocks/flower_oxeye_daisy"
+  },
+  "cm_tableware_flower_cornflower": {
+    "textures": "textures/blocks/flower_cornflower"
+  },
+  "cm_tableware_flower_lily_of_the_valley": {
+    "textures": "textures/blocks/flower_lily_of_the_valley"
+  },
+  "cm_tableware_flower_wither_rose": {
+    "textures": "textures/blocks/flower_wither_rose"
+  },
+  "cm_tableware_flower_oak_sapling": {
+    "textures": "textures/blocks/sapling_oak"
+  },
+  "cm_tableware_flower_birch_sapling": {
+    "textures": "textures/blocks/sapling_birch"
+  }
+}

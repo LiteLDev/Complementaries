@@ -1,0 +1,10 @@
+tile.complementaries:goblet.name=高脚杯
+tile.complementaries:urn.name=瓮
+tile.complementaries:planter.name=花盆
+tile.complementaries:flower_box.name=花箱
+tile.complementaries:book_pile.name=书堆
+tile.complementaries:book_pile_horizontal.name=书堆
+tile.complementaries:pancake.name=煎饼
+tile.complementaries:jar_boat.name=瓶中船
+item.complementaries:pancake.name=煎饼
+item.complementaries:candy.name=糖果

@@ -1,0 +1,267 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:book_pile_horizontal",
+      "menu_category": {
+        "category": "none",
+        "is_hidden_in_commands": false
+      },
+      "states": {
+        "cm:book0": {
+          "values": {
+            "min": 0,
+            "max": 2
+          }
+        },
+        "cm:book1": {
+          "values": {
+            "min": 0,
+            "max": 2
+          }
+        },
+        "cm:book2": {
+          "values": {
+            "min": 0,
+            "max": 2
+          }
+        },
+        "cm:book3": {
+          "values": {
+            "min": 0,
+            "max": 2
+          }
+        }
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:book_pile_horizontal.name",
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.book_pile_horizontal",
+        "bone_visibility": {
+          "book0_1": "q.block_state('cm:book0') == 1",
+          "book0_2": "q.block_state('cm:book0') == 2",
+          "book1_1": "q.block_state('cm:book1') == 1",
+          "book1_2": "q.block_state('cm:book1') == 2",
+          "book2_1": "q.block_state('cm:book2') == 1",
+          "book2_2": "q.block_state('cm:book2') == 2",
+          "book3_1": "q.block_state('cm:book3') == 1",
+          "book3_2": "q.block_state('cm:book3') == 2"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_tableware_book_pages",
+          "render_method": "opaque",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "pages": {
+          "texture": "cm_tableware_book_pages",
+          "render_method": "opaque",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "cover_8": {
+          "texture": "cm_tableware_book_8",
+          "render_method": "opaque",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        },
+        "cover_9": {
+          "texture": "cm_tableware_book_9",
+          "render_method": "opaque",
+          "ambient_occlusion": false,
+          "face_dimming": true
+        }
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          3,
+          12
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -6,
+          0,
+          -6
+        ],
+        "size": [
+          12,
+          3,
+          12
+        ]
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 1.0
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:map_color": "#5b3a1f",
+      "minecraft:loot": "loot_tables/blocks/book_pile_horizontal.json",
+      "minecraft:placement_filter": {
+        "conditions": [
+          {
+            "allowed_faces": [
+              "up"
+            ]
+          }
+        ]
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:book1') > 0",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              6,
+              12
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              6,
+              12
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:book2') > 0",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              9,
+              12
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              9,
+              12
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('cm:book3') > 0",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              12,
+              12
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -6,
+              0,
+              -6
+            ],
+            "size": [
+              12,
+              12,
+              12
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

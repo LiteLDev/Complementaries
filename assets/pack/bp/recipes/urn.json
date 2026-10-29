@@ -1,0 +1,16 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:urn"
+    },
+    "tags": ["crafting_table"],
+    "pattern": [" C ", "C C", "CCC"],
+    "key": { "C": { "item": "minecraft:hardened_clay" } },
+    "unlock": [{ "item": "minecraft:hardened_clay" }],
+    "result": {
+      "item": "complementaries:urn",
+      "count": 1
+    }
+  }
+}
