@@ -1,0 +1,12 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "complementaries:dispenser_minecart",
+      "materials": { "default": "entity_alphatest" },
+      "textures": { "default": "textures/entity/dispenser_minecart" },
+      "geometry": { "default": "geometry.complementaries.dispenser_minecart" },
+      "render_controllers": ["controller.render.default"]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "block.supplementaries.speaker_block": "扬声器",
+  "gui.supplementaries.speaker_block.edit": "扬声器",
+  "gui.supplementaries.speaker_block.message": "消息",
+  "gui.supplementaries.speaker_block.mode": "模式",
+  "gui.supplementaries.speaker_block.chat_message": "聊天栏",
+  "gui.supplementaries.speaker_block.status_message": "状态栏消息",
+  "gui.supplementaries.speaker_block.title_message": "标题",
+  "gui.supplementaries.speaker_block.narrator_message": "旁白",
+  "gui.supplementaries.speaker_block.volume": "音量",
+  "message.supplementaries.speaker": "{0}：{1}"
+}

@@ -1,0 +1,78 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.complementaries.dispenser_minecart",
+        "texture_width": 64,
+        "texture_height": 16,
+        "visible_bounds_width": 3,
+        "visible_bounds_height": 2,
+        "visible_bounds_offset": [0, 0.5, 0]
+      },
+      "bones": [
+        {
+          "name": "cart",
+          "pivot": [0, 0, 0],
+          "cubes": [
+            {
+              "origin": [-10, 1, -8], "size": [20, 2, 16],
+              "uv": {
+                "north": { "uv": [0, 0], "uv_size": [16, 2] }, "south": { "uv": [0, 0], "uv_size": [16, 2] },
+                "east": { "uv": [0, 0], "uv_size": [16, 2] }, "west": { "uv": [0, 0], "uv_size": [16, 2] },
+                "up": { "uv": [0, 0], "uv_size": [16, 16] }, "down": { "uv": [0, 0], "uv_size": [16, 16] }
+              }
+            },
+            {
+              "origin": [-10, 3, -8], "size": [2, 8, 16],
+              "uv": {
+                "north": { "uv": [0, 4], "uv_size": [2, 8] }, "south": { "uv": [0, 4], "uv_size": [2, 8] },
+                "east": { "uv": [0, 4], "uv_size": [16, 8] }, "west": { "uv": [0, 4], "uv_size": [16, 8] },
+                "up": { "uv": [0, 0], "uv_size": [2, 16] }, "down": { "uv": [0, 0], "uv_size": [2, 16] }
+              }
+            },
+            {
+              "origin": [8, 3, -8], "size": [2, 8, 16],
+              "uv": {
+                "north": { "uv": [0, 4], "uv_size": [2, 8] }, "south": { "uv": [0, 4], "uv_size": [2, 8] },
+                "east": { "uv": [0, 4], "uv_size": [16, 8] }, "west": { "uv": [0, 4], "uv_size": [16, 8] },
+                "up": { "uv": [0, 0], "uv_size": [2, 16] }, "down": { "uv": [0, 0], "uv_size": [2, 16] }
+              }
+            },
+            {
+              "origin": [-8, 3, -8], "size": [16, 8, 2],
+              "uv": {
+                "north": { "uv": [0, 4], "uv_size": [16, 8] }, "south": { "uv": [0, 4], "uv_size": [16, 8] },
+                "east": { "uv": [0, 4], "uv_size": [2, 8] }, "west": { "uv": [0, 4], "uv_size": [2, 8] },
+                "up": { "uv": [0, 0], "uv_size": [16, 2] }, "down": { "uv": [0, 0], "uv_size": [16, 2] }
+              }
+            },
+            {
+              "origin": [-8, 3, 6], "size": [16, 8, 2],
+              "uv": {
+                "north": { "uv": [0, 4], "uv_size": [16, 8] }, "south": { "uv": [0, 4], "uv_size": [16, 8] },
+                "east": { "uv": [0, 4], "uv_size": [2, 8] }, "west": { "uv": [0, 4], "uv_size": [2, 8] },
+                "up": { "uv": [0, 0], "uv_size": [16, 2] }, "down": { "uv": [0, 0], "uv_size": [16, 2] }
+              }
+            }
+          ]
+        },
+        {
+          "name": "dispenser",
+          "parent": "cart",
+          "pivot": [0, 3, 0],
+          "cubes": [
+            {
+              "origin": [-6, 3, -6], "size": [12, 12, 12],
+              "uv": {
+                "east": { "uv": [16, 0], "uv_size": [16, 16] }, "west": { "uv": [32, 0], "uv_size": [16, 16] },
+                "north": { "uv": [32, 0], "uv_size": [16, 16] }, "south": { "uv": [32, 0], "uv_size": [16, 16] },
+                "up": { "uv": [48, 0], "uv_size": [16, 16] }, "down": { "uv": [48, 0], "uv_size": [16, 16] }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

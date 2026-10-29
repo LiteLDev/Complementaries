@@ -1,0 +1,143 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:crystal_display",
+      "menu_category": {
+        "category": "items"
+      },
+      "states": {
+        "complementaries:power": {
+          "values": {
+            "min": 0,
+            "max": 15
+          }
+        },
+        "complementaries:chain": {
+          "values": {
+            "min": 0,
+            "max": 2
+          }
+        }
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 180
+        }
+      }
+    },
+    "components": {
+      "minecraft:display_name": "tile.complementaries:crystal_display.name",
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.75
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0.5
+      },
+      "minecraft:map_color": "#5b4b80",
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.crystal_display",
+        "bone_visibility": {
+          "l_a": "q.block_state('complementaries:chain') == 0 && false",
+          "l_b": "q.block_state('complementaries:chain') == 0 && (q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 11 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 14 || q.block_state('complementaries:power') == 15)",
+          "l_c": "q.block_state('complementaries:chain') == 0 && (q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 11 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 14 || q.block_state('complementaries:power') == 15)",
+          "l_d": "q.block_state('complementaries:chain') == 0 && false",
+          "l_e": "q.block_state('complementaries:chain') == 0 && false",
+          "l_f": "q.block_state('complementaries:chain') == 0 && false",
+          "l_g": "q.block_state('complementaries:chain') == 0 && false",
+          "r_a": "q.block_state('complementaries:chain') == 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 2 || q.block_state('complementaries:power') == 3 || q.block_state('complementaries:power') == 5 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 7 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 15)",
+          "r_b": "q.block_state('complementaries:chain') == 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 1 || q.block_state('complementaries:power') == 2 || q.block_state('complementaries:power') == 3 || q.block_state('complementaries:power') == 4 || q.block_state('complementaries:power') == 7 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 11 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 14)",
+          "r_c": "q.block_state('complementaries:chain') == 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 1 || q.block_state('complementaries:power') == 3 || q.block_state('complementaries:power') == 4 || q.block_state('complementaries:power') == 5 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 7 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 11 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 14 || q.block_state('complementaries:power') == 15)",
+          "r_d": "q.block_state('complementaries:chain') == 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 2 || q.block_state('complementaries:power') == 3 || q.block_state('complementaries:power') == 5 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 15)",
+          "r_e": "q.block_state('complementaries:chain') == 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 2 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 12)",
+          "r_f": "q.block_state('complementaries:chain') == 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 4 || q.block_state('complementaries:power') == 5 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 14 || q.block_state('complementaries:power') == 15)",
+          "r_g": "q.block_state('complementaries:chain') == 0 && (q.block_state('complementaries:power') == 2 || q.block_state('complementaries:power') == 3 || q.block_state('complementaries:power') == 4 || q.block_state('complementaries:power') == 5 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 14 || q.block_state('complementaries:power') == 15)",
+          "big_a": "q.block_state('complementaries:chain') != 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 2 || q.block_state('complementaries:power') == 3 || q.block_state('complementaries:power') == 5 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 7 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 11 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 14 || q.block_state('complementaries:power') == 15)",
+          "big_b": "q.block_state('complementaries:chain') != 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 1 || q.block_state('complementaries:power') == 2 || q.block_state('complementaries:power') == 3 || q.block_state('complementaries:power') == 4 || q.block_state('complementaries:power') == 7 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 11 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 14 || q.block_state('complementaries:power') == 15)",
+          "big_c": "q.block_state('complementaries:chain') != 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 1 || q.block_state('complementaries:power') == 3 || q.block_state('complementaries:power') == 4 || q.block_state('complementaries:power') == 5 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 7 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 11 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 14 || q.block_state('complementaries:power') == 15)",
+          "big_d": "q.block_state('complementaries:chain') != 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 2 || q.block_state('complementaries:power') == 3 || q.block_state('complementaries:power') == 5 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 11 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 14 || q.block_state('complementaries:power') == 15)",
+          "big_e": "q.block_state('complementaries:chain') != 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 2 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 8)",
+          "big_f": "q.block_state('complementaries:chain') != 0 && (q.block_state('complementaries:power') == 0 || q.block_state('complementaries:power') == 4 || q.block_state('complementaries:power') == 5 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 11 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 14 || q.block_state('complementaries:power') == 15)",
+          "big_g": "q.block_state('complementaries:chain') != 0 && (q.block_state('complementaries:power') == 2 || q.block_state('complementaries:power') == 3 || q.block_state('complementaries:power') == 4 || q.block_state('complementaries:power') == 5 || q.block_state('complementaries:power') == 6 || q.block_state('complementaries:power') == 8 || q.block_state('complementaries:power') == 9 || q.block_state('complementaries:power') == 10 || q.block_state('complementaries:power') == 11 || q.block_state('complementaries:power') == 12 || q.block_state('complementaries:power') == 13 || q.block_state('complementaries:power') == 14 || q.block_state('complementaries:power') == 15)"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "complementaries_crystal_display",
+          "render_method": "opaque"
+        },
+        "screen": {
+          "texture": "complementaries_crystal_display_front",
+          "render_method": "opaque"
+        },
+        "segment": {
+          "texture": "complementaries_crystal_display_segment",
+          "render_method": "opaque",
+          "face_dimming": false
+        }
+      },
+      "minecraft:light_emission": 2,
+      "minecraft:redstone_conductivity": {
+        "redstone_conductor": false,
+        "allows_wire_to_step_down": true
+      },
+      "minecraft:redstone_consumer": {
+        "min_power": 0,
+        "propagates_power": false
+      }
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "components": {
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              -90,
+              0
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
