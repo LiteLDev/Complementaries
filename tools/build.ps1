@@ -39,13 +39,17 @@ try {
         if ($pf -and (Test-Path (Join-Path $pf 'Microsoft Visual Studio\18'))) { $vsArgs = @('--vs=2026'); break }
     }
 
+    # -P pins the project to this checkout: without it xmake walks up to the first folder with a
+    # .xmake directory, so a worktree under .claude/worktrees/ would build the outer checkout.
+    $proj = @('-P', $root)
+
     $targets = if ($Target -eq 'all') { @('server', 'client') } else { @($Target) }
     foreach ($t in $targets) {
         Write-Host "==> configuring $t ($Mode)"
-        xmake f -a x64 -m $Mode -p windows --target_type=$t -o "build/$t" @vsArgs -y
+        xmake f @proj -a x64 -m $Mode -p windows --target_type=$t -o "build/$t" @vsArgs -y
         if ($LASTEXITCODE) { throw "xmake config failed for $t" }
         Write-Host "==> building $t"
-        xmake build -y Complementaries
+        xmake build @proj -y Complementaries
         if ($LASTEXITCODE) { throw "build failed for $t" }
         $out = Join-Path $root "bin/$t/Complementaries"
         if (-not (Test-Path (Join-Path $out 'Complementaries.dll'))) { throw "missing output $out" }
@@ -53,9 +57,9 @@ try {
     }
     if ($Tests) {
         Write-Host '==> unit tests'
-        xmake build -y cm-tests
+        xmake build @proj -y cm-tests
         if ($LASTEXITCODE) { throw 'cm-tests build failed' }
-        xmake run cm-tests
+        xmake run @proj cm-tests
         if ($LASTEXITCODE) { throw 'unit tests failed' }
     }
 } finally {

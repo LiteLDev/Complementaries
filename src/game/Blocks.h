@@ -24,11 +24,16 @@ namespace cm::game {
 /// The block at `pos` ("" when the chunk isn't loaded).
 [[nodiscard]] std::string blockIdAt(BlockSource& region, BlockPos const& pos);
 
-/// Integer / boolean custom state of `block` (nullopt if the block has no such state).
+/// Integer / boolean state of `block` as its real value (a [1, 2, 3, 4] state reads 1..4, booleans
+/// 0/1; a string state gives its index). nullopt if the block has no such state.
 [[nodiscard]] std::optional<int> intState(Block const& block, std::string_view state);
 
-/// The default state of `id` with `states` applied (unknown states are ignored). nullptr if the
-/// block id is not registered (behavior pack missing).
+/// `block` with `states` applied by value, as `intState` reads them (unknown states and values are
+/// ignored).
+[[nodiscard]] Block const* withStates(Block const& block, std::vector<std::pair<std::string_view, int>> const& states);
+
+/// The default state of `id` with `states` applied by value, as `intState` reads them (unknown
+/// states and values are ignored). nullptr if the block id is not registered (behavior pack missing).
 [[nodiscard]] Block const* blockWith(std::string_view id, std::vector<std::pair<std::string_view, int>> const& states = {});
 
 /// Sets a block (neighbour + client updates). Returns false on failure.
