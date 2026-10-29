@@ -1,0 +1,80 @@
+{
+  "cm_ash_bricks": {
+    "textures": "textures/blocks/building/ash_bricks"
+  },
+  "cm_stone_tile": {
+    "textures": "textures/blocks/building/stone_tile"
+  },
+  "cm_blackstone_tile": {
+    "textures": "textures/blocks/building/blackstone_tile"
+  },
+  "cm_lapis_bricks": {
+    "textures": "textures/blocks/building/lapis_bricks"
+  },
+  "cm_checker_block": {
+    "textures": "textures/blocks/building/checker_block"
+  },
+  "cm_fine_wood": {
+    "textures": "textures/blocks/building/fine_wood"
+  },
+  "cm_daub": {
+    "textures": "textures/blocks/building/daub"
+  },
+  "cm_daub_frame": {
+    "textures": "textures/blocks/building/daub_frame"
+  },
+  "cm_daub_brace": {
+    "textures": "textures/blocks/building/daub_brace"
+  },
+  "cm_daub_brace_flipped": {
+    "textures": "textures/blocks/building/daub_brace_flipped"
+  },
+  "cm_daub_cross_brace": {
+    "textures": "textures/blocks/building/daub_cross_brace"
+  },
+  "cm_timber_frame": {
+    "textures": "textures/blocks/building/timber_frame"
+  },
+  "cm_timber_brace": {
+    "textures": "textures/blocks/building/timber_brace"
+  },
+  "cm_timber_brace_flipped": {
+    "textures": "textures/blocks/building/timber_brace_flipped"
+  },
+  "cm_timber_cross_brace": {
+    "textures": "textures/blocks/building/timber_cross_brace"
+  },
+  "cm_soap_block": {
+    "textures": "textures/blocks/building/soap_block"
+  },
+  "cm_flint_block": {
+    "textures": "textures/blocks/building/flint_block"
+  },
+  "cm_feather_block": {
+    "textures": "textures/blocks/building/feather_block"
+  },
+  "cm_sugar_cube": {
+    "textures": "textures/blocks/building/sugar_cube"
+  },
+  "cm_raked_gravel_0": {
+    "textures": "textures/blocks/building/raked_gravel_0"
+  },
+  "cm_raked_gravel_1": {
+    "textures": "textures/blocks/building/raked_gravel_1"
+  },
+  "cm_raked_gravel_2": {
+    "textures": "textures/blocks/building/raked_gravel_2"
+  },
+  "cm_raked_gravel_3": {
+    "textures": "textures/blocks/building/raked_gravel_3"
+  },
+  "cm_raked_gravel_4": {
+    "textures": "textures/blocks/building/raked_gravel_4"
+  },
+  "cm_raked_gravel_5": {
+    "textures": "textures/blocks/building/raked_gravel_5"
+  },
+  "cm_ash": {
+    "textures": "textures/blocks/building/ash"
+  }
+}

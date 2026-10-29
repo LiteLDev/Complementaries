@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:fine_wood_stairs"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "#  ",
+      "## ",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "complementaries:fine_wood"
+      }
+    },
+    "unlock": [
+      {
+        "item": "complementaries:fine_wood"
+      }
+    ],
+    "result": {
+      "item": "complementaries:fine_wood_stairs",
+      "count": 4
+    }
+  }
+}

@@ -1,0 +1,2382 @@
+{
+  "format_version": "1.26.20",
+  "minecraft:block": {
+    "description": {
+      "identifier": "complementaries:blackstone_tile_stairs",
+      "menu_category": {
+        "category": "construction",
+        "group": "minecraft:itemGroup.name.stairs"
+      },
+      "states": {
+        "complementaries:shape": {
+          "values": {
+            "min": 0,
+            "max": 4
+          }
+        }
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 0
+        },
+        "minecraft:placement_position": {
+          "enabled_states": [
+            "minecraft:vertical_half"
+          ]
+        }
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 1.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 6.0
+      },
+      "minecraft:map_color": "#2a2328",
+      "minecraft:tags": [
+        "minecraft:is_pickaxe_item_destructible",
+        "stone"
+      ],
+      "minecraft:geometry": {
+        "identifier": "geometry.complementaries.stairs"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cm_blackstone_tile",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:support": {
+        "shape": "stair"
+      },
+      "minecraft:loot": "loot_tables/blocks/blackstone_tile_stairs.json"
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "1.0",
+              "lo_ne": "0.0",
+              "hi_ne": "1.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "1.0",
+              "lo_ne": "0.0",
+              "hi_ne": "1.0",
+              "lo_sw": "0.0",
+              "hi_sw": "1.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "1.0",
+              "lo_ne": "0.0",
+              "hi_ne": "1.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "1.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "1.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "1.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "1.0",
+              "hi_nw": "0.0",
+              "lo_ne": "1.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "1.0",
+              "hi_nw": "0.0",
+              "lo_ne": "1.0",
+              "hi_ne": "0.0",
+              "lo_sw": "1.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "1.0",
+              "hi_nw": "0.0",
+              "lo_ne": "1.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "1.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "1.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "1.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "1.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "1.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "1.0",
+              "lo_ne": "0.0",
+              "hi_ne": "1.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "1.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "1.0",
+              "lo_sw": "0.0",
+              "hi_sw": "1.0",
+              "lo_se": "0.0",
+              "hi_se": "1.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "1.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "1.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "1.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "1.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "1.0",
+              "hi_nw": "0.0",
+              "lo_ne": "1.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "1.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "1.0",
+              "hi_ne": "0.0",
+              "lo_sw": "1.0",
+              "hi_sw": "0.0",
+              "lo_se": "1.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "1.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "1.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "1.0",
+              "lo_se": "0.0",
+              "hi_se": "1.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "1.0",
+              "lo_sw": "0.0",
+              "hi_sw": "1.0",
+              "lo_se": "0.0",
+              "hi_se": "1.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "1.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "1.0",
+              "lo_se": "0.0",
+              "hi_se": "1.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "1.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "1.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "1.0",
+              "hi_sw": "0.0",
+              "lo_se": "1.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "1.0",
+              "hi_ne": "0.0",
+              "lo_sw": "1.0",
+              "hi_sw": "0.0",
+              "lo_se": "1.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "1.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "1.0",
+              "hi_sw": "0.0",
+              "lo_se": "1.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "1.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "1.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "1.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "1.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "1.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "1.0",
+              "lo_se": "0.0",
+              "hi_se": "1.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "1.0",
+              "lo_ne": "0.0",
+              "hi_ne": "1.0",
+              "lo_sw": "0.0",
+              "hi_sw": "1.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "1.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:vertical_half') == 'bottom' && q.block_state('complementaries:shape') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "1.0",
+              "upper": "0.0",
+              "lo_nw": "0.0",
+              "hi_nw": "1.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 0",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "1.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "1.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 1",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "1.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "1.0",
+              "hi_sw": "0.0",
+              "lo_se": "1.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 2",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "1.0",
+              "hi_nw": "0.0",
+              "lo_ne": "1.0",
+              "hi_ne": "0.0",
+              "lo_sw": "1.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                0.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 3",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "0.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "1.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                0.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('minecraft:vertical_half') == 'top' && q.block_state('complementaries:shape') == 4",
+        "components": {
+          "minecraft:geometry": {
+            "identifier": "geometry.complementaries.stairs",
+            "bone_visibility": {
+              "lower": "0.0",
+              "upper": "1.0",
+              "lo_nw": "1.0",
+              "hi_nw": "0.0",
+              "lo_ne": "0.0",
+              "hi_ne": "0.0",
+              "lo_sw": "0.0",
+              "hi_sw": "0.0",
+              "lo_se": "0.0",
+              "hi_se": "0.0"
+            }
+          },
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8.0,
+                8.0,
+                -8.0
+              ],
+              "size": [
+                16.0,
+                8.0,
+                16.0
+              ]
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                -8.0
+              ],
+              "size": [
+                8.0,
+                8.0,
+                8.0
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

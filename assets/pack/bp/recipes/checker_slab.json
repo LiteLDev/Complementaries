@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:checker_slab"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "complementaries:checker_block"
+      }
+    },
+    "unlock": [
+      {
+        "item": "complementaries:checker_block"
+      }
+    ],
+    "result": {
+      "item": "complementaries:checker_slab",
+      "count": 6
+    }
+  }
+}

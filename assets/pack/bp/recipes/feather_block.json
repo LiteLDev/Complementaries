@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "complementaries:feather_block"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "###",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:feather"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:feather"
+      }
+    ],
+    "result": {
+      "item": "complementaries:feather_block",
+      "count": 1
+    }
+  }
+}

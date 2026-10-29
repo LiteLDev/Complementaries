@@ -1,0 +1,8 @@
+{
+  "cm_ash": {
+    "textures": "textures/items/building/ash"
+  },
+  "cm_ash_brick": {
+    "textures": "textures/items/building/ash_brick"
+  }
+}

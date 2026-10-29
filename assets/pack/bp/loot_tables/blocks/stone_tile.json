@@ -1,0 +1,22 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "complementaries:stone_tile",
+          "weight": 1
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "item_tags_any": [
+            "minecraft:is_pickaxe"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "complementaries:sugar_from_sugar_cube"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "complementaries:sugar_cube"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "complementaries:sugar_cube"
+      }
+    ],
+    "result": {
+      "item": "minecraft:sugar",
+      "count": 9
+    }
+  }
+}

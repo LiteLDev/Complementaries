@@ -1,0 +1,104 @@
+{
+  "complementaries:ash_bricks": {
+    "sound": "stone"
+  },
+  "complementaries:ash_bricks_slab": {
+    "sound": "stone"
+  },
+  "complementaries:ash_bricks_stairs": {
+    "sound": "stone"
+  },
+  "complementaries:ash_bricks_wall": {
+    "sound": "stone"
+  },
+  "complementaries:stone_tile": {
+    "sound": "stone"
+  },
+  "complementaries:stone_tile_slab": {
+    "sound": "stone"
+  },
+  "complementaries:stone_tile_stairs": {
+    "sound": "stone"
+  },
+  "complementaries:stone_tile_wall": {
+    "sound": "stone"
+  },
+  "complementaries:blackstone_tile": {
+    "sound": "stone"
+  },
+  "complementaries:blackstone_tile_slab": {
+    "sound": "stone"
+  },
+  "complementaries:blackstone_tile_stairs": {
+    "sound": "stone"
+  },
+  "complementaries:blackstone_tile_wall": {
+    "sound": "stone"
+  },
+  "complementaries:lapis_bricks": {
+    "sound": "stone"
+  },
+  "complementaries:lapis_bricks_slab": {
+    "sound": "stone"
+  },
+  "complementaries:lapis_bricks_stairs": {
+    "sound": "stone"
+  },
+  "complementaries:lapis_bricks_wall": {
+    "sound": "stone"
+  },
+  "complementaries:checker_block": {
+    "sound": "stone"
+  },
+  "complementaries:checker_slab": {
+    "sound": "stone"
+  },
+  "complementaries:fine_wood": {
+    "sound": "wood"
+  },
+  "complementaries:fine_wood_stairs": {
+    "sound": "wood"
+  },
+  "complementaries:fine_wood_slab": {
+    "sound": "wood"
+  },
+  "complementaries:daub": {
+    "sound": "stone"
+  },
+  "complementaries:daub_frame": {
+    "sound": "stone"
+  },
+  "complementaries:daub_brace": {
+    "sound": "stone"
+  },
+  "complementaries:daub_cross_brace": {
+    "sound": "stone"
+  },
+  "complementaries:timber_frame": {
+    "sound": "wood"
+  },
+  "complementaries:timber_brace": {
+    "sound": "wood"
+  },
+  "complementaries:timber_cross_brace": {
+    "sound": "wood"
+  },
+  "complementaries:soap_block": {
+    "sound": "coral"
+  },
+  "complementaries:flint_block": {
+    "sound": "stone"
+  },
+  "complementaries:feather_block": {
+    "sound": "cloth"
+  },
+  "complementaries:sugar_cube": {
+    "sound": "sand"
+  },
+  "complementaries:raked_gravel": {
+    "sound": "gravel"
+  },
+  "complementaries:ash": {
+    "sound": "sand"
+  }
+}
