@@ -90,7 +90,7 @@ pwsh tools/build.ps1 -Target all -Tests     # bin/server/Complementaries + bin/c
 pwsh tools/build.ps1 -Target server -Tests  # one platform + unit tests
 xmake build -y cm-tests; xmake run cm-tests
 pwsh -NoProfile -File tools/e2e/server/run.ps1 -Scenario smoke       # BDS (4 slots, waits for a free one)
-pwsh -NoProfile -File tools/e2e/client/run.ps1 -Scenario smoke       # headless client via LeviHeadlessInput
+pwsh -NoProfile -File tools/e2e/client/run.ps1 -Scenario smoke       # headless client via Be.D.D.
 ```
 
 - `git config --global core.longpaths true` is required (long LeviLamina header paths).
@@ -101,7 +101,7 @@ pwsh -NoProfile -File tools/e2e/client/run.ps1 -Scenario smoke       # headless 
 - Log contract: `Complementaries enabled` on enable; `Complementaries world ready` when a world is available.
 - E2E client runs: set `$env:LEVI_E2E_SLOTS='1,2,3,4'` to take the first free game slot. Locks live in
   `%APPDATA%\levilauncher.exe\` (`bei-e2e.lock` for slot 1, `hiN-e2e.lock` for clones); the harness
-  waits for them. Headless input (LeviHeadlessInput) is the default: the game runs in the
+  waits for them. Headless input (Be.D.D.) is the default: the game runs in the
   background and never takes the real mouse/keyboard.
 
 Deploying by hand: copy `bin/server/Complementaries` to `<BDS>/plugins/`, or `bin/client/Complementaries` to

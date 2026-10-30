@@ -22,8 +22,8 @@ function Look-At([double]$x, [double]$z, [double]$tx, [double]$ty, [double]$tz) 
 
 # Right click where the crosshair is. (Click moves the mouse first, which turns the camera in game.)
 function Use-Item {
-    if (Get-Command Send-HeadlessRaw -ErrorAction SilentlyContinue) {
-        Send-HeadlessRaw -Action click -Button right | Out-Null   # raw: no cursor move, no camera turn
+    if (Get-Command Send-BeDDRaw -ErrorAction SilentlyContinue) {
+        Send-BeDDRaw -Action click -Button right | Out-Null   # raw: no cursor move, no camera turn
     } else {
         Focus-Game
         [BsE2E.Native]::MouseButton(1, $false); Start-Sleep -Milliseconds 80; [BsE2E.Native]::MouseButton(1, $true)

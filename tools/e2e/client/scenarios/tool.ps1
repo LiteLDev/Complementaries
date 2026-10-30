@@ -8,8 +8,8 @@ if ($r.Fail -gt 0 -or $r.Pass -lt 15) { throw "tool selftests: pass=$($r.Pass) f
 # does not answer a second connection while the button is held); -Foreground uses SendInput.
 function Use-Held([int]$ms) {
     Move-Mouse 0.5 0.5 -Relative
-    if (Get-Command Send-HeadlessRaw -ErrorAction SilentlyContinue) {
-        Send-HeadlessRaw -Action click -Button right -HoldMs $ms
+    if (Get-Command Send-BeDDRaw -ErrorAction SilentlyContinue) {
+        Send-BeDDRaw -Action click -Button right -HoldMs $ms
     } else {
         [BsE2E.Native]::MouseButton(1, $false)
         Start-Sleep -Milliseconds $ms
